@@ -7,11 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0ECF088922DE791300F5A8AA /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ECF088822DE791300F5A8AA /* SignUpViewController.m */; };
+		0ECF088D22DE792900F5A8AA /* LogInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ECF088C22DE792900F5A8AA /* LogInViewController.m */; };
 		29A8EC7B4F38AA78FA6C4845 /* Pods_ProjectX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0928723A5AE3026AC937476F /* Pods_ProjectX.framework */; };
 		99F8EB00342760F6893E827A /* Pods_ProjectXUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C13DCD25F4A6C311579D2826 /* Pods_ProjectXUITests.framework */; };
 		A09A64824F4DD69269DDB7F8 /* Pods_ProjectXTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A742B06266A269297335835 /* Pods_ProjectXTests.framework */; };
 		EA54ECE622DE3F3800D0D7A2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EA54ECE522DE3F3800D0D7A2 /* AppDelegate.m */; };
-		EA54ECE922DE3F3800D0D7A2 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA54ECE822DE3F3800D0D7A2 /* ViewController.m */; };
 		EA54ECEC22DE3F3800D0D7A2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA54ECEA22DE3F3800D0D7A2 /* Main.storyboard */; };
 		EA54ECEF22DE3F3800D0D7A2 /* ProjectX.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EA54ECED22DE3F3800D0D7A2 /* ProjectX.xcdatamodeld */; };
 		EA54ECF122DE3F3900D0D7A2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA54ECF022DE3F3900D0D7A2 /* Assets.xcassets */; };
@@ -41,6 +42,10 @@
 
 /* Begin PBXFileReference section */
 		0928723A5AE3026AC937476F /* Pods_ProjectX.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ProjectX.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0ECF088722DE791300F5A8AA /* SignUpViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SignUpViewController.h; sourceTree = "<group>"; };
+		0ECF088822DE791300F5A8AA /* SignUpViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SignUpViewController.m; sourceTree = "<group>"; };
+		0ECF088B22DE792900F5A8AA /* LogInViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LogInViewController.h; sourceTree = "<group>"; };
+		0ECF088C22DE792900F5A8AA /* LogInViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LogInViewController.m; sourceTree = "<group>"; };
 		1A742B06266A269297335835 /* Pods_ProjectXTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ProjectXTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F86A2358733677EE4DB3E06 /* Pods-ProjectX.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProjectX.debug.xcconfig"; path = "Target Support Files/Pods-ProjectX/Pods-ProjectX.debug.xcconfig"; sourceTree = "<group>"; };
 		9BD01D7486EF1CABB1F02B87 /* Pods-ProjectXTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProjectXTests.debug.xcconfig"; path = "Target Support Files/Pods-ProjectXTests/Pods-ProjectXTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -51,8 +56,6 @@
 		EA54ECE122DE3F3800D0D7A2 /* ProjectX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProjectX.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA54ECE422DE3F3800D0D7A2 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		EA54ECE522DE3F3800D0D7A2 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		EA54ECE722DE3F3800D0D7A2 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		EA54ECE822DE3F3800D0D7A2 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		EA54ECEB22DE3F3800D0D7A2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		EA54ECEE22DE3F3800D0D7A2 /* ProjectX.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ProjectX.xcdatamodel; sourceTree = "<group>"; };
 		EA54ECF022DE3F3900D0D7A2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -97,6 +100,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0ECF088622DE78CB00F5A8AA /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				0ECF088722DE791300F5A8AA /* SignUpViewController.h */,
+				0ECF088822DE791300F5A8AA /* SignUpViewController.m */,
+				0ECF088B22DE792900F5A8AA /* LogInViewController.h */,
+				0ECF088C22DE792900F5A8AA /* LogInViewController.m */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
 		1C5CE5FF20F63981F22EC9FE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -145,10 +159,9 @@
 		EA54ECE322DE3F3800D0D7A2 /* ProjectX */ = {
 			isa = PBXGroup;
 			children = (
+				0ECF088622DE78CB00F5A8AA /* View Controllers */,
 				EA54ECE422DE3F3800D0D7A2 /* AppDelegate.h */,
 				EA54ECE522DE3F3800D0D7A2 /* AppDelegate.m */,
-				EA54ECE722DE3F3800D0D7A2 /* ViewController.h */,
-				EA54ECE822DE3F3800D0D7A2 /* ViewController.m */,
 				EA54ECEA22DE3F3800D0D7A2 /* Main.storyboard */,
 				EA54ED1D22DE674000D0D7A2 /* GoogleService-Info.plist */,
 				EA54ECF022DE3F3900D0D7A2 /* Assets.xcassets */,
@@ -399,9 +412,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EA54ECE922DE3F3800D0D7A2 /* ViewController.m in Sources */,
 				EA54ECE622DE3F3800D0D7A2 /* AppDelegate.m in Sources */,
 				EA54ECF722DE3F3900D0D7A2 /* main.m in Sources */,
+				0ECF088D22DE792900F5A8AA /* LogInViewController.m in Sources */,
+				0ECF088922DE791300F5A8AA /* SignUpViewController.m in Sources */,
 				EA54ECEF22DE3F3800D0D7A2 /* ProjectX.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
