@@ -6,6 +6,7 @@ target 'ProjectX' do
   use_frameworks!
 
   # Pods for ProjectX
+  pod 'Firebase'
 	pod 'FirebaseAuth'
 	pod 'FirebaseCore'
 	pod 'FirebaseDatabase'
