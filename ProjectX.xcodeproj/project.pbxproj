@@ -100,7 +100,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0ECF088622DE78CB00F5A8AA /* View Controllers */ = {
+		0ECF088622DE78CB00F5A8AA /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
 				0ECF088722DE791300F5A8AA /* SignUpViewController.h */,
@@ -108,7 +108,7 @@
 				0ECF088B22DE792900F5A8AA /* LogInViewController.h */,
 				0ECF088C22DE792900F5A8AA /* LogInViewController.m */,
 			);
-			path = "View Controllers";
+			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 		1C5CE5FF20F63981F22EC9FE /* Frameworks */ = {
@@ -159,7 +159,7 @@
 		EA54ECE322DE3F3800D0D7A2 /* ProjectX */ = {
 			isa = PBXGroup;
 			children = (
-				0ECF088622DE78CB00F5A8AA /* View Controllers */,
+				0ECF088622DE78CB00F5A8AA /* ViewControllers */,
 				EA54ECE422DE3F3800D0D7A2 /* AppDelegate.h */,
 				EA54ECE522DE3F3800D0D7A2 /* AppDelegate.m */,
 				EA54ECEA22DE3F3800D0D7A2 /* Main.storyboard */,
