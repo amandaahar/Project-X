@@ -38,34 +38,35 @@
         [self setUsername:dictionary[@"username"]];
         [self setPreferences:@[]];
         [self setLocation:dictionary[@"location"]];
-        [self getImageFromString:dictionary[@"profileImage"]];
-        
+        [self setProfileImageURL:dictionary[@"profileImage"]];
+        //[self setProfileImage];
     }
     return self;
 }
 
 #pragma mark - Getter and setter
 /**
- getImageFromString
+ getProfileImage
  This method is going to get the real image from the string url that we receive from the database
  
  
  -Parameters:
- stringURL (NSString *) This is the string that is the url for the image
+ nil
  */
--(void) getImageFromString : (NSString *) stringURL
+
+
+-(void) setProfileImage
 {
+    UIImage *image = [UIImage new];
     AFImageDownloader * downloader = [[AFImageDownloader alloc] init];
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:stringURL]];
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:self.profileImage]];
     [downloader downloadImageForURLRequest:request success:^(NSURLRequest * _Nonnull request, NSHTTPURLResponse * _Nullable response, UIImage * _Nonnull responseObject) {
-        
         self.profileImage = responseObject;
     }failure:^(NSURLRequest * _Nonnull request, NSHTTPURLResponse * _Nullable response, NSError * _Nonnull error) {
-        
         self.profileImage = nil;
     }];
-    
 }
+
 
 
 @end

@@ -25,6 +25,15 @@
     
     self.db = [FIRFirestore firestore];
     
+    [[FirebaseManager sharedManager] getCurrentUser:^(User * _Nonnull user, NSError * _Nonnull error) {
+        if(error != nil)
+        {
+            
+        }else
+        {
+            NSLog(@"%@",user.username);
+        }
+    }];
     
 
 }

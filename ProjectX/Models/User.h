@@ -20,7 +20,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSString *lastName;
 @property (strong, nonatomic) NSString *username;
 @property (strong, nonatomic) GeoFire *location;
-@property (strong, nonatomic) UIImage *profileImage;
+@property (strong, nonatomic) NSString *profileImageURL;
+@property (strong, nonatomic) NSString *profileImage;
 @property (strong, nonatomic) NSArray *preferences;
 
 #pragma mark - User Initializer
