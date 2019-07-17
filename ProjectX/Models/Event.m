@@ -9,12 +9,7 @@
 #import "Event.h"
 
 @implementation Event
-@dynamic name;
-@dynamic descriptionEvent;
-@dynamic location;
-@dynamic date;
-@dynamic pictures;
-@dynamic attendees;
+
 
 -(instancetype) init
 {
@@ -27,12 +22,13 @@
     self = [super init];
     if(self)
     {
+        NSLog(@"%@",dictionary);
         self.name = dictionary[@"name"];
         self.descriptionEvent = dictionary[@"description"];
-        self.attendees = dictionary[@"attendees"];
-        self.location = [[GeoFire alloc] init];
+        self.attendees = dictionary[@"numAttendees"];
+        // self.location = [[GeoFire alloc] init];
         self.pictures = @[];
-        self.date = dictionary[@"date"];
+        self.date = dictionary[@"eventDate"];
     }
     return self;
 }

@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "User.h"
+#import "Event.h"
 NS_ASSUME_NONNULL_BEGIN
 @import Firebase;
 
@@ -15,9 +16,9 @@ NS_ASSUME_NONNULL_BEGIN
     FIRFirestore *database;
 }
 
-
 + (id)sharedManager;
 - (void)getCurrentUser:(void(^)(User *user, NSError *error))completion;
+- (void)getEvent:(void(^)(NSArray *event, NSError *error))completion;
 
 @end
 

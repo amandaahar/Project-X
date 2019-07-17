@@ -10,8 +10,6 @@
 
 @implementation FirebaseManager
 
-
-
 #pragma mark Singleton Methods
 
 + (id)sharedManager {
@@ -53,7 +51,30 @@
             completion(nil, error);
         }
     }];
+
 }
+
+- (void)getEvent:(void(^)(NSArray *events, NSError *error))completion {
+    [[database collectionWithPath:@"Event"]
+     getDocumentsWithCompletion:^(FIRQuerySnapshot *snapshot, NSError *error) {
+         if (error != nil) {
+             NSLog(@"Error getting documents: %@", error);
+             completion(nil,error);
+         } else {
+             NSMutableArray *events = [NSMutableArray new];
+             for (FIRDocumentSnapshot *document in snapshot.documents) {
+                 NSLog(@"%@ => %@", document.documentID, document.data);
+                 Event * myEvent = [[Event alloc] initWithDictionary:document.data];
+                 [events addObject:myEvent];
+//                 Events = [NSArray arrayWithObjects: @"name", @"description", @"numAttendees", @"location", @"eventDate", nil];
+             }
+             completion(events, nil);
+         }
+     }];
+}
+
+
+
 
 #pragma mark - Set methods
 

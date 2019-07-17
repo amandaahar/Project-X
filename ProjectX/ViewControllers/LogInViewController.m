@@ -8,6 +8,7 @@
 
 #import "LogInViewController.h"
 #import "AppDelegate.h"
+#import "../Models/APIEventsManager.h"
 @import Firebase;
 
 @interface LogInViewController ()
@@ -20,6 +21,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [[APIEventsManager sharedManager] getCategories];
     // Do any additional setup after loading the view.
 }
 
@@ -41,6 +43,9 @@
             appDelegate.window.rootViewController = loginViewController;
         }
     }];
+}
+
+-(IBAction)prepareForUnwind:(UIStoryboardSegue *)segue {
 }
 
 - (IBAction)shutKeyboard:(UITapGestureRecognizer *)sender {
