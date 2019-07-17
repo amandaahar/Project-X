@@ -19,8 +19,10 @@
     // Override point for customization after application launch.
 
     [FIRApp configure];
-    
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-variable"
     FIRFirestore *defaultFirestore = [FIRFirestore firestore];
+#pragma clang diagnostic pop
     return YES;
 }
 

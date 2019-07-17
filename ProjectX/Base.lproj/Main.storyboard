@@ -288,10 +288,10 @@
             </objects>
             <point key="canvasLocation" x="631.20000000000005" y="2478.7106446776615"/>
         </scene>
-        <!--View Controller-->
+        <!--Profile View Controller-->
         <scene sceneID="fw4-Yo-CFL">
             <objects>
-                <viewController id="m3G-l6-Mez" sceneMemberID="viewController">
+                <viewController id="m3G-l6-Mez" customClass="ProfileViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="mg8-3Y-ewV">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

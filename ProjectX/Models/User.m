@@ -9,13 +9,9 @@
 #import "User.h"
 
 @implementation User
-@dynamic firstName;
-@dynamic lastName;
-@dynamic username;
-@dynamic profileImage;
-@dynamic preferences;
-@dynamic location;
 
+
+#pragma mark - User Initializer
 -(instancetype) init
 {
     NSDictionary *defaultDictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"", @"firstName",@"",@"lastName",@"",@"username",@"", @"profileImage",@"", @"location",@[], @"preferences" , nil];
@@ -27,34 +23,45 @@
  initWithDictonary
  
  This is going to get a dictionary and set all the properties of the class
+ 
+ 
+ -Parameters:
+    dictionary (NSDictionary *) This is the dictionary that we receive from the database
  */
 -(instancetype) initWithDictionary: (NSDictionary *)  dictionary
 {
     self = [super init];
     if(self)
     {
-        self.firstName = dictionary[@"firstName"];
-        self.lastName = dictionary[@"lastName"];
-        self.username = dictionary[@"username"];
-        self.preferences = @[];
-        self.location = [[GeoFire alloc] init];
+        [self setFirstName:dictionary[@"firstName"]];
+        [self setLastName:dictionary[@"firstName"]];
+        [self setUsername:dictionary[@"username"]];
+        [self setPreferences:@[]];
+        [self setLocation:dictionary[@"location"]];
         [self getImageFromString:dictionary[@"profileImage"]];
         
     }
     return self;
 }
 
+#pragma mark - Getter and setter
+/**
+ getImageFromString
+ This method is going to get the real image from the string url that we receive from the database
+ 
+ 
+ -Parameters:
+ stringURL (NSString *) This is the string that is the url for the image
+ */
 -(void) getImageFromString : (NSString *) stringURL
 {
     AFImageDownloader * downloader = [[AFImageDownloader alloc] init];
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:stringURL]];
     [downloader downloadImageForURLRequest:request success:^(NSURLRequest * _Nonnull request, NSHTTPURLResponse * _Nullable response, UIImage * _Nonnull responseObject) {
         
-        NSLog(@"Succes download image");
         self.profileImage = responseObject;
     }failure:^(NSURLRequest * _Nonnull request, NSHTTPURLResponse * _Nullable response, NSError * _Nonnull error) {
         
-        NSLog(@"Error download image");
         self.profileImage = nil;
     }];
     

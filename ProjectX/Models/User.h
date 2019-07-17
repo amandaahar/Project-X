@@ -13,8 +13,9 @@
 @import AFNetworking;
 
 NS_ASSUME_NONNULL_BEGIN
-
 @interface User : NSObject
+
+#pragma mark - User Attributes
 @property (strong, nonatomic) NSString *firstName;
 @property (strong, nonatomic) NSString *lastName;
 @property (strong, nonatomic) NSString *username;
@@ -22,7 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) UIImage *profileImage;
 @property (strong, nonatomic) NSArray *preferences;
 
-
+#pragma mark - User Initializer
 -(instancetype) initWithDictionary : (NSDictionary *) dictionary;
 -(void) getImageFromString : (NSString *) stringURL;
 @end

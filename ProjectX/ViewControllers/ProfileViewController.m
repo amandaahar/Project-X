@@ -7,8 +7,9 @@
 //
 
 #import "ProfileViewController.h"
+#import "../Models/FirebaseManager.h"
 @import Firebase;
-
+//@class FirebaseManager;
 @interface ProfileViewController ()
 @property (weak, nonatomic) IBOutlet UIImageView *profilePictureImage;
 @property (weak, nonatomic) IBOutlet UILabel *username;
@@ -24,18 +25,8 @@
     
     self.db = [FIRFirestore firestore];
     
-    FIRDocumentReference *docRef =
-    [[self.db collectionWithPath:@"Users"] documentWithPath:@"DAhDAxEMoJNpOcjkaWe1cyevl9v2"];
-    [docRef getDocumentWithCompletion:^(FIRDocumentSnapshot *snapshot, NSError *error) {
-        if (snapshot.exists) {
-            // Document data may be nil if the document exists but has no keys or values.
-            NSLog(@"Document data: %@", snapshot.data);
-        } else {
-            NSLog(@"Document does not exist");
-        }
-    }];
     
-    NSLog(@"%@", docRef);
+
 }
 
 /*
