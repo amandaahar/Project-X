@@ -31,10 +31,6 @@
 
 @class FSTLocalSerializer;
 
-namespace core = firebase::firestore::core;
-namespace local = firebase::firestore::local;
-namespace util = firebase::firestore::util;
-
 NS_ASSUME_NONNULL_BEGIN
 
 @interface FSTLevelDBLRUDelegate : NSObject <FSTReferenceDelegate, FSTLRUDelegate>
@@ -50,15 +46,16 @@ NS_ASSUME_NONNULL_BEGIN
  * Once FSTLevelDB is ported to C++, this factory method should return StatusOr<>. It cannot
  * currently do that because ObjC references are not allowed in StatusOr.
  */
-+ (util::Status)dbWithDirectory:(util::Path)directory
-                     serializer:(FSTLocalSerializer *)serializer
-                      lruParams:(local::LruParams)lruParams
-                            ptr:(FSTLevelDB *_Nullable *_Nonnull)ptr;
++ (firebase::firestore::util::Status)dbWithDirectory:(firebase::firestore::util::Path)directory
+                                          serializer:(FSTLocalSerializer *)serializer
+                                           lruParams:
+                                               (firebase::firestore::local::LruParams)lruParams
+                                                 ptr:(FSTLevelDB *_Nullable *_Nonnull)ptr;
 
 - (instancetype)init NS_UNAVAILABLE;
 
 /** Finds a suitable directory to serve as the root of all Firestore local storage. */
-+ (util::Path)documentsDirectory;
++ (firebase::firestore::util::Path)documentsDirectory;
 
 /**
  * Computes a unique storage directory for the given identifying components of local storage.
@@ -68,20 +65,19 @@ NS_ASSUME_NONNULL_BEGIN
  *     will be created. Usually just +[FSTLevelDB documentsDir].
  * @return A storage directory unique to the instance identified by databaseInfo.
  */
-+ (util::Path)storageDirectoryForDatabaseInfo:(const core::DatabaseInfo &)databaseInfo
-                           documentsDirectory:(const util::Path &)documentsDirectory;
++ (firebase::firestore::util::Path)
+    storageDirectoryForDatabaseInfo:(const firebase::firestore::core::DatabaseInfo &)databaseInfo
+                 documentsDirectory:(const firebase::firestore::util::Path &)documentsDirectory;
 
 /**
  * @return A standard set of read options
  */
 + (const leveldb::ReadOptions)standardReadOptions;
 
-+ (util::Status)clearPersistence:(const core::DatabaseInfo &)databaseInfo;
-
 /** The native db pointer, allocated during start. */
 @property(nonatomic, assign, readonly) leveldb::DB *ptr;
 
-@property(nonatomic, readonly) local::LevelDbTransaction *currentTransaction;
+@property(nonatomic, readonly) firebase::firestore::local::LevelDbTransaction *currentTransaction;
 
 @property(nonatomic, readonly) const std::set<std::string> &users;
 

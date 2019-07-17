@@ -25,10 +25,10 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @implementation FIRSnapshotMetadata {
-  api::SnapshotMetadata _metadata;
+  SnapshotMetadata _metadata;
 }
 
-- (instancetype)initWithMetadata:(api::SnapshotMetadata)metadata {
+- (instancetype)initWithMetadata:(SnapshotMetadata)metadata {
   if (self = [super init]) {
     _metadata = std::move(metadata);
   }
@@ -36,7 +36,7 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 - (instancetype)initWithPendingWrites:(bool)pendingWrites fromCache:(bool)fromCache {
-  api::SnapshotMetadata wrapped(pendingWrites, fromCache);
+  SnapshotMetadata wrapped(pendingWrites, fromCache);
   return [self initWithMetadata:std::move(wrapped)];
 }
 

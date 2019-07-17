@@ -31,9 +31,7 @@
 #include <grpc/support/sync.h>
 
 extern "C" {
-#include <openssl_grpc/bn.h>
 #include <openssl_grpc/pem.h>
-#include <openssl_grpc/rsa.h>
 }
 
 #include "src/core/lib/gpr/string.h"
@@ -134,8 +132,7 @@ static void jose_header_destroy(jose_header* h) {
 }
 
 /* Takes ownership of json and buffer. */
-static jose_header* jose_header_from_json(grpc_json* json,
-                                          const grpc_slice& buffer) {
+static jose_header* jose_header_from_json(grpc_json* json, grpc_slice buffer) {
   grpc_json* cur;
   jose_header* h = static_cast<jose_header*>(gpr_zalloc(sizeof(jose_header)));
   h->buffer = buffer;
@@ -236,8 +233,7 @@ gpr_timespec grpc_jwt_claims_not_before(const grpc_jwt_claims* claims) {
 }
 
 /* Takes ownership of json and buffer even in case of failure. */
-grpc_jwt_claims* grpc_jwt_claims_from_json(grpc_json* json,
-                                           const grpc_slice& buffer) {
+grpc_jwt_claims* grpc_jwt_claims_from_json(grpc_json* json, grpc_slice buffer) {
   grpc_json* cur;
   grpc_jwt_claims* claims =
       static_cast<grpc_jwt_claims*>(gpr_malloc(sizeof(grpc_jwt_claims)));
@@ -352,10 +348,9 @@ typedef struct {
 /* Takes ownership of the header, claims and signature. */
 static verifier_cb_ctx* verifier_cb_ctx_create(
     grpc_jwt_verifier* verifier, grpc_pollset* pollset, jose_header* header,
-    grpc_jwt_claims* claims, const char* audience, const grpc_slice& signature,
+    grpc_jwt_claims* claims, const char* audience, grpc_slice signature,
     const char* signed_jwt, size_t signed_jwt_len, void* user_data,
     grpc_jwt_verification_done_cb cb) {
-  grpc_core::ApplicationCallbackExecCtx callback_exec_ctx;
   grpc_core::ExecCtx exec_ctx;
   verifier_cb_ctx* ctx =
       static_cast<verifier_cb_ctx*>(gpr_zalloc(sizeof(verifier_cb_ctx)));
@@ -604,8 +599,7 @@ static EVP_PKEY* find_verification_key(const grpc_json* json,
 }
 
 static int verify_jwt_signature(EVP_PKEY* key, const char* alg,
-                                const grpc_slice& signature,
-                                const grpc_slice& signed_data) {
+                                grpc_slice signature, grpc_slice signed_data) {
   EVP_MD_CTX* md_ctx = EVP_MD_CTX_create();
   const EVP_MD* md = evp_md_from_alg(alg);
   int result = 0;
@@ -670,7 +664,7 @@ static void on_keys_retrieved(void* user_data, grpc_error* error) {
   }
 
 end:
-  grpc_json_destroy(json);
+  if (json != nullptr) grpc_json_destroy(json);
   EVP_PKEY_free(verification_key);
   ctx->user_cb(ctx->user_data, status, claims);
   verifier_cb_ctx_destroy(ctx);
@@ -723,7 +717,7 @@ static void on_openid_config_retrieved(void* user_data, grpc_error* error) {
   return;
 
 error:
-  grpc_json_destroy(json);
+  if (json != nullptr) grpc_json_destroy(json);
   ctx->user_cb(ctx->user_data, GRPC_JWT_VERIFIER_KEY_RETRIEVAL_ERROR, nullptr);
   verifier_cb_ctx_destroy(ctx);
 }

@@ -16,8 +16,6 @@
 
 #import "FIRDocumentSnapshot.h"
 
-#include <memory>
-
 #include "Firestore/core/src/firebase/firestore/api/document_snapshot.h"
 #include "Firestore/core/src/firebase/firestore/api/snapshot_metadata.h"
 #include "Firestore/core/src/firebase/firestore/model/document_key.h"
@@ -25,22 +23,24 @@
 @class FIRFirestore;
 @class FSTDocument;
 
-namespace api = firebase::firestore::api;
-namespace model = firebase::firestore::model;
+using firebase::firestore::api::DocumentSnapshot;
+using firebase::firestore::api::Firestore;
+using firebase::firestore::api::SnapshotMetadata;
+using firebase::firestore::model::DocumentKey;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface FIRDocumentSnapshot (/* Init */)
 
-- (instancetype)initWithSnapshot:(api::DocumentSnapshot &&)snapshot NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithSnapshot:(DocumentSnapshot &&)snapshot NS_DESIGNATED_INITIALIZER;
 
-- (instancetype)initWithFirestore:(std::shared_ptr<api::Firestore>)firestore
-                      documentKey:(model::DocumentKey)documentKey
+- (instancetype)initWithFirestore:(Firestore *)firestore
+                      documentKey:(DocumentKey)documentKey
                          document:(nullable FSTDocument *)document
-                         metadata:(api::SnapshotMetadata)metadata;
+                         metadata:(SnapshotMetadata)metadata;
 
-- (instancetype)initWithFirestore:(std::shared_ptr<api::Firestore>)firestore
-                      documentKey:(model::DocumentKey)documentKey
+- (instancetype)initWithFirestore:(Firestore *)firestore
+                      documentKey:(DocumentKey)documentKey
                          document:(nullable FSTDocument *)document
                         fromCache:(bool)fromCache
                  hasPendingWrites:(bool)hasPendingWrites;

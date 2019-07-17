@@ -35,17 +35,18 @@ class GrpcLibrary final : public GrpcLibraryInterface {
   void shutdown() override { grpc_shutdown(); }
 };
 
+static GrpcLibrary g_gli;
+static CoreCodegen g_core_codegen;
+
 /// Instantiating this class ensures the proper initialization of gRPC.
 class GrpcLibraryInitializer final {
  public:
   GrpcLibraryInitializer() {
     if (grpc::g_glip == nullptr) {
-      static auto* const g_gli = new GrpcLibrary();
-      grpc::g_glip = g_gli;
+      grpc::g_glip = &g_gli;
     }
     if (grpc::g_core_codegen_interface == nullptr) {
-      static auto* const g_core_codegen = new CoreCodegen();
-      grpc::g_core_codegen_interface = g_core_codegen;
+      grpc::g_core_codegen_interface = &g_core_codegen;
     }
   }
 

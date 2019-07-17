@@ -17,6 +17,10 @@
 #ifndef FIRESTORE_CORE_SRC_FIREBASE_FIRESTORE_CORE_VIEW_SNAPSHOT_H_
 #define FIRESTORE_CORE_SRC_FIREBASE_FIRESTORE_CORE_VIEW_SNAPSHOT_H_
 
+#if !defined(__OBJC__)
+#error "This header only supports Objective-C++"
+#endif  // !defined(__OBJC__)
+
 #include <functional>
 #include <iosfwd>
 #include <memory>
@@ -29,13 +33,12 @@
 #include "Firestore/core/src/firebase/firestore/model/document_key.h"
 #include "Firestore/core/src/firebase/firestore/model/document_key_set.h"
 #include "Firestore/core/src/firebase/firestore/model/document_set.h"
-#include "Firestore/core/src/firebase/firestore/objc/objc_class.h"
 #include "Firestore/core/src/firebase/firestore/util/statusor.h"
 
-OBJC_CLASS(FSTDocument);
-OBJC_CLASS(FSTQuery);
-
 NS_ASSUME_NONNULL_BEGIN
+
+@class FSTDocument;
+@class FSTQuery;
 
 namespace firebase {
 namespace firestore {
@@ -53,9 +56,13 @@ class DocumentViewChange {
 
   DocumentViewChange() = default;
 
-  DocumentViewChange(FSTDocument* document, Type type);
+  DocumentViewChange(FSTDocument* document, Type type)
+      : document_{document}, type_{type} {
+  }
 
-  FSTDocument* document() const;
+  FSTDocument* document() const {
+    return document_;
+  }
   DocumentViewChange::Type type() const {
     return type_;
   }
@@ -64,7 +71,7 @@ class DocumentViewChange {
   size_t Hash() const;
 
  private:
-  objc::Handle<FSTDocument> document_;
+  FSTDocument* document_ = nullptr;
   Type type_{};
 };
 
@@ -124,7 +131,9 @@ class ViewSnapshot {
                                            bool excludes_metadata_changes);
 
   /** The query this view is tracking the results for. */
-  FSTQuery* query() const;
+  FSTQuery* query() const {
+    return query_;
+  }
 
   /** The documents currently known to be results of the query. */
   const model::DocumentSet& documents() const {
@@ -171,7 +180,7 @@ class ViewSnapshot {
   size_t Hash() const;
 
  private:
-  objc::Handle<FSTQuery> query_;
+  FSTQuery* query_ = nil;
 
   model::DocumentSet documents_;
   model::DocumentSet old_documents_;

@@ -29,8 +29,6 @@
 
 @class GPBTimestamp;
 
-namespace model = firebase::firestore::model;
-
 NS_ASSUME_NONNULL_BEGIN
 
 /**
@@ -65,10 +63,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (FSTQueryData *)decodedQueryData:(FSTPBTarget *)target;
 
 /** Encodes a SnapshotVersion model into a GPBTimestamp proto. */
-- (GPBTimestamp *)encodedVersion:(const model::SnapshotVersion &)version;
+- (GPBTimestamp *)encodedVersion:(const firebase::firestore::model::SnapshotVersion &)version;
 
 /** Decodes a GPBTimestamp proto into a SnapshotVersion model. */
-- (model::SnapshotVersion)decodedVersion:(GPBTimestamp *)version;
+- (firebase::firestore::model::SnapshotVersion)decodedVersion:(GPBTimestamp *)version;
 
 @end
 

@@ -20,7 +20,7 @@
 #import "FIRStorageTask_Private.h"
 #import "FIRStorageUploadTask_Private.h"
 
-#import <GTMSessionFetcher/GTMSessionUploadFetcher.h>
+#import "GTMSessionUploadFetcher.h"
 
 @implementation FIRStorageUploadTask
 
@@ -196,17 +196,14 @@
   NSError *fileReachabilityError;
   if (![_fileURL checkResourceIsReachableAndReturnError:&fileReachabilityError]) {
     if (outError != NULL) {
-      NSMutableDictionary *userInfo = [NSMutableDictionary dictionaryWithCapacity:2];
-      userInfo[NSLocalizedDescriptionKey] =
+      NSString *description =
           [NSString stringWithFormat:@"File at URL: %@ is not reachable.", _fileURL.absoluteString];
-
-      if (fileReachabilityError) {
-        userInfo[NSUnderlyingErrorKey] = fileReachabilityError;
-      }
-
       *outError = [NSError errorWithDomain:FIRStorageErrorDomain
                                       code:FIRStorageErrorCodeUnknown
-                                  userInfo:userInfo];
+                                  userInfo:@{
+                                    NSUnderlyingErrorKey : fileReachabilityError,
+                                    NSLocalizedDescriptionKey : description
+                                  }];
     }
 
     return NO;

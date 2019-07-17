@@ -52,7 +52,7 @@ class GrpcStreamingReader : public GrpcCall, public GrpcStreamObserver {
   GrpcStreamingReader(
       std::unique_ptr<grpc::ClientContext> context,
       std::unique_ptr<grpc::GenericClientAsyncReaderWriter> call,
-      const std::shared_ptr<util::AsyncQueue>& worker_queue,
+      util::AsyncQueue* worker_queue,
       GrpcConnection* grpc_connection,
       const grpc::ByteBuffer& request);
 

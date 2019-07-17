@@ -20,11 +20,7 @@
 #include <pb.h>
 #include <pb_decode.h>
 
-#include <cstdint>
-#include <vector>
-
 #include "Firestore/core/include/firebase/firestore/firestore_errors.h"
-#include "Firestore/core/src/firebase/firestore/nanopb/byte_string.h"
 #include "Firestore/core/src/firebase/firestore/util/status.h"
 #include "absl/strings/string_view.h"
 
@@ -42,9 +38,6 @@ namespace nanopb {
  */
 class Reader {
  public:
-  Reader(const Reader&) = delete;
-  Reader(Reader&&) = delete;
-
   /**
    * Creates an input stream that reads from the specified bytes. Note that
    * this reference must remain valid for the lifetime of this Reader.
@@ -54,9 +47,7 @@ class Reader {
    *
    * @param bytes where the input should be deserialized from.
    */
-  explicit Reader(const nanopb::ByteString& bytes);
-  explicit Reader(const std::vector<uint8_t>& bytes);
-  Reader(const uint8_t* bytes, size_t length);
+  static Reader Wrap(const uint8_t* bytes, size_t length);
 
   /**
    * Creates an input stream from bytes backing the string_view. Note that
@@ -65,7 +56,7 @@ class Reader {
    * (This is roughly equivalent to the nanopb function
    * pb_istream_from_buffer())
    */
-  explicit Reader(absl::string_view);
+  static Reader Wrap(absl::string_view);
 
   /**
    * Reads a nanopb message from the input stream.

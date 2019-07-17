@@ -50,7 +50,7 @@ class GrpcUnaryCall : public GrpcCall {
 
   GrpcUnaryCall(std::unique_ptr<grpc::ClientContext> context,
                 std::unique_ptr<grpc::GenericClientAsyncResponseReader> call,
-                const std::shared_ptr<util::AsyncQueue>& worker_queue,
+                util::AsyncQueue* worker_queue,
                 GrpcConnection* grpc_connection,
                 const grpc::ByteBuffer& request);
   ~GrpcUnaryCall();
@@ -100,7 +100,7 @@ class GrpcUnaryCall : public GrpcCall {
   // Stored to avoid lifetime issues with gRPC.
   grpc::ByteBuffer request_;
 
-  std::shared_ptr<util::AsyncQueue> worker_queue_;
+  util::AsyncQueue* worker_queue_ = nullptr;
   GrpcConnection* grpc_connection_ = nullptr;
 
   GrpcCompletion* finish_completion_ = nullptr;

@@ -35,8 +35,6 @@
 @class FSTObjectValue;
 @class FIRTimestamp;
 
-namespace model = firebase::firestore::model;
-
 NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - FSTMutationResult
@@ -44,7 +42,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface FSTMutationResult : NSObject
 
 - (instancetype)init NS_UNAVAILABLE;
-- (instancetype)initWithVersion:(model::SnapshotVersion)version
+- (instancetype)initWithVersion:(firebase::firestore::model::SnapshotVersion)version
                transformResults:(NSArray<FSTFieldValue *> *_Nullable)transformResults
     NS_DESIGNATED_INITIALIZER;
 
@@ -58,7 +56,7 @@ NS_ASSUME_NONNULL_BEGIN
  * Note that these versions can be different: No-op writes will not change the updateTime even
  * though the commitTime advances.
  */
-- (const model::SnapshotVersion &)version;
+- (const firebase::firestore::model::SnapshotVersion &)version;
 
 /**
  * The resulting fields returned from the backend after a FSTTransformMutation has been committed.
@@ -119,8 +117,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (id)init NS_UNAVAILABLE;
 
-- (instancetype)initWithKey:(model::DocumentKey)key
-               precondition:(model::Precondition)precondition NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithKey:(firebase::firestore::model::DocumentKey)key
+               precondition:(firebase::firestore::model::Precondition)precondition
+    NS_DESIGNATED_INITIALIZER;
 
 /**
  * Applies this mutation to the given FSTMaybeDocument for the purposes of computing a new remote
@@ -151,18 +150,18 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (nullable FSTMaybeDocument *)applyToLocalDocument:(nullable FSTMaybeDocument *)maybeDoc
                                        baseDocument:(nullable FSTMaybeDocument *)baseDoc
-                                     localWriteTime:(const firebase::Timestamp &)localWriteTime;
+                                     localWriteTime:(FIRTimestamp *)localWriteTime;
 
-- (const model::DocumentKey &)key;
+- (const firebase::firestore::model::DocumentKey &)key;
 
-- (const model::Precondition &)precondition;
+- (const firebase::firestore::model::Precondition &)precondition;
 
 /**
  * If applicable, returns the field mask for this mutation. Fields that are not included in this
  * field mask are not modified when this mutation is applied. Mutations that replace all document
  * values return 'nullptr'.
  */
-- (nullable const model::FieldMask *)fieldMask;
+- (const firebase::firestore::model::FieldMask *)fieldMask;
 
 /** Returns whether all operations in the mutation are idempotent. */
 @property(nonatomic, readonly) BOOL idempotent;
@@ -177,8 +176,8 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @interface FSTSetMutation : FSTMutation
 
-- (instancetype)initWithKey:(model::DocumentKey)key
-               precondition:(model::Precondition)precondition NS_UNAVAILABLE;
+- (instancetype)initWithKey:(firebase::firestore::model::DocumentKey)key
+               precondition:(firebase::firestore::model::Precondition)precondition NS_UNAVAILABLE;
 
 /**
  * Initializes the set mutation.
@@ -188,9 +187,10 @@ NS_ASSUME_NONNULL_BEGIN
  * key.
  * @param precondition The precondition for this mutation.
  */
-- (instancetype)initWithKey:(model::DocumentKey)key
+- (instancetype)initWithKey:(firebase::firestore::model::DocumentKey)key
                       value:(FSTObjectValue *)value
-               precondition:(model::Precondition)precondition NS_DESIGNATED_INITIALIZER;
+               precondition:(firebase::firestore::model::Precondition)precondition
+    NS_DESIGNATED_INITIALIZER;
 
 /** The object value to use when setting the document. */
 @property(nonatomic, strong, readonly) FSTObjectValue *value;
@@ -210,8 +210,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface FSTPatchMutation : FSTMutation
 
 /** Returns the precondition for the given Precondition. */
-- (instancetype)initWithKey:(model::DocumentKey)key
-               precondition:(model::Precondition)precondition NS_UNAVAILABLE;
+- (instancetype)initWithKey:(firebase::firestore::model::DocumentKey)key
+               precondition:(firebase::firestore::model::Precondition)precondition NS_UNAVAILABLE;
 
 /**
  * Initializes a new patch mutation with an explicit FieldMask and FSTObjectValue representing
@@ -224,16 +224,17 @@ NS_ASSUME_NONNULL_BEGIN
  * to determine the locations at which it should be applied).
  * @param precondition The precondition for this mutation.
  */
-- (instancetype)initWithKey:(model::DocumentKey)key
-                  fieldMask:(model::FieldMask)fieldMask
+- (instancetype)initWithKey:(firebase::firestore::model::DocumentKey)key
+                  fieldMask:(firebase::firestore::model::FieldMask)fieldMask
                       value:(FSTObjectValue *)value
-               precondition:(model::Precondition)precondition NS_DESIGNATED_INITIALIZER;
+               precondition:(firebase::firestore::model::Precondition)precondition
+    NS_DESIGNATED_INITIALIZER;
 
 /**
  * A mask to apply to |value|, where only fields that are in both the fieldMask and the value
  * will be updated.
  */
-- (const model::FieldMask *)fieldMask;
+- (const firebase::firestore::model::FieldMask *)fieldMask;
 
 /** The fields and associated values to use when patching the document. */
 @property(nonatomic, strong, readonly) FSTObjectValue *value;
@@ -253,8 +254,8 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @interface FSTTransformMutation : FSTMutation
 
-- (instancetype)initWithKey:(model::DocumentKey)key
-               precondition:(model::Precondition)precondition NS_UNAVAILABLE;
+- (instancetype)initWithKey:(firebase::firestore::model::DocumentKey)key
+               precondition:(firebase::firestore::model::Precondition)precondition NS_UNAVAILABLE;
 
 /**
  * Initializes a new transform mutation with the specified field transforms.
@@ -262,12 +263,12 @@ NS_ASSUME_NONNULL_BEGIN
  * @param key Identifies the location of the document to mutate.
  * @param fieldTransforms A list of FieldTransform objects to perform to the document.
  */
-- (instancetype)initWithKey:(model::DocumentKey)key
-            fieldTransforms:(std::vector<model::FieldTransform>)fieldTransforms
+- (instancetype)initWithKey:(firebase::firestore::model::DocumentKey)key
+            fieldTransforms:(std::vector<firebase::firestore::model::FieldTransform>)fieldTransforms
     NS_DESIGNATED_INITIALIZER;
 
 /** The field transforms to use when transforming the document. */
-- (const std::vector<model::FieldTransform> &)fieldTransforms;
+- (const std::vector<firebase::firestore::model::FieldTransform> &)fieldTransforms;
 
 @end
 

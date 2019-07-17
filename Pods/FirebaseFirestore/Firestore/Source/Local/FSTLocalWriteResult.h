@@ -19,21 +19,19 @@
 #include "Firestore/core/src/firebase/firestore/model/document_map.h"
 #include "Firestore/core/src/firebase/firestore/model/types.h"
 
-namespace model = firebase::firestore::model;
-
 NS_ASSUME_NONNULL_BEGIN
 
 /** The result of a write to the local store. */
 @interface FSTLocalWriteResult : NSObject
 
-+ (instancetype)resultForBatchID:(model::BatchId)batchID
-                         changes:(model::MaybeDocumentMap &&)changes;
++ (instancetype)resultForBatchID:(firebase::firestore::model::BatchId)batchID
+                         changes:(firebase::firestore::model::MaybeDocumentMap &&)changes;
 
 - (id)init __attribute__((unavailable("Use resultForBatchID:changes:")));
 
-- (const model::MaybeDocumentMap &)changes;
+- (const firebase::firestore::model::MaybeDocumentMap &)changes;
 
-@property(nonatomic, assign, readonly) model::BatchId batchID;
+@property(nonatomic, assign, readonly) firebase::firestore::model::BatchId batchID;
 
 @end
 

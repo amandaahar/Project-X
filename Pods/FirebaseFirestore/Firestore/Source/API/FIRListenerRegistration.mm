@@ -25,10 +25,10 @@ NS_ASSUME_NONNULL_BEGIN
 using firebase::firestore::util::DelayedConstructor;
 
 @implementation FSTListenerRegistration {
-  DelayedConstructor<api::ListenerRegistration> _registration;
+  DelayedConstructor<ListenerRegistration> _registration;
 }
 
-- (instancetype)initWithRegistration:(api::ListenerRegistration &&)registration {
+- (instancetype)initWithRegistration:(ListenerRegistration &&)registration {
   if (self = [super init]) {
     _registration.Init(std::move(registration));
   }

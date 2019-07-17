@@ -100,7 +100,10 @@ class InlinedVector {
   void reserve(size_t capacity) {
     if (capacity > capacity_) {
       T* new_dynamic = static_cast<T*>(gpr_malloc(sizeof(T) * capacity));
-      move_elements(data(), new_dynamic, size_);
+      for (size_t i = 0; i < size_; ++i) {
+        new (&new_dynamic[i]) T(std::move(data()[i]));
+        data()[i].~T();
+      }
       gpr_free(dynamic_);
       dynamic_ = new_dynamic;
       capacity_ = capacity;
@@ -128,6 +131,33 @@ class InlinedVector {
     size_--;
   }
 
+  void copy_from(const InlinedVector& v) {
+    // if v is allocated, copy over the buffer.
+    if (v.dynamic_ != nullptr) {
+      reserve(v.capacity_);
+      memcpy(dynamic_, v.dynamic_, v.size_ * sizeof(T));
+    } else {
+      memcpy(inline_, v.inline_, v.size_ * sizeof(T));
+    }
+    // copy over metadata
+    size_ = v.size_;
+    capacity_ = v.capacity_;
+  }
+
+  void move_from(InlinedVector& v) {
+    // if v is allocated, then we steal its buffer, else we copy it.
+    if (v.dynamic_ != nullptr) {
+      dynamic_ = v.dynamic_;
+    } else {
+      memcpy(inline_, v.inline_, v.size_ * sizeof(T));
+    }
+    // copy over metadata
+    size_ = v.size_;
+    capacity_ = v.capacity_;
+    // null out the original
+    v.init_data();
+  }
+
   size_t size() const { return size_; }
   bool empty() const { return size_ == 0; }
 
@@ -139,42 +169,6 @@ class InlinedVector {
   }
 
  private:
-  void copy_from(const InlinedVector& v) {
-    // if v is allocated, make sure we have enough capacity.
-    if (v.dynamic_ != nullptr) {
-      reserve(v.capacity_);
-    }
-    // copy over elements
-    for (size_t i = 0; i < v.size_; ++i) {
-      new (&(data()[i])) T(v[i]);
-    }
-    // copy over metadata
-    size_ = v.size_;
-    capacity_ = v.capacity_;
-  }
-
-  void move_from(InlinedVector& v) {
-    // if v is allocated, then we steal its dynamic array; otherwise, we
-    // move the elements individually.
-    if (v.dynamic_ != nullptr) {
-      dynamic_ = v.dynamic_;
-    } else {
-      move_elements(v.data(), data(), v.size_);
-    }
-    // copy over metadata
-    size_ = v.size_;
-    capacity_ = v.capacity_;
-    // null out the original
-    v.init_data();
-  }
-
-  static void move_elements(T* src, T* dst, size_t num_elements) {
-    for (size_t i = 0; i < num_elements; ++i) {
-      new (&dst[i]) T(std::move(src[i]));
-      src[i].~T();
-    }
-  }
-
   void init_data() {
     dynamic_ = nullptr;
     size_ = 0;

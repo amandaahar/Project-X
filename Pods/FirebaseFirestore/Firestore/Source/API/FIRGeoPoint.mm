@@ -16,11 +16,10 @@
 
 #import "Firestore/Source/API/FIRGeoPoint+Internal.h"
 
-#include "Firestore/core/include/firebase/firestore/geo_point.h"
-#include "Firestore/core/src/firebase/firestore/api/input_validation.h"
-#include "Firestore/core/src/firebase/firestore/util/comparison.h"
+#import "Firestore/core/src/firebase/firestore/util/comparison.h"
 
-using firebase::firestore::api::ThrowInvalidArgument;
+#import "Firestore/Source/Util/FSTUsageValidation.h"
+
 using firebase::firestore::util::DoubleBitwiseEquals;
 using firebase::firestore::util::DoubleBitwiseHash;
 using firebase::firestore::util::WrapCompare;
@@ -32,20 +31,29 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)initWithLatitude:(double)latitude longitude:(double)longitude {
   if (self = [super init]) {
     if (latitude < -90 || latitude > 90 || !isfinite(latitude)) {
-      ThrowInvalidArgument("GeoPoint requires a latitude value in the range of [-90, 90], "
-                           "but was %s",
-                           latitude);
+      FSTThrowInvalidArgument(@"GeoPoint requires a latitude value in the range of [-90, 90], "
+                               "but was %f",
+                              latitude);
     }
     if (longitude < -180 || longitude > 180 || !isfinite(longitude)) {
-      ThrowInvalidArgument("GeoPoint requires a longitude value in the range of [-180, 180], "
-                           "but was %s",
-                           longitude);
+      FSTThrowInvalidArgument(@"GeoPoint requires a longitude value in the range of [-180, 180], "
+                               "but was %f",
+                              longitude);
     }
 
     _latitude = latitude;
     _longitude = longitude;
   }
   return self;
+}
+
+- (NSComparisonResult)compare:(FIRGeoPoint *)other {
+  NSComparisonResult result = WrapCompare<double>(self.latitude, other.latitude);
+  if (result != NSOrderedSame) {
+    return result;
+  } else {
+    return WrapCompare<double>(self.longitude, other.longitude);
+  }
 }
 
 #pragma mark - NSObject methods
@@ -73,19 +81,6 @@ NS_ASSUME_NONNULL_BEGIN
 /** Implements NSCopying without actually copying because geopoints are immutable. */
 - (id)copyWithZone:(NSZone *_Nullable)zone {
   return self;
-}
-
-@end
-
-@implementation FIRGeoPoint (Internal)
-
-- (NSComparisonResult)compare:(FIRGeoPoint *)other {
-  NSComparisonResult result = WrapCompare<double>(self.latitude, other.latitude);
-  if (result != NSOrderedSame) {
-    return result;
-  } else {
-    return WrapCompare<double>(self.longitude, other.longitude);
-  }
 }
 
 @end

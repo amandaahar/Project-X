@@ -17,39 +17,42 @@
 #ifndef FIRESTORE_CORE_SRC_FIREBASE_FIRESTORE_API_QUERY_SNAPSHOT_H_
 #define FIRESTORE_CORE_SRC_FIREBASE_FIRESTORE_API_QUERY_SNAPSHOT_H_
 
+#if !defined(__OBJC__)
+#error "This header only supports Objective-C++"
+#endif  // !defined(__OBJC__)
+
+#import <Foundation/Foundation.h>
+
 #include <functional>
-#include <memory>
 #include <utility>
 
-#include "Firestore/core/src/firebase/firestore/api/document_change.h"
 #include "Firestore/core/src/firebase/firestore/api/document_snapshot.h"
 #include "Firestore/core/src/firebase/firestore/api/snapshot_metadata.h"
-#include "Firestore/core/src/firebase/firestore/core/event_listener.h"
 #include "Firestore/core/src/firebase/firestore/core/view_snapshot.h"
 #include "Firestore/core/src/firebase/firestore/model/document_set.h"
-#include "Firestore/core/src/firebase/firestore/objc/objc_class.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-OBJC_CLASS(FSTQuery);
+@class FSTQuery;
 
 namespace firebase {
 namespace firestore {
 namespace api {
-
-class Query;
 
 /**
  * A `QuerySnapshot` contains zero or more `DocumentSnapshot` objects.
  */
 class QuerySnapshot {
  public:
-  using Listener = std::unique_ptr<core::EventListener<QuerySnapshot>>;
-
-  QuerySnapshot(std::shared_ptr<Firestore> firestore,
+  QuerySnapshot(Firestore* firestore,
                 FSTQuery* query,
                 core::ViewSnapshot&& snapshot,
-                SnapshotMetadata metadata);
+                SnapshotMetadata metadata)
+      : firestore_(firestore),
+        internal_query_(query),
+        snapshot_(std::move(snapshot)),
+        metadata_(std::move(metadata)) {
+  }
 
   size_t Hash() const;
 
@@ -65,13 +68,17 @@ class QuerySnapshot {
     return snapshot_.documents().size();
   }
 
-  const std::shared_ptr<Firestore>& firestore() const {
+  Firestore* firestore() const {
     return firestore_;
   }
 
-  Query query() const;
+  FSTQuery* internal_query() const {
+    return internal_query_;
+  }
 
-  FSTQuery* internal_query() const;
+  const core::ViewSnapshot& view_snapshot() const {
+    return snapshot_;
+  }
 
   /**
    * Metadata about this snapshot, concerning its source and if it has local
@@ -85,18 +92,11 @@ class QuerySnapshot {
   void ForEachDocument(
       const std::function<void(DocumentSnapshot)>& callback) const;
 
-  /**
-   * Iterates over the `DocumentChanges` representing the changes between
-   * the prior snapshot and this one.
-   */
-  void ForEachChange(bool include_metadata_changes,
-                     const std::function<void(DocumentChange)>& callback) const;
-
   friend bool operator==(const QuerySnapshot& lhs, const QuerySnapshot& rhs);
 
  private:
-  std::shared_ptr<Firestore> firestore_;
-  objc::Handle<FSTQuery> internal_query_;
+  Firestore* firestore_ = nullptr;
+  FSTQuery* internal_query_ = nil;
   core::ViewSnapshot snapshot_;
   SnapshotMetadata metadata_;
 };

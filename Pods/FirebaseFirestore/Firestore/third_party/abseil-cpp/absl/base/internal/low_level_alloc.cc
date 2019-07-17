@@ -4,7 +4,7 @@
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
-//      https://www.apache.org/licenses/LICENSE-2.0
+//      http://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
@@ -208,7 +208,7 @@ struct LowLevelAlloc::Arena {
   int32_t allocation_count GUARDED_BY(mu);
   // flags passed to NewArena
   const uint32_t flags;
-  // Result of sysconf(_SC_PAGESIZE)
+  // Result of getpagesize()
   const size_t pagesize;
   // Lowest power of two >= max(16, sizeof(AllocList))
   const size_t roundup;
@@ -324,10 +324,8 @@ size_t GetPageSize() {
   SYSTEM_INFO system_info;
   GetSystemInfo(&system_info);
   return std::max(system_info.dwPageSize, system_info.dwAllocationGranularity);
-#elif defined(__wasm__) || defined(__asmjs__)
-  return getpagesize();
 #else
-  return sysconf(_SC_PAGESIZE);
+  return getpagesize();
 #endif
 }
 

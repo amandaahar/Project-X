@@ -20,13 +20,13 @@
 
 #include "Firestore/core/src/firebase/firestore/api/snapshot_metadata.h"
 
-namespace api = firebase::firestore::api;
+using firebase::firestore::api::SnapshotMetadata;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface FIRSnapshotMetadata (/* Init */)
 
-- (instancetype)initWithMetadata:(api::SnapshotMetadata)metadata NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithMetadata:(SnapshotMetadata)metadata NS_DESIGNATED_INITIALIZER;
 
 - (instancetype)initWithPendingWrites:(bool)pendingWrites fromCache:(bool)fromCache;
 

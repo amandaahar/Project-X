@@ -189,10 +189,7 @@ static NSString *const kPendingSubscriptionsListKey =
 
 - (void)archivePendingTopicsList:(FIRMessagingPendingTopicsList *)topicsList {
   GULUserDefaults *defaults = [GULUserDefaults standardUserDefaults];
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
   NSData *pendingData = [NSKeyedArchiver archivedDataWithRootObject:topicsList];
-#pragma clang diagnostic pop
   [defaults setObject:pendingData forKey:kPendingSubscriptionsListKey];
   [defaults synchronize];
 }
@@ -203,10 +200,7 @@ static NSString *const kPendingSubscriptionsListKey =
   FIRMessagingPendingTopicsList *subscriptions;
   @try {
     if (pendingData) {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
       subscriptions = [NSKeyedUnarchiver unarchiveObjectWithData:pendingData];
-#pragma clang diagnostic pop
     }
   } @catch (NSException *exception) {
     // Nothing we can do, just continue as if we don't have pending subscriptions

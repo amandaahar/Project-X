@@ -3,8 +3,10 @@
 //  GeoFire
 //
 //  Created by Jonny Dimond on 7/11/14.
-//  Copyright (c) 2014 Firebase. All rights reserved.
+//  Copyright (c) 2016 Firebase. All rights reserved.
 //
+
+NS_ASSUME_NONNULL_BEGIN
 
 @interface GFCircleQuery : GFQuery
 
@@ -21,3 +23,5 @@
 @property (atomic, readwrite) double radius;
 
 @end
+
+NS_ASSUME_NONNULL_END

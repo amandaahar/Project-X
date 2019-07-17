@@ -29,9 +29,9 @@
 #include <utility>
 
 #import "Firestore/Source/API/FIRFirestore+Internal.h"
+#import "Firestore/Source/Util/FSTUsageValidation.h"
 #include "Firestore/core/include/firebase/firestore/firestore_version.h"
 #include "Firestore/core/src/firebase/firestore/api/firestore.h"
-#include "Firestore/core/src/firebase/firestore/api/input_validation.h"
 #include "Firestore/core/src/firebase/firestore/auth/credentials_provider.h"
 #include "Firestore/core/src/firebase/firestore/auth/firebase_credentials_provider_apple.h"
 #include "Firestore/core/src/firebase/firestore/util/async_queue.h"
@@ -41,7 +41,6 @@
 
 namespace util = firebase::firestore::util;
 using firebase::firestore::api::Firestore;
-using firebase::firestore::api::ThrowInvalidArgument;
 using firebase::firestore::auth::CredentialsProvider;
 using firebase::firestore::auth::FirebaseCredentialsProvider;
 using util::AsyncQueue;
@@ -74,7 +73,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (FIRFirestore *)firestoreForDatabase:(NSString *)database {
   if (!database) {
-    ThrowInvalidArgument("Database identifier may not be nil.");
+    FSTThrowInvalidArgument(@"database identifier may not be nil.");
   }
 
   NSString *key = [NSString stringWithFormat:@"%@|%@", self.app.name, database];
@@ -95,14 +94,14 @@ NS_ASSUME_NONNULL_BEGIN
       id<FIRAuthInterop> auth = FIR_COMPONENT(FIRAuthInterop, self.app.container);
       auto credentialsProvider = absl::make_unique<FirebaseCredentialsProvider>(self.app, auth);
 
-      model::DatabaseId databaseID{util::MakeString(self.app.options.projectID),
-                                   util::MakeString(database)};
+      std::string projectID = util::MakeString(self.app.options.projectID);
       std::string persistenceKey = util::MakeString(self.app.name);
-      firestore = [[FIRFirestore alloc] initWithDatabaseID:std::move(databaseID)
-                                            persistenceKey:std::move(persistenceKey)
-                                       credentialsProvider:std::move(credentialsProvider)
-                                               workerQueue:std::move(workerQueue)
-                                               firebaseApp:self.app];
+      firestore = [[FIRFirestore alloc] initWithProjectID:std::move(projectID)
+                                                 database:util::MakeString(database)
+                                           persistenceKey:std::move(persistenceKey)
+                                      credentialsProvider:std::move(credentialsProvider)
+                                              workerQueue:std::move(workerQueue)
+                                              firebaseApp:self.app];
       _instances[key] = firestore;
     }
 

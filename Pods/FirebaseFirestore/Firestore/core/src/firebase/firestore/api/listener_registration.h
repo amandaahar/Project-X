@@ -17,14 +17,19 @@
 #ifndef FIRESTORE_CORE_SRC_FIREBASE_FIRESTORE_API_LISTENER_REGISTRATION_H_
 #define FIRESTORE_CORE_SRC_FIREBASE_FIRESTORE_API_LISTENER_REGISTRATION_H_
 
+#if !defined(__OBJC__)
+#error "This header only supports Objective-C++"
+#endif  // !defined(__OBJC__)
+
+#import <Foundation/Foundation.h>
+
 #include <memory>
 #include <utility>
 
 #include "Firestore/core/src/firebase/firestore/core/event_listener.h"
 #include "Firestore/core/src/firebase/firestore/core/query_listener.h"
-#include "Firestore/core/src/firebase/firestore/objc/objc_class.h"
 
-OBJC_CLASS(FSTFirestoreClient);
+@class FSTFirestoreClient;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -56,7 +61,11 @@ class ListenerRegistration {
       FSTFirestoreClient* client,
       std::shared_ptr<core::AsyncEventListener<core::ViewSnapshot>>
           async_listener,
-      std::shared_ptr<core::QueryListener> query_listener);
+      std::shared_ptr<core::QueryListener> query_listener)
+      : client_(client),
+        async_listener_(std::move(async_listener)),
+        query_listener_(std::move(query_listener)) {
+  }
 
   /**
    * Removes the listener being tracked by this FIRListenerRegistration. After
@@ -66,7 +75,7 @@ class ListenerRegistration {
 
  private:
   /** The client that was used to register this listen. */
-  objc::Handle<FSTFirestoreClient> client_;
+  FSTFirestoreClient* client_ = nil;
 
   /** The async listener that is used to mute events synchronously. */
   std::weak_ptr<core::AsyncEventListener<core::ViewSnapshot>> async_listener_;

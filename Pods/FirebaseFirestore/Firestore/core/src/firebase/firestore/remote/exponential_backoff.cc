@@ -17,7 +17,6 @@
 #include "Firestore/core/src/firebase/firestore/remote/exponential_backoff.h"
 
 #include <algorithm>
-#include <memory>
 #include <random>
 #include <utility>
 
@@ -32,7 +31,7 @@ using firebase::firestore::util::AsyncQueue;
 using firebase::firestore::util::TimerId;
 namespace chr = std::chrono;
 
-ExponentialBackoff::ExponentialBackoff(const std::shared_ptr<AsyncQueue>& queue,
+ExponentialBackoff::ExponentialBackoff(AsyncQueue* queue,
                                        TimerId timer_id,
                                        double backoff_factor,
                                        Milliseconds initial_delay,

@@ -18,7 +18,6 @@
 
 #include <vector>
 
-#include "Firestore/core/include/firebase/firestore/timestamp.h"
 #include "Firestore/core/src/firebase/firestore/core/user_data.h"
 #include "Firestore/core/src/firebase/firestore/model/database_id.h"
 #include "Firestore/core/src/firebase/firestore/model/document_key.h"
@@ -29,9 +28,6 @@
 @class FSTObjectValue;
 @class FSTFieldValue;
 @class FSTMutation;
-
-namespace core = firebase::firestore::core;
-namespace model = firebase::firestore::model;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -46,12 +42,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)init NS_UNAVAILABLE;
 
-- (instancetype)initWithKey:(model::DocumentKey)key
-                 databaseID:(model::DatabaseId)databaseID NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithKey:(firebase::firestore::model::DocumentKey)key
+                 databaseID:(const firebase::firestore::model::DatabaseId *)databaseID
+    NS_DESIGNATED_INITIALIZER;
 
-- (const model::DocumentKey &)key;
+- (const firebase::firestore::model::DocumentKey &)key;
 
-@property(nonatomic, assign, readonly) const model::DatabaseId &databaseID;
+// Does not own the DatabaseId instance.
+@property(nonatomic, assign, readonly) const firebase::firestore::model::DatabaseId *databaseID;
 
 @end
 
@@ -68,17 +66,18 @@ typedef id _Nullable (^FSTPreConverterBlock)(id _Nullable);
 @interface FSTUserDataConverter : NSObject
 
 - (instancetype)init NS_UNAVAILABLE;
-- (instancetype)initWithDatabaseID:(model::DatabaseId)databaseID
+- (instancetype)initWithDatabaseID:(const firebase::firestore::model::DatabaseId *)databaseID
                       preConverter:(FSTPreConverterBlock)preConverter NS_DESIGNATED_INITIALIZER;
 
 /** Parse document data from a non-merge setData call.*/
-- (core::ParsedSetData)parsedSetData:(id)input;
+- (firebase::firestore::core::ParsedSetData)parsedSetData:(id)input;
 
 /** Parse document data from a setData call with `merge:YES`. */
-- (core::ParsedSetData)parsedMergeData:(id)input fieldMask:(nullable NSArray<id> *)fieldMask;
+- (firebase::firestore::core::ParsedSetData)parsedMergeData:(id)input
+                                                  fieldMask:(nullable NSArray<id> *)fieldMask;
 
 /** Parse update data from an updateData call. */
-- (core::ParsedUpdateData)parsedUpdateData:(id)input;
+- (firebase::firestore::core::ParsedUpdateData)parsedUpdateData:(id)input;
 
 /** Parse a "query value" (e.g. value in a where filter or a value in a cursor bound). */
 - (FSTFieldValue *)parsedQueryValue:(id)input;

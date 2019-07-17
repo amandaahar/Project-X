@@ -29,10 +29,10 @@
 #import "FUNSerializer.h"
 #import "FUNUsageValidation.h"
 
-#import <FirebaseCore/FIRApp.h>
-#import <FirebaseCore/FIRAppInternal.h>
-#import <FirebaseCore/FIROptions.h>
-#import <GTMSessionFetcher/GTMSessionFetcherService.h>
+#import "FIRApp.h"
+#import "FIRAppInternal.h"
+#import "FIROptions.h"
+#import "GTMSessionFetcherService.h"
 
 // The following two macros supply the incantation so that the C
 // preprocessor does not try to parse the version as a floating
@@ -275,7 +275,8 @@ NSString *const kFUNDefaultRegion = @"us-central1";
       dataJSON = responseJSON[@"result"];
     }
     if (!dataJSON) {
-      NSDictionary *userInfo = @{NSLocalizedDescriptionKey : @"Response is missing data field."};
+      NSDictionary *userInfo =
+          @{NSLocalizedDescriptionKey : @"Response did not include data field."};
       error = [NSError errorWithDomain:FIRFunctionsErrorDomain
                                   code:FIRFunctionsErrorCodeInternal
                               userInfo:userInfo];

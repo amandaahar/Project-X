@@ -36,8 +36,7 @@ typedef struct grpc_endpoint_vtable grpc_endpoint_vtable;
 class Timestamps;
 
 struct grpc_endpoint_vtable {
-  void (*read)(grpc_endpoint* ep, grpc_slice_buffer* slices, grpc_closure* cb,
-               bool urgent);
+  void (*read)(grpc_endpoint* ep, grpc_slice_buffer* slices, grpc_closure* cb);
   void (*write)(grpc_endpoint* ep, grpc_slice_buffer* slices, grpc_closure* cb,
                 void* arg);
   void (*add_to_pollset)(grpc_endpoint* ep, grpc_pollset* pollset);
@@ -48,7 +47,6 @@ struct grpc_endpoint_vtable {
   grpc_resource_user* (*get_resource_user)(grpc_endpoint* ep);
   char* (*get_peer)(grpc_endpoint* ep);
   int (*get_fd)(grpc_endpoint* ep);
-  bool (*can_track_err)(grpc_endpoint* ep);
 };
 
 /* When data is available on the connection, calls the callback with slices.
@@ -57,7 +55,7 @@ struct grpc_endpoint_vtable {
    Valid slices may be placed into \a slices even when the callback is
    invoked with error != GRPC_ERROR_NONE. */
 void grpc_endpoint_read(grpc_endpoint* ep, grpc_slice_buffer* slices,
-                        grpc_closure* cb, bool urgent);
+                        grpc_closure* cb);
 
 char* grpc_endpoint_get_peer(grpc_endpoint* ep);
 
@@ -96,8 +94,6 @@ void grpc_endpoint_delete_from_pollset_set(grpc_endpoint* ep,
                                            grpc_pollset_set* pollset_set);
 
 grpc_resource_user* grpc_endpoint_get_resource_user(grpc_endpoint* endpoint);
-
-bool grpc_endpoint_can_track_err(grpc_endpoint* ep);
 
 struct grpc_endpoint {
   const grpc_endpoint_vtable* vtable;

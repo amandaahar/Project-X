@@ -16,27 +16,20 @@
 
 #import <Foundation/Foundation.h>
 
-#include <memory>
 #include <vector>
 
 #import "Firestore/Source/Core/FSTTypes.h"
 
 #include "Firestore/core/src/firebase/firestore/auth/user.h"
-#include "Firestore/core/src/firebase/firestore/core/transaction.h"
 #include "Firestore/core/src/firebase/firestore/model/types.h"
 #include "Firestore/core/src/firebase/firestore/remote/remote_store.h"
 #include "Firestore/core/src/firebase/firestore/util/async_queue.h"
-#include "Firestore/core/src/firebase/firestore/util/statusor_callback.h"
 
 @class FSTLocalStore;
 @class FSTMutation;
 @class FSTQuery;
 
-namespace auth = firebase::firestore::auth;
-namespace core = firebase::firestore::core;
-namespace model = firebase::firestore::model;
-namespace remote = firebase::firestore::remote;
-namespace util = firebase::firestore::util;
+using firebase::firestore::model::OnlineState;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -47,9 +40,9 @@ NS_ASSUME_NONNULL_BEGIN
  * new view snapshots or errors.
  */
 @protocol FSTSyncEngineDelegate
-- (void)handleViewSnapshots:(std::vector<core::ViewSnapshot> &&)viewSnapshots;
+- (void)handleViewSnapshots:(std::vector<firebase::firestore::core::ViewSnapshot> &&)viewSnapshots;
 - (void)handleError:(NSError *)error forQuery:(FSTQuery *)query;
-- (void)applyChangedOnlineState:(model::OnlineState)onlineState;
+- (void)applyChangedOnlineState:(OnlineState)onlineState;
 @end
 
 /**
@@ -70,8 +63,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)init NS_UNAVAILABLE;
 - (instancetype)initWithLocalStore:(FSTLocalStore *)localStore
-                       remoteStore:(remote::RemoteStore *)remoteStore
-                       initialUser:(const auth::User &)user NS_DESIGNATED_INITIALIZER;
+                       remoteStore:(firebase::firestore::remote::RemoteStore *)remoteStore
+                       initialUser:(const firebase::firestore::auth::User &)user
+    NS_DESIGNATED_INITIALIZER;
 
 /**
  * A delegate to be notified when queries being listened to produce new view snapshots or errors.
@@ -85,7 +79,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  * @return the target ID assigned to the query.
  */
-- (model::TargetId)listenToQuery:(FSTQuery *)query;
+- (firebase::firestore::model::TargetId)listenToQuery:(FSTQuery *)query;
 
 /** Stops listening to a query previously listened to via listenToQuery:. */
 - (void)stopListeningToQuery:(FSTQuery *)query;
@@ -104,18 +98,18 @@ NS_ASSUME_NONNULL_BEGIN
  *
  * @param retries The number of times to try before giving up.
  * @param workerQueue The queue to dispatch sync engine calls to.
- * @param updateCallback The callback to call to execute the user's transaction.
- * @param resultCallback The callback to call when the transaction is finished or failed.
+ * @param updateBlock The block to call to execute the user's transaction.
+ * @param completion The block to call when the transaction is finished or failed.
  */
 - (void)transactionWithRetries:(int)retries
-                   workerQueue:(const std::shared_ptr<util::AsyncQueue> &)workerQueue
-                updateCallback:(core::TransactionUpdateCallback)updateCallback
-                resultCallback:(core::TransactionResultCallback)resultCallback;
+                   workerQueue:(firebase::firestore::util::AsyncQueue *)workerQueue
+                   updateBlock:(FSTTransactionBlock)updateBlock
+                    completion:(FSTVoidIDErrorBlock)completion;
 
-- (void)credentialDidChangeWithUser:(const auth::User &)user;
+- (void)credentialDidChangeWithUser:(const firebase::firestore::auth::User &)user;
 
 /** Applies an OnlineState change to the sync engine and notifies any views of the change. */
-- (void)applyChangedOnlineState:(model::OnlineState)onlineState;
+- (void)applyChangedOnlineState:(firebase::firestore::model::OnlineState)onlineState;
 
 @end
 

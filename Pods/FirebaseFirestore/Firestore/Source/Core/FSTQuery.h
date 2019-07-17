@@ -16,19 +16,26 @@
 
 #import <Foundation/Foundation.h>
 
-#include "Firestore/core/src/firebase/firestore/core/filter.h"
-#include "Firestore/core/src/firebase/firestore/model/document_set.h"
 #include "Firestore/core/src/firebase/firestore/model/field_path.h"
 #include "Firestore/core/src/firebase/firestore/model/resource_path.h"
 
 @class FSTDocument;
 @class FSTFieldValue;
 
-namespace core = firebase::firestore::core;
-namespace model = firebase::firestore::model;
-namespace util = firebase::firestore::util;
-
 NS_ASSUME_NONNULL_BEGIN
+
+/**
+ * FSTRelationFilterOperator is a value relation operator that can be used to filter documents.
+ * It is similar to NSPredicateOperatorType, but only has operators supported by Firestore.
+ */
+typedef NS_ENUM(NSInteger, FSTRelationFilterOperator) {
+  FSTRelationFilterOperatorLessThan = 0,
+  FSTRelationFilterOperatorLessThanOrEqual,
+  FSTRelationFilterOperatorEqual,
+  FSTRelationFilterOperatorGreaterThanOrEqual,
+  FSTRelationFilterOperatorGreaterThan,
+  FSTRelationFilterOperatorArrayContains,
+};
 
 /** Interface used for all query filters. */
 @interface FSTFilter : NSObject
@@ -36,17 +43,17 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  * Creates a filter for the provided path, operator, and value.
  *
- * Note that if the relational operator is Filter::Operator::Equal and the
- * value is FieldValue::Null() or FieldValue::Nan(), this will return the
- * appropriate FSTNullFilter or FSTNanFilter class instead of a
+ * Note that if the relational operator is FSTRelationFilterOperatorEqual and
+ * the value is [FSTNullValue nullValue] or [FSTDoubleValue nanValue], this
+ * will return the appropriate FSTNullFilter or FSTNanFilter class instead of a
  * FSTRelationFilter.
  */
-+ (instancetype)filterWithField:(const model::FieldPath &)field
-                 filterOperator:(core::Filter::Operator)op
++ (instancetype)filterWithField:(const firebase::firestore::model::FieldPath &)field
+                 filterOperator:(FSTRelationFilterOperator)op
                           value:(FSTFieldValue *)value;
 
 /** Returns the field the Filter operates over. Abstract method. */
-- (const model::FieldPath &)field;
+- (const firebase::firestore::model::FieldPath &)field;
 
 /** Returns true if a document matches the filter. Abstract method. */
 - (BOOL)matchesDocument:(FSTDocument *)document;
@@ -70,8 +77,8 @@ NS_ASSUME_NONNULL_BEGIN
  * @param value A constant value to compare @a field to. The RHS of the expression.
  * @return A new instance of FSTRelationFilter.
  */
-- (instancetype)initWithField:(model::FieldPath)field
-               filterOperator:(core::Filter::Operator)filterOperator
+- (instancetype)initWithField:(firebase::firestore::model::FieldPath)field
+               filterOperator:(FSTRelationFilterOperator)filterOperator
                         value:(FSTFieldValue *)value;
 
 - (instancetype)init NS_UNAVAILABLE;
@@ -80,10 +87,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL)isInequality;
 
 /** The left hand side of the relation. A path into a document field. */
-- (const model::FieldPath &)field;
+- (const firebase::firestore::model::FieldPath &)field;
 
 /** The type of equality/inequality operator to use in the relation. */
-@property(nonatomic, assign, readonly) core::Filter::Operator filterOperator;
+@property(nonatomic, assign, readonly) FSTRelationFilterOperator filterOperator;
 
 /** The right hand side of the relation. A constant value to compare to. */
 @property(nonatomic, strong, readonly) FSTFieldValue *value;
@@ -93,29 +100,31 @@ NS_ASSUME_NONNULL_BEGIN
 /** Filter that matches NULL values. */
 @interface FSTNullFilter : FSTFilter
 - (instancetype)init NS_UNAVAILABLE;
-- (instancetype)initWithField:(model::FieldPath)field NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithField:(firebase::firestore::model::FieldPath)field
+    NS_DESIGNATED_INITIALIZER;
 @end
 
 /** Filter that matches NAN values. */
 @interface FSTNanFilter : FSTFilter
 - (instancetype)init NS_UNAVAILABLE;
-- (instancetype)initWithField:(model::FieldPath)field NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithField:(firebase::firestore::model::FieldPath)field
+    NS_DESIGNATED_INITIALIZER;
 @end
 
 /** FSTSortOrder is a field and direction to order query results by. */
 @interface FSTSortOrder : NSObject <NSCopying>
 
 /** Creates a new sort order with the given field and direction. */
-+ (instancetype)sortOrderWithFieldPath:(model::FieldPath)fieldPath ascending:(BOOL)ascending;
++ (instancetype)sortOrderWithFieldPath:(firebase::firestore::model::FieldPath)fieldPath
+                             ascending:(BOOL)ascending;
 
 - (instancetype)init NS_UNAVAILABLE;
 
 /** Compares two documents based on the field and direction of this sort order. */
-- (util::ComparisonResult)compareDocument:(FSTDocument *)document1
-                               toDocument:(FSTDocument *)document2;
+- (NSComparisonResult)compareDocument:(FSTDocument *)document1 toDocument:(FSTDocument *)document2;
 
 /** The field to sort by. */
-- (const model::FieldPath &)field;
+- (const firebase::firestore::model::FieldPath &)field;
 
 /** The direction of the sort. */
 @property(nonatomic, assign, readonly, getter=isAscending) BOOL ascending;
@@ -164,11 +173,11 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  * Initializes a query with all of its components directly.
  */
-- (instancetype)initWithPath:(model::ResourcePath)path
+- (instancetype)initWithPath:(firebase::firestore::model::ResourcePath)path
              collectionGroup:(nullable NSString *)collectionGroup
                     filterBy:(NSArray<FSTFilter *> *)filters
                      orderBy:(NSArray<FSTSortOrder *> *)sortOrders
-                       limit:(int32_t)limit
+                       limit:(NSInteger)limit
                      startAt:(nullable FSTBound *)startAtBound
                        endAt:(nullable FSTBound *)endAtBound NS_DESIGNATED_INITIALIZER;
 
@@ -178,7 +187,7 @@ NS_ASSUME_NONNULL_BEGIN
  * @param path The path to the collection to be queried over.
  * @return A new instance of FSTQuery.
  */
-+ (instancetype)queryWithPath:(model::ResourcePath)path;
++ (instancetype)queryWithPath:(firebase::firestore::model::ResourcePath)path;
 
 /**
  * Creates and returns a new FSTQuery.
@@ -189,7 +198,7 @@ NS_ASSUME_NONNULL_BEGIN
  *     is not a collection group query.
  * @return A new instance of FSTQuery.
  */
-+ (instancetype)queryWithPath:(model::ResourcePath)path
++ (instancetype)queryWithPath:(firebase::firestore::model::ResourcePath)path
               collectionGroup:(nullable NSString *)collectionGroup;
 
 /**
@@ -230,7 +239,7 @@ NS_ASSUME_NONNULL_BEGIN
  * @param limit The maximum number of results to return. If @a limit <= 0, behavior is unspecified.
  *     If @a limit == NSNotFound, then no limit is applied.
  */
-- (instancetype)queryBySettingLimit:(int32_t)limit;
+- (instancetype)queryBySettingLimit:(NSInteger)limit;
 
 /**
  * Creates a new FSTQuery starting at the provided bound.
@@ -253,7 +262,7 @@ NS_ASSUME_NONNULL_BEGIN
  * used when executing collection group queries, since we have to split the query into a set of
  * collection queries at multiple paths.
  */
-- (instancetype)collectionQueryAtPath:(model::ResourcePath)path;
+- (instancetype)collectionQueryAtPath:(firebase::firestore::model::ResourcePath)path;
 
 /** Returns YES if the receiver is query for a specific document. */
 - (BOOL)isDocumentQuery;
@@ -265,20 +274,20 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL)matchesDocument:(FSTDocument *)document;
 
 /** Returns a comparator that will sort documents according to the receiver's sort order. */
-- (model::DocumentComparator)comparator;
+- (NSComparator)comparator;
 
 /** Returns the field of the first filter on the receiver that's an inequality, or nullptr if none.
  */
-- (nullable const model::FieldPath *)inequalityFilterField;
+- (nullable const firebase::firestore::model::FieldPath *)inequalityFilterField;
 
 /** Returns YES if the query has an arrayContains filter already. */
 - (BOOL)hasArrayContainsFilter;
 
 /** Returns the first field in an order-by constraint, or nullptr if none. */
-- (nullable const model::FieldPath *)firstSortOrderField;
+- (nullable const firebase::firestore::model::FieldPath *)firstSortOrderField;
 
 /** The base path of the query. */
-- (const model::ResourcePath &)path;
+- (const firebase::firestore::model::ResourcePath &)path;
 
 /** The collection group of the query. */
 @property(nonatomic, nullable, strong, readonly) NSString *collectionGroup;
@@ -287,7 +296,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, strong, readonly) NSArray<FSTFilter *> *filters;
 
 /** The maximum number of results to return, or NSNotFound if no limit. */
-@property(nonatomic, assign, readonly) int32_t limit;
+@property(nonatomic, assign, readonly) NSInteger limit;
 
 /**
  * A canonical string identifying the query. Two different instances of equivalent queries will

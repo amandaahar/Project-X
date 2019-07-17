@@ -21,8 +21,6 @@
 
 @class FSTQuery;
 
-namespace model = firebase::firestore::model;
-
 NS_ASSUME_NONNULL_BEGIN
 
 /** An enumeration of the different purposes we have for queries. */
@@ -41,16 +39,16 @@ typedef NS_ENUM(NSInteger, FSTQueryPurpose) {
 @interface FSTQueryData : NSObject
 
 - (instancetype)initWithQuery:(FSTQuery *)query
-                     targetID:(model::TargetId)targetID
-         listenSequenceNumber:(model::ListenSequenceNumber)sequenceNumber
+                     targetID:(firebase::firestore::model::TargetId)targetID
+         listenSequenceNumber:(firebase::firestore::model::ListenSequenceNumber)sequenceNumber
                       purpose:(FSTQueryPurpose)purpose
-              snapshotVersion:(model::SnapshotVersion)snapshotVersion
+              snapshotVersion:(firebase::firestore::model::SnapshotVersion)snapshotVersion
                   resumeToken:(NSData *)resumeToken NS_DESIGNATED_INITIALIZER;
 
 /** Convenience initializer for use when creating an FSTQueryData for the first time. */
 - (instancetype)initWithQuery:(FSTQuery *)query
-                     targetID:(model::TargetId)targetID
-         listenSequenceNumber:(model::ListenSequenceNumber)sequenceNumber
+                     targetID:(firebase::firestore::model::TargetId)targetID
+         listenSequenceNumber:(firebase::firestore::model::ListenSequenceNumber)sequenceNumber
                       purpose:(FSTQueryPurpose)purpose;
 
 - (instancetype)init NS_UNAVAILABLE;
@@ -59,12 +57,14 @@ typedef NS_ENUM(NSInteger, FSTQueryPurpose) {
  * Creates a new query data instance with an updated snapshot version, resume token, and sequence
  * number.
  */
-- (instancetype)queryDataByReplacingSnapshotVersion:(model::SnapshotVersion)snapshotVersion
-                                        resumeToken:(NSData *)resumeToken
-                                     sequenceNumber:(model::ListenSequenceNumber)sequenceNumber;
+- (instancetype)
+    queryDataByReplacingSnapshotVersion:(firebase::firestore::model::SnapshotVersion)snapshotVersion
+                            resumeToken:(NSData *)resumeToken
+                         sequenceNumber:
+                             (firebase::firestore::model::ListenSequenceNumber)sequenceNumber;
 
 /** The latest snapshot version seen for this target. */
-- (const model::SnapshotVersion &)snapshotVersion;
+- (const firebase::firestore::model::SnapshotVersion &)snapshotVersion;
 
 /** The query being listened to. */
 @property(nonatomic, strong, readonly) FSTQuery *query;
@@ -73,9 +73,10 @@ typedef NS_ENUM(NSInteger, FSTQueryPurpose) {
  * The targetID to which the query corresponds, assigned by the FSTLocalStore for user queries or
  * the FSTSyncEngine for limbo queries.
  */
-@property(nonatomic, assign, readonly) model::TargetId targetID;
+@property(nonatomic, assign, readonly) firebase::firestore::model::TargetId targetID;
 
-@property(nonatomic, assign, readonly) model::ListenSequenceNumber sequenceNumber;
+@property(nonatomic, assign, readonly)
+    firebase::firestore::model::ListenSequenceNumber sequenceNumber;
 
 /** The purpose of the query. */
 @property(nonatomic, assign, readonly) FSTQueryPurpose purpose;

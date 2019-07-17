@@ -22,11 +22,12 @@ namespace firebase {
 namespace firestore {
 namespace core {
 
-DatabaseInfo::DatabaseInfo(model::DatabaseId database_id,
-                           std::string persistence_key,
-                           std::string host,
-                           bool ssl_enabled)
-    : database_id_{std::move(database_id)},
+DatabaseInfo::DatabaseInfo(
+    const firebase::firestore::model::DatabaseId& database_id,
+    std::string persistence_key,
+    std::string host,
+    bool ssl_enabled)
+    : database_id_{database_id},
       persistence_key_{std::move(persistence_key)},
       host_{std::move(host)},
       ssl_enabled_{ssl_enabled} {

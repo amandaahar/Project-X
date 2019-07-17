@@ -30,10 +30,6 @@
 @class FSTQueryData;
 @protocol FSTReferenceDelegate;
 
-namespace auth = firebase::firestore::auth;
-namespace local = firebase::firestore::local;
-namespace model = firebase::firestore::model;
-
 struct FSTTransactionRunner;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -81,16 +77,17 @@ NS_ASSUME_NONNULL_BEGIN
  * implementation to the extent possible (e.g. in the case of uid switching from
  * sally=>jack=>sally, sally's mutation queue will be preserved).
  */
-- (local::MutationQueue *)mutationQueueForUser:(const auth::User &)user;
+- (firebase::firestore::local::MutationQueue *)mutationQueueForUser:
+    (const firebase::firestore::auth::User &)user;
 
 /** Creates an FSTQueryCache representing the persisted cache of queries. */
-- (local::QueryCache *)queryCache;
+- (firebase::firestore::local::QueryCache *)queryCache;
 
 /** Creates a RemoteDocumentCache representing the persisted cache of remote documents. */
-- (local::RemoteDocumentCache *)remoteDocumentCache;
+- (firebase::firestore::local::RemoteDocumentCache *)remoteDocumentCache;
 
 /** Creates an IndexManager that manages our persisted query indexes. */
-- (local::IndexManager *)indexManager;
+- (firebase::firestore::local::IndexManager *)indexManager;
 
 @property(nonatomic, readonly, assign) const FSTTransactionRunner &run;
 
@@ -100,7 +97,8 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property(nonatomic, readonly, strong) id<FSTReferenceDelegate> referenceDelegate;
 
-@property(nonatomic, readonly) model::ListenSequenceNumber currentSequenceNumber;
+@property(nonatomic, readonly)
+    firebase::firestore::model::ListenSequenceNumber currentSequenceNumber;
 
 @end
 
@@ -129,7 +127,7 @@ NS_ASSUME_NONNULL_BEGIN
  * Registers an FSTReferenceSet of documents that should be considered 'referenced' and not eligible
  * for removal during garbage collection.
  */
-- (void)addInMemoryPins:(local::ReferenceSet *)set;
+- (void)addInMemoryPins:(firebase::firestore::local::ReferenceSet *)set;
 
 /**
  * Notify the delegate that a target was removed.
@@ -139,24 +137,25 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  * Notify the delegate that the given document was added to a target.
  */
-- (void)addReference:(const model::DocumentKey &)key;
+- (void)addReference:(const firebase::firestore::model::DocumentKey &)key;
 
 /**
  * Notify the delegate that the given document was removed from a target.
  */
-- (void)removeReference:(const model::DocumentKey &)key;
+- (void)removeReference:(const firebase::firestore::model::DocumentKey &)key;
 
 /**
  * Notify the delegate that a document is no longer being mutated by the user.
  */
-- (void)removeMutationReference:(const model::DocumentKey &)key;
+- (void)removeMutationReference:(const firebase::firestore::model::DocumentKey &)key;
 
 /**
  * Notify the delegate that a limbo document was updated.
  */
-- (void)limboDocumentUpdated:(const model::DocumentKey &)key;
+- (void)limboDocumentUpdated:(const firebase::firestore::model::DocumentKey &)key;
 
-@property(nonatomic, readonly) model::ListenSequenceNumber currentSequenceNumber;
+@property(nonatomic, readonly)
+    firebase::firestore::model::ListenSequenceNumber currentSequenceNumber;
 
 @end
 

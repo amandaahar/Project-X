@@ -1,8 +1,8 @@
 /*
  * Firebase GeoFire iOS Library
  *
- * Copyright © 2014 Firebase - All Rights Reserved
- * https://www.firebase.com
+ * Copyright © 2016 Firebase - All Rights Reserved
+ * https://firebase.google.com
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -34,10 +34,12 @@
 #import "GFCircleQuery.h"
 #import "GFRegionQuery.h"
 
-@class Firebase;
+@class FIRDatabaseReference;
 
-typedef void (^GFCompletionBlock) (NSError *error);
-typedef void (^GFCallbackBlock) (CLLocation *location, NSError *error);
+NS_ASSUME_NONNULL_BEGIN
+
+typedef void (^GFCompletionBlock) (NSError * _Nullable error);
+typedef void (^GFCallbackBlock) (CLLocation * _Nullable location, NSError * _Nullable error);
 
 /**
  * A GeoFire instance is used to store geo location data at a Firebase location.
@@ -47,7 +49,7 @@ typedef void (^GFCallbackBlock) (CLLocation *location, NSError *error);
 /**
  * The Firebase reference this GeoFire instance uses.
  */
-@property (nonatomic, strong, readonly) Firebase *firebaseRef;
+@property (nonatomic, strong, readonly) FIRDatabaseReference *firebaseRef;
 
 /**
  * The dispatch queue this GeoFire object and all its GFQueries use for callbacks.
@@ -61,7 +63,7 @@ typedef void (^GFCallbackBlock) (CLLocation *location, NSError *error);
  * @param firebase The Firebase location to attach this GeoFire instance to
  * @return The new GeoFire instance
  */
-- (id)initWithFirebaseRef:(Firebase *)firebase;
+- (id)initWithFirebaseRef:(FIRDatabaseReference *)firebase;
 
 /** @name Setting and Updating Locations */
 
@@ -82,7 +84,7 @@ typedef void (^GFCallbackBlock) (CLLocation *location, NSError *error);
  */
 - (void)setLocation:(CLLocation *)location
              forKey:(NSString *)key
-withCompletionBlock:(GFCompletionBlock)block;
+withCompletionBlock:(nullable GFCompletionBlock)block;
 
 /**
  * Removes the location for a given key.
@@ -96,7 +98,7 @@ withCompletionBlock:(GFCompletionBlock)block;
  * @param key The key for which the location is removed
  * @param block The completion block that is called once the location was successfully updated on the server
  */
-- (void)removeKey:(NSString *)key withCompletionBlock:(GFCompletionBlock)block;
+- (void)removeKey:(NSString *)key withCompletionBlock:(nullable GFCompletionBlock)block;
 
 /**
  * Gets the current location for a key in GeoFire and calls the callback with the location or nil if there is no
@@ -105,7 +107,6 @@ withCompletionBlock:(GFCompletionBlock)block;
  *
  * @param key The key to observe the location for
  * @param callback The callback that is called for the current location
- * @return
  */
 - (void)getLocationForKey:(NSString *)key
              withCallback:(GFCallbackBlock)callback;
@@ -129,3 +130,5 @@ withCompletionBlock:(GFCompletionBlock)block;
 - (GFRegionQuery *)queryWithRegion:(MKCoordinateRegion)region;
 
 @end
+
+NS_ASSUME_NONNULL_END

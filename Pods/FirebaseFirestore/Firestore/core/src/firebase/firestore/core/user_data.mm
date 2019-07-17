@@ -19,15 +19,14 @@
 #include <utility>
 
 #import "Firestore/Source/Model/FSTMutation.h"
+#import "Firestore/Source/Util/FSTUsageValidation.h"
 
-#include "Firestore/core/src/firebase/firestore/api/input_validation.h"
 #include "absl/strings/match.h"
 
 namespace firebase {
 namespace firestore {
 namespace core {
 
-using api::ThrowInvalidArgument;
 using model::DocumentKey;
 using model::FieldMask;
 using model::FieldPath;
@@ -156,8 +155,8 @@ bool ParseContext::write() const {
     case UserDataSource::Argument:
       return false;
     default:
-      ThrowInvalidArgument("Unexpected case for UserDataSource: %s",
-                           accumulator_->data_source());
+      FSTThrowInvalidArgument(@"Unexpected case for UserDataSource: %d",
+                              accumulator_->data_source());
   }
 }
 
@@ -176,8 +175,9 @@ void ParseContext::ValidatePathSegment(absl::string_view segment) const {
   absl::string_view designator{RESERVED_FIELD_DESIGNATOR};
   if (write() && absl::StartsWith(segment, designator) &&
       absl::EndsWith(segment, designator)) {
-    ThrowInvalidArgument("Document fields cannot begin and end with %s%s",
-                         RESERVED_FIELD_DESIGNATOR, FieldDescription());
+    FSTThrowInvalidArgument(@"Document fields cannot begin and end with %s%s",
+                            RESERVED_FIELD_DESIGNATOR,
+                            FieldDescription().c_str());
   }
 }
 

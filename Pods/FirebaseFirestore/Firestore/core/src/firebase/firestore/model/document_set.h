@@ -17,6 +17,12 @@
 #ifndef FIRESTORE_CORE_SRC_FIREBASE_FIRESTORE_MODEL_DOCUMENT_SET_H_
 #define FIRESTORE_CORE_SRC_FIREBASE_FIRESTORE_MODEL_DOCUMENT_SET_H_
 
+#if !defined(__OBJC__)
+#error "This header only supports Objective-C++"
+#endif  // !defined(__OBJC__)
+
+#import <Foundation/Foundation.h>
+
 #include <iosfwd>
 #include <string>
 #include <utility>
@@ -26,10 +32,9 @@
 #include "Firestore/core/src/firebase/firestore/immutable/sorted_set.h"
 #include "Firestore/core/src/firebase/firestore/model/document_key.h"
 #include "Firestore/core/src/firebase/firestore/model/document_map.h"
-#include "Firestore/core/src/firebase/firestore/objc/objc_class.h"
 #include "Firestore/core/src/firebase/firestore/util/comparison.h"
 
-OBJC_CLASS(FSTDocument);
+@class FSTDocument;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -37,11 +42,22 @@ namespace firebase {
 namespace firestore {
 namespace model {
 
-class DocumentComparator : public util::FunctionComparator<FSTDocument*> {
+/**
+ * A C++ comparator that returns less-than, implemented by delegating to
+ * an NSComparator.
+ */
+class DocumentSetComparator {
  public:
-  using FunctionComparator<FSTDocument*>::FunctionComparator;
+  explicit DocumentSetComparator(NSComparator delegate = nil)
+      : delegate_(delegate) {
+  }
 
-  static DocumentComparator ByKey();
+  bool operator()(FSTDocument* lhs, FSTDocument* rhs) const {
+    return delegate_(lhs, rhs) == NSOrderedAscending;
+  }
+
+ private:
+  NSComparator delegate_;
 };
 
 /**
@@ -50,13 +66,14 @@ class DocumentComparator : public util::FunctionComparator<FSTDocument*> {
  * comparator on top of what is provided to guarantee document equality based on
  * the key.
  */
-class DocumentSet : public immutable::SortedContainer {
+class DocumentSet : public immutable::SortedContainer,
+                    public util::Equatable<DocumentSet> {
  public:
   /**
    * The type of the main collection of documents in an DocumentSet.
    * @see sorted_set_.
    */
-  using SetType = immutable::SortedSet<FSTDocument*, DocumentComparator>;
+  using SetType = immutable::SortedSet<FSTDocument*, DocumentSetComparator>;
 
   // STL container types
   using value_type = FSTDocument*;
@@ -66,7 +83,7 @@ class DocumentSet : public immutable::SortedContainer {
    * Creates a new, empty DocumentSet sorted by the given comparator, then by
    * keys.
    */
-  explicit DocumentSet(DocumentComparator&& comparator);
+  explicit DocumentSet(NSComparator comparator);
 
   size_t size() const {
     return index_.size();
@@ -147,10 +164,6 @@ class DocumentSet : public immutable::SortedContainer {
    */
   SetType sorted_set_;
 };
-
-inline bool operator!=(const DocumentSet& lhs, const DocumentSet& rhs) {
-  return !(lhs == rhs);
-}
 
 }  // namespace model
 }  // namespace firestore

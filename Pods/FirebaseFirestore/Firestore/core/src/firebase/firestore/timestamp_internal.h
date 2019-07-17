@@ -42,14 +42,6 @@ class TimestampInternal {
   static firebase::Timestamp Min() {
     return {-62135596800L, 0};
   }
-
-  static size_t Hash(const Timestamp& timestamp);
-
-  /**
-   * Truncates the input timestamp to microsecond precision to match backend
-   * behavior.
-   */
-  static Timestamp Truncate(const Timestamp& timestamp);
 };
 
 }  // namespace firebase

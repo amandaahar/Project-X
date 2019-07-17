@@ -6,11 +6,12 @@
 //  Copyright (c) 2014 Firebase. All rights reserved.
 //
 
+#import <FirebaseDatabase/FirebaseDatabase.h>
+
 #import "GeoFire.h"
 #import "GeoFire+Private.h"
 #import "GFGeoHash.h"
 #import "GFQuery+Private.h"
-#import <Firebase/Firebase.h>
 
 NSString * const kGeoFireErrorDomain = @"com.firebase.geofire";
 
@@ -20,7 +21,7 @@ enum {
 
 @interface GeoFire ()
 
-@property (nonatomic, strong, readwrite) Firebase *firebaseRef;
+@property (nonatomic, strong, readwrite) FIRDatabaseReference *firebaseRef;
 
 @end
 
@@ -34,7 +35,7 @@ enum {
     return nil;
 }
 
-- (id)initWithFirebaseRef:(Firebase *)firebaseRef
+- (id)initWithFirebaseRef:(FIRDatabaseReference *)firebaseRef
 {
     self = [super init];
     if (self != nil) {
@@ -66,7 +67,7 @@ withCompletionBlock:(GFCompletionBlock)block
                  withBlock:block];
 }
 
-- (Firebase *)firebaseRefForLocationKey:(NSString *)key
+- (FIRDatabaseReference *)firebaseRefForLocationKey:(NSString *)key
 {
     static NSCharacterSet *illegalCharacters;
     static dispatch_once_t onceToken;
@@ -77,7 +78,7 @@ withCompletionBlock:(GFCompletionBlock)block
         [NSException raise:NSInvalidArgumentException
                     format:@"Not a valid GeoFire key: \"%@\". Characters .#$][/ not allowed in key!", key];
     }
-    return [self.firebaseRef childByAppendingPath:key];
+    return [self.firebaseRef child:key];
 }
 
 - (void)setLocationValue:(CLLocation *)location
@@ -85,26 +86,31 @@ withCompletionBlock:(GFCompletionBlock)block
                withBlock:(GFCompletionBlock)block
 {
     NSDictionary *value;
-    NSString *priority;
     if (location != nil) {
         NSNumber *lat = [NSNumber numberWithDouble:location.coordinate.latitude];
         NSNumber *lng = [NSNumber numberWithDouble:location.coordinate.longitude];
         NSString *geoHash = [GFGeoHash newWithLocation:location.coordinate].geoHashValue;
         value = @{ @"l": @[ lat, lng ], @"g": geoHash };
-        priority = geoHash;
+
+        [[self firebaseRefForLocationKey:key] updateChildValues:value
+                                            withCompletionBlock:^(NSError *error, FIRDatabaseReference *ref) {
+            if (block != nil) {
+                dispatch_async(self.callbackQueue, ^{
+                    block(error);
+                });
+            }
+        }];
     } else {
-        value = nil;
-        priority = nil;
+        [[self firebaseRefForLocationKey:key] removeValueWithCompletionBlock:^(NSError *error,
+                                                                               FIRDatabaseReference *ref) {
+            if (block != nil) {
+                dispatch_async(self.callbackQueue, ^{
+                    block(error);
+                });
+            }
+        }];
     }
-    [[self firebaseRefForLocationKey:key] setValue:value
-                                       andPriority:priority
-                               withCompletionBlock:^(NSError *error, Firebase *ref) {
-        if (block != nil) {
-            dispatch_async(self.callbackQueue, ^{
-                block(error);
-            });
-        }
-    }];
+
 }
 
 - (void)removeKey:(NSString *)key
@@ -140,8 +146,8 @@ withCompletionBlock:(GFCompletionBlock)block
 - (void)getLocationForKey:(NSString *)key withCallback:(GFCallbackBlock)callback
 {
     [[self firebaseRefForLocationKey:key]
-     observeSingleEventOfType:FEventTypeValue
-     withBlock:^(FDataSnapshot *snapshot) {
+     observeSingleEventOfType:FIRDataEventTypeValue
+     withBlock:^(FIRDataSnapshot *snapshot) {
          dispatch_async(self.callbackQueue, ^{
              if (snapshot.value == nil || [snapshot.value isMemberOfClass:[NSNull class]]) {
                  callback(nil, nil);

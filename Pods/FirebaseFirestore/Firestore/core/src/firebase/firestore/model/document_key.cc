@@ -48,10 +48,6 @@ const DocumentKey& DocumentKey::Empty() {
   return empty;
 }
 
-util::ComparisonResult DocumentKey::CompareTo(const DocumentKey& other) const {
-  return path().CompareTo(other.path());
-}
-
 }  // namespace model
 }  // namespace firestore
 }  // namespace firebase

@@ -23,7 +23,6 @@
 #include "Firestore/core/src/firebase/firestore/core/query.h"
 #include "Firestore/core/src/firebase/firestore/model/snapshot_version.h"
 #include "Firestore/core/src/firebase/firestore/model/types.h"
-#include "Firestore/core/src/firebase/firestore/nanopb/byte_string.h"
 
 namespace firebase {
 namespace firestore {
@@ -67,7 +66,7 @@ class QueryData {
             model::ListenSequenceNumber sequence_number,
             QueryPurpose purpose,
             model::SnapshotVersion&& snapshot_version,
-            nanopb::ByteString&& resume_token);
+            std::vector<uint8_t>&& resume_token);
 
   /**
    * Convenience constructor for use when creating a QueryData for the first
@@ -102,20 +101,20 @@ class QueryData {
     return snapshot_version_;
   }
 
-  const nanopb::ByteString& resume_token() const {
+  const std::vector<uint8_t>& resume_token() const {
     return resume_token_;
   }
 
   QueryData Copy(model::SnapshotVersion&& snapshot_version,
-                 nanopb::ByteString&& resume_token) const;
+                 std::vector<uint8_t>&& resume_token) const;
 
  private:
-  core::Query query_;
+  const core::Query query_;
   model::TargetId target_id_;
   model::ListenSequenceNumber sequence_number_;
   QueryPurpose purpose_;
-  model::SnapshotVersion snapshot_version_;
-  nanopb::ByteString resume_token_;
+  const model::SnapshotVersion snapshot_version_;
+  const std::vector<uint8_t> resume_token_;
 };
 
 inline bool operator==(const QueryData& lhs, const QueryData& rhs) {

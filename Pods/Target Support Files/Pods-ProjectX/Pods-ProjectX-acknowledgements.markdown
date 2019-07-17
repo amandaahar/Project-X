@@ -281,7 +281,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ## Firebase
 
-https://www.firebase.com/terms/terms-of-service.html
+Copyright 2019 Google
+
+## FirebaseAnalytics
+
+Copyright 2019 Google
 
 ## FirebaseAnalyticsInterop
 
@@ -2553,7 +2557,7 @@ https://www.firebase.com/terms/terms-of-service.html
 
 The MIT License (MIT)
 
-Copyright (c) 2014 Firebase
+Copyright (c) 2016 Firebase
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -2573,6 +2577,10 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
+
+## GoogleAppMeasurement
+
+Copyright 2019 Google
 
 ## GoogleUtilities
 

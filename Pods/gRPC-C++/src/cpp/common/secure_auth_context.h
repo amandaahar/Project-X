@@ -21,17 +21,15 @@
 
 #include <grpcpp/security/auth_context.h>
 
-#include "src/core/lib/gprpp/ref_counted_ptr.h"
-#include "src/core/lib/security/context/security_context.h"
+struct grpc_auth_context;
 
 namespace grpc {
 
 class SecureAuthContext final : public AuthContext {
  public:
-  explicit SecureAuthContext(grpc_auth_context* ctx)
-      : ctx_(ctx != nullptr ? ctx->Ref() : nullptr) {}
+  SecureAuthContext(grpc_auth_context* ctx, bool take_ownership);
 
-  ~SecureAuthContext() override = default;
+  ~SecureAuthContext() override;
 
   bool IsPeerAuthenticated() const override;
 
@@ -52,7 +50,8 @@ class SecureAuthContext final : public AuthContext {
   virtual bool SetPeerIdentityPropertyName(const grpc::string& name) override;
 
  private:
-  grpc_core::RefCountedPtr<grpc_auth_context> ctx_;
+  grpc_auth_context* ctx_;
+  bool take_ownership_;
 };
 
 }  // namespace grpc

@@ -25,9 +25,10 @@
 
 #include "Firestore/core/src/firebase/firestore/immutable/keys_view.h"
 #include "Firestore/core/src/firebase/firestore/immutable/llrb_node.h"
+#include "Firestore/core/src/firebase/firestore/immutable/map_entry.h"
 #include "Firestore/core/src/firebase/firestore/immutable/sorted_container.h"
+#include "Firestore/core/src/firebase/firestore/util/comparator_holder.h"
 #include "Firestore/core/src/firebase/firestore/util/comparison.h"
-#include "Firestore/core/src/firebase/firestore/util/compressed_member.h"
 
 namespace firebase {
 namespace firestore {
@@ -39,9 +40,7 @@ namespace impl {
  * methods to efficiently create new maps that are mutations of it.
  */
 template <typename K, typename V, typename C = util::Comparator<K>>
-class TreeSortedMap : public SortedMapBase, private util::CompressedMember<C> {
-  using ComparatorMember = util::CompressedMember<C>;
-
+class TreeSortedMap : public SortedMapBase, public util::ComparatorHolder<C> {
  public:
   /**
    * The type of the entries stored in the map.
@@ -59,7 +58,7 @@ class TreeSortedMap : public SortedMapBase, private util::CompressedMember<C> {
    * Creates an empty TreeSortedMap.
    */
   explicit TreeSortedMap(const C& comparator = {})
-      : ComparatorMember{comparator} {
+      : util::ComparatorHolder<C>{comparator} {
   }
 
   /**
@@ -86,10 +85,6 @@ class TreeSortedMap : public SortedMapBase, private util::CompressedMember<C> {
 
   const node_type& root() const {
     return root_;
-  }
-
-  const C& comparator() const {
-    return ComparatorMember::get();
   }
 
   /**
@@ -122,7 +117,7 @@ class TreeSortedMap : public SortedMapBase, private util::CompressedMember<C> {
     const C& comparator = this->comparator();
     const node_type* node = &root();
     while (!node->empty()) {
-      util::ComparisonResult cmp = comparator.Compare(key, node->key());
+      util::ComparisonResult cmp = util::Compare(key, node->key(), comparator);
       if (cmp == util::ComparisonResult::Same) {
         return true;
       } else if (cmp == util::ComparisonResult::Ascending) {
@@ -143,8 +138,7 @@ class TreeSortedMap : public SortedMapBase, private util::CompressedMember<C> {
    */
   const_iterator find(const K& key) const {
     const_iterator found = lower_bound(key);
-    if (!found.is_end() &&
-        util::Same(this->comparator().Compare(key, found->first))) {
+    if (!found.is_end() && !this->comparator()(key, found->first)) {
       return found;
     } else {
       return end();
@@ -163,7 +157,7 @@ class TreeSortedMap : public SortedMapBase, private util::CompressedMember<C> {
     size_type pruned_nodes = 0;
     const node_type* node = &root_;
     while (!node->empty()) {
-      util::ComparisonResult cmp = comparator.Compare(key, node->key());
+      util::ComparisonResult cmp = util::Compare(key, node->key(), comparator);
       if (cmp == util::ComparisonResult::Same) {
         return pruned_nodes + node->left().size();
 
@@ -251,7 +245,7 @@ class TreeSortedMap : public SortedMapBase, private util::CompressedMember<C> {
 
  private:
   TreeSortedMap(node_type&& root, const C& comparator) noexcept
-      : ComparatorMember{comparator}, root_{std::move(root)} {
+      : util::ComparatorHolder<C>{comparator}, root_{std::move(root)} {
   }
 
   TreeSortedMap Wrap(node_type&& root) noexcept {

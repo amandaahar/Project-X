@@ -25,14 +25,11 @@
 #import "Firestore/Source/Model/FSTMutation.h"
 
 #include "Firestore/core/src/firebase/firestore/model/document_map.h"
-#include "Firestore/core/src/firebase/firestore/objc/objc_compatibility.h"
-#include "Firestore/core/src/firebase/firestore/timestamp_internal.h"
 #include "Firestore/core/src/firebase/firestore/util/hard_assert.h"
 #include "Firestore/core/src/firebase/firestore/util/hashing.h"
+#include "Firestore/core/src/firebase/firestore/util/objc_compatibility.h"
 
-namespace objc = firebase::firestore::objc;
-using firebase::Timestamp;
-using firebase::TimestampInternal;
+namespace objc = firebase::firestore::util::objc;
 using firebase::firestore::model::BatchId;
 using firebase::firestore::model::DocumentKey;
 using firebase::firestore::model::DocumentKeyHash;
@@ -45,13 +42,12 @@ using firebase::firestore::util::Hash;
 NS_ASSUME_NONNULL_BEGIN
 
 @implementation FSTMutationBatch {
-  Timestamp _localWriteTime;
   std::vector<FSTMutation *> _baseMutations;
   std::vector<FSTMutation *> _mutations;
 }
 
 - (instancetype)initWithBatchID:(BatchId)batchID
-                 localWriteTime:(const Timestamp &)localWriteTime
+                 localWriteTime:(FIRTimestamp *)localWriteTime
                   baseMutations:(std::vector<FSTMutation *> &&)baseMutations
                       mutations:(std::vector<FSTMutation *> &&)mutations {
   HARD_ASSERT(!mutations.empty(), "Cannot create an empty mutation batch");
@@ -81,14 +77,15 @@ NS_ASSUME_NONNULL_BEGIN
   }
 
   FSTMutationBatch *otherBatch = (FSTMutationBatch *)other;
-  return self.batchID == otherBatch.batchID && self.localWriteTime == otherBatch.localWriteTime &&
+  return self.batchID == otherBatch.batchID &&
+         [self.localWriteTime isEqual:otherBatch.localWriteTime] &&
          objc::Equals(_baseMutations, otherBatch.baseMutations) &&
          objc::Equals(_mutations, otherBatch.mutations);
 }
 
 - (NSUInteger)hash {
   NSUInteger result = (NSUInteger)self.batchID;
-  result = result * 31 + TimestampInternal::Hash(self.localWriteTime);
+  result = result * 31 + self.localWriteTime.hash;
   for (FSTMutation *mutation : _baseMutations) {
     result = result * 31 + [mutation hash];
   }
@@ -99,9 +96,9 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 - (NSString *)description {
-  return [NSString stringWithFormat:@"<FSTMutationBatch: id=%d, localWriteTime=%s, mutations=%@>",
-                                    self.batchID, self.localWriteTime.ToString().c_str(),
-                                    objc::Description(_mutations)];
+  return
+      [NSString stringWithFormat:@"<FSTMutationBatch: id=%d, localWriteTime=%@, mutations=%@>",
+                                 self.batchID, self.localWriteTime, objc::Description(_mutations)];
 }
 
 - (FSTMaybeDocument *_Nullable)applyToRemoteDocument:(FSTMaybeDocument *_Nullable)maybeDoc

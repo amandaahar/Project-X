@@ -18,16 +18,14 @@
 
 #include "Firestore/core/src/firebase/firestore/model/field_path.h"
 
-namespace model = firebase::firestore::model;
-
 NS_ASSUME_NONNULL_BEGIN
 
 @interface FIRFieldPath ()
 
 /** Internal field path representation */
-- (const model::FieldPath &)internalValue;
+- (const firebase::firestore::model::FieldPath &)internalValue;
 
-- (instancetype)initPrivate:(model::FieldPath)path NS_DESIGNATED_INITIALIZER;
+- (instancetype)initPrivate:(firebase::firestore::model::FieldPath)path NS_DESIGNATED_INITIALIZER;
 
 @end
 

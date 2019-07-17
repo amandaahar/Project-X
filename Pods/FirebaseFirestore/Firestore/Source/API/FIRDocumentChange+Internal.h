@@ -16,18 +16,21 @@
 
 #import "FIRDocumentChange.h"
 
-#import <Foundation/Foundation.h>
+#include "Firestore/core/src/firebase/firestore/api/firestore.h"
+#include "Firestore/core/src/firebase/firestore/core/view_snapshot.h"
 
-#include "Firestore/core/src/firebase/firestore/api/document_change.h"
-
-namespace api = firebase::firestore::api;
+@class FIRFirestore;
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface FIRDocumentChange (/* Init */)
+/** Internal FIRDocumentChange API we don't want exposed in our public header files. */
+@interface FIRDocumentChange (Internal)
 
-- (instancetype)initWithDocumentChange:(api::DocumentChange &&)documentChange
-    NS_DESIGNATED_INITIALIZER;
+/** Calculates the array of FIRDocumentChange's based on the given FSTViewSnapshot. */
++ (NSArray<FIRDocumentChange *> *)
+    documentChangesForSnapshot:(const firebase::firestore::core::ViewSnapshot &)snapshot
+        includeMetadataChanges:(bool)includeMetadataChanges
+                     firestore:(firebase::firestore::api::Firestore *)firestore;
 
 @end
 

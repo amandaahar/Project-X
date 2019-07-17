@@ -23,9 +23,6 @@
 @class FSTMutation;
 @class FSTQuery;
 
-namespace core = firebase::firestore::core;
-namespace model = firebase::firestore::model;
-
 NS_ASSUME_NONNULL_BEGIN
 
 /**
@@ -35,19 +32,19 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @interface FSTLocalViewChanges : NSObject
 
-+ (instancetype)changesForTarget:(model::TargetId)targetID
-                       addedKeys:(model::DocumentKeySet)addedKeys
-                     removedKeys:(model::DocumentKeySet)removedKeys;
++ (instancetype)changesForTarget:(firebase::firestore::model::TargetId)targetID
+                       addedKeys:(firebase::firestore::model::DocumentKeySet)addedKeys
+                     removedKeys:(firebase::firestore::model::DocumentKeySet)removedKeys;
 
-+ (instancetype)changesForViewSnapshot:(const core::ViewSnapshot &)viewSnapshot
-                          withTargetID:(model::TargetId)targetID;
++ (instancetype)changesForViewSnapshot:(const firebase::firestore::core::ViewSnapshot &)viewSnapshot
+                          withTargetID:(firebase::firestore::model::TargetId)targetID;
 
 - (id)init NS_UNAVAILABLE;
 
-@property(readonly) model::TargetId targetID;
+@property(readonly) firebase::firestore::model::TargetId targetID;
 
-- (const model::DocumentKeySet &)addedKeys;
-- (const model::DocumentKeySet &)removedKeys;
+- (const firebase::firestore::model::DocumentKeySet &)addedKeys;
+- (const firebase::firestore::model::DocumentKeySet &)removedKeys;
 
 @end
 

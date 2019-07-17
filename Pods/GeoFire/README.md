@@ -7,7 +7,7 @@ At its heart, GeoFire simply stores locations with string keys. Its main
 benefit however, is the possibility of querying keys within a given geographic
 area - all in realtime.
 
-GeoFire uses the [Firebase](https://www.firebase.com/?utm_source=geofire-objc) database for
+GeoFire uses the [Firebase](https://firebase.google.com/?utm_source=geofire-objc) database for
 data storage, allowing query results to be updated in realtime as they change.
 GeoFire *selectively loads only the data near certain locations, keeping your
 applications light and responsive*, even with extremely large datasets.
@@ -36,56 +36,52 @@ at `/bars/<bar-id>`.
 
 ## Upgrading GeoFire
 
+### Upgrading from Geofire 1.x to 2.x
+
+With the 
+[expansion of Firebase at Google I/O 2016](https://firebase.googleblog.com/2016/05/firebase-expands-to-become-unified-app-platform.html) 
+and onwards, we've added a number of new features to Firebase, and have changed 
+initialization to incorporate them more easily. See our 
+[setup instructions](https://firebase.google.com/docs/ios/setup) for more info 
+on installing and initializing the Firebase SDK.
+
 ### Upgrading from GeoFire 1.0.x to 1.1.x
 
 With the release of GeoFire for iOS 1.1.0, this library now uses [the new query functionality found in
-Firebase 2.0.0](https://www.firebase.com/blog/2014-11-04-firebase-realtime-queries.html). As a
+Firebase 2.0.0](https://firebase.googleblog.com/2014/11/firebase-now-with-more-querying.html). As a
 result, you will need to upgrade to Firebase 2.x.x and add a new `.indexOn` rule to your Security
 and Firebase Rules to get the best performance. You can view [the updated rules
 here](https://github.com/firebase/geofire-js/blob/master/examples/securityRules/rules.json)
-and [read our docs for more information about indexing your data](https://www.firebase.com/docs/security/guide/indexing-data.html).
+and [read our docs for more information about indexing your data](https://firebase.google.com/docs/database/security/indexing-data).
 
 
 ## Downloading GeoFire for iOS
 
-In order to use GeoFire in your project, you need to download the framework and
-add it to your project. You also need to [add the Firebase
-framework](https://www.firebase.com/docs/ios-quickstart.html?utm_source=geofire-objc)
-and the CoreLocation framework to your project.
+If you're using [CocoaPods](http://cocoapods.org/?q=geofire), add the following 
+to your `Podfile`:
 
-You can download the latest version of the [GeoFire.framework from the releases
-page](https://github.com/firebase/geofire-objc/releases) or include the GeoFire
-Xcode project from this repo in your project.
-
-Alternatively, if you're using [CocoaPods](http://cocoapods.org/?q=geofire), add
-the following to your `Podfile`:
-
-```
-pod 'GeoFire', '>= 1.1'
+```ruby
+pod 'GeoFire', '~> 3.0'
 ```
 
 ### Using GeoFire with Swift
 
 GeoFire supports Swift out of the box! In order to use GeoFire and Swift from CocoaPods, add the `use_frameworks!` line to your `Podfile`, like so:
 
-````
+```ruby
 use_frameworks!
 
-pod 'GeoFire', '>= 1.1'
-````
-
+pod 'GeoFire', '~> 3.0'
+```
 
 ## Getting Started with Firebase
 
-GeoFire requires Firebase in order to store location data. You can [sign up here for a free
-account](https://www.firebase.com/signup/?utm_source=geofire-objc).
-
+GeoFire uses Firebase Realtime Database to store location data. You can [sign up here for a free
+account](https://firebase.google.com/console/?utm_source=geofire-objc).
 
 ## GeoFire for iOS Quickstart
 
-This is a quickstart on how to use GeoFire's core features. There is also a
-[full API reference available
-online](https://geofire-ios.firebaseapp.com/docs/).
+See the `examples/SFVehicles` folder for a working example of a project using GeoFire via CocoaPods.
 
 ### GeoFire
 
@@ -94,18 +90,18 @@ and to create queries. To create a new `GeoFire` instance you need to attach it 
 
 ##### Objective-C
 ```objective-c
-Firebase *geofireRef = [[Firebase alloc] initWithUrl:@"https://<your-firebase>.firebaseio.com/"];
+FIRDatabaseRef *geofireRef = [[FIRDatabase database] reference];
 GeoFire *geoFire = [[GeoFire alloc] initWithFirebaseRef:geofireRef];
 ```
 
 ##### Swift
-````swift
-let geofireRef = Firebase(url: "https://<your-firebase>.firebaseio.com/")
+```swift
+let geofireRef = Database.database().reference()
 let geoFire = GeoFire(firebaseRef: geofireRef)
-````
+```
 
 Note that you can point your reference to anywhere in your Firebase database, but don't
-forget to [setup security rules for
+forget to [set up security rules for
 GeoFire](https://github.com/firebase/geofire-js/blob/master/examples/securityRules).
 
 #### Setting location data
@@ -120,9 +116,9 @@ simply call the `setLocation:forKey` method:
 ```
 
 ##### Swift
-````swift
+```swift
 geoFire.setLocation(CLLocation(latitude: 37.7853889, longitude: -122.4056973), forKey: "firebase-hq")
-````
+```
 
 Alternatively a callback can be passed which is called once the server
 successfully saves the location:
@@ -141,15 +137,15 @@ successfully saves the location:
 ```
 
 ##### Swift
-````swift
+```swift
 geoFire.setLocation(CLLocation(latitude: 37.7853889, longitude: -122.4056973), forKey: "firebase-hq") { (error) in
   if (error != nil) {
-    println("An error occured: \(error)")
+    print("An error occured: \(error)")
   } else {
-    println("Saved location successfully!")
+    print("Saved location successfully!")
   }
 }
-````
+```
 
 To remove a location and delete the location from your database simply call:
 
@@ -159,9 +155,9 @@ To remove a location and delete the location from your database simply call:
 ```
 
 ##### Swift
-````swift
+```swift
 geoFire.removeKey("firebase-hq")
-````
+```
 
 #### Retrieving a location
 
@@ -185,17 +181,17 @@ callback is passed the error and the location will be `nil`.
 ```
 
 ##### Swift
-````swift
-geoFire.getLocationForKey("firebase-hq", withCallback: { (location, error) in
+```swift
+geoFire.getLocationForKey("firebase-hq") { (location, error) in
   if (error != nil) {
-    println("An error occurred getting the location for \"firebase-hq\": \(error.localizedDescription)")
+    print("An error occurred getting the location for \"firebase-hq\": \(error.localizedDescription)")
   } else if (location != nil) {
-    println("Location for \"firebase-hq\" is [\(location.coordinate.latitude), \(location.coordinate.longitude)]")
+    print("Location for \"firebase-hq\" is [\(location.coordinate.latitude), \(location.coordinate.longitude)]")
   } else {
-    println("GeoFire does not contain a location for \"firebase-hq\"")
+    print("GeoFire does not contain a location for \"firebase-hq\"")
   }
-})
-````
+}
+```
 
 ### Geo Queries
 
@@ -217,7 +213,7 @@ GFRegionQuery *regionQuery = [geoFire queryWithRegion:region];
 ```
 
 #### Swift
-````swift
+```swift
 let center = CLLocation(latitude: 37.7832889, longitude: -122.4056973)
 // Query locations at [37.7832889, -122.4056973] with a radius of 600 meters
 var circleQuery = geoFire.queryAtLocation(center, withRadius: 0.6)
@@ -226,7 +222,7 @@ var circleQuery = geoFire.queryAtLocation(center, withRadius: 0.6)
 let span = MKCoordinateSpanMake(0.001, 0.001)
 let region = MKCoordinateRegionMake(center.coordinate, span)
 var regionQuery = geoFire.queryWithRegion(region)
-````
+```
 
 #### Receiving events for geo queries
 
@@ -244,17 +240,19 @@ To observe events for a geo query you can register a callback with `observeEvent
 
 ##### Objective-C
 ```objective-c
-FirebaseHandle queryHandle = [query observeEventType:GFEventTypeKeyEntered withBlock:^(NSString *key, CLLocation *location) {
+FIRDatabaseHandle queryHandle = [query observeEventType:GFEventTypeKeyEntered withBlock:^(NSString *key, CLLocation *location) {
     NSLog(@"Key '%@' entered the search area and is at location '%@'", key, location);
 }];
 ```
 
 ##### Swift
-````swift
+```swift
+
 var queryHandle = query.observeEventType(.KeyEntered, withBlock: { (key: String!, location: CLLocation!) in
-  println("Key '\(key)' entered the search area and is at location '\(location)'")
+  print("Key '\(key)' entered the search area and is at location '\(location)'")
 })
-````
+
+```
 
 To cancel one or all callbacks for a geo query, call
 `removeObserverWithFirebaseHandle:` or `removeAllObservers:`, respectively.
@@ -274,11 +272,13 @@ fully loaded. `GFQuery` offers a method to listen for these ready events:
 ```
 
 ##### Swift
-````swift
+```swift
+
 query.observeReadyWithBlock({
-  println("All initial data has been loaded and events have been fired!")
+  print("All initial data has been loaded and events have been fired!")
 })
-````
+
+```
 
 Note that locations might change while initially loading the data and key moved and key
 exited events might therefore still occur before the ready event was fired.
@@ -294,11 +294,6 @@ the `GFQuery` object. Key exited and key entered events will be fired for
 keys moving in and out of the old and new search area, respectively. No key moved
 events will be fired as a result of the query criteria changing; however, key moved
 events might occur independently.
-
-
-## API Reference
-
-[A full API reference is available here](https://geofire-ios.firebaseapp.com/docs/).
 
 ## Deployment
 
@@ -317,5 +312,6 @@ following commands to get your environment set up:
 ```bash
 $ git clone https://github.com/firebase/geofire-objc.git
 $ cd geofire-objc
-$ ./setup.sh
+$ pod install
+$ open Geofire.xcworkspace
 ```

@@ -4,7 +4,7 @@
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
-//      https://www.apache.org/licenses/LICENSE-2.0
+//      http://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
@@ -27,7 +27,7 @@
 //   const T2& t2 = value.get<2>();
 //   ...
 //
-// https://en.cppreference.com/w/cpp/language/ebo
+// http://en.cppreference.com/w/cpp/language/ebo
 
 #ifndef ABSL_CONTAINER_INTERNAL_COMPRESSED_TUPLE_H_
 #define ABSL_CONTAINER_INTERNAL_COMPRESSED_TUPLE_H_
@@ -38,13 +38,13 @@
 
 #include "absl/utility/utility.h"
 
-#if defined(_MSC_VER) && !defined(__NVCC__)
+#ifdef _MSC_VER
 // We need to mark these classes with this declspec to ensure that
 // CompressedTuple happens.
 #define ABSL_INTERNAL_COMPRESSED_TUPLE_DECLSPEC __declspec(empty_bases)
-#else
+#else  // _MSC_VER
 #define ABSL_INTERNAL_COMPRESSED_TUPLE_DECLSPEC
-#endif
+#endif  // _MSC_VER
 
 namespace absl {
 namespace container_internal {
@@ -89,10 +89,8 @@ struct Storage {
   T value;
   constexpr Storage() = default;
   explicit constexpr Storage(T&& v) : value(absl::forward<T>(v)) {}
-  constexpr const T& get() const& { return value; }
-  T& get() & { return value; }
-  constexpr const T&& get() const&& { return absl::move(*this).value; }
-  T&& get() && { return std::move(*this).value; }
+  constexpr const T& get() const { return value; }
+  T& get() { return value; }
 };
 
 template <typename D, size_t I>
@@ -101,10 +99,8 @@ struct ABSL_INTERNAL_COMPRESSED_TUPLE_DECLSPEC Storage<D, I, true>
   using T = internal_compressed_tuple::ElemT<D, I>;
   constexpr Storage() = default;
   explicit constexpr Storage(T&& v) : T(absl::forward<T>(v)) {}
-  constexpr const T& get() const& { return *this; }
-  T& get() & { return *this; }
-  constexpr const T&& get() const&& { return absl::move(*this); }
-  T&& get() && { return std::move(*this); }
+  constexpr const T& get() const { return *this; }
+  T& get() { return *this; }
 };
 
 template <typename D, typename I>
@@ -141,7 +137,7 @@ struct ABSL_INTERNAL_COMPRESSED_TUPLE_DECLSPEC
 //   const T2& t2 = value.get<2>();
 //   ...
 //
-// https://en.cppreference.com/w/cpp/language/ebo
+// http://en.cppreference.com/w/cpp/language/ebo
 template <typename... Ts>
 class ABSL_INTERNAL_COMPRESSED_TUPLE_DECLSPEC CompressedTuple
     : private internal_compressed_tuple::CompressedTupleImpl<
@@ -156,25 +152,13 @@ class ABSL_INTERNAL_COMPRESSED_TUPLE_DECLSPEC CompressedTuple
       : CompressedTuple::CompressedTupleImpl(absl::forward<Ts>(base)...) {}
 
   template <int I>
-  ElemT<I>& get() & {
+  ElemT<I>& get() {
     return internal_compressed_tuple::Storage<CompressedTuple, I>::get();
   }
 
   template <int I>
-  constexpr const ElemT<I>& get() const& {
+  constexpr const ElemT<I>& get() const {
     return internal_compressed_tuple::Storage<CompressedTuple, I>::get();
-  }
-
-  template <int I>
-  ElemT<I>&& get() && {
-    return std::move(*this)
-        .internal_compressed_tuple::template Storage<CompressedTuple, I>::get();
-  }
-
-  template <int I>
-  constexpr const ElemT<I>&& get() const&& {
-    return absl::move(*this)
-        .internal_compressed_tuple::template Storage<CompressedTuple, I>::get();
   }
 };
 

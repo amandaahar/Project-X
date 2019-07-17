@@ -23,8 +23,8 @@
 grpc_core::TraceFlag grpc_tcp_trace(false, "tcp");
 
 void grpc_endpoint_read(grpc_endpoint* ep, grpc_slice_buffer* slices,
-                        grpc_closure* cb, bool urgent) {
-  ep->vtable->read(ep, slices, cb, urgent);
+                        grpc_closure* cb) {
+  ep->vtable->read(ep, slices, cb);
 }
 
 void grpc_endpoint_write(grpc_endpoint* ep, grpc_slice_buffer* slices,
@@ -60,8 +60,4 @@ int grpc_endpoint_get_fd(grpc_endpoint* ep) { return ep->vtable->get_fd(ep); }
 
 grpc_resource_user* grpc_endpoint_get_resource_user(grpc_endpoint* ep) {
   return ep->vtable->get_resource_user(ep);
-}
-
-bool grpc_endpoint_can_track_err(grpc_endpoint* ep) {
-  return ep->vtable->can_track_err(ep);
 }

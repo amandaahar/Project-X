@@ -4,7 +4,7 @@
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
-//      https://www.apache.org/licenses/LICENSE-2.0
+//      http://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
@@ -32,7 +32,6 @@
 #include <type_traits>
 #include <utility>
 
-#include "absl/algorithm/container.h"
 #include "absl/base/macros.h"
 #include "absl/container/internal/container_memory.h"
 #include "absl/container/internal/hash_function_defaults.h"  // IWYU pragma: export
@@ -67,7 +66,7 @@ struct FlatHashSetPolicy;
 // By default, `flat_hash_set` uses the `absl::Hash` hashing framework. All
 // fundamental and Abseil types that support the `absl::Hash` framework have a
 // compatible equality operator for comparing insertions into `flat_hash_map`.
-// If your type is not yet supported by the `absl::Hash` framework, see
+// If your type is not yet supported by the `asbl::Hash` framework, see
 // absl/hash/hash.h for information on extending Abseil hashing to user-defined
 // types.
 //
@@ -212,12 +211,8 @@ class flat_hash_set
   //   Erases the element at `position` of the `flat_hash_set`, returning
   //   `void`.
   //
-  //   NOTE: returning `void` in this case is different than that of STL
-  //   containers in general and `std::unordered_set` in particular (which
-  //   return an iterator to the element following the erased element). If that
-  //   iterator is needed, simply post increment the iterator:
-  //
-  //     set.erase(it++);
+  //   NOTE: this return behavior is different than that of STL containers in
+  //   general and `std::unordered_map` in particular.
   //
   // iterator erase(const_iterator first, const_iterator last):
   //
@@ -283,7 +278,8 @@ class flat_hash_set
   //
   // The element may be constructed even if there already is an element with the
   // key in the container, in which case the newly constructed element will be
-  // destroyed immediately.
+  // destroyed immediately. Prefer `try_emplace()` unless your key is not
+  // copyable or moveable.
   //
   // If rehashing occurs due to the insertion, all iterators are invalidated.
   using Base::emplace;
@@ -297,7 +293,8 @@ class flat_hash_set
   //
   // The element may be constructed even if there already is an element with the
   // key in the container, in which case the newly constructed element will be
-  // destroyed immediately.
+  // destroyed immediately. Prefer `try_emplace()` unless your key is not
+  // copyable or moveable.
   //
   // If rehashing occurs due to the insertion, all iterators are invalidated.
   using Base::emplace_hint;
@@ -478,16 +475,5 @@ struct FlatHashSetPolicy {
   static size_t space_used(const T*) { return 0; }
 };
 }  // namespace container_internal
-
-namespace container_algorithm_internal {
-
-// Specialization of trait in absl/algorithm/container.h
-template <class Key, class Hash, class KeyEqual, class Allocator>
-struct IsUnorderedContainer<absl::flat_hash_set<Key, Hash, KeyEqual, Allocator>>
-    : std::true_type {};
-
-}  // namespace container_algorithm_internal
-
 }  // namespace absl
-
 #endif  // ABSL_CONTAINER_FLAT_HASH_SET_H_

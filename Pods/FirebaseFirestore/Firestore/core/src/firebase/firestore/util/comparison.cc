@@ -16,60 +16,35 @@
 
 #include "Firestore/core/src/firebase/firestore/util/comparison.h"
 
-#include <algorithm>
 #include <cmath>
-#include <cstring>
 #include <limits>
-
-#include "absl/base/casts.h"
 
 namespace firebase {
 namespace firestore {
 namespace util {
 using std::isnan;
 
-/**
- * Creates a ComparisonResult from a typical integer return value, where
- * 0 means "same", less than zero means "ascending", and greater than zero
- * means "descending".
- */
-constexpr ComparisonResult ComparisonResultFromInt(int value) {
-  // TODO(c++14): convert this to an if statement.
-  return value < 0 ? ComparisonResult::Ascending
-                   : (value > 0 ? ComparisonResult::Descending
-                                : ComparisonResult::Same);
+bool Comparator<absl::string_view>::operator()(absl::string_view left,
+                                               absl::string_view right) const {
+  // TODO(wilhuff): truncation aware comparison
+  return left < right;
 }
 
-ComparisonResult Comparator<absl::string_view>::Compare(
-    absl::string_view left, absl::string_view right) const {
-  return ComparisonResultFromInt(left.compare(right));
+bool Comparator<std::string>::operator()(const std::string& left,
+                                         const std::string& right) const {
+  // TODO(wilhuff): truncation aware comparison
+  return left < right;
 }
 
-ComparisonResult Comparator<std::string>::Compare(
-    const std::string& left, const std::string& right) const {
-  return ComparisonResultFromInt(left.compare(right));
-}
-
-ComparisonResult Comparator<double>::Compare(double left, double right) const {
+bool Comparator<double>::operator()(double left, double right) const {
   // NaN sorts equal to itself and before any other number.
   if (left < right) {
-    return ComparisonResult::Ascending;
-  } else if (left > right) {
-    return ComparisonResult::Descending;
-  } else if (left == right) {
-    return ComparisonResult::Same;
+    return true;
+  } else if (left >= right) {
+    return false;
   } else {
     // One or both left and right is NaN.
-    if (!isnan(right)) {
-      // Only left is NaN.
-      return ComparisonResult::Ascending;
-    } else if (!isnan(left)) {
-      // Only right is NaN.
-      return ComparisonResult::Descending;
-    } else {
-      // Both are NaN.
-      return ComparisonResult::Same;
-    }
+    return isnan(left) && !isnan(right);
   }
 }
 
@@ -118,7 +93,13 @@ uint64_t DoubleBits(double d) {
     d = NAN;
   }
 
-  return absl::bit_cast<uint64_t>(d);
+  // Unlike C, C++ does not define type punning through a union type.
+
+  // TODO(wilhuff): replace with absl::bit_cast
+  static_assert(sizeof(double) == sizeof(uint64_t), "doubles must be 8 bytes");
+  uint64_t bits;
+  memcpy(&bits, &d, sizeof(bits));
+  return bits;
 }
 
 bool DoubleBitwiseEquals(double left, double right) {

@@ -24,14 +24,13 @@ namespace local {
 
 using core::Query;
 using model::SnapshotVersion;
-using nanopb::ByteString;
 
 QueryData::QueryData(Query&& query,
                      model::TargetId target_id,
                      model::ListenSequenceNumber sequence_number,
                      QueryPurpose purpose,
                      SnapshotVersion&& snapshot_version,
-                     ByteString&& resume_token)
+                     std::vector<uint8_t>&& resume_token)
     : query_(std::move(query)),
       target_id_(target_id),
       sequence_number_(sequence_number),
@@ -58,7 +57,7 @@ QueryData QueryData::Invalid() {
 }
 
 QueryData QueryData::Copy(SnapshotVersion&& snapshot_version,
-                          ByteString&& resume_token) const {
+                          std::vector<uint8_t>&& resume_token) const {
   return QueryData(Query(query_), target_id_, sequence_number_, purpose_,
                    std::move(snapshot_version), std::move(resume_token));
 }

@@ -4,7 +4,7 @@
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
-//      https://www.apache.org/licenses/LICENSE-2.0
+//      http://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
@@ -43,7 +43,7 @@ struct IsMap<Map, absl::void_t<typename Map::mapped_type>> : std::true_type {};
 
 }  // namespace generator_internal
 
-std::mt19937_64* GetSharedRng();
+std::mt19937_64* GetThreadLocalRng();
 
 enum Enum {
   kEnumEmpty,
@@ -66,7 +66,7 @@ template <class T>
 struct Generator<T, typename std::enable_if<std::is_integral<T>::value>::type> {
   T operator()() const {
     std::uniform_int_distribution<T> dist;
-    return dist(*GetSharedRng());
+    return dist(*GetThreadLocalRng());
   }
 };
 
@@ -76,7 +76,7 @@ struct Generator<Enum> {
     std::uniform_int_distribution<typename std::underlying_type<Enum>::type>
         dist;
     while (true) {
-      auto variate = dist(*GetSharedRng());
+      auto variate = dist(*GetThreadLocalRng());
       if (variate != kEnumEmpty && variate != kEnumDeleted)
         return static_cast<Enum>(variate);
     }
@@ -90,7 +90,7 @@ struct Generator<EnumClass> {
         typename std::underlying_type<EnumClass>::type>
         dist;
     while (true) {
-      EnumClass variate = static_cast<EnumClass>(dist(*GetSharedRng()));
+      EnumClass variate = static_cast<EnumClass>(dist(*GetThreadLocalRng()));
       if (variate != EnumClass::kEmpty && variate != EnumClass::kDeleted)
         return static_cast<EnumClass>(variate);
     }

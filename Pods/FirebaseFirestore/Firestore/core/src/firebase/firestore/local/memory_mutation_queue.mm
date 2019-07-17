@@ -74,7 +74,7 @@ void MemoryMutationQueue::Start() {
 }
 
 FSTMutationBatch* MemoryMutationQueue::AddMutationBatch(
-    const Timestamp& local_write_time,
+    FIRTimestamp* local_write_time,
     std::vector<FSTMutation*>&& base_mutations,
     std::vector<FSTMutation*>&& mutations) {
   HARD_ASSERT(!mutations.empty(), "Mutation batches should not be empty");

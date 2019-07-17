@@ -33,7 +33,6 @@
 #import "Firestore/Source/Model/FSTMutation.h"
 #import "Firestore/Source/Model/FSTMutationBatch.h"
 
-#include "Firestore/core/include/firebase/firestore/timestamp.h"
 #include "Firestore/core/src/firebase/firestore/auth/user.h"
 #include "Firestore/core/src/firebase/firestore/core/target_id_generator.h"
 #include "Firestore/core/src/firebase/firestore/immutable/sorted_set.h"
@@ -50,7 +49,6 @@
 #include "Firestore/core/src/firebase/firestore/util/log.h"
 #include "absl/memory/memory.h"
 
-using firebase::Timestamp;
 using firebase::firestore::auth::User;
 using firebase::firestore::core::TargetIdGenerator;
 using firebase::firestore::local::LocalDocumentsView;
@@ -174,7 +172,7 @@ static const int64_t kResumeTokenMaxAgeSeconds = 5 * 60;  // 5 minutes
 }
 
 - (FSTLocalWriteResult *)locallyWriteMutations:(std::vector<FSTMutation *> &&)mutations {
-  Timestamp localWriteTime = Timestamp::Now();
+  FIRTimestamp *localWriteTime = [FIRTimestamp timestamp];
   DocumentKeySet keys;
   for (FSTMutation *mutation : mutations) {
     keys = keys.insert(mutation.key);
@@ -462,16 +460,13 @@ static const int64_t kResumeTokenMaxAgeSeconds = 5 * 60;  // 5 minutes
     TargetId targetID = queryData.targetID;
 
     auto found = _targetIDs.find(targetID);
-    if (found != _targetIDs.end()) {
-      FSTQueryData *cachedQueryData = found->second;
-
-      if (cachedQueryData.snapshotVersion > queryData.snapshotVersion) {
-        // If we've been avoiding persisting the resumeToken (see shouldPersistQueryData for
-        // conditions and rationale) we need to persist the token now because there will no
-        // longer be an in-memory version to fall back on.
-        queryData = cachedQueryData;
-        _queryCache->UpdateTarget(queryData);
-      }
+    FSTQueryData *cachedQueryData = found != _targetIDs.end() ? found->second : nil;
+    if (cachedQueryData.snapshotVersion > queryData.snapshotVersion) {
+      // If we've been avoiding persisting the resumeToken (see shouldPersistQueryData for
+      // conditions and rationale) we need to persist the token now because there will no
+      // longer be an in-memory version to fall back on.
+      queryData = cachedQueryData;
+      _queryCache->UpdateTarget(queryData);
     }
 
     // References for documents sent via Watch are automatically removed when we delete a

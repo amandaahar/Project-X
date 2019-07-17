@@ -62,7 +62,11 @@ class DelayedConstructor {
  public:
   typedef T element_type;
 
-  DelayedConstructor() = default;
+  /**
+   * Default constructor does nothing.
+   */
+  DelayedConstructor() {
+  }
 
   /**
    * Forwards arguments to the T's constructor: calls T(args...).
@@ -75,22 +79,26 @@ class DelayedConstructor {
                               void(DelayedConstructor)>::value,
                 int>::type = 0>
   void Init(Ts&&... args) {
-    new (&space_.value) T(std::forward<Ts>(args)...);
+    new (&space_) T(std::forward<Ts>(args)...);
   }
 
   /**
    * Forwards copy and move construction for T.
    */
   void Init(const T& x) {
-    new (&space_.value) T(x);
+    new (&space_) T(x);
   }
   void Init(T&& x) {
-    new (&space_.value) T(std::move(x));
+    new (&space_) T(std::move(x));
   }
 
   // No copying.
   DelayedConstructor(const DelayedConstructor&) = delete;
   DelayedConstructor& operator=(const DelayedConstructor&) = delete;
+
+  ~DelayedConstructor() {
+    get()->~T();
+  }
 
   // Pretend to be a smart pointer to T.
   T& operator*() {
@@ -100,7 +108,7 @@ class DelayedConstructor {
     return get();
   }
   T* get() {
-    return &space_.value;
+    return reinterpret_cast<T*>(&space_);
   }
   const T& operator*() const {
     return *get();
@@ -109,20 +117,11 @@ class DelayedConstructor {
     return get();
   }
   const T* get() const {
-    return &space_.value;
+    return reinterpret_cast<const T*>(&space_);
   }
 
  private:
-  union Space {
-    /** Default constructor does nothing. */
-    Space() {
-    }
-    ~Space() {
-      value.~T();
-    }
-    char empty;
-    T value;
-  } space_;
+  typename std::aligned_storage<sizeof(T), alignof(T)>::type space_;
 };
 
 }  // namespace util

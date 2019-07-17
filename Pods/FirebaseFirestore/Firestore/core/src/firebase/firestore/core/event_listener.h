@@ -61,8 +61,7 @@ class AsyncEventListener
  public:
   using DelegateListener = std::unique_ptr<EventListener<T>>;
 
-  AsyncEventListener(const std::shared_ptr<util::Executor>& executor,
-                     DelegateListener&& delegate)
+  AsyncEventListener(util::Executor* executor, DelegateListener&& delegate)
       : executor_(executor), delegate_(std::move(delegate)) {
     // std::atomic's constructor is not atomic, so assign after contruction
     // (since assignment is atomic).
@@ -70,10 +69,10 @@ class AsyncEventListener
   }
 
   static std::shared_ptr<AsyncEventListener<T>> Create(
-      std::shared_ptr<util::Executor> executor, DelegateListener&& delegate);
+      util::Executor* executor, DelegateListener&& delegate);
 
   static std::shared_ptr<AsyncEventListener<T>> Create(
-      std::shared_ptr<util::Executor> executor, EventListener<T>&& delegate) {
+      util::Executor* executor, EventListener<T>&& delegate) {
     return Create(executor,
                   absl::make_unique<EventListener>(std::move(delegate)));
   }
@@ -88,7 +87,7 @@ class AsyncEventListener
 
  private:
   std::atomic<bool> muted_;
-  std::shared_ptr<util::Executor> executor_;
+  util::Executor* executor_;
   DelegateListener delegate_;
 };
 
@@ -114,7 +113,7 @@ std::unique_ptr<EventListener<T>> EventListener<T>::Create(
 
 template <typename T>
 std::shared_ptr<AsyncEventListener<T>> AsyncEventListener<T>::Create(
-    std::shared_ptr<util::Executor> executor, DelegateListener&& delegate) {
+    util::Executor* executor, DelegateListener&& delegate) {
   return std::make_shared<AsyncEventListener<T>>(executor, std::move(delegate));
 }
 

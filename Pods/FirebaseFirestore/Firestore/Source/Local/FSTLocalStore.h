@@ -46,11 +46,6 @@ class RemoteEvent;
 @class FSTQueryData;
 @protocol FSTPersistence;
 
-namespace auth = firebase::firestore::auth;
-namespace local = firebase::firestore::local;
-namespace model = firebase::firestore::model;
-namespace remote = firebase::firestore::remote;
-
 NS_ASSUME_NONNULL_BEGIN
 
 /**
@@ -92,7 +87,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 /** Creates a new instance of the FSTLocalStore with its required dependencies as parameters. */
 - (instancetype)initWithPersistence:(id<FSTPersistence>)persistence
-                        initialUser:(const auth::User &)initialUser NS_DESIGNATED_INITIALIZER;
+                        initialUser:(const firebase::firestore::auth::User &)initialUser
+    NS_DESIGNATED_INITIALIZER;
 
 - (instancetype)init NS_UNAVAILABLE;
 
@@ -105,13 +101,14 @@ NS_ASSUME_NONNULL_BEGIN
  * In response the local store switches the mutation queue to the new user and returns any
  * resulting document changes.
  */
-- (model::MaybeDocumentMap)userDidChange:(const auth::User &)user;
+- (firebase::firestore::model::MaybeDocumentMap)userDidChange:
+    (const firebase::firestore::auth::User &)user;
 
 /** Accepts locally generated Mutations and commits them to storage. */
 - (FSTLocalWriteResult *)locallyWriteMutations:(std::vector<FSTMutation *> &&)mutations;
 
 /** Returns the current value of a document with a given key, or nil if not found. */
-- (nullable FSTMaybeDocument *)readDocument:(const model::DocumentKey &)key;
+- (nullable FSTMaybeDocument *)readDocument:(const firebase::firestore::model::DocumentKey &)key;
 
 /**
  * Acknowledges the given batch.
@@ -126,7 +123,8 @@ NS_ASSUME_NONNULL_BEGIN
  *
  * @return The resulting (modified) documents.
  */
-- (model::MaybeDocumentMap)acknowledgeBatchWithResult:(FSTMutationBatchResult *)batchResult;
+- (firebase::firestore::model::MaybeDocumentMap)acknowledgeBatchWithResult:
+    (FSTMutationBatchResult *)batchResult;
 
 /**
  * Removes mutations from the MutationQueue for the specified batch. LocalDocuments will be
@@ -134,7 +132,8 @@ NS_ASSUME_NONNULL_BEGIN
  *
  * @return The resulting (modified) documents.
  */
-- (model::MaybeDocumentMap)rejectBatchID:(model::BatchId)batchID;
+- (firebase::firestore::model::MaybeDocumentMap)rejectBatchID:
+    (firebase::firestore::model::BatchId)batchID;
 
 /** Returns the last recorded stream token for the current user. */
 - (nullable NSData *)lastStreamToken;
@@ -150,7 +149,7 @@ NS_ASSUME_NONNULL_BEGIN
  * Returns the last consistent snapshot processed (used by the RemoteStore to determine whether to
  * buffer incoming snapshots from the backend).
  */
-- (const model::SnapshotVersion &)lastRemoteSnapshotVersion;
+- (const firebase::firestore::model::SnapshotVersion &)lastRemoteSnapshotVersion;
 
 /**
  * Updates the "ground-state" (remote) documents. We assume that the remote event reflects any
@@ -159,13 +158,15 @@ NS_ASSUME_NONNULL_BEGIN
  *
  * LocalDocuments are re-calculated if there are remaining mutations in the queue.
  */
-- (model::MaybeDocumentMap)applyRemoteEvent:(const remote::RemoteEvent &)remoteEvent;
+- (firebase::firestore::model::MaybeDocumentMap)applyRemoteEvent:
+    (const firebase::firestore::remote::RemoteEvent &)remoteEvent;
 
 /**
  * Returns the keys of the documents that are associated with the given targetID in the remote
  * table.
  */
-- (model::DocumentKeySet)remoteDocumentKeysForTarget:(model::TargetId)targetID;
+- (firebase::firestore::model::DocumentKeySet)remoteDocumentKeysForTarget:
+    (firebase::firestore::model::TargetId)targetID;
 
 /**
  * Assigns @a query an internal ID so that its results can be pinned so they don't get GC'd.
@@ -177,7 +178,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)releaseQuery:(FSTQuery *)query;
 
 /** Runs @a query against all the documents in the local store and returns the results. */
-- (model::DocumentMap)executeQuery:(FSTQuery *)query;
+- (firebase::firestore::model::DocumentMap)executeQuery:(FSTQuery *)query;
 
 /** Notify the local store of the changed views to locally pin / unpin documents. */
 - (void)notifyLocalViewChanges:(NSArray<FSTLocalViewChanges *> *)viewChanges;
@@ -188,9 +189,10 @@ NS_ASSUME_NONNULL_BEGIN
  * @param batchID The batch to search after, or -1 for the first mutation in the queue.
  * @return the next mutation or nil if there wasn't one.
  */
-- (nullable FSTMutationBatch *)nextMutationBatchAfterBatchID:(model::BatchId)batchID;
+- (nullable FSTMutationBatch *)nextMutationBatchAfterBatchID:
+    (firebase::firestore::model::BatchId)batchID;
 
-- (local::LruResults)collectGarbage:(FSTLRUGarbageCollector *)garbageCollector;
+- (firebase::firestore::local::LruResults)collectGarbage:(FSTLRUGarbageCollector *)garbageCollector;
 
 @end
 
