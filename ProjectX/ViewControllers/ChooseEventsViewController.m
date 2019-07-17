@@ -7,8 +7,16 @@
 //
 
 #import "ChooseEventsViewController.h"
+#import "AppDelegate.h"
+#import "../Models/FirebaseManager.h"
+@import Firebase;
 
 @interface ChooseEventsViewController ()
+@property (weak, nonatomic) IBOutlet UILabel *eventDate;
+@property (weak, nonatomic) IBOutlet UILabel *numAttendees;
+@property (weak, nonatomic) IBOutlet UILabel *eventName;
+@property (weak, nonatomic) IBOutlet UILabel *Eventdescription;
+@property (nonatomic, readwrite) FIRFirestore *db;
 
 @end
 
@@ -16,7 +24,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
+    [[FirebaseManager sharedManager] getEvent:^(NSArray * _Nonnull event, NSError * _Nonnull error) {
+        if(error != nil)
+        {
+            NSLog(@"Error showing documents: %@", error);
+        }else
+        {
+            NSLog(@"%@", event);
+        }
+    }];
 }
 
 /*
