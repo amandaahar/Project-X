@@ -34,9 +34,9 @@
     if(self)
     {
         [self setFirstName:dictionary[@"firstName"]];
-        [self setLastName:dictionary[@"firstName"]];
+        [self setLastName:dictionary[@"lastName"]];
         [self setUsername:dictionary[@"username"]];
-        [self setPreferences:@[]];
+        [self setPreferences:dictionary[@"preferences"]];
         [self setLocation:dictionary[@"location"]];
         [self setProfileImageURL:dictionary[@"profileImage"]];
         [self setProfileImage];

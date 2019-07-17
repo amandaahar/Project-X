@@ -8,6 +8,7 @@
 
 #import "ProfileViewController.h"
 #import "../Models/FirebaseManager.h"
+#import "UIImageView+AFNetworking.h"
 @import Firebase;
 //@class FirebaseManager;
 @interface ProfileViewController ()
@@ -35,16 +36,33 @@
         {
             self.currentUser = user;
             NSLog(@"%@",user.username);
+            
+            self.nameText.text = [[self.currentUser.firstName stringByAppendingString:@" "] stringByAppendingString:self.currentUser.lastName];
+            
+            self.username.text = self.currentUser.username;
+            
+            [self setImage:self.currentUser.profileImageURL];
+            
+            for (NSString *category in self.currentUser.preferences) {
+                // NSString *interestsString = [[NSString alloc] init];
+                // self.preferences.text = @"";
+                self.preferences.text = [[self.preferences.text stringByAppendingString:@" "] stringByAppendingString:category];
+                
+            }
+            
+            
         }
     }];
     
-    self.nameText.text = [self.currentUser.firstName stringByAppendingString:self.currentUser.lastName];
-    self.username.text = self.currentUser.username;
     
+    
+     
+    /*
     for (NSString *category in self.currentUser.preferences) {
         
         
     }
+     */
     
     
     
@@ -52,6 +70,13 @@
 }
 - (IBAction)didTapEditProfile:(id)sender {
     [self performSegueWithIdentifier:@"editProfileSegue" sender:nil];
+    
+}
+
+-(void) setImage: (NSString *) photoURL {
+    NSURL *imageURL = [NSURL URLWithString:photoURL];
+    [self.profilePictureImage setImageWithURL:imageURL];
+    
     
 }
 

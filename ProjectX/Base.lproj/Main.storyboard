@@ -87,7 +87,7 @@
             </objects>
             <point key="canvasLocation" x="-2898" y="672"/>
         </scene>
-
+        <!--Home-->
         <scene sceneID="6CN-be-upY">
             <objects>
                 <viewController id="b5a-C1-RtS" customClass="EventsFeedViewController" sceneMemberID="viewController">
@@ -273,9 +273,7 @@
         <scene sceneID="2ie-wI-UGd">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="zg0-N2-HFH" sceneMemberID="viewController">
-
                     <tabBarItem key="tabBarItem" title="Home" id="r2n-WG-4gv"/>
-
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="k02-vN-Xc4">
                         <rect key="frame" x="0.0" y="20" width="375" height="96"/>
@@ -384,6 +382,20 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eEZ-L4-m3d">
+                                <rect key="frame" x="9" y="222" width="350" height="89"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e4C-md-POa">
+                                <rect key="frame" x="16" y="356" width="343" height="178"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="V1W-q6-egF"/>
@@ -402,12 +414,12 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="bioText" destination="yMJ-f8-k6j" id="BmQ-zR-H6z"/>
+                        <outlet property="bioText" destination="eEZ-L4-m3d" id="qFt-B5-TRs"/>
                         <outlet property="nameText" destination="bC9-UX-zST" id="ord-w9-85z"/>
-                        <outlet property="preferences" destination="MTp-Kr-3Nk" id="o28-Fc-dfZ"/>
+                        <outlet property="preferences" destination="e4C-md-POa" id="IdY-rn-vqW"/>
                         <outlet property="profilePictureImage" destination="pix-av-Cx4" id="I4e-Uv-z0C"/>
                         <outlet property="username" destination="o6L-wR-HZT" id="7mh-kM-h8z"/>
-                        <segue destination="J4q-XK-DiR" kind="presentation" identifier="editProfileSegue" id="lS5-9O-Q4O"/>
+                        <segue destination="AB5-tH-Yf7" kind="show" identifier="editProfileSegue" id="BU5-6j-K1t"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OH2-fc-VoD" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -487,7 +499,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vin-rD-2DA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3512.8000000000002" y="3318.8905547226391"/>
+            <point key="canvasLocation" x="2522" y="3319"/>
         </scene>
         <!--Profile-->
         <scene sceneID="V6g-f6-0nN">
@@ -507,24 +519,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="D35-4l-X9c" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="631" y="3319"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="ceF-zq-rve">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="J4q-XK-DiR" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="vIG-08-t8U">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="AB5-tH-Yf7" kind="relationship" relationship="rootViewController" id="TBJ-T2-xgk"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="MVN-gN-aNW" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2573.5999999999999" y="3318.8905547226391"/>
         </scene>
     </scenes>
 </document>
