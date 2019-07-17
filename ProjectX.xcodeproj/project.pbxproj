@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		02E1E8E427559EB8E3639068 /* Pods_ProjectXUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBD9E6E483995742FF9E6D06 /* Pods_ProjectXUITests.framework */; };
+		0E17456E22DFB837000942E5 /* APIEventsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E17456D22DFB836000942E5 /* APIEventsManager.m */; };
 		0ECF088922DE791300F5A8AA /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ECF088822DE791300F5A8AA /* SignUpViewController.m */; };
 		0ECF088D22DE792900F5A8AA /* LogInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ECF088C22DE792900F5A8AA /* LogInViewController.m */; };
 		7A4BD0CE86A659CBEE639CD6 /* Pods_ProjectXTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70CEB876BE4019117E81D49A /* Pods_ProjectXTests.framework */; };
@@ -48,6 +49,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0E17456C22DFB836000942E5 /* APIEventsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APIEventsManager.h; sourceTree = "<group>"; };
+		0E17456D22DFB836000942E5 /* APIEventsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APIEventsManager.m; sourceTree = "<group>"; };
 		0ECF088722DE791300F5A8AA /* SignUpViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SignUpViewController.h; sourceTree = "<group>"; };
 		0ECF088822DE791300F5A8AA /* SignUpViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SignUpViewController.m; sourceTree = "<group>"; };
 		0ECF088B22DE792900F5A8AA /* LogInViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LogInViewController.h; sourceTree = "<group>"; };
@@ -224,6 +227,8 @@
 		EA54ED2222DE867D00D0D7A2 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				0E17456C22DFB836000942E5 /* APIEventsManager.h */,
+				0E17456D22DFB836000942E5 /* APIEventsManager.m */,
 				EA54ED1F22DE819900D0D7A2 /* User.h */,
 				EA54ED2022DE819900D0D7A2 /* User.m */,
 				EA54ED2322DE9E3600D0D7A2 /* Event.h */,
@@ -460,6 +465,7 @@
 				E7AEA0AC22DE8C8A00A77CC2 /* GroupsViewController.m in Sources */,
 				EA54ECE622DE3F3800D0D7A2 /* AppDelegate.m in Sources */,
 				E7AEA0A922DE8C4400A77CC2 /* EventsFeedViewController.m in Sources */,
+				0E17456E22DFB837000942E5 /* APIEventsManager.m in Sources */,
 				EA54ECF722DE3F3900D0D7A2 /* main.m in Sources */,
 				EA54ED2122DE819900D0D7A2 /* User.m in Sources */,
 				0ECF088D22DE792900F5A8AA /* LogInViewController.m in Sources */,
