@@ -23,8 +23,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSArray *preferences;
 
 
--(instancetype) initWithDictonary : (NSDictionary *) dictionary;
--(UIImage *) getImageFromString : (NSString *) stringURL;
+-(instancetype) initWithDictionary : (NSDictionary *) dictionary;
+-(void) getImageFromString : (NSString *) stringURL;
 @end
 
 NS_ASSUME_NONNULL_END

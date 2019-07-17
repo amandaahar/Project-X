@@ -12,6 +12,13 @@
 		0ECF088D22DE792900F5A8AA /* LogInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ECF088C22DE792900F5A8AA /* LogInViewController.m */; };
 		7A4BD0CE86A659CBEE639CD6 /* Pods_ProjectXTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70CEB876BE4019117E81D49A /* Pods_ProjectXTests.framework */; };
 		7F2A7DC42E2A0127BBFFA154 /* Pods_ProjectX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C296CF13ED1DF49E87C0289 /* Pods_ProjectX.framework */; };
+		29A8EC7B4F38AA78FA6C4845 /* Pods_ProjectX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0928723A5AE3026AC937476F /* Pods_ProjectX.framework */; };
+		99F8EB00342760F6893E827A /* Pods_ProjectXUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C13DCD25F4A6C311579D2826 /* Pods_ProjectXUITests.framework */; };
+		A09A64824F4DD69269DDB7F8 /* Pods_ProjectXTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A742B06266A269297335835 /* Pods_ProjectXTests.framework */; };
+		E7AEA0A622DE8A8E00A77CC2 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AEA0A522DE8A8E00A77CC2 /* ProfileViewController.m */; };
+		E7AEA0A922DE8C4400A77CC2 /* EventsFeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AEA0A822DE8C4400A77CC2 /* EventsFeedViewController.m */; };
+		E7AEA0AC22DE8C8A00A77CC2 /* GroupsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AEA0AB22DE8C8A00A77CC2 /* GroupsViewController.m */; };
+		E7AEA0AF22DE8CE800A77CC2 /* ChooseEventsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AEA0AE22DE8CE800A77CC2 /* ChooseEventsViewController.m */; };
 		EA54ECE622DE3F3800D0D7A2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EA54ECE522DE3F3800D0D7A2 /* AppDelegate.m */; };
 		EA54ECEC22DE3F3800D0D7A2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA54ECEA22DE3F3800D0D7A2 /* Main.storyboard */; };
 		EA54ECEF22DE3F3800D0D7A2 /* ProjectX.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EA54ECED22DE3F3800D0D7A2 /* ProjectX.xcdatamodeld */; };
@@ -56,6 +63,21 @@
 		C9EBBE401D4157199CB0DD86 /* Pods-ProjectXUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProjectXUITests.release.xcconfig"; path = "Target Support Files/Pods-ProjectXUITests/Pods-ProjectXUITests.release.xcconfig"; sourceTree = "<group>"; };
 		CBD9E6E483995742FF9E6D06 /* Pods_ProjectXUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ProjectXUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D45E39045F451DD5AAFB4ED8 /* Pods-ProjectX.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProjectX.debug.xcconfig"; path = "Target Support Files/Pods-ProjectX/Pods-ProjectX.debug.xcconfig"; sourceTree = "<group>"; };
+		1A742B06266A269297335835 /* Pods_ProjectXTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ProjectXTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4F86A2358733677EE4DB3E06 /* Pods-ProjectX.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProjectX.debug.xcconfig"; path = "Target Support Files/Pods-ProjectX/Pods-ProjectX.debug.xcconfig"; sourceTree = "<group>"; };
+		9BD01D7486EF1CABB1F02B87 /* Pods-ProjectXTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProjectXTests.debug.xcconfig"; path = "Target Support Files/Pods-ProjectXTests/Pods-ProjectXTests.debug.xcconfig"; sourceTree = "<group>"; };
+		BC2248FEF20331FF92CEAA78 /* Pods-ProjectXUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProjectXUITests.release.xcconfig"; path = "Target Support Files/Pods-ProjectXUITests/Pods-ProjectXUITests.release.xcconfig"; sourceTree = "<group>"; };
+		C13DCD25F4A6C311579D2826 /* Pods_ProjectXUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ProjectXUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D2C1BCBE8FC4A7114B8B1D4A /* Pods-ProjectXTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProjectXTests.release.xcconfig"; path = "Target Support Files/Pods-ProjectXTests/Pods-ProjectXTests.release.xcconfig"; sourceTree = "<group>"; };
+		D620986C76DC4E077B557D8C /* Pods-ProjectXUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProjectXUITests.debug.xcconfig"; path = "Target Support Files/Pods-ProjectXUITests/Pods-ProjectXUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		E7AEA0A422DE8A8E00A77CC2 /* ProfileViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
+		E7AEA0A522DE8A8E00A77CC2 /* ProfileViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
+		E7AEA0A722DE8C4400A77CC2 /* EventsFeedViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EventsFeedViewController.h; sourceTree = "<group>"; };
+		E7AEA0A822DE8C4400A77CC2 /* EventsFeedViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EventsFeedViewController.m; sourceTree = "<group>"; };
+		E7AEA0AA22DE8C8A00A77CC2 /* GroupsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GroupsViewController.h; sourceTree = "<group>"; };
+		E7AEA0AB22DE8C8A00A77CC2 /* GroupsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GroupsViewController.m; sourceTree = "<group>"; };
+		E7AEA0AD22DE8CE800A77CC2 /* ChooseEventsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChooseEventsViewController.h; sourceTree = "<group>"; };
+		E7AEA0AE22DE8CE800A77CC2 /* ChooseEventsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChooseEventsViewController.m; sourceTree = "<group>"; };
 		EA54ECE122DE3F3800D0D7A2 /* ProjectX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProjectX.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA54ECE422DE3F3800D0D7A2 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		EA54ECE522DE3F3800D0D7A2 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -113,6 +135,14 @@
 				0ECF088822DE791300F5A8AA /* SignUpViewController.m */,
 				0ECF088B22DE792900F5A8AA /* LogInViewController.h */,
 				0ECF088C22DE792900F5A8AA /* LogInViewController.m */,
+				E7AEA0A422DE8A8E00A77CC2 /* ProfileViewController.h */,
+				E7AEA0A522DE8A8E00A77CC2 /* ProfileViewController.m */,
+				E7AEA0A722DE8C4400A77CC2 /* EventsFeedViewController.h */,
+				E7AEA0A822DE8C4400A77CC2 /* EventsFeedViewController.m */,
+				E7AEA0AA22DE8C8A00A77CC2 /* GroupsViewController.h */,
+				E7AEA0AB22DE8C8A00A77CC2 /* GroupsViewController.m */,
+				E7AEA0AD22DE8CE800A77CC2 /* ChooseEventsViewController.h */,
+				E7AEA0AE22DE8CE800A77CC2 /* ChooseEventsViewController.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -430,11 +460,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E7AEA0AF22DE8CE800A77CC2 /* ChooseEventsViewController.m in Sources */,
+				E7AEA0AC22DE8C8A00A77CC2 /* GroupsViewController.m in Sources */,
 				EA54ECE622DE3F3800D0D7A2 /* AppDelegate.m in Sources */,
+				E7AEA0A922DE8C4400A77CC2 /* EventsFeedViewController.m in Sources */,
 				EA54ECF722DE3F3900D0D7A2 /* main.m in Sources */,
 				EA54ED2122DE819900D0D7A2 /* User.m in Sources */,
 				0ECF088D22DE792900F5A8AA /* LogInViewController.m in Sources */,
 				0ECF088922DE791300F5A8AA /* SignUpViewController.m in Sources */,
+				E7AEA0A622DE8A8E00A77CC2 /* ProfileViewController.m in Sources */,
 				EA54ECEF22DE3F3800D0D7A2 /* ProjectX.xcdatamodeld in Sources */,
 				EA54ED2522DE9E3600D0D7A2 /* Event.m in Sources */,
 			);

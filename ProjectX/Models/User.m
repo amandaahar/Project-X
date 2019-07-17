@@ -41,9 +41,10 @@
         [self getImageFromString:dictionary[@"profileImage"]];
         
     }
+    return self;
 }
 
--(UIImage *) getImageFromString : (NSString *) stringURL
+-(void) getImageFromString : (NSString *) stringURL
 {
     AFImageDownloader * downloader = [[AFImageDownloader alloc] init];
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:stringURL]];
@@ -56,6 +57,7 @@
         NSLog(@"Error download image");
         self.profileImage = nil;
     }];
+    
 }
 
 
