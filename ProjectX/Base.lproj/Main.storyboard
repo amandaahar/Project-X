@@ -273,11 +273,9 @@
         <scene sceneID="2ie-wI-UGd">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="zg0-N2-HFH" sceneMemberID="viewController">
-<<<<<<< HEAD
-                    <tabBarItem key="tabBarItem" title="Home" image="Home" id="r2n-WG-4gv"/>
-=======
+
                     <tabBarItem key="tabBarItem" title="Home" id="r2n-WG-4gv"/>
->>>>>>> 6b0be7b2ffd095884d9fa09b9fd14c68ce8d8a16
+
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="k02-vN-Xc4">
                         <rect key="frame" x="0.0" y="20" width="375" height="96"/>
