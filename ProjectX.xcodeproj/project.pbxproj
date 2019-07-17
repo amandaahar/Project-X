@@ -17,6 +17,7 @@
 		E7AEA0A922DE8C4400A77CC2 /* EventsFeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AEA0A822DE8C4400A77CC2 /* EventsFeedViewController.m */; };
 		E7AEA0AC22DE8C8A00A77CC2 /* GroupsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AEA0AB22DE8C8A00A77CC2 /* GroupsViewController.m */; };
 		E7AEA0AF22DE8CE800A77CC2 /* ChooseEventsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AEA0AE22DE8CE800A77CC2 /* ChooseEventsViewController.m */; };
+		E7AEA0B722DF9D7700A77CC2 /* EditProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AEA0B622DF9D7700A77CC2 /* EditProfileViewController.m */; };
 		EA54ECE622DE3F3800D0D7A2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EA54ECE522DE3F3800D0D7A2 /* AppDelegate.m */; };
 		EA54ECEC22DE3F3800D0D7A2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA54ECEA22DE3F3800D0D7A2 /* Main.storyboard */; };
 		EA54ECEF22DE3F3800D0D7A2 /* ProjectX.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EA54ECED22DE3F3800D0D7A2 /* ProjectX.xcdatamodeld */; };
@@ -72,6 +73,8 @@
 		E7AEA0AB22DE8C8A00A77CC2 /* GroupsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GroupsViewController.m; sourceTree = "<group>"; };
 		E7AEA0AD22DE8CE800A77CC2 /* ChooseEventsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChooseEventsViewController.h; sourceTree = "<group>"; };
 		E7AEA0AE22DE8CE800A77CC2 /* ChooseEventsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChooseEventsViewController.m; sourceTree = "<group>"; };
+		E7AEA0B522DF9D7700A77CC2 /* EditProfileViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EditProfileViewController.h; sourceTree = "<group>"; };
+		E7AEA0B622DF9D7700A77CC2 /* EditProfileViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EditProfileViewController.m; sourceTree = "<group>"; };
 		EA54ECE122DE3F3800D0D7A2 /* ProjectX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProjectX.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA54ECE422DE3F3800D0D7A2 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		EA54ECE522DE3F3800D0D7A2 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -139,6 +142,8 @@
 				E7AEA0AB22DE8C8A00A77CC2 /* GroupsViewController.m */,
 				E7AEA0AD22DE8CE800A77CC2 /* ChooseEventsViewController.h */,
 				E7AEA0AE22DE8CE800A77CC2 /* ChooseEventsViewController.m */,
+				E7AEA0B522DF9D7700A77CC2 /* EditProfileViewController.h */,
+				E7AEA0B622DF9D7700A77CC2 /* EditProfileViewController.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -469,6 +474,7 @@
 				EA54ECF722DE3F3900D0D7A2 /* main.m in Sources */,
 				EA54ED2122DE819900D0D7A2 /* User.m in Sources */,
 				0ECF088D22DE792900F5A8AA /* LogInViewController.m in Sources */,
+				E7AEA0B722DF9D7700A77CC2 /* EditProfileViewController.m in Sources */,
 				0ECF088922DE791300F5A8AA /* SignUpViewController.m in Sources */,
 				E7AEA0A622DE8A8E00A77CC2 /* ProfileViewController.m in Sources */,
 				EA54ECEF22DE3F3800D0D7A2 /* ProjectX.xcdatamodeld in Sources */,
