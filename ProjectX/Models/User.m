@@ -39,7 +39,7 @@
         [self setPreferences:@[]];
         [self setLocation:dictionary[@"location"]];
         [self setProfileImageURL:dictionary[@"profileImage"]];
-        //[self setProfileImage];
+        [self setProfileImage];
     }
     return self;
 }
