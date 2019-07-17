@@ -7,13 +7,16 @@ target 'ProjectX' do
 
   # Pods for ProjectX
   pod 'Firebase'
-	pod 'FirebaseAuth'
-	pod 'FirebaseCore'
-	pod 'FirebaseDatabase'
-	pod 'FirebaseFirestore'  # Only iOS and macOS
-	pod 'FirebaseFunctions'
-	pod 'FirebaseMessaging'  # Only iOS and tvOS
-	pod 'FirebaseStorage'
+  pod 'FirebaseAuth'
+  pod 'FirebaseCore'
+  pod 'FirebaseDatabase'
+  pod 'FirebaseFirestore'
+  pod 'FirebaseFunctions'
+  pod 'FirebaseMessaging'
+  pod 'FirebaseStorage'
+  pod 'GeoFire'
+  pod 'AFNetworking'
+
   target 'ProjectXTests' do
     inherit! :search_paths
     # Pods for testing
