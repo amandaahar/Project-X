@@ -85,36 +85,19 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-2898" y="672"/>
+            <point key="canvasLocation" x="-2852" y="170.46476761619192"/>
         </scene>
-
+        <!--Events Feed View Controller-->
         <scene sceneID="6CN-be-upY">
             <objects>
                 <viewController id="b5a-C1-RtS" customClass="EventsFeedViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="UiJ-sR-2WF">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="TYc-FE-sM2">
-                                <rect key="frame" x="0.0" y="116" width="375" height="502"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="88" id="etz-Sx-lju">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="88"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="etz-Sx-lju" id="Vi0-1S-MXC">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="87.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </prototypes>
-                            </tableView>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="Dz6-yb-0uT"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Home" id="Yon-vz-xcX"/>
+                    <navigationItem key="navigationItem" id="Yon-vz-xcX"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Bsn-sM-Kyf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -205,7 +188,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Log in"/>
                                 <connections>
-                                    <segue destination="mCA-Z6-2zN" kind="unwind" unwindAction="prepareForUnwind:" id="Xby-Tx-AHk"/>
+                                    <segue destination="BYZ-38-t0r" kind="show" id="oPp-yD-hCc"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fOK-x7-4pD">
@@ -260,27 +243,22 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZvQ-41-hAM" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="mCA-Z6-2zN" userLabel="Exit" sceneMemberID="exit"/>
                 <tapGestureRecognizer id="bab-6g-lcw">
                     <connections>
                         <action selector="shutKeyboard:" destination="XwA-F1-3gi" id="5Bm-0W-uz8"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-2127" y="672"/>
+            <point key="canvasLocation" x="-1186.4000000000001" y="170.46476761619192"/>
         </scene>
         <!--Home-->
         <scene sceneID="2ie-wI-UGd">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="zg0-N2-HFH" sceneMemberID="viewController">
-<<<<<<< HEAD
-                    <tabBarItem key="tabBarItem" title="Home" image="Home" id="r2n-WG-4gv"/>
-=======
                     <tabBarItem key="tabBarItem" title="Home" id="r2n-WG-4gv"/>
->>>>>>> 6b0be7b2ffd095884d9fa09b9fd14c68ce8d8a16
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="k02-vN-Xc4">
-                        <rect key="frame" x="0.0" y="20" width="375" height="96"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="k02-vN-Xc4">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>

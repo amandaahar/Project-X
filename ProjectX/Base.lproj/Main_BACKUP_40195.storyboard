@@ -87,7 +87,11 @@
             </objects>
             <point key="canvasLocation" x="-2898" y="672"/>
         </scene>
-
+<<<<<<< HEAD
+        <!--Home-->
+=======
+        <!--Events Feed View Controller-->
+>>>>>>> 6b0be7b2ffd095884d9fa09b9fd14c68ce8d8a16
         <scene sceneID="6CN-be-upY">
             <objects>
                 <viewController id="b5a-C1-RtS" customClass="EventsFeedViewController" sceneMemberID="viewController">
