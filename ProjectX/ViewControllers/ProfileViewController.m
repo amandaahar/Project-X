@@ -11,11 +11,13 @@
 @import Firebase;
 //@class FirebaseManager;
 @interface ProfileViewController ()
+@property (weak, nonatomic) IBOutlet UILabel *nameText;
 @property (weak, nonatomic) IBOutlet UIImageView *profilePictureImage;
 @property (weak, nonatomic) IBOutlet UILabel *username;
 @property (weak, nonatomic) IBOutlet UILabel *preferences;
+@property (weak, nonatomic) IBOutlet UILabel *bioText;
 @property (nonatomic, readwrite) FIRFirestore *db;
-
+@property (nonatomic, strong) User *currentUser;
 @end
 
 @implementation ProfileViewController
@@ -31,11 +33,26 @@
             
         }else
         {
+            self.currentUser = user;
             NSLog(@"%@",user.username);
         }
     }];
     
+    self.nameText.text = [self.currentUser.firstName stringByAppendingString:self.currentUser.lastName];
+    self.username.text = self.currentUser.username;
+    
+    for (NSString *category in self.currentUser.preferences) {
+        
+        
+    }
+    
+    
+    
 
+}
+- (IBAction)didTapEditProfile:(id)sender {
+    [self performSegueWithIdentifier:@"editProfileSegue" sender:nil];
+    
 }
 
 /*
