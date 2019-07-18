@@ -21,7 +21,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [[APIEventsManager sharedManager] getCategories];
     // Do any additional setup after loading the view.
 }
 
@@ -47,6 +46,17 @@
 
 -(IBAction)prepareForUnwind:(UIStoryboardSegue *)segue {
 }
+- (void)viewDidAppear:(BOOL)animated
+{
+    if(FIRAuth.auth.currentUser != nil)
+    {
+        AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        LogInViewController *loginViewController = [storyboard instantiateViewControllerWithIdentifier:@"TabBarVC"];
+        appDelegate.window.rootViewController = loginViewController;
+    }
+}
+
 
 - (IBAction)shutKeyboard:(UITapGestureRecognizer *)sender {
     [self.view endEditing:YES];
