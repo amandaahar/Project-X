@@ -27,28 +27,31 @@
     self.chatsTableView.dataSource = self;
     self.chatsTableView.delegate = self;
     
-    NSLog(@"inViewdidload");
-    /*
-    
     [[FirebaseManager sharedManager] getCurrentUser:^(User * _Nonnull user, NSError * _Nonnull error) {
-        if(error != nil)
-        {
+        if(error != nil) {
             NSLog(@"in if");
-        }else
-        {
-            NSLog(@"in else");
+        }else {
             self.currentUser = user;
-            self.chats = self.currentUser.chats;
+            // self.chats = self.currentUser.chats;
             NSLog(@"%@ hello", self.chats);
             NSLog(@"%@hello2", self.chats[0]);
-            FIRDocumentReference *myRef = self.chats[0];
-            [
+            for (FIRDocumentReference *chat in self.currentUser.chats) {
+                [chat getDocumentWithCompletion:^(FIRDocumentSnapshot *snapshot, NSError *error) {
+                    if (snapshot.exists) {
+                        // [self.chats arrayByAddingObject:<#(nonnull id)#>]
+                        NSLog(@"Document w data: %@", snapshot.data);
+                    } else {
+                        NSLog(@"no data");
+                    }
+                }];
+            }
+            // FIRDocumentReference *chatRef = self.chats[0];
             
         }
     }];
     
     NSLog(@"after firebase");
-     */
+     
 }
 
 /*
