@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (id)sharedManager;
 - (void) getCategories:(void(^)(NSArray *categories, NSError *error))completion;
--(void) getEventsByLocation: (NSString *) latitude  longitude:(NSString *) longitude  completion:(void(^)(NSArray *categories, NSError *error))completion;
+-(void) getEventsByLocation : (NSString *) latitude  longitude:(NSString *) longitude  completion:(void(^)(NSArray *eventsEventbrite,NSArray * eventsTicketmaster, NSError *error))completion;
 - (void) getEventByCategory: (NSString *) categoryID completion:(void(^)(NSArray *events, NSError *error))completion;
 @end
 
