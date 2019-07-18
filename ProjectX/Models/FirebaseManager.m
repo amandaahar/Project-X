@@ -44,7 +44,6 @@
     // [[database collectionWithPath:@"Users"] documentWithPath:[[[FIRAuth auth] currentUser] uid]];
     [docRef getDocumentWithCompletion:^(FIRDocumentSnapshot *snapshot, NSError *error) {
         if (snapshot.exists) {
-            // Document data may be nil if the document exists but has no keys or values.
             User * newUser = [[User alloc] initWithDictionary:snapshot.data];
             completion(newUser, nil);
         } else {

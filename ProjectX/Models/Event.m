@@ -22,7 +22,6 @@
     self = [super init];
     if(self)
     {
-        NSLog(@"%@",dictionary);
         self.name = dictionary[@"name"];
         self.descriptionEvent = dictionary[@"description"];
         self.attendees = dictionary[@"numAttendees"];

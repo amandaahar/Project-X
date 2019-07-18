@@ -49,7 +49,6 @@ static NSString * const clientSecret = @"XFZKXUDPWBPQANV7EWD237QVMMH35G4H47CHB3H
       parameters:nil
         progress:nil
          success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary*  _Nullable responseObject) {
-             NSLog(@"Success: %@", responseObject);
              completion(responseObject[@"categories"],nil);
          }
          failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -63,10 +62,9 @@ static NSString * const clientSecret = @"XFZKXUDPWBPQANV7EWD237QVMMH35G4H47CHB3H
     [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:baseURLString]];
     [manager.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@", publicToken] forHTTPHeaderField:@"Authorization"];
     [manager GET:@"events/search/"
-      parameters:@{@"high_affinity_categories" : categoryID, @"location.address" : @"london", @"location.within" : @"10km"}
+      parameters:@{@"location.address" : @"london", @"location.within" : @"10km"}
         progress:nil
          success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary*  _Nullable responseObject) {
-             NSLog(@"Success: %@", responseObject);
 
              completion(responseObject[@"events"],nil);
          }
@@ -75,20 +73,33 @@ static NSString * const clientSecret = @"XFZKXUDPWBPQANV7EWD237QVMMH35G4H47CHB3H
          }];
 }
 
--(void) getEventsByLocation : (NSString *) latitude  longitude:(NSString *) longitude  completion:(void(^)(NSArray *categories, NSError *error))completion{
+-(void) getEventsByLocation : (NSString *) latitude  longitude:(NSString *) longitude  completion:(void(^)(NSArray *eventsEventbrite,NSArray * eventsTicketmaster, NSError *error))completion{
     
+
     AFHTTPSessionManager *manager =
     [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:baseURLString]];
     [manager.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@", publicToken] forHTTPHeaderField:@"Authorization"];
-    [manager POST:@"events/search"
-       parameters:@{@"location.longitude":@"-123.11236500000001",@"location.latitude":@"49.279974"}
+    [manager GET:@"events/search/"
+      parameters:@{@"location.longitude" : @"-123.11236500000001",@"location.latitude":@"49.279974"}
         progress:nil
-         success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary*  _Nullable responseObject) {
-             NSLog(@"Success: %@", responseObject);
-             completion(responseObject[@"categories"],nil);
+         success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary*  _Nullable dictionaryEventbrite) {
+             AFHTTPSessionManager *manager2 =
+             [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:@"https://app.ticketmaster.com/"]];
+             [manager2 GET:@"discovery/v2/events.json" parameters:@{@"apikey" : @"OgabuZXqzqkv0GJtbvl5hKlbAFZLxncm",@"geoPoint":@"34.101155,-118.343727", @"radius" : @"15",@"unit" : @"km"}
+                 progress:nil
+                  success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary*  _Nullable dictionaryTicketmaster) {
+                      completion(dictionaryEventbrite[@"events"],dictionaryTicketmaster[@"_embedded"][@"events"],nil);
+                  }
+                  failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                      NSLog(@"Failure: %@", error);
+                      completion(dictionaryEventbrite[@"events"],nil,nil);
+                  }];
+             
+             //completion(responseObject[@"events"],nil);
          }
          failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
              NSLog(@"Failure: %@", error);
+             completion(nil,nil,nil);
          }];
 }
 
