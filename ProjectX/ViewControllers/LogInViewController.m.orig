@@ -21,7 +21,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+<<<<<<< HEAD
     //[[APIEventsManager sharedManager] getCategories];
+=======
+>>>>>>> 35e361429e4777ca8b409f1385579f5efea5a3fe
     // Do any additional setup after loading the view.
 }
 
