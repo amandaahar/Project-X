@@ -14,7 +14,7 @@
 #pragma mark - User Initializer
 -(instancetype) init
 {
-    NSDictionary *defaultDictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"", @"firstName",@"",@"lastName",@"",@"username",@"", @"profileImage",@"", @"location",@[], @"preferences" , nil];
+    NSDictionary *defaultDictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"", @"chats", @"", @"firstName",@"",@"lastName",@"",@"username",@"", @"profileImage",@"", @"location",@[], @"preferences" , nil];
     self = [self initWithDictionary:defaultDictionary];
     return self;
 }
@@ -34,11 +34,12 @@
     if(self)
     {
         [self setFirstName:dictionary[@"firstName"]];
-        [self setLastName:dictionary[@"firstName"]];
+        [self setLastName:dictionary[@"lastName"]];
         [self setUsername:dictionary[@"username"]];
-        [self setPreferences:@[]];
+        [self setPreferences:dictionary[@"preferences"]];
         [self setLocation:dictionary[@"location"]];
         [self setProfileImageURL:dictionary[@"profileImage"]];
+        [self setChats:dictionary[@"chats"]];
         [self setProfileImage];
     }
     return self;
