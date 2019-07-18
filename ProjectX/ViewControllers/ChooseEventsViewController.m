@@ -18,8 +18,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *Eventdescription;
 @property (nonatomic, readwrite) FIRFirestore *db;
 //@property (strong, nonatomic) FIRDatabaseReference *ref;
-//@property (strong, nonatomic) NSArray *eventArray;
-@property (strong, nonatomic) NSArray *myEvent2;
+@property (strong, nonatomic) NSArray *eventArray;
 
 @end
 
@@ -28,13 +27,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self fetchEvents];
-    self.myEvent2 = [NSArray new];
+    self.eventArray = [NSArray new];
     UISwipeGestureRecognizer *left = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(PerformAction:)];
-    left.direction = UISwipeGestureRecognizerDirectionLeft ;
+    left.direction = UISwipeGestureRecognizerDirectionLeft;
     [self.view addGestureRecognizer:left];
     
     UISwipeGestureRecognizer *right = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(PerformAction:)];
-    right.direction = UISwipeGestureRecognizerDirectionRight ;
+    right.direction = UISwipeGestureRecognizerDirectionRight;
     [self.view addGestureRecognizer:right];
 }
 
@@ -51,7 +50,7 @@
             self.numAttendees.text = [NSString stringWithFormat:@"%@", myEvent.attendees];
             self.eventName.text = myEvent.name;
             self.Eventdescription.text = myEvent.descriptionEvent;
-            self.myEvent2 = event;
+            self.eventArray = event;
             
             /*
              FIRUser *currentUser = [FIRUser currentUser];
@@ -89,20 +88,28 @@
         */
         //[NSMutableArray replaceObjectAtIndex:index withObject:[NSNull null]];
         
-        
-        NSMutableArray * tempArray = [self.myEvent2 mutableCopy];
-        for (Event *myEvent in self.myEvent2){
-            [tempArray removeObject: myEvent]; //Make sure to delete just one element in array not all!
+
+        NSMutableArray * tempArray = [self.eventArray mutableCopy];
+        /*
+         for (Event *myEvent in self.myEvent2){
+            //[tempArray removeObject: myEvent]; //Make sure to delete just one element in array not all!
+            [tempArray removeObjectAtIndex:0];
             NSLog(@"%@", tempArray);
             NSLog(@"Inside for");
         }
-        self.myEvent2 = tempArray;
+         */
+        //NSMutableArray * tempArray = [tempArray removeLastObject];
+        
+        [tempArray removeObjectAtIndex:0];
+        
+        self.eventArray = tempArray;
         NSLog(@"inside if");
-        //self.eventDate = myEvent.date;
-        Event *myEvent3 = self.myEvent2.firstObject;
-        self.numAttendees.text = [NSString stringWithFormat:@"%@", myEvent3.attendees];
-        self.eventName.text = myEvent3.name;
-        self.Eventdescription.text = myEvent3.descriptionEvent;
+        Event *nextEvent = self.eventArray.firstObject;
+        //self.myEvent2 = nextEvent;
+        //self.eventDate = nextEvent.date;
+        self.numAttendees.text = [NSString stringWithFormat:@"%@", nextEvent.attendees];
+        self.eventName.text = nextEvent.name;
+        self.Eventdescription.text = nextEvent.descriptionEvent;
 
     }
     else if(sender.direction == UISwipeGestureRecognizerDirectionRight) {
