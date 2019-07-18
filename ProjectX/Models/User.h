@@ -23,6 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSString *profileImageURL;
 @property (strong, nonatomic) NSString *profileImage;
 @property (strong, nonatomic) NSArray *preferences;
+@property (strong, nonatomic) NSArray *chats;
 
 #pragma mark - User Initializer
 -(instancetype) initWithDictionary : (NSDictionary *) dictionary;

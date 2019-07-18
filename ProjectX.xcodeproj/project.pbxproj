@@ -18,6 +18,9 @@
 		E7AEA0AC22DE8C8A00A77CC2 /* GroupsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AEA0AB22DE8C8A00A77CC2 /* GroupsViewController.m */; };
 		E7AEA0AF22DE8CE800A77CC2 /* ChooseEventsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AEA0AE22DE8CE800A77CC2 /* ChooseEventsViewController.m */; };
 		E7AEA0B722DF9D7700A77CC2 /* EditProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AEA0B622DF9D7700A77CC2 /* EditProfileViewController.m */; };
+		E7AEA0BA22DFCC3A00A77CC2 /* Chat.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AEA0B922DFCC3A00A77CC2 /* Chat.m */; };
+		E7AEA0BE22DFD8BC00A77CC2 /* GroupTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AEA0BD22DFD8BC00A77CC2 /* GroupTableViewCell.m */; };
+		E7AEA0C122DFF64100A77CC2 /* APIEventsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AEA0C022DFF64100A77CC2 /* APIEventsManager.m */; };
 		EA54ECE622DE3F3800D0D7A2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EA54ECE522DE3F3800D0D7A2 /* AppDelegate.m */; };
 		EA54ECEC22DE3F3800D0D7A2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA54ECEA22DE3F3800D0D7A2 /* Main.storyboard */; };
 		EA54ECEF22DE3F3800D0D7A2 /* ProjectX.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EA54ECED22DE3F3800D0D7A2 /* ProjectX.xcdatamodeld */; };
@@ -75,6 +78,12 @@
 		E7AEA0AE22DE8CE800A77CC2 /* ChooseEventsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChooseEventsViewController.m; sourceTree = "<group>"; };
 		E7AEA0B522DF9D7700A77CC2 /* EditProfileViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EditProfileViewController.h; sourceTree = "<group>"; };
 		E7AEA0B622DF9D7700A77CC2 /* EditProfileViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EditProfileViewController.m; sourceTree = "<group>"; };
+		E7AEA0B822DFCC3A00A77CC2 /* Chat.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Chat.h; sourceTree = "<group>"; };
+		E7AEA0B922DFCC3A00A77CC2 /* Chat.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Chat.m; sourceTree = "<group>"; };
+		E7AEA0BC22DFD8BC00A77CC2 /* GroupTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GroupTableViewCell.h; sourceTree = "<group>"; };
+		E7AEA0BD22DFD8BC00A77CC2 /* GroupTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GroupTableViewCell.m; sourceTree = "<group>"; };
+		E7AEA0BF22DFF64100A77CC2 /* APIEventsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APIEventsManager.h; sourceTree = "<group>"; };
+		E7AEA0C022DFF64100A77CC2 /* APIEventsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APIEventsManager.m; sourceTree = "<group>"; };
 		EA54ECE122DE3F3800D0D7A2 /* ProjectX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProjectX.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA54ECE422DE3F3800D0D7A2 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		EA54ECE522DE3F3800D0D7A2 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -171,6 +180,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		E7AEA0BB22DFD88C00A77CC2 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E7AEA0BC22DFD8BC00A77CC2 /* GroupTableViewCell.h */,
+				E7AEA0BD22DFD8BC00A77CC2 /* GroupTableViewCell.m */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		EA54ECD822DE3F3800D0D7A2 = {
 			isa = PBXGroup;
 			children = (
@@ -196,6 +214,7 @@
 		EA54ECE322DE3F3800D0D7A2 /* ProjectX */ = {
 			isa = PBXGroup;
 			children = (
+				E7AEA0BB22DFD88C00A77CC2 /* Views */,
 				EA54ED2222DE867D00D0D7A2 /* Models */,
 				0ECF088622DE78CB00F5A8AA /* ViewControllers */,
 				EA54ECE422DE3F3800D0D7A2 /* AppDelegate.h */,
@@ -234,12 +253,16 @@
 			children = (
 				0E17456C22DFB836000942E5 /* APIEventsManager.h */,
 				0E17456D22DFB836000942E5 /* APIEventsManager.m */,
+				E7AEA0BF22DFF64100A77CC2 /* APIEventsManager.h */,
+				E7AEA0C022DFF64100A77CC2 /* APIEventsManager.m */,
 				EA54ED1F22DE819900D0D7A2 /* User.h */,
 				EA54ED2022DE819900D0D7A2 /* User.m */,
 				EA54ED2322DE9E3600D0D7A2 /* Event.h */,
 				EA54ED2422DE9E3600D0D7A2 /* Event.m */,
 				EA54ED2622DEE23900D0D7A2 /* FirebaseManager.h */,
 				EA54ED2722DEE23900D0D7A2 /* FirebaseManager.m */,
+				E7AEA0B822DFCC3A00A77CC2 /* Chat.h */,
+				E7AEA0B922DFCC3A00A77CC2 /* Chat.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -465,6 +488,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E7AEA0BE22DFD8BC00A77CC2 /* GroupTableViewCell.m in Sources */,
 				EA54ED2822DEE23900D0D7A2 /* FirebaseManager.m in Sources */,
 				E7AEA0AF22DE8CE800A77CC2 /* ChooseEventsViewController.m in Sources */,
 				E7AEA0AC22DE8C8A00A77CC2 /* GroupsViewController.m in Sources */,
@@ -472,6 +496,7 @@
 				E7AEA0A922DE8C4400A77CC2 /* EventsFeedViewController.m in Sources */,
 				0E17456E22DFB837000942E5 /* APIEventsManager.m in Sources */,
 				EA54ECF722DE3F3900D0D7A2 /* main.m in Sources */,
+				E7AEA0C122DFF64100A77CC2 /* APIEventsManager.m in Sources */,
 				EA54ED2122DE819900D0D7A2 /* User.m in Sources */,
 				0ECF088D22DE792900F5A8AA /* LogInViewController.m in Sources */,
 				E7AEA0B722DF9D7700A77CC2 /* EditProfileViewController.m in Sources */,
@@ -479,6 +504,7 @@
 				E7AEA0A622DE8A8E00A77CC2 /* ProfileViewController.m in Sources */,
 				EA54ECEF22DE3F3800D0D7A2 /* ProjectX.xcdatamodeld in Sources */,
 				EA54ED2522DE9E3600D0D7A2 /* Event.m in Sources */,
+				E7AEA0BA22DFCC3A00A77CC2 /* Chat.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

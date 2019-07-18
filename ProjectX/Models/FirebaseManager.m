@@ -10,7 +10,7 @@
 
 @implementation FirebaseManager
 
-#pragma mark Singleton Methods
+#pragma mark - Singleton Methods
 
 + (id)sharedManager {
     static FirebaseManager *sharedMyManager = nil;
