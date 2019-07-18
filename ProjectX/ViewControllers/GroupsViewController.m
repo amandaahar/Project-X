@@ -29,12 +29,10 @@
     
     [[FirebaseManager sharedManager] getCurrentUser:^(User * _Nonnull user, NSError * _Nonnull error) {
         if(error != nil) {
-            NSLog(@"in if");
+            //NSLog(@"in if");
         }else {
             self.currentUser = user;
             // self.chats = self.currentUser.chats;
-            NSLog(@"%@ hello", self.chats);
-            NSLog(@"%@hello2", self.chats[0]);
             for (FIRDocumentReference *chat in self.currentUser.chats) {
                 [chat getDocumentWithCompletion:^(FIRDocumentSnapshot *snapshot, NSError *error) {
                     if (snapshot.exists) {
@@ -49,9 +47,6 @@
             
         }
     }];
-    
-    NSLog(@"after firebase");
-     
 }
 
 /*

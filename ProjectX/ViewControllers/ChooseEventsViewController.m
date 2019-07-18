@@ -17,7 +17,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *eventName;
 @property (weak, nonatomic) IBOutlet UILabel *Eventdescription;
 @property (nonatomic, readwrite) FIRFirestore *db;
-//@property (strong, nonatomic) FIRDatabaseReference *ref;
+@property (weak, nonatomic) IBOutlet UIView *card;
 @property (strong, nonatomic) NSArray *eventArray;
 
 @end
@@ -28,13 +28,6 @@
     [super viewDidLoad];
     [self fetchEvents];
     self.eventArray = [NSArray new];
-    UISwipeGestureRecognizer *left = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(PerformAction:)];
-    left.direction = UISwipeGestureRecognizerDirectionLeft;
-    [self.view addGestureRecognizer:left];
-    
-    UISwipeGestureRecognizer *right = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(PerformAction:)];
-    right.direction = UISwipeGestureRecognizerDirectionRight;
-    [self.view addGestureRecognizer:right];
 }
 
 - (void) fetchEvents {
@@ -52,70 +45,67 @@
             self.Eventdescription.text = myEvent.descriptionEvent;
             self.eventArray = event;
             
-            /*
-             FIRUser *currentUser = [FIRUser currentUser];
-             self.eventName.text = [currentUser username];
-             self.ref = [[FIRDatabase database] reference];
-             NSString *key = [[self.ref child:@"posts"] childByAutoId].key;
-             NSDictionary *post = @{@"eventDate": self.eventDate,
-             @"numAttendees": self.numAttendees,
-             @"name": self.eventName,
-             @"description": self.Eventdescription};
-             NSDictionary *childUpdates = @{[@"/Event/" stringByAppendingString:key]: post,
-             [NSString stringWithFormat:@"/user-posts/%@/", key]: post};
-             [self.ref updateChildValues:childUpdates];
-             */
+            self.card.layer.cornerRadius = 15;
+            self.card.layer.masksToBounds = true;
         }
     }];
 }
 
--(void)PerformAction:(UISwipeGestureRecognizer *)sender {
+- (IBAction)didPan:(UIPanGestureRecognizer *)sender {
     
-    if (sender.direction == UISwipeGestureRecognizerDirectionLeft) {
-        NSLog(@"LEFT GESTURE");
-        
-        /*
-        FIRDocumentReference *EventRef =
-        [[self.db collectionWithPath:@"Event"] documentWithPath:[[[FIRAuth auth] currentUser] uid]];
-        
-        // Atomically add a new region to the "regions" array field.
-        [EventRef updateData:@{@"Users": [FIRFieldValue fieldValueForArrayUnion:@[@"Danny"]]
-                                    }];
-        
-        // Atomically remove a new region to the "regions" array field.
-        [EventRef updateData:@{@"Users": [FIRFieldValue fieldValueForArrayRemove:@[@"San Fran hiking"]]
-                               }];
-        */
-        //[NSMutableArray replaceObjectAtIndex:index withObject:[NSNull null]];
-        
-
-        NSMutableArray * tempArray = [self.eventArray mutableCopy];
-        /*
-         for (Event *myEvent in self.myEvent2){
-            //[tempArray removeObject: myEvent]; //Make sure to delete just one element in array not all!
-            [tempArray removeObjectAtIndex:0];
-            NSLog(@"%@", tempArray);
-            NSLog(@"Inside for");
+    CGPoint translation = [sender translationInView:sender.view.superview];
+    sender.view.center = CGPointMake(sender.view.center.x + translation.x, sender.view.center.y + translation.y);
+    [sender setTranslation:CGPointMake(0.0, 0.0) inView:sender.view.superview];
+    
+    
+    if(sender.state == UIGestureRecognizerStateEnded) {
+        if (self.card.center.x < 75) {
+            //Move to left side
+            [UIView animateWithDuration:0.3 animations:^{
+                self.card.center = CGPointMake(self.card.center.x - 200, self.card.center.y + 75);
+            }];
+            
+            NSLog(@"LEFT GESTURE");
+            [self nextEvent];
+            [self resetCard];
         }
-         */
-        //NSMutableArray * tempArray = [tempArray removeLastObject];
         
-        [tempArray removeObjectAtIndex:0];
+        else if ((self.card.center.x) > (self.card.frame.size.width - 75)){
+            //move off to right side
+            [UIView animateWithDuration:0.3 animations:^{
+                self.card.center = CGPointMake(self.card.center.x + 200, self.card.center.y + 75);
+            }];
+            
+            NSLog(@"RIGHT GESTURE");
+            [self nextEvent];
+            self.tabBarController.selectedIndex = 2;
+        }
         
-        self.eventArray = tempArray;
-        NSLog(@"inside if");
-        Event *nextEvent = self.eventArray.firstObject;
-        //self.myEvent2 = nextEvent;
-        //self.eventDate = nextEvent.date;
-        self.numAttendees.text = [NSString stringWithFormat:@"%@", nextEvent.attendees];
-        self.eventName.text = nextEvent.name;
-        self.Eventdescription.text = nextEvent.descriptionEvent;
+        else {
+            [self resetCard];
+        }
+    }
+}
 
-    }
-    else if(sender.direction == UISwipeGestureRecognizerDirectionRight) {
-        NSLog(@"RIGHT GESTURE");
-        self.tabBarController.selectedIndex = 2;
-    }
+- (void) nextEvent {
+    NSMutableArray * tempArray = [self.eventArray mutableCopy];
+    [tempArray removeObjectAtIndex:0];
+    self.eventArray = tempArray;
+    Event *nextEvent = self.eventArray.firstObject;
+    //self.eventDate = nextEvent.date;
+    self.numAttendees.text = [NSString stringWithFormat:@"%@", nextEvent.attendees];
+    self.eventName.text = nextEvent.name;
+    self.Eventdescription.text = nextEvent.descriptionEvent;
+}
+
+- (void) resetCard {
+    [UIView animateWithDuration:0.65 animations:^{
+        [self.card setCenter:self.view.center];
+    }];
+}
+
+- (void) viewDidAppear:(BOOL)animated {
+    [self resetCard];
 }
 
 /*
