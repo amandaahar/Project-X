@@ -9,9 +9,11 @@
 #import "EventsFeedViewController.h"
 #import "../Models/APIEventsManager.h"
 #import "../Models/EventAPI.h"
+
 #import "../Cells/GroupEventsTableViewCell.h"
 @import CoreLocation;
 @interface EventsFeedViewController () <UITableViewDelegate, UITableViewDataSource,CLLocationManagerDelegate>
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityView;
 @property (weak, nonatomic) IBOutlet UITableView *tableViewEventCategories;
 @property (strong, nonatomic) NSMutableArray *events;
 @property (strong, nonatomic) NSMutableArray *topEvents;
@@ -25,10 +27,13 @@ CLLocation *currentLocation;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self.activityView setHidden:NO];
+    [self.activityView startAnimating];
     self.tableViewEventCategories.delegate = self;
     self.tableViewEventCategories.dataSource = self;
     self.events = [NSMutableArray new];
     self.categories = [NSMutableArray new];
+    self.navigationItem.titleView = [self setTitle:@"Explore" subtitle:@"FRIDAY 6 NOVEMBER"];
     [self currentLocationIdentifier]; // call this method
 //    [[APIEventsManager sharedManager] getEventsByLocation:@"" longitude:@"" completion:^(NSArray * _Nonnull eventsEventbrite, NSArray * _Nonnull eventsTicketmaster, NSError * _Nonnull error) {
 //
@@ -76,7 +81,7 @@ CLLocation *currentLocation;
      
 -(void)currentLocationIdentifier
 {
-    //---- For getting current gps location
+
     locationManager = [CLLocationManager new];
     [locationManager requestWhenInUseAuthorization];
     locationManager.delegate = self;
@@ -87,7 +92,7 @@ CLLocation *currentLocation;
     [self fetchArrayEvents];
     [locationManager startUpdatingLocation];
     
-    //------
+
 }
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
@@ -96,36 +101,6 @@ CLLocation *currentLocation;
     CLGeocoder *geocoder = [[CLGeocoder alloc] init] ;
     [geocoder reverseGeocodeLocation:currentLocation completionHandler:^(NSArray *placemarks, NSError *error)
      {
-         if (!(error))
-         {
-             
-//             CLPlacemark *placemark = [placemarks objectAtIndex:0];
-//             NSLog(@"\nCurrent Location Detected\n");
-//             NSLog(@"placemark %@",placemark);
-//             NSString *locatedAt = [[placemark.addressDictionary valueForKey:@"FormattedAddressLines"] componentsJoinedByString:@", "];
-//             NSString *Address = [[NSString alloc]initWithString:locatedAt];
-//             NSString *Area = [[NSString alloc]initWithString:placemark.locality];
-//             NSString *Country = [[NSString alloc]initWithString:placemark.country];
-//             NSString *CountryArea = [NSString stringWithFormat:@"%@, %@", Area,Country];
-//             NSLog(@"%@",CountryArea);
-         }
-         else
-         {
-             NSLog(@"Geocode failed with error %@", error);
-             NSLog(@"\nCurrent Location Not Detected\n");
-             //return;
-             //CountryArea = NULL;
-         }
-         /*---- For more results
-          placemark.region);
-          placemark.country);
-          placemark.locality);
-          placemark.name);
-          placemark.ocean);
-          placemark.postalCode);
-          placemark.subLocality);
-          placemark.location);
-          ------*/
      }];
 }
 
@@ -133,10 +108,16 @@ CLLocation *currentLocation;
 {
     for(NSDictionary *category in self.categories)
     {
+       
         [[APIEventsManager sharedManager] getEventsByLocation:[NSString stringWithFormat:@"%f", currentLocation.coordinate.latitude]  longitude:[NSString stringWithFormat:@"%f", currentLocation.coordinate.longitude] category:category[@"id"] shortName:category[@"short_name"] completion:^(NSArray * _Nonnull eventsEventbrite, NSArray * _Nonnull eventsTicketmaster, NSError * _Nonnull error) {
             if(error == nil)
             {
+                
+                [self.activityView stopAnimating];
+                [self.activityView setHidden:YES];
                 NSLog(@"%@",eventsTicketmaster);
+                
+            
                     NSMutableArray *arrayCategory = [NSMutableArray new];
                     for(NSDictionary * eventbriteDic in eventsEventbrite)
                     {
@@ -149,9 +130,8 @@ CLLocation *currentLocation;
                             [arrayCategory addObject:[[EventAPI alloc] initWithInfo:eventbriteDic[@"name"][@"text"] :eventbriteDic[@"summary"] :eventbriteDic[@"id"] :eventbriteDic[@"start"][@"local"] : url]];
                         } @catch (NSException *exception) {
                             [arrayCategory addObject:[[EventAPI alloc] initWithInfo:eventbriteDic[@"name"][@"text"] :eventbriteDic[@"summary"] :eventbriteDic[@"id"] :eventbriteDic[@"start"][@"local"] : @"https://www.daviespaints.com.ph/wp-content/uploads/img/color-ideas/1008-colors/2036P.png"]];
-                        } @finally {
-                           [arrayCategory addObject:[[EventAPI alloc] initWithInfo:eventbriteDic[@"name"][@"text"] :eventbriteDic[@"summary"] :eventbriteDic[@"id"] :eventbriteDic[@"start"][@"local"] : @"https://www.daviespaints.com.ph/wp-content/uploads/img/color-ideas/1008-colors/2036P.png"]];
-                        }
+                        } 
+                        
                 
                         
                         
@@ -160,23 +140,71 @@ CLLocation *currentLocation;
                     {
                         [arrayCategory addObject:[[EventAPI alloc] initWithInfo:ticketmasterDic[@"name"] :ticketmasterDic[@"name"] :ticketmasterDic[@"id"] :ticketmasterDic[@"dates"][@"start"][@"dateTime"] :ticketmasterDic[@"images"][0][@"url"]]];
                     }
-                    [self.events addObject:arrayCategory];
-                    [self.tableViewEventCategories reloadData];
                 
-                }
-
+                [self.events addObject:arrayCategory];
+                [self.tableViewEventCategories reloadData];
+            }
             }
         ];
-//                            [[APIEventsManager sharedManager] getEventsByLocation:[NSString stringWithFormat:@"%f", currentLocation.coordinate.latitude] longitude:[NSString stringWithFormat:@"%f", currentLocation.coordinate.longitude] category:category[@"id"] completion:^(NSArray * _Nonnull eventsEventbrite, NSArray * _Nonnull eventsTicketmaster, NSError * _Nonnull error) {
-//                                if(error == nil)
-//                                {
-//
-//                                }
-//
-//                             ];
+
     }
     
 
+}
+
+
+
+-(UIView *) setTitle: (NSString *) title subtitle:(NSString *) subtitle
+{
+    int navigationBarHeight = self.navigationController.navigationBar.frame.size.height;
+    int navigationBarWidth = self.navigationController.navigationBar.frame.size.width;
+    
+    double y_Title = 0.0;
+    double y_Subtitle = 0.0;
+    
+    if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+    {
+        switch ((int)UIScreen.mainScreen.nativeBounds.size.height) {
+            case 1136:
+                y_Title = 46;
+                y_Subtitle = 36;
+                
+                break;
+            case 1334:
+            case 1920:
+            case 2208:
+            case 2436:
+                y_Title = 48;
+                y_Subtitle = 38;
+                break;
+            default:
+                y_Title = 46;
+                y_Subtitle = 36;
+                break;
+        }
+    }
+    UIFont * titleFont = [UIFont systemFontOfSize:33 weight:(UIFontWeightBold)];
+    UIFont * subTitleFont = [UIFont systemFontOfSize:12 weight:(UIFontWeightSemibold)];
+    
+    UILabel * titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(8.5, y_Title, 0, 0)];
+    [titleLabel setBackgroundColor:UIColor.clearColor];
+    [titleLabel setTextColor:UIColor.blackColor];
+    [titleLabel setFont:titleFont];
+    [titleLabel setText:title];
+    [titleLabel sizeToFit];
+    
+    UILabel * subTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(8.5, y_Subtitle, 0, 0)];
+    [subTitleLabel setBackgroundColor:UIColor.clearColor];
+    [subTitleLabel setTextColor:UIColor.blackColor];
+    [subTitleLabel setFont:subTitleFont];
+    [subTitleLabel setText:subtitle];
+    [subTitleLabel sizeToFit];
+    
+    UIView * titleView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, navigationBarWidth, navigationBarHeight)];
+    [titleView addSubview:titleLabel];
+    [titleView addSubview:subTitleLabel];
+    return titleView;
+    
 }
 
 
@@ -184,11 +212,18 @@ CLLocation *currentLocation;
 
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
     NSString *identifier = @"cellGrouped";
+   
     GroupEventsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if(!cell)
     {
         [tableView registerNib:[UINib nibWithNibName:@"GroupEventsTableViewCell" bundle:nil] forCellReuseIdentifier:@"cellGrouped"];
         cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    }
+    if(indexPath.section == 0)
+    {
+        cell.fullView = YES;
+    }else{
+        cell.fullView = NO;
     }
     cell.groupedEvents = self.events[indexPath.section];
     [cell.collectionViewGroupsEvents reloadData];

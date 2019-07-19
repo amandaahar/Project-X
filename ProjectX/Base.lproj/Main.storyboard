@@ -87,7 +87,7 @@
             </objects>
             <point key="canvasLocation" x="-2898" y="672"/>
         </scene>
-        <!--Explore-->
+        <!--Events Feed View Controller-->
         <scene sceneID="6CN-be-upY">
             <objects>
                 <viewController id="b5a-C1-RtS" customClass="EventsFeedViewController" sceneMemberID="viewController">
@@ -156,16 +156,21 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Q1Z-C1-Jyz">
+                                <rect key="frame" x="177" y="122" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="Dz6-yb-0uT"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Explore" id="Yon-vz-xcX">
-                        <barButtonItem key="rightBarButtonItem" image="location" style="done" id="ocD-vg-4bW">
+                    <navigationItem key="navigationItem" id="48O-Vc-oIf">
+                        <barButtonItem key="rightBarButtonItem" image="location" style="done" id="iev-zV-zaq">
                             <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="activityView" destination="Q1Z-C1-Jyz" id="voy-vS-tOb"/>
                         <outlet property="tableViewEventCategories" destination="TYc-FE-sM2" id="Xgm-l5-ARW"/>
                     </connections>
                 </viewController>

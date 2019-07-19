@@ -13,6 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface GroupEventsTableViewCell : UITableViewCell <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionViewGroupsEvents;
 @property (strong, nonatomic) NSArray *groupedEvents;
+@property (assign, nonatomic) BOOL  fullView;
+
 @end
 
 NS_ASSUME_NONNULL_END
