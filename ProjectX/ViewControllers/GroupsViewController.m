@@ -47,6 +47,7 @@
     
     [[FirebaseManager sharedManager] getCurrentUser:^(User * _Nonnull user, NSError * _Nonnull error) {
         if(error != nil) {
+<<<<<<< HEAD
             NSLog(@"Error getting user");
         } else {
             self.currentUser = user;
@@ -55,6 +56,14 @@
                 [chatDoc getDocumentWithCompletion:^(FIRDocumentSnapshot *snapshot, NSError *error) {
                     Chat *chat = [[Chat alloc] initWithDictionary:snapshot.data];
                     NSLog(@"%@", snapshot.data);
+=======
+            //NSLog(@"in if");
+        }else {
+            self.currentUser = user;
+            // self.chats = self.currentUser.chats;
+            for (FIRDocumentReference *chat in self.currentUser.chats) {
+                [chat getDocumentWithCompletion:^(FIRDocumentSnapshot *snapshot, NSError *error) {
+>>>>>>> 043a2c0fbccb54e0749a9b07ec1dc3309772a473
                     if (snapshot.exists) {
                         // [self.chats arrayByAddingObject:<#(nonnull id)#>]
                         
@@ -86,6 +95,7 @@
             
         }
     }];
+<<<<<<< HEAD
     
     NSLog(@"num of chats in array%zd", self.chats.count);
 }
@@ -96,6 +106,8 @@
             [self.chats removeObject:chat];
         }
     }
+=======
+>>>>>>> 043a2c0fbccb54e0749a9b07ec1dc3309772a473
 }
 
 /*
