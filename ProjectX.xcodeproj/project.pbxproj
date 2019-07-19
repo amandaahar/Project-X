@@ -20,6 +20,8 @@
 		E7AEA0B722DF9D7700A77CC2 /* EditProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AEA0B622DF9D7700A77CC2 /* EditProfileViewController.m */; };
 		E7AEA0BA22DFCC3A00A77CC2 /* Chat.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AEA0B922DFCC3A00A77CC2 /* Chat.m */; };
 		E7AEA0BE22DFD8BC00A77CC2 /* GroupTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AEA0BD22DFD8BC00A77CC2 /* GroupTableViewCell.m */; };
+		EA3A502422E0F2FC004F2FFD /* HomeFeedTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3A502222E0F2FC004F2FFD /* HomeFeedTableViewCell.m */; };
+		EA3A502522E0F2FC004F2FFD /* HomeFeedTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA3A502322E0F2FC004F2FFD /* HomeFeedTableViewCell.xib */; };
 		EA54ECE622DE3F3800D0D7A2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EA54ECE522DE3F3800D0D7A2 /* AppDelegate.m */; };
 		EA54ECEC22DE3F3800D0D7A2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA54ECEA22DE3F3800D0D7A2 /* Main.storyboard */; };
 		EA54ECEF22DE3F3800D0D7A2 /* ProjectX.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EA54ECED22DE3F3800D0D7A2 /* ProjectX.xcdatamodeld */; };
@@ -34,6 +36,8 @@
 		EA54ED2822DEE23900D0D7A2 /* FirebaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EA54ED2722DEE23900D0D7A2 /* FirebaseManager.m */; };
 		EA54ED2E22DFBA2700D0D7A2 /* APIEventsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EA54ED2D22DFBA2700D0D7A2 /* APIEventsManager.m */; };
 		EA54ED3022DFD1D800D0D7A2 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA54ED2F22DFD1D800D0D7A2 /* CoreLocation.framework */; };
+		EA73F81322E10AE200385689 /* CategoriesCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA73F81122E10AE200385689 /* CategoriesCollectionViewCell.m */; };
+		EA73F81D22E11B4700385689 /* GroupEventsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA73F81B22E11B4700385689 /* GroupEventsTableViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +87,9 @@
 		E7AEA0B922DFCC3A00A77CC2 /* Chat.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Chat.m; sourceTree = "<group>"; };
 		E7AEA0BC22DFD8BC00A77CC2 /* GroupTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GroupTableViewCell.h; sourceTree = "<group>"; };
 		E7AEA0BD22DFD8BC00A77CC2 /* GroupTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GroupTableViewCell.m; sourceTree = "<group>"; };
+		EA3A502122E0F2FC004F2FFD /* HomeFeedTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HomeFeedTableViewCell.h; path = ProjectX/Cells/HomeFeedTableViewCell.h; sourceTree = SOURCE_ROOT; };
+		EA3A502222E0F2FC004F2FFD /* HomeFeedTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = HomeFeedTableViewCell.m; path = ProjectX/Cells/HomeFeedTableViewCell.m; sourceTree = SOURCE_ROOT; };
+		EA3A502322E0F2FC004F2FFD /* HomeFeedTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = HomeFeedTableViewCell.xib; path = ProjectX/Cells/HomeFeedTableViewCell.xib; sourceTree = SOURCE_ROOT; };
 		EA54ECE122DE3F3800D0D7A2 /* ProjectX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProjectX.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA54ECE422DE3F3800D0D7A2 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		EA54ECE522DE3F3800D0D7A2 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -108,6 +115,10 @@
 		EA54ED2C22DFBA2700D0D7A2 /* APIEventsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APIEventsManager.h; sourceTree = "<group>"; };
 		EA54ED2D22DFBA2700D0D7A2 /* APIEventsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APIEventsManager.m; sourceTree = "<group>"; };
 		EA54ED2F22DFD1D800D0D7A2 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		EA73F81022E10AE200385689 /* CategoriesCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CategoriesCollectionViewCell.h; sourceTree = "<group>"; };
+		EA73F81122E10AE200385689 /* CategoriesCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CategoriesCollectionViewCell.m; sourceTree = "<group>"; };
+		EA73F81A22E11B4700385689 /* GroupEventsTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GroupEventsTableViewCell.h; sourceTree = "<group>"; };
+		EA73F81B22E11B4700385689 /* GroupEventsTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GroupEventsTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -193,6 +204,20 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		EA3A502622E1006B004F2FFD /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				EA3A502122E0F2FC004F2FFD /* HomeFeedTableViewCell.h */,
+				EA3A502222E0F2FC004F2FFD /* HomeFeedTableViewCell.m */,
+				EA3A502322E0F2FC004F2FFD /* HomeFeedTableViewCell.xib */,
+				EA73F81022E10AE200385689 /* CategoriesCollectionViewCell.h */,
+				EA73F81122E10AE200385689 /* CategoriesCollectionViewCell.m */,
+				EA73F81A22E11B4700385689 /* GroupEventsTableViewCell.h */,
+				EA73F81B22E11B4700385689 /* GroupEventsTableViewCell.m */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 		EA54ECD822DE3F3800D0D7A2 = {
 			isa = PBXGroup;
 			children = (
@@ -218,7 +243,7 @@
 		EA54ECE322DE3F3800D0D7A2 /* ProjectX */ = {
 			isa = PBXGroup;
 			children = (
-				EA54ED3122DFEF2A00D0D7A2 /* CustomCell */,
+				EA3A502622E1006B004F2FFD /* Cells */,
 				E7AEA0BB22DFD88C00A77CC2 /* Views */,
 				EA54ED2222DE867D00D0D7A2 /* Models */,
 				0ECF088622DE78CB00F5A8AA /* ViewControllers */,
@@ -270,13 +295,6 @@
 				E7AEA0B922DFCC3A00A77CC2 /* Chat.m */,
 			);
 			path = Models;
-			sourceTree = "<group>";
-		};
-		EA54ED3122DFEF2A00D0D7A2 /* CustomCell */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = CustomCell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -388,6 +406,7 @@
 			files = (
 				EA54ECF422DE3F3900D0D7A2 /* LaunchScreen.storyboard in Resources */,
 				EA54ED1E22DE674000D0D7A2 /* GoogleService-Info.plist in Resources */,
+				EA3A502522E0F2FC004F2FFD /* HomeFeedTableViewCell.xib in Resources */,
 				EA54ECF122DE3F3900D0D7A2 /* Assets.xcassets in Resources */,
 				EA54ECEC22DE3F3800D0D7A2 /* Main.storyboard in Resources */,
 			);
@@ -506,8 +525,10 @@
 				E7AEA0AC22DE8C8A00A77CC2 /* GroupsViewController.m in Sources */,
 				E77FCBFE22E0DFF100A4E3AC /* EventAPI.m in Sources */,
 				EA54ED2E22DFBA2700D0D7A2 /* APIEventsManager.m in Sources */,
+				EA73F81D22E11B4700385689 /* GroupEventsTableViewCell.m in Sources */,
 				EA54ECE622DE3F3800D0D7A2 /* AppDelegate.m in Sources */,
 				E7AEA0A922DE8C4400A77CC2 /* EventsFeedViewController.m in Sources */,
+				EA3A502422E0F2FC004F2FFD /* HomeFeedTableViewCell.m in Sources */,
 				EA54ECF722DE3F3900D0D7A2 /* main.m in Sources */,
 				EA54ED2122DE819900D0D7A2 /* User.m in Sources */,
 				0ECF088D22DE792900F5A8AA /* LogInViewController.m in Sources */,
@@ -517,6 +538,7 @@
 				EA54ECEF22DE3F3800D0D7A2 /* ProjectX.xcdatamodeld in Sources */,
 				EA54ED2522DE9E3600D0D7A2 /* Event.m in Sources */,
 				E7AEA0BA22DFCC3A00A77CC2 /* Chat.m in Sources */,
+				EA73F81322E10AE200385689 /* CategoriesCollectionViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
