@@ -10,12 +10,16 @@
 #import "../Models/FirebaseManager.h"
 #import "GroupTableViewCell.h"
 #import "Chat.h"
+#import "Event.h"
+
 
 
 @interface GroupsViewController () <UITableViewDelegate, UITableViewDataSource>
-@property (nonatomic, strong) NSArray *chats;
+@property (nonatomic, strong) NSMutableArray *chats;
 @property (weak, nonatomic) IBOutlet UITableView *chatsTableView;
 @property (nonatomic, strong) User *currentUser;
+@property (nonatomic, readwrite) FIRFirestore *db;
+
 
 @end
 
@@ -23,23 +27,45 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    // [self.chatsTableView reloadData];
+    self.db = [FIRFirestore firestore];
+    [self getChats];
     
     self.chatsTableView.dataSource = self;
     self.chatsTableView.delegate = self;
     
+    self.chats = [[NSMutableArray alloc] init];
+    
+    
+    
+    
+    
+    NSLog(@"after firebase");
+     
+}
+
+-(void) getChats {
     [[FirebaseManager sharedManager] getCurrentUser:^(User * _Nonnull user, NSError * _Nonnull error) {
         if(error != nil) {
-            NSLog(@"in if");
-        }else {
+            NSLog(@"Error getting user");
+        } else {
             self.currentUser = user;
-            // self.chats = self.currentUser.chats;
-            NSLog(@"%@ hello", self.chats);
-            NSLog(@"%@hello2", self.chats[0]);
-            for (FIRDocumentReference *chat in self.currentUser.chats) {
-                [chat getDocumentWithCompletion:^(FIRDocumentSnapshot *snapshot, NSError *error) {
+            for (FIRDocumentReference *chatDoc in self.currentUser.chats) {
+                [chatDoc getDocumentWithCompletion:^(FIRDocumentSnapshot *snapshot, NSError *error) {
                     if (snapshot.exists) {
                         // [self.chats arrayByAddingObject:<#(nonnull id)#>]
-                        NSLog(@"Document w data: %@", snapshot.data);
+                        Chat *chat = [[Chat alloc] initWithDictionary:snapshot.data];
+                        // NSString *imageURL = [[NSString alloc]init];
+                        
+                    
+                        
+                        [self.chats addObject:chat];
+                        [self.chatsTableView reloadData];
+                        
+                        NSLog(@"chat array: %@", self.chats);
+                        NSLog(@"chat w data: %@", chat);
+                        
+                        //NSLog(@"Document w data: %@", snapshot.data);
                     } else {
                         NSLog(@"no data");
                     }
@@ -50,8 +76,6 @@
         }
     }];
     
-    NSLog(@"after firebase");
-     
 }
 
 /*
@@ -65,7 +89,26 @@
 */
 
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
-    GroupTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"GroupsCell"];
+    GroupTableViewCell *cell = [self.chatsTableView dequeueReusableCellWithIdentifier:@"GroupsCell"];
+    
+    Chat *chat = self.chats[indexPath.row];
+    
+    
+    [chat getEventForChat:^(Event *event, NSError *error) {
+        if (error != nil) {
+            NSLog(@"Error getting event");
+        } else {
+            
+            [cell setImage:event.pictures[0]];
+            
+        }
+        
+    }];
+    
+    
+
+    [cell setNameOfChatText:chat.name];
+    
     
     return cell;
 }

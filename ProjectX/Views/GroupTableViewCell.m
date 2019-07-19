@@ -8,6 +8,7 @@
 
 #import "GroupTableViewCell.h"
 #import "Chat.h"
+#import "UIImageView+AFNetworking.h"
 
 @interface GroupTableViewCell()
 @property (nonatomic, strong) Chat *chat;
@@ -31,4 +32,17 @@
     // Configure the view for the selected state
 }
 
+-(NSString *)getNameOfChat {
+    return self.nameOfChat.text;
+}
+
+-(void)setNameOfChatText:(NSString *)nameOfChat {
+    self.nameOfChat.text = nameOfChat;
+}
+
+-(void) setImage: (NSString *) photoURL {
+    NSURL *imageURL = [NSURL URLWithString:photoURL];
+    [self.groupImage setImageWithURL:imageURL];
+    
+}
 @end

@@ -38,7 +38,6 @@
 
 - (void)getCurrentUser:(void(^)(User *user, NSError *error))completion
 {
-    
     FIRDocumentReference *docRef =
     [[database collectionWithPath:@"Users"] documentWithPath:@"DAhDAxEMoJNpOcjkaWe1cyevl9v2"];
     // [[database collectionWithPath:@"Users"] documentWithPath:[[[FIRAuth auth] currentUser] uid]];
@@ -72,8 +71,27 @@
      }];
 }
 
-
-
+//- (void)getEventForChatId:(void(^)(Event *event, NSError *error))completion forChatID:(NSString *)chatID {
+//    FIRCollectionReference *eventsRef = [database collectionWithPath:@"Events"];
+//    FIRQuery *eventForChatQuery = [eventsRef queryWhereField:@"chats" arrayContains:chatID];
+//    [eventForChatQuery getDocumentsWithCompletion:^(FIRQuerySnapshot * _Nullable snapshot, NSError * _Nullable error) {
+//        Event *theEvent;
+//        for (FIRDocumentSnapshot *document in snapshot.documents) {
+//            theEvent = [[Event alloc] initWithDictionary:document.data];
+//        }
+//        completion(theEvent, nil);
+//    }];
+//}
+//
+//
+//
+//-(Event *)getEventForChatId: (NSString *)chatID {
+//    FIRCollectionReference *eventsRef = [database collectionWithPath:@"Events"];
+//    FIRQuery *eventForChatQuery = [eventsRef queryWhereField:@"chats" arrayContains:chatID];
+//    Event * event = [[Event alloc] initWithDictionary:eventForChatQuery];
+//
+//}
+//
 
 
 
