@@ -11,6 +11,7 @@
 #import "GroupTableViewCell.h"
 #import "Chat.h"
 #import "Event.h"
+#import "User.h"
 
 
 
@@ -58,9 +59,11 @@
                         
                     
                         if (!chat.isExpired){
+                            NSLog(@"chat is not expired");
                             [self.chats addObject:chat];
                         }
                         //[self.chats addObject:chat];
+                        NSLog(@"chat is expired");
                         [self.chatsTableView reloadData];
                         
                         NSLog(@"chat array: %@", self.chats);
@@ -72,7 +75,6 @@
                     }
                 }];
             }
-            // FIRDocumentReference *chatRef = self.chats[0];
             
         }
     }];

@@ -9,6 +9,8 @@
 #import "ProfileViewController.h"
 #import "../Models/FirebaseManager.h"
 #import "UIImageView+AFNetworking.h"
+#import "User.h"
+
 @import Firebase;
 //@class FirebaseManager;
 @interface ProfileViewController ()

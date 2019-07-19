@@ -69,6 +69,7 @@
 		D45E39045F451DD5AAFB4ED8 /* Pods-ProjectX.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProjectX.debug.xcconfig"; path = "Target Support Files/Pods-ProjectX/Pods-ProjectX.debug.xcconfig"; sourceTree = "<group>"; };
 		E77FCBFC22E0DFF100A4E3AC /* EventAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventAPI.m; sourceTree = "<group>"; };
 		E77FCBFD22E0DFF100A4E3AC /* EventAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventAPI.h; sourceTree = "<group>"; };
+		E7A6133222E184EF00030D44 /* FirebaseManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FirebaseManager.h; sourceTree = "<group>"; };
 		E7AEA0A422DE8A8E00A77CC2 /* ProfileViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
 		E7AEA0A522DE8A8E00A77CC2 /* ProfileViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
 		E7AEA0A722DE8C4400A77CC2 /* EventsFeedViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EventsFeedViewController.h; sourceTree = "<group>"; };
@@ -103,7 +104,6 @@
 		EA54ED2022DE819900D0D7A2 /* User.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		EA54ED2322DE9E3600D0D7A2 /* Event.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
 		EA54ED2422DE9E3600D0D7A2 /* Event.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
-		EA54ED2622DEE23900D0D7A2 /* FirebaseManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FirebaseManager.h; sourceTree = "<group>"; };
 		EA54ED2722DEE23900D0D7A2 /* FirebaseManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FirebaseManager.m; sourceTree = "<group>"; };
 		EA54ED2C22DFBA2700D0D7A2 /* APIEventsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APIEventsManager.h; sourceTree = "<group>"; };
 		EA54ED2D22DFBA2700D0D7A2 /* APIEventsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APIEventsManager.m; sourceTree = "<group>"; };
@@ -262,7 +262,7 @@
 				EA54ED2022DE819900D0D7A2 /* User.m */,
 				EA54ED2322DE9E3600D0D7A2 /* Event.h */,
 				EA54ED2422DE9E3600D0D7A2 /* Event.m */,
-				EA54ED2622DEE23900D0D7A2 /* FirebaseManager.h */,
+				E7A6133222E184EF00030D44 /* FirebaseManager.h */,
 				EA54ED2722DEE23900D0D7A2 /* FirebaseManager.m */,
 				EA54ED2C22DFBA2700D0D7A2 /* APIEventsManager.h */,
 				EA54ED2D22DFBA2700D0D7A2 /* APIEventsManager.m */,

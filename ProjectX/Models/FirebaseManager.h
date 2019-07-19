@@ -7,10 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "User.h"
 #import "Event.h"
 NS_ASSUME_NONNULL_BEGIN
 @import Firebase;
+@class User;
 
 @interface FirebaseManager : NSObject {
     FIRFirestore *database;
@@ -19,7 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (id)sharedManager;
 - (void)getCurrentUser:(void(^)(User *user, NSError *error))completion;
 - (void)getEvent:(void(^)(NSArray *event, NSError *error))completion;
-- (Event *)getEventForChatId: (NSString *)chatID;
+
 @end
 
 NS_ASSUME_NONNULL_END

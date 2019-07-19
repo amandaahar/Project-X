@@ -8,6 +8,7 @@
 
 #import "Chat.h"
 #import "Event.h"
+#import "User.h"
 
 @implementation Chat
 
@@ -59,10 +60,14 @@
 
 
 -(BOOL) isExpired {
-    if ([self.createdAt compare:self.endAt] == 1) {
-        return true;
+    NSDate *today = [NSDate date];
+    if ([today compare:self.endAt] == NSOrderedDescending) {
+       //  NSLog(@"comparison result %d", [self.createdAt compare:self.endAt] == NSOrderedDescending);
+        
+        return YES;
+    } else {
+        return NO;
     }
-    return false;
 }
  
     
