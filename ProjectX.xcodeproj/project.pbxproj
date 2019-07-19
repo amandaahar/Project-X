@@ -15,6 +15,8 @@
 		7F2A7DC42E2A0127BBFFA154 /* Pods_ProjectX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C296CF13ED1DF49E87C0289 /* Pods_ProjectX.framework */; };
 		E76311B822E23E8E00A1B674 /* MessagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E76311B722E23E8E00A1B674 /* MessagesViewController.m */; };
 		E76311BB22E241BB00A1B674 /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = E76311BA22E241BB00A1B674 /* Message.m */; };
+		E76311BF22E2746400A1B674 /* topCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E76311BD22E2746400A1B674 /* topCollectionViewCell.xib */; };
+		E76311C022E2746400A1B674 /* topCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E76311BE22E2746400A1B674 /* topCollectionViewCell.m */; };
 		E77FCBFE22E0DFF100A4E3AC /* EventAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = E77FCBFC22E0DFF100A4E3AC /* EventAPI.m */; };
 		E7AEA0A622DE8A8E00A77CC2 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AEA0A522DE8A8E00A77CC2 /* ProfileViewController.m */; };
 		E7AEA0A922DE8C4400A77CC2 /* EventsFeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AEA0A822DE8C4400A77CC2 /* EventsFeedViewController.m */; };
@@ -79,6 +81,9 @@
 		E76311B722E23E8E00A1B674 /* MessagesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MessagesViewController.m; sourceTree = "<group>"; };
 		E76311B922E241BB00A1B674 /* Message.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
 		E76311BA22E241BB00A1B674 /* Message.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Message.m; sourceTree = "<group>"; };
+		E76311BC22E2746300A1B674 /* topCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = topCollectionViewCell.h; sourceTree = "<group>"; };
+		E76311BD22E2746400A1B674 /* topCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = topCollectionViewCell.xib; sourceTree = "<group>"; };
+		E76311BE22E2746400A1B674 /* topCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = topCollectionViewCell.m; sourceTree = "<group>"; };
 		E77FCBFC22E0DFF100A4E3AC /* EventAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventAPI.m; sourceTree = "<group>"; };
 		E77FCBFD22E0DFF100A4E3AC /* EventAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventAPI.h; sourceTree = "<group>"; };
 		E7A6133222E184EF00030D44 /* FirebaseManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FirebaseManager.h; sourceTree = "<group>"; };
@@ -219,6 +224,9 @@
 		EA3A502622E1006B004F2FFD /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				E76311BC22E2746300A1B674 /* topCollectionViewCell.h */,
+				E76311BE22E2746400A1B674 /* topCollectionViewCell.m */,
+				E76311BD22E2746400A1B674 /* topCollectionViewCell.xib */,
 				EA3A502122E0F2FC004F2FFD /* HomeFeedTableViewCell.h */,
 				EA3A502222E0F2FC004F2FFD /* HomeFeedTableViewCell.m */,
 				EA3A502322E0F2FC004F2FFD /* HomeFeedTableViewCell.xib */,
@@ -420,6 +428,7 @@
 			files = (
 				EA54ECF422DE3F3900D0D7A2 /* LaunchScreen.storyboard in Resources */,
 				EA54ED1E22DE674000D0D7A2 /* GoogleService-Info.plist in Resources */,
+				E76311BF22E2746400A1B674 /* topCollectionViewCell.xib in Resources */,
 				EA3A502522E0F2FC004F2FFD /* HomeFeedTableViewCell.xib in Resources */,
 				EA54ECF122DE3F3900D0D7A2 /* Assets.xcassets in Resources */,
 				EA54ECEC22DE3F3800D0D7A2 /* Main.storyboard in Resources */,
@@ -542,6 +551,7 @@
 				EA73F81D22E11B4700385689 /* GroupEventsTableViewCell.m in Sources */,
 				EA54ECE622DE3F3800D0D7A2 /* AppDelegate.m in Sources */,
 				E7AEA0A922DE8C4400A77CC2 /* EventsFeedViewController.m in Sources */,
+				E76311C022E2746400A1B674 /* topCollectionViewCell.m in Sources */,
 				E76311BB22E241BB00A1B674 /* Message.m in Sources */,
 				EA3A502422E0F2FC004F2FFD /* HomeFeedTableViewCell.m in Sources */,
 				EA54ECF722DE3F3900D0D7A2 /* main.m in Sources */,

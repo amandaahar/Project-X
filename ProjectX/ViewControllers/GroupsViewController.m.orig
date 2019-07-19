@@ -45,6 +45,10 @@
 -(void) getChats {
     [[FirebaseManager sharedManager] getCurrentUser:^(User * _Nonnull user, NSError * _Nonnull error) {
         if(error != nil) {
+<<<<<<< HEAD
+=======
+
+>>>>>>> 1680e217bb3b0750d8bc5c41077dcc9d9d4faf0f
             NSLog(@"Error getting user");
         } else {
             self.currentUser = user;
@@ -86,7 +90,10 @@
         }
         
     }];
+<<<<<<< HEAD
+}
 
+=======
 
 }
 -(void)removeExpiredChats {
@@ -97,6 +104,7 @@
     }
 
 }
+>>>>>>> 1680e217bb3b0750d8bc5c41077dcc9d9d4faf0f
 
 #pragma mark - Navigation
 
