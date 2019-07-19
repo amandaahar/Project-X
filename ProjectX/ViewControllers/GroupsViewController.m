@@ -51,34 +51,43 @@
         } else {
             self.currentUser = user;
             for (FIRDocumentReference *chatDoc in self.currentUser.chats) {
+                NSLog(@"loopxyz");
                 [chatDoc getDocumentWithCompletion:^(FIRDocumentSnapshot *snapshot, NSError *error) {
+                    Chat *chat = [[Chat alloc] initWithDictionary:snapshot.data];
+                    NSLog(@"%@", snapshot.data);
                     if (snapshot.exists) {
                         // [self.chats arrayByAddingObject:<#(nonnull id)#>]
-                        Chat *chat = [[Chat alloc] initWithDictionary:snapshot.data];
+                        
                         // NSString *imageURL = [[NSString alloc]init];
                         
-                    
+                        // [self.chats addObject:chat];
                         if (!chat.isExpired){
                             NSLog(@"chat is not expired");
                             [self.chats addObject:chat];
+                        } else {
+                             NSLog(@"chat is expired");
                         }
                         //[self.chats addObject:chat];
-                        NSLog(@"chat is expired");
+                       
                         [self.chatsTableView reloadData];
                         
                         NSLog(@"chat array: %@", self.chats);
-                        NSLog(@"chat w data: %@", chat);
+                        //NSLog(@"chat w data: %@", chat);
                         
                         //NSLog(@"Document w data: %@", snapshot.data);
                     } else {
                         NSLog(@"no data");
+                        NSLog(@"2nd chat%@", chat.name);
                     }
                 }];
             }
+           
+            NSLog(@"end loop");
             
         }
     }];
     
+    NSLog(@"num of chats in array%zd", self.chats.count);
 }
 
 -(void)removeExpiredChats {
@@ -120,6 +129,7 @@
         }
         
     }];
+     
     
     
 
