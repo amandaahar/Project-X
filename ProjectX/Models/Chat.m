@@ -14,7 +14,7 @@
 
 #pragma mark - Chat Initializer
 -(instancetype) init {
-    NSDictionary *defaultDictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"",@"createdAt",@"",@"endAt",@"",@"name", @"", @"users",@"", @"event",nil];
+    NSDictionary *defaultDictionary = [NSDictionary dictionaryWithObjectsAndKeys:[NSDate new],@"createdAt",[NSDate new],@"endAt",@"",@"name", @[], @"users",@"", @"event",nil];
     self = [self initWithDictionary:defaultDictionary];
     return self;
 }

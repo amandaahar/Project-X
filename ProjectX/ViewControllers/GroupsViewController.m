@@ -12,6 +12,7 @@
 #import "Chat.h"
 #import "Event.h"
 #import "User.h"
+#import "MessagesViewController.h"
 
 
 
@@ -42,12 +43,8 @@
 }
 
 -(void) getChats {
-    // [self removeExpiredChats];
-    
-    
     [[FirebaseManager sharedManager] getCurrentUser:^(User * _Nonnull user, NSError * _Nonnull error) {
         if(error != nil) {
-<<<<<<< HEAD
             NSLog(@"Error getting user");
         } else {
             self.currentUser = user;
@@ -56,14 +53,7 @@
                 [chatDoc getDocumentWithCompletion:^(FIRDocumentSnapshot *snapshot, NSError *error) {
                     Chat *chat = [[Chat alloc] initWithDictionary:snapshot.data];
                     NSLog(@"%@", snapshot.data);
-=======
-            //NSLog(@"in if");
-        }else {
-            self.currentUser = user;
-            // self.chats = self.currentUser.chats;
-            for (FIRDocumentReference *chat in self.currentUser.chats) {
-                [chat getDocumentWithCompletion:^(FIRDocumentSnapshot *snapshot, NSError *error) {
->>>>>>> 043a2c0fbccb54e0749a9b07ec1dc3309772a473
+
                     if (snapshot.exists) {
                         // [self.chats arrayByAddingObject:<#(nonnull id)#>]
                         
@@ -95,30 +85,22 @@
             
         }
     }];
-<<<<<<< HEAD
-    
-    NSLog(@"num of chats in array%zd", self.chats.count);
 }
 
--(void)removeExpiredChats {
-    for (Chat *chat in self.chats) {
-        if(chat.isExpired) {
-            [self.chats removeObject:chat];
-        }
-    }
-=======
->>>>>>> 043a2c0fbccb54e0749a9b07ec1dc3309772a473
-}
 
-/*
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    UITableViewCell *tappedCell = sender;
+    NSIndexPath *indexPath = [self.chatsTableView indexPathForCell:tappedCell];
+    Chat *chatToPass = self.chats[indexPath.row];
+    MessagesViewController *messagesViewController = [segue destinationViewController];
+    
+    [messagesViewController setChat:chatToPass];
+    
 }
-*/
+
 
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
     GroupTableViewCell *cell = [self.chatsTableView dequeueReusableCellWithIdentifier:@"GroupsCell"];
