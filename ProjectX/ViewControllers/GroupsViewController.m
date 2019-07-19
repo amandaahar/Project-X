@@ -84,9 +84,20 @@
             NSLog(@"end loop");
             
         }
+        
     }];
-}
 
+
+}
+-(void)removeExpiredChats {
+    for (Chat *chat in self.chats) {
+        if(chat.isExpired) {
+            [self.chats removeObject:chat];
+        }
+    }
+
+}
+>>>>>>> 1680e217bb3b0750d8bc5c41077dcc9d9d4faf0f
 
 #pragma mark - Navigation
 

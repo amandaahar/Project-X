@@ -8,6 +8,8 @@
 
 #import "GroupEventsTableViewCell.h"
 #import "CategoriesCollectionViewCell.h"
+#import "../Models/EventAPI.h"
+#import "topCollectionViewCell.h"
 @implementation GroupEventsTableViewCell
 
 - (void)awakeFromNib {
@@ -32,6 +34,22 @@
     
     
     NSString * identifier = @"categoryCell";
+    if(self.fullView)
+    {
+        NSString * newIdentifier = @"topCell";
+
+        topCollectionViewCell *cellCollection = nil;
+        if(!cellCollection)
+        {
+           
+            [collectionView registerNib:[UINib nibWithNibName:@"topCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"topCell"];
+            cellCollection = [collectionView dequeueReusableCellWithReuseIdentifier:newIdentifier forIndexPath:indexPath];
+            
+        }
+        [cellCollection setMyEvent:self.groupedEvents[indexPath.row]];
+        
+        return cellCollection;
+    }
     CategoriesCollectionViewCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
     if(!cell)
     {
@@ -41,11 +59,15 @@
     }
     NSMutableArray * groupEventsOfThree = [NSMutableArray new];
     for(size_t i = indexPath.row * 3; i < self.groupedEvents.count - 1 && i
-        < (indexPath.row + 1) * 3; i++)
+        < ((indexPath.row + 1) * 3); i++)
     {
-        [groupEventsOfThree addObject:self.groupedEvents[i]];
+        EventAPI * myEvent = self.groupedEvents[i];
+        NSLog(@"%i%@",i,myEvent.name);
+        [groupEventsOfThree addObject:myEvent];
     }
+    NSLog(@"%@",groupEventsOfThree);
     cell.threeEvents = groupEventsOfThree;
+    [cell.tableViewEvents reloadData];
     return cell;
 }
 
