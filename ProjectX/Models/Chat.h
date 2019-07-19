@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "User.h"
 #import "../Models/FirebaseManager.h"
+#import "Event.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -26,6 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - Chat Initializer
 -(instancetype) initWithDictionary : (NSDictionary *) dictionary;
 - (void)getEventForChat:(void(^)(Event *event, NSError *error))completion;
+-(BOOL) isExpired;
 
 @end
 

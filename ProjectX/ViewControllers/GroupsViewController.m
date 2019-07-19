@@ -29,6 +29,7 @@
     [super viewDidLoad];
     // [self.chatsTableView reloadData];
     self.db = [FIRFirestore firestore];
+    
     [self getChats];
     
     self.chatsTableView.dataSource = self;
@@ -36,15 +37,13 @@
     
     self.chats = [[NSMutableArray alloc] init];
     
-    
-    
-    
-    
-    NSLog(@"after firebase");
      
 }
 
 -(void) getChats {
+    // [self removeExpiredChats];
+    
+    
     [[FirebaseManager sharedManager] getCurrentUser:^(User * _Nonnull user, NSError * _Nonnull error) {
         if(error != nil) {
             NSLog(@"Error getting user");
@@ -58,8 +57,10 @@
                         // NSString *imageURL = [[NSString alloc]init];
                         
                     
-                        
-                        [self.chats addObject:chat];
+                        if (!chat.isExpired){
+                            [self.chats addObject:chat];
+                        }
+                        //[self.chats addObject:chat];
                         [self.chatsTableView reloadData];
                         
                         NSLog(@"chat array: %@", self.chats);
@@ -78,6 +79,14 @@
     
 }
 
+-(void)removeExpiredChats {
+    for (Chat *chat in self.chats) {
+        if(chat.isExpired) {
+            [self.chats removeObject:chat];
+        }
+    }
+}
+
 /*
 #pragma mark - Navigation
 
@@ -92,14 +101,19 @@
     GroupTableViewCell *cell = [self.chatsTableView dequeueReusableCellWithIdentifier:@"GroupsCell"];
     
     Chat *chat = self.chats[indexPath.row];
+    NSLog(@"created at date%@", chat.createdAt);
     
     
     [chat getEventForChat:^(Event *event, NSError *error) {
         if (error != nil) {
             NSLog(@"Error getting event");
         } else {
+            if (event.pictures[0] != nil) {
+                [cell setImage:event.pictures[0]];
+            } else {
+                [cell setImage:@"http://pngimg.com/uploads/earth/earth_PNG39.png"];
+            }
             
-            [cell setImage:event.pictures[0]];
             
         }
         

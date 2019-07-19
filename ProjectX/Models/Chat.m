@@ -21,8 +21,10 @@
 -(instancetype) initWithDictionary:(NSDictionary *)dictionary {
     self = [super init];
     if(self) {
-        [self setCreatedAt:dictionary[@"createdAt"]];
-        [self setEndAt:dictionary[@"endAt"]];
+        FIRTimestamp *createdDate = dictionary[@"createdAt"];
+        FIRTimestamp *endDate = dictionary[@"endAt"];
+        [self setCreatedAt:createdDate.dateValue];
+        [self setEndAt:endDate.dateValue];
         [self setName:dictionary[@"name"]];
         [self setUsers:dictionary[@"users"]];
         [self setEvent:dictionary[@"event"]];
@@ -35,19 +37,6 @@
     
     FIRFirestore *db = [FIRFirestore firestore];
     
-//    FIRDocumentReference *docRef =
-//    [[db collectionWithPath:@"Users"] documentWithPath:@"DAhDAxEMoJNpOcjkaWe1cyevl9v2"];
-//    // [[database collectionWithPath:@"Users"] documentWithPath:[[[FIRAuth auth] currentUser] uid]];
-//    [docRef getDocumentWithCompletion:^(FIRDocumentSnapshot *snapshot, NSError *error) {
-//        if (snapshot.exists) {
-//            User * newUser = [[User alloc] initWithDictionary:snapshot.data];
-//            completion(nil, nil);
-//        } else {
-//            completion(nil, error);
-//        }
-//    }];
-//}
-//
     FIRDocumentReference *eventRef = [[db collectionWithPath:@"Event"] documentWithPath:self.event];
 
     [eventRef getDocumentWithCompletion:^(FIRDocumentSnapshot *snapshot, NSError *error) {
@@ -67,6 +56,15 @@
 
     
 }
+
+
+-(BOOL) isExpired {
+    if ([self.createdAt compare:self.endAt] == 1) {
+        return true;
+    }
+    return false;
+}
+ 
     
     
 
