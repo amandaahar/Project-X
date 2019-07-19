@@ -25,8 +25,9 @@
         self.name = dictionary[@"name"];
         self.descriptionEvent = dictionary[@"description"];
         self.attendees = dictionary[@"numAttendees"];
+        // self.location = [[GeoFire alloc] init];
+        self.pictures = dictionary[@"pictures"];
         self.location = dictionary[@"location"];
-        self.pictures = @[];
         self.date = dictionary[@"eventDate"];
     }
     return self;

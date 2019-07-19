@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Chat.h"
 @import UIKit;
 
 @import GeoFire;
@@ -23,11 +24,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSString *profileImageURL;
 @property (strong, nonatomic) NSString *profileImage;
 @property (strong, nonatomic) NSArray *preferences;
-@property (strong, nonatomic) NSArray *chats;
+@property (strong, nonatomic) NSMutableArray *chats;
 
 #pragma mark - User Initializer
 -(instancetype) initWithDictionary : (NSDictionary *) dictionary;
--(void) getImageFromString : (NSString *) stringURL;
+// -(void) getImageFromString : (NSString *) stringURL;
+-(void)removeExpiredChats;
 @end
 
 NS_ASSUME_NONNULL_END

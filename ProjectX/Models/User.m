@@ -68,6 +68,17 @@
     }];
 }
 
+-(void)removeExpiredChats {
+    for(Chat *chat in self.chats) {
+        if(chat.isExpired) {
+            [self.chats removeObject:chat];
+            
+        }
+    }
+    
+}
+
+
 
 
 @end

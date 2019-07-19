@@ -7,6 +7,7 @@
 //
 
 #import "FirebaseManager.h"
+#import "User.h"
 
 @implementation FirebaseManager
 
@@ -38,7 +39,6 @@
 
 - (void)getCurrentUser:(void(^)(User *user, NSError *error))completion
 {
-    
     FIRDocumentReference *docRef =
     [[database collectionWithPath:@"Users"] documentWithPath:@"DAhDAxEMoJNpOcjkaWe1cyevl9v2"];
     // [[database collectionWithPath:@"Users"] documentWithPath:[[[FIRAuth auth] currentUser] uid]];
@@ -50,6 +50,8 @@
             completion(nil, error);
         }
     }];
+    
+
 
 }
 
@@ -71,8 +73,6 @@
          }
      }];
 }
-
-
 
 
 

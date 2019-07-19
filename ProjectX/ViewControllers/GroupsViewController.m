@@ -10,12 +10,17 @@
 #import "../Models/FirebaseManager.h"
 #import "GroupTableViewCell.h"
 #import "Chat.h"
+#import "Event.h"
+#import "User.h"
+
 
 
 @interface GroupsViewController () <UITableViewDelegate, UITableViewDataSource>
-@property (nonatomic, strong) NSArray *chats;
+@property (nonatomic, strong) NSMutableArray *chats;
 @property (weak, nonatomic) IBOutlet UITableView *chatsTableView;
 @property (nonatomic, strong) User *currentUser;
+@property (nonatomic, readwrite) FIRFirestore *db;
+
 
 @end
 
@@ -23,30 +28,86 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    // [self.chatsTableView reloadData];
+    self.db = [FIRFirestore firestore];
+    
+    [self getChats];
     
     self.chatsTableView.dataSource = self;
     self.chatsTableView.delegate = self;
     
+    self.chats = [[NSMutableArray alloc] init];
+    
+     
+}
+
+-(void) getChats {
+    // [self removeExpiredChats];
+    
+    
     [[FirebaseManager sharedManager] getCurrentUser:^(User * _Nonnull user, NSError * _Nonnull error) {
         if(error != nil) {
+<<<<<<< HEAD
+            NSLog(@"Error getting user");
+        } else {
+            self.currentUser = user;
+            for (FIRDocumentReference *chatDoc in self.currentUser.chats) {
+                NSLog(@"loopxyz");
+                [chatDoc getDocumentWithCompletion:^(FIRDocumentSnapshot *snapshot, NSError *error) {
+                    Chat *chat = [[Chat alloc] initWithDictionary:snapshot.data];
+                    NSLog(@"%@", snapshot.data);
+=======
             //NSLog(@"in if");
         }else {
             self.currentUser = user;
             // self.chats = self.currentUser.chats;
             for (FIRDocumentReference *chat in self.currentUser.chats) {
                 [chat getDocumentWithCompletion:^(FIRDocumentSnapshot *snapshot, NSError *error) {
+>>>>>>> 043a2c0fbccb54e0749a9b07ec1dc3309772a473
                     if (snapshot.exists) {
                         // [self.chats arrayByAddingObject:<#(nonnull id)#>]
-                        NSLog(@"Document w data: %@", snapshot.data);
+                        
+                        // NSString *imageURL = [[NSString alloc]init];
+                        
+                        // [self.chats addObject:chat];
+                        if (!chat.isExpired){
+                            NSLog(@"chat is not expired");
+                            [self.chats addObject:chat];
+                        } else {
+                             NSLog(@"chat is expired");
+                        }
+                        //[self.chats addObject:chat];
+                       
+                        [self.chatsTableView reloadData];
+                        
+                        NSLog(@"chat array: %@", self.chats);
+                        //NSLog(@"chat w data: %@", chat);
+                        
+                        //NSLog(@"Document w data: %@", snapshot.data);
                     } else {
                         NSLog(@"no data");
+                        NSLog(@"2nd chat%@", chat.name);
                     }
                 }];
             }
-            // FIRDocumentReference *chatRef = self.chats[0];
+           
+            NSLog(@"end loop");
             
         }
     }];
+<<<<<<< HEAD
+    
+    NSLog(@"num of chats in array%zd", self.chats.count);
+}
+
+-(void)removeExpiredChats {
+    for (Chat *chat in self.chats) {
+        if(chat.isExpired) {
+            [self.chats removeObject:chat];
+        }
+    }
+=======
+>>>>>>> 043a2c0fbccb54e0749a9b07ec1dc3309772a473
 }
 
 /*
@@ -60,7 +121,32 @@
 */
 
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
-    GroupTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"GroupsCell"];
+    GroupTableViewCell *cell = [self.chatsTableView dequeueReusableCellWithIdentifier:@"GroupsCell"];
+    
+    Chat *chat = self.chats[indexPath.row];
+    NSLog(@"created at date%@", chat.createdAt);
+    
+    
+    [chat getEventForChat:^(Event *event, NSError *error) {
+        if (error != nil) {
+            NSLog(@"Error getting event");
+        } else {
+            if (event.pictures[0] != nil) {
+                [cell setImage:event.pictures[0]];
+            } else {
+                [cell setImage:@"http://pngimg.com/uploads/earth/earth_PNG39.png"];
+            }
+            
+            
+        }
+        
+    }];
+     
+    
+    
+
+    [cell setNameOfChatText:chat.name];
+    
     
     return cell;
 }

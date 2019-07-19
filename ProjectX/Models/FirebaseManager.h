@@ -7,10 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "User.h"
 #import "Event.h"
 NS_ASSUME_NONNULL_BEGIN
 @import Firebase;
+@class User;
 
 @interface FirebaseManager : NSObject {
     FIRFirestore *database;
