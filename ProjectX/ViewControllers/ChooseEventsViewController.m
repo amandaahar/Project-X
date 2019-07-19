@@ -69,10 +69,9 @@
             [UIView animateWithDuration:0.3 animations:^{
                 self.card.center = CGPointMake(self.card.center.x - 200, self.card.center.y + 75);
             }];
-            
-            NSLog(@"LEFT GESTURE");
+            //NSLog(@"LEFT GESTURE");
             [self nextEvent];
-            [self resetCard];
+            //[self resetCard];
         }
         
         else if ((self.card.center.x) > (self.card.frame.size.width - 75)){
@@ -80,8 +79,7 @@
             [UIView animateWithDuration:0.3 animations:^{
                 self.card.center = CGPointMake(self.card.center.x + 200, self.card.center.y + 75);
             }];
-            
-            NSLog(@"RIGHT GESTURE");
+            //NSLog(@"RIGHT GESTURE");
             [self nextEvent];
             self.tabBarController.selectedIndex = 2;
         }
@@ -96,12 +94,34 @@
     NSMutableArray * tempArray = [self.eventArray mutableCopy];
     [tempArray removeObjectAtIndex:0];
     self.eventArray = tempArray;
-    Event *nextEvent = self.eventArray.firstObject;
-    //self.eventDate = nextEvent.date;
-    self.numAttendees.text = [NSString stringWithFormat:@"%@", nextEvent.attendees];
-    self.eventName.text = nextEvent.name;
-    self.Eventdescription.text = nextEvent.descriptionEvent;
-    [self eventLocationIdentifier];
+    
+    if (self.eventArray.firstObject == nil) {
+        //NSLog(@"No events found");
+        
+        UIView *emptyCard = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 100)];
+        emptyCard.center = self.view.center;
+        emptyCard.backgroundColor = [UIColor blackColor];
+        emptyCard.layer.cornerRadius = 15;
+        emptyCard.layer.masksToBounds = true;
+        [self.view addSubview:emptyCard];
+        
+        UILabel *noEventsLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 270, 200)];
+        noEventsLabel.center = self.view.center;
+        [noEventsLabel setText:@"No events found, create your own now!"];
+        [noEventsLabel setNumberOfLines:0];
+        [noEventsLabel setTextColor:[UIColor whiteColor]];
+        [self.view addSubview:noEventsLabel];
+    }
+    
+    else {
+        Event *nextEvent = self.eventArray.firstObject;
+        //self.eventDate = nextEvent.date;
+        self.numAttendees.text = [NSString stringWithFormat:@"%@", nextEvent.attendees];
+        self.eventName.text = nextEvent.name;
+        self.Eventdescription.text = nextEvent.descriptionEvent;
+        [self eventLocationIdentifier];
+        [self resetCard];
+    }
 }
 
 - (void) resetCard {
@@ -110,13 +130,9 @@
     }];
 }
 
-- (void) viewDidAppear:(BOOL)animated {
-    [self resetCard];
-}
-
 - (void) eventLocationIdentifier {
     Event *event = self.eventArray.firstObject;
-    MKCoordinateRegion location = MKCoordinateRegionMake(CLLocationCoordinate2DMake(event.location.latitude, event.location.longitude), MKCoordinateSpanMake(0.1, 0.1));
+    MKCoordinateRegion location = MKCoordinateRegionMake(CLLocationCoordinate2DMake(event.location.latitude, event.location.longitude), MKCoordinateSpanMake(0.05, 0.05));
     [self.mapView setRegion:location animated:false];
     
     self.mapView.layer.cornerRadius = 15;
