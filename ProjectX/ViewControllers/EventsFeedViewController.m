@@ -33,20 +33,12 @@ CLLocation *currentLocation;
     self.tableViewEventCategories.dataSource = self;
     self.events = [NSMutableArray new];
     self.categories = [NSMutableArray new];
-    self.navigationItem.titleView = [self setTitle:@"Explore" subtitle:@"FRIDAY 6 NOVEMBER"];
+    NSDateFormatter *format = [[NSDateFormatter alloc] init];
+    [format setDateFormat:@"MMM dd, yyyy HH:mm"];
+    NSDate *now = [[NSDate alloc] init];
+    NSString *dateString = [format stringFromDate:now];
+    self.navigationItem.titleView = [self setTitle:@"Explore" subtitle:dateString];
     [self currentLocationIdentifier]; // call this method
-//    [[APIEventsManager sharedManager] getEventsByLocation:@"" longitude:@"" completion:^(NSArray * _Nonnull eventsEventbrite, NSArray * _Nonnull eventsTicketmaster, NSError * _Nonnull error) {
-//
-//        //[self.tableViewEventCategories reloadData];
-//
-//
-//    }];
-    
-    
-   
-    
-   
-    // Do any additional setup after loading the view.
 }
 
 -(void) fetchArrayEvents
@@ -58,21 +50,9 @@ CLLocation *currentLocation;
             int numCategories = 0;
             for(NSDictionary *category in categories)
             {
-                numCategories++;
-                
-                NSLog(@"%@",category);
-            
-                if(numCategories < 6)
-                {
-                    [self.categories addObject:category];
-                }else if(numCategories == 7)
-                {
-                    [self getEventsFromCategories];
-                }
-                
-                
-                
+                [self.categories addObject:category];
             }
+            [self getEventsFromCategories];
         }
     }];
     
@@ -112,9 +92,11 @@ CLLocation *currentLocation;
         [[APIEventsManager sharedManager] getEventsByLocation:[NSString stringWithFormat:@"%f", currentLocation.coordinate.latitude]  longitude:[NSString stringWithFormat:@"%f", currentLocation.coordinate.longitude] category:category[@"id"] shortName:category[@"short_name"] completion:^(NSArray * _Nonnull eventsEventbrite, NSArray * _Nonnull eventsTicketmaster, NSError * _Nonnull error) {
             if(error == nil)
             {
+                dispatch_async(dispatch_get_main_queue(), ^(void){
+                    [self.activityView stopAnimating];
+                    [self.activityView setHidden:YES];
+                });
                 
-                [self.activityView stopAnimating];
-                [self.activityView setHidden:YES];
                 NSLog(@"%@",eventsTicketmaster);
                 
             
@@ -142,7 +124,9 @@ CLLocation *currentLocation;
                     }
                 
                 [self.events addObject:arrayCategory];
+                 dispatch_async(dispatch_get_main_queue(), ^(void){
                 [self.tableViewEventCategories reloadData];
+                 });
             }
             }
         ];

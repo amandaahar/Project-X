@@ -19,14 +19,14 @@
 {
     self.event = event;
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString: event.logo]];
-    
+    self.imageEvent.layer.cornerRadius = 20;
+    self.imageEvent.clipsToBounds = YES;
     [self.imageEvent setImageWithURLRequest:request placeholderImage:nil
                                     success:^(NSURLRequest *imageRequest, NSHTTPURLResponse *imageResponse, UIImage *image) {
                                         
                                         [UIView transitionWithView:self.imageEvent duration:0.5 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
                                             [self.imageEvent setImage:image];
-                                            self.imageEvent.layer.cornerRadius = 20;
-                                            self.imageEvent.clipsToBounds = YES;
+                                            
                                         } completion:nil];
                                         
                                         
