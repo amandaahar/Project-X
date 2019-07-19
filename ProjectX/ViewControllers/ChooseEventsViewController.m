@@ -9,15 +9,18 @@
 #import "ChooseEventsViewController.h"
 #import "AppDelegate.h"
 #import "../Models/FirebaseManager.h"
+#import <MapKit/MapKit.h>
+#import <CoreLocation/CoreLocation.h>
 @import Firebase;
 
-@interface ChooseEventsViewController ()
+@interface ChooseEventsViewController () <CLLocationManagerDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *eventDate;
 @property (weak, nonatomic) IBOutlet UILabel *numAttendees;
 @property (weak, nonatomic) IBOutlet UILabel *eventName;
 @property (weak, nonatomic) IBOutlet UILabel *Eventdescription;
 @property (nonatomic, readwrite) FIRFirestore *db;
 @property (weak, nonatomic) IBOutlet UIView *card;
+@property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (strong, nonatomic) NSArray *eventArray;
 
 @end
@@ -44,6 +47,8 @@
             self.eventName.text = myEvent.name;
             self.Eventdescription.text = myEvent.descriptionEvent;
             self.eventArray = event;
+            
+            [self eventLocationIdentifier];
             
             self.card.layer.cornerRadius = 15;
             self.card.layer.masksToBounds = true;
@@ -96,6 +101,7 @@
     self.numAttendees.text = [NSString stringWithFormat:@"%@", nextEvent.attendees];
     self.eventName.text = nextEvent.name;
     self.Eventdescription.text = nextEvent.descriptionEvent;
+    [self eventLocationIdentifier];
 }
 
 - (void) resetCard {
@@ -106,6 +112,15 @@
 
 - (void) viewDidAppear:(BOOL)animated {
     [self resetCard];
+}
+
+- (void) eventLocationIdentifier {
+    Event *event = self.eventArray.firstObject;
+    MKCoordinateRegion location = MKCoordinateRegionMake(CLLocationCoordinate2DMake(event.location.latitude, event.location.longitude), MKCoordinateSpanMake(0.1, 0.1));
+    [self.mapView setRegion:location animated:false];
+    
+    self.mapView.layer.cornerRadius = 15;
+    self.mapView.layer.masksToBounds = true;
 }
 
 /*
