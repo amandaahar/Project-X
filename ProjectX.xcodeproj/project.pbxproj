@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		02E1E8E427559EB8E3639068 /* Pods_ProjectXUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBD9E6E483995742FF9E6D06 /* Pods_ProjectXUITests.framework */; };
+		0E496C0622E1345200DEF38C /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E496C0522E1345200DEF38C /* MapKit.framework */; };
 		0ECF088922DE791300F5A8AA /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ECF088822DE791300F5A8AA /* SignUpViewController.m */; };
 		0ECF088D22DE792900F5A8AA /* LogInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ECF088C22DE792900F5A8AA /* LogInViewController.m */; };
 		7A4BD0CE86A659CBEE639CD6 /* Pods_ProjectXTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70CEB876BE4019117E81D49A /* Pods_ProjectXTests.framework */; };
@@ -58,6 +59,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0E496C0522E1345200DEF38C /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		0ECF088722DE791300F5A8AA /* SignUpViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SignUpViewController.h; sourceTree = "<group>"; };
 		0ECF088822DE791300F5A8AA /* SignUpViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SignUpViewController.m; sourceTree = "<group>"; };
 		0ECF088B22DE792900F5A8AA /* LogInViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LogInViewController.h; sourceTree = "<group>"; };
@@ -126,6 +128,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0E496C0622E1345200DEF38C /* MapKit.framework in Frameworks */,
 				EA54ED3022DFD1D800D0D7A2 /* CoreLocation.framework in Frameworks */,
 				7F2A7DC42E2A0127BBFFA154 /* Pods_ProjectX.framework in Frameworks */,
 			);
@@ -187,6 +190,7 @@
 		A056C411C871EE33E69370F7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0E496C0522E1345200DEF38C /* MapKit.framework */,
 				EA54ED2F22DFD1D800D0D7A2 /* CoreLocation.framework */,
 				8C296CF13ED1DF49E87C0289 /* Pods_ProjectX.framework */,
 				70CEB876BE4019117E81D49A /* Pods_ProjectXTests.framework */,

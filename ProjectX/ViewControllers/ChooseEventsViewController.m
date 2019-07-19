@@ -9,17 +9,19 @@
 #import "ChooseEventsViewController.h"
 #import "AppDelegate.h"
 #import "../Models/FirebaseManager.h"
+#import <MapKit/MapKit.h>
+#import <CoreLocation/CoreLocation.h>
 @import Firebase;
 
-@interface ChooseEventsViewController ()
+@interface ChooseEventsViewController () <CLLocationManagerDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *eventDate;
 @property (weak, nonatomic) IBOutlet UILabel *numAttendees;
 @property (weak, nonatomic) IBOutlet UILabel *eventName;
 @property (weak, nonatomic) IBOutlet UILabel *Eventdescription;
 @property (nonatomic, readwrite) FIRFirestore *db;
-//@property (strong, nonatomic) FIRDatabaseReference *ref;
-//@property (strong, nonatomic) NSArray *eventArray;
-@property (strong, nonatomic) NSArray *myEvent2;
+@property (weak, nonatomic) IBOutlet UIView *card;
+@property (weak, nonatomic) IBOutlet MKMapView *mapView;
+@property (strong, nonatomic) NSArray *eventArray;
 
 @end
 
@@ -28,14 +30,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self fetchEvents];
-    self.myEvent2 = [NSArray new];
-    UISwipeGestureRecognizer *left = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(PerformAction:)];
-    left.direction = UISwipeGestureRecognizerDirectionLeft ;
-    [self.view addGestureRecognizer:left];
-    
-    UISwipeGestureRecognizer *right = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(PerformAction:)];
-    right.direction = UISwipeGestureRecognizerDirectionRight ;
-    [self.view addGestureRecognizer:right];
+    self.eventArray = [NSArray new];
 }
 
 - (void) fetchEvents {
@@ -51,64 +46,81 @@
             self.numAttendees.text = [NSString stringWithFormat:@"%@", myEvent.attendees];
             self.eventName.text = myEvent.name;
             self.Eventdescription.text = myEvent.descriptionEvent;
-            self.myEvent2 = event;
+            self.eventArray = event;
             
-            /*
-             FIRUser *currentUser = [FIRUser currentUser];
-             self.eventName.text = [currentUser username];
-             self.ref = [[FIRDatabase database] reference];
-             NSString *key = [[self.ref child:@"posts"] childByAutoId].key;
-             NSDictionary *post = @{@"eventDate": self.eventDate,
-             @"numAttendees": self.numAttendees,
-             @"name": self.eventName,
-             @"description": self.Eventdescription};
-             NSDictionary *childUpdates = @{[@"/Event/" stringByAppendingString:key]: post,
-             [NSString stringWithFormat:@"/user-posts/%@/", key]: post};
-             [self.ref updateChildValues:childUpdates];
-             */
+            [self eventLocationIdentifier];
+            
+            self.card.layer.cornerRadius = 15;
+            self.card.layer.masksToBounds = true;
         }
     }];
 }
 
--(void)PerformAction:(UISwipeGestureRecognizer *)sender {
+- (IBAction)didPan:(UIPanGestureRecognizer *)sender {
     
-    if (sender.direction == UISwipeGestureRecognizerDirectionLeft) {
-        NSLog(@"LEFT GESTURE");
-        
-        /*
-        FIRDocumentReference *EventRef =
-        [[self.db collectionWithPath:@"Event"] documentWithPath:[[[FIRAuth auth] currentUser] uid]];
-        
-        // Atomically add a new region to the "regions" array field.
-        [EventRef updateData:@{@"Users": [FIRFieldValue fieldValueForArrayUnion:@[@"Danny"]]
-                                    }];
-        
-        // Atomically remove a new region to the "regions" array field.
-        [EventRef updateData:@{@"Users": [FIRFieldValue fieldValueForArrayRemove:@[@"San Fran hiking"]]
-                               }];
-        */
-        //[NSMutableArray replaceObjectAtIndex:index withObject:[NSNull null]];
-        
-        
-        NSMutableArray * tempArray = [self.myEvent2 mutableCopy];
-        for (Event *myEvent in self.myEvent2){
-            [tempArray removeObject: myEvent]; //Make sure to delete just one element in array not all!
-            NSLog(@"%@", tempArray);
-            NSLog(@"Inside for");
+    CGPoint translation = [sender translationInView:sender.view.superview];
+    sender.view.center = CGPointMake(sender.view.center.x + translation.x, sender.view.center.y + translation.y);
+    [sender setTranslation:CGPointMake(0.0, 0.0) inView:sender.view.superview];
+    
+    
+    if(sender.state == UIGestureRecognizerStateEnded) {
+        if (self.card.center.x < 75) {
+            //Move to left side
+            [UIView animateWithDuration:0.3 animations:^{
+                self.card.center = CGPointMake(self.card.center.x - 200, self.card.center.y + 75);
+            }];
+            
+            NSLog(@"LEFT GESTURE");
+            [self nextEvent];
+            [self resetCard];
         }
-        self.myEvent2 = tempArray;
-        NSLog(@"inside if");
-        //self.eventDate = myEvent.date;
-        Event *myEvent3 = self.myEvent2.firstObject;
-        self.numAttendees.text = [NSString stringWithFormat:@"%@", myEvent3.attendees];
-        self.eventName.text = myEvent3.name;
-        self.Eventdescription.text = myEvent3.descriptionEvent;
+        
+        else if ((self.card.center.x) > (self.card.frame.size.width - 75)){
+            //move off to right side
+            [UIView animateWithDuration:0.3 animations:^{
+                self.card.center = CGPointMake(self.card.center.x + 200, self.card.center.y + 75);
+            }];
+            
+            NSLog(@"RIGHT GESTURE");
+            [self nextEvent];
+            self.tabBarController.selectedIndex = 2;
+        }
+        
+        else {
+            [self resetCard];
+        }
+    }
+}
 
-    }
-    else if(sender.direction == UISwipeGestureRecognizerDirectionRight) {
-        NSLog(@"RIGHT GESTURE");
-        self.tabBarController.selectedIndex = 2;
-    }
+- (void) nextEvent {
+    NSMutableArray * tempArray = [self.eventArray mutableCopy];
+    [tempArray removeObjectAtIndex:0];
+    self.eventArray = tempArray;
+    Event *nextEvent = self.eventArray.firstObject;
+    //self.eventDate = nextEvent.date;
+    self.numAttendees.text = [NSString stringWithFormat:@"%@", nextEvent.attendees];
+    self.eventName.text = nextEvent.name;
+    self.Eventdescription.text = nextEvent.descriptionEvent;
+    [self eventLocationIdentifier];
+}
+
+- (void) resetCard {
+    [UIView animateWithDuration:0.65 animations:^{
+        [self.card setCenter:self.view.center];
+    }];
+}
+
+- (void) viewDidAppear:(BOOL)animated {
+    [self resetCard];
+}
+
+- (void) eventLocationIdentifier {
+    Event *event = self.eventArray.firstObject;
+    MKCoordinateRegion location = MKCoordinateRegionMake(CLLocationCoordinate2DMake(event.location.latitude, event.location.longitude), MKCoordinateSpanMake(0.1, 0.1));
+    [self.mapView setRegion:location animated:false];
+    
+    self.mapView.layer.cornerRadius = 15;
+    self.mapView.layer.masksToBounds = true;
 }
 
 /*
