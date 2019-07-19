@@ -12,6 +12,7 @@
 #import "Chat.h"
 #import "Event.h"
 #import "User.h"
+#import "MessagesViewController.h"
 
 
 
@@ -42,12 +43,8 @@
 }
 
 -(void) getChats {
-    // [self removeExpiredChats];
-    
-    
     [[FirebaseManager sharedManager] getCurrentUser:^(User * _Nonnull user, NSError * _Nonnull error) {
         if(error != nil) {
-
             NSLog(@"Error getting user");
         } else {
             self.currentUser = user;
@@ -90,6 +87,7 @@
         
     }];
 
+
 }
 -(void)removeExpiredChats {
     for (Chat *chat in self.chats) {
@@ -100,15 +98,19 @@
 
 }
 
-/*
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    UITableViewCell *tappedCell = sender;
+    NSIndexPath *indexPath = [self.chatsTableView indexPathForCell:tappedCell];
+    Chat *chatToPass = self.chats[indexPath.row];
+    MessagesViewController *messagesViewController = [segue destinationViewController];
+    
+    [messagesViewController setChat:chatToPass];
+    
 }
-*/
+
 
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
     GroupTableViewCell *cell = [self.chatsTableView dequeueReusableCellWithIdentifier:@"GroupsCell"];

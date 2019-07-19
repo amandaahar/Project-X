@@ -22,6 +22,7 @@
 @property (weak, nonatomic) IBOutlet UIView *card;
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (strong, nonatomic) NSArray *eventArray;
+@property (strong, nonatomic) NSDate *dateNSEvent;
 
 @end
 
@@ -42,12 +43,12 @@
         {
             NSLog(@"%@", event);
             Event * myEvent = event.firstObject;
-            //self.eventDate = myEvent.date;
+            
             self.numAttendees.text = [NSString stringWithFormat:@"%@", myEvent.attendees];
             self.eventName.text = myEvent.name;
             self.Eventdescription.text = myEvent.descriptionEvent;
             self.eventArray = event;
-            
+            [self eventDateIdentifier];
             [self eventLocationIdentifier];
             
             self.card.layer.cornerRadius = 15;
@@ -115,11 +116,11 @@
     
     else {
         Event *nextEvent = self.eventArray.firstObject;
-        //self.eventDate = nextEvent.date;
         self.numAttendees.text = [NSString stringWithFormat:@"%@", nextEvent.attendees];
         self.eventName.text = nextEvent.name;
         self.Eventdescription.text = nextEvent.descriptionEvent;
         [self eventLocationIdentifier];
+        [self eventDateIdentifier];
         [self resetCard];
     }
 }
@@ -137,6 +138,14 @@
     
     self.mapView.layer.cornerRadius = 15;
     self.mapView.layer.masksToBounds = true;
+}
+
+ - (void) eventDateIdentifier {
+    Event *event = self.eventArray.firstObject;
+     
+    FIRTimestamp *eventTimestamp = event.date;
+    [self setDateNSEvent:eventTimestamp.dateValue];
+    self.eventDate.text =  [NSString stringWithFormat:@"%@", self.dateNSEvent];
 }
 
 /*
