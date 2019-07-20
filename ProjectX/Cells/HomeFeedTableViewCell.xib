@@ -51,6 +51,7 @@
                         <state key="normal" title="Check out"/>
                     </button>
                 </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
                     <constraint firstItem="bvw-cX-pFH" firstAttribute="width" secondItem="ODm-yF-c6o" secondAttribute="width" id="0wK-Jc-yO9"/>
                     <constraint firstItem="6Yb-YE-kHZ" firstAttribute="leading" secondItem="ODm-yF-c6o" secondAttribute="trailing" constant="5" id="2nv-ZE-9GU"/>
@@ -70,6 +71,7 @@
                     <constraint firstItem="ODm-yF-c6o" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="1hG-Ed-Ic7" secondAttribute="trailing" constant="12" id="yV3-md-a3Y"/>
                 </constraints>
             </tableViewCellContentView>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>
             <connections>
                 <outlet property="descriptionEvent" destination="bvw-cX-pFH" id="20B-RH-ZWj"/>

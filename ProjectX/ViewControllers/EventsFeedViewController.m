@@ -12,18 +12,23 @@
 
 #import "../Cells/GroupEventsTableViewCell.h"
 @import CoreLocation;
-@interface EventsFeedViewController () <UITableViewDelegate, UITableViewDataSource,CLLocationManagerDelegate>
+@interface EventsFeedViewController () <UITableViewDelegate, UITableViewDataSource,CLLocationManagerDelegate, UIScrollViewDelegate>
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityView;
 @property (weak, nonatomic) IBOutlet UITableView *tableViewEventCategories;
 @property (strong, nonatomic) NSMutableArray *events;
 @property (strong, nonatomic) NSMutableArray *topEvents;
 @property (strong, nonatomic) NSMutableArray *categories;
+@property(assign, nonatomic) CGFloat currentOffset;
 @end
 
 @implementation EventsFeedViewController
 
 CLLocationManager *locationManager;
 CLLocation *currentLocation;
+- (void)viewDidAppear:(BOOL)animated
+{
+  
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -31,13 +36,17 @@ CLLocation *currentLocation;
     [self.activityView startAnimating];
     self.tableViewEventCategories.delegate = self;
     self.tableViewEventCategories.dataSource = self;
+   
     self.events = [NSMutableArray new];
     self.categories = [NSMutableArray new];
     NSDateFormatter *format = [[NSDateFormatter alloc] init];
     [format setDateFormat:@"MMM dd, yyyy HH:mm"];
     NSDate *now = [[NSDate alloc] init];
     NSString *dateString = [format stringFromDate:now];
-    self.navigationItem.titleView = [self setTitle:@"Explore" subtitle:dateString];
+   
+    //self.tableViewEventCategories.tableHeaderView = [self setTitle:@"Explore" subtitle:dateString];
+
+
     [self currentLocationIdentifier]; // call this method
 }
 
@@ -58,6 +67,7 @@ CLLocation *currentLocation;
     
     
 }
+
      
 -(void)currentLocationIdentifier
 {
@@ -81,6 +91,16 @@ CLLocation *currentLocation;
     CLGeocoder *geocoder = [[CLGeocoder alloc] init] ;
     [geocoder reverseGeocodeLocation:currentLocation completionHandler:^(NSArray *placemarks, NSError *error)
      {
+         CLPlacemark *placemark = [placemarks objectAtIndex:0];
+         NSLog(@"\nCurrent Location Detected\n");
+         NSLog(@"placemark %@",placemark);
+         NSString *locatedAt = [[placemark.addressDictionary valueForKey:@"FormattedAddressLines"] componentsJoinedByString:@", "];
+         NSString *Address = [[NSString alloc]initWithString:locatedAt];
+         NSString *Area = [[NSString alloc]initWithString:placemark.locality];
+         NSString *Country = [[NSString alloc]initWithString:placemark.country];
+         NSString *CountryArea = [NSString stringWithFormat:@"%@, %@", Area,Country];
+         NSLog(@"%@",CountryArea);
+         [self.navigationItem.rightBarButtonItem setTitle:Area];
      }];
 }
 
@@ -150,34 +170,34 @@ CLLocation *currentLocation;
     {
         switch ((int)UIScreen.mainScreen.nativeBounds.size.height) {
             case 1136:
-                y_Title = 46;
-                y_Subtitle = 36;
+                y_Title = 35;
+                y_Subtitle = 25;
                 
                 break;
             case 1334:
             case 1920:
             case 2208:
             case 2436:
-                y_Title = 48;
-                y_Subtitle = 38;
+                y_Title = 37;
+                y_Subtitle = 27;
                 break;
             default:
-                y_Title = 46;
-                y_Subtitle = 36;
+                y_Title = 35;
+                y_Subtitle = 25;
                 break;
         }
     }
-    UIFont * titleFont = [UIFont systemFontOfSize:33 weight:(UIFontWeightBold)];
+    UIFont * titleFont = [UIFont systemFontOfSize:28 weight:(UIFontWeightBold)];
     UIFont * subTitleFont = [UIFont systemFontOfSize:12 weight:(UIFontWeightSemibold)];
     
-    UILabel * titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(8.5, y_Title, 0, 0)];
+    UILabel * titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, y_Title, 0, 0)];
     [titleLabel setBackgroundColor:UIColor.clearColor];
     [titleLabel setTextColor:UIColor.blackColor];
     [titleLabel setFont:titleFont];
     [titleLabel setText:title];
     [titleLabel sizeToFit];
     
-    UILabel * subTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(8.5, y_Subtitle, 0, 0)];
+    UILabel * subTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, y_Subtitle, 0, 0)];
     [subTitleLabel setBackgroundColor:UIColor.clearColor];
     [subTitleLabel setTextColor:UIColor.blackColor];
     [subTitleLabel setFont:subTitleFont];
@@ -190,6 +210,7 @@ CLLocation *currentLocation;
     return titleView;
     
 }
+
 
 
 #pragma mark - Protocol functions
@@ -230,6 +251,20 @@ CLLocation *currentLocation;
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 300;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    return  [self setTitle:self.categories[section][@"short_name_localized"] subtitle:self.categories[section][@"name"]];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 80;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 5;
 }
 
 //- (void)tableView:(UITableView *)tableView willDisplayCell:(nonnull HomeFeedTableViewCell *)cell forRowAtIndexPath:(nonnull NSIndexPath *)indexPath
