@@ -9,11 +9,13 @@
 #import "ChooseEventsViewController.h"
 #import "AppDelegate.h"
 #import "../Models/FirebaseManager.h"
+#import "CreateEventViewController.h"
+#import "Event.h"
 #import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
 @import Firebase;
 
-@interface ChooseEventsViewController () <CLLocationManagerDelegate>
+@interface ChooseEventsViewController () <CLLocationManagerDelegate, CreateEventControllerDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *eventDate;
 @property (weak, nonatomic) IBOutlet UILabel *numAttendees;
 @property (weak, nonatomic) IBOutlet UILabel *eventName;
@@ -21,8 +23,10 @@
 @property (nonatomic, readwrite) FIRFirestore *db;
 @property (weak, nonatomic) IBOutlet UIView *card;
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
-@property (strong, nonatomic) NSArray *eventArray;
+@property (strong, nonatomic) NSMutableArray *eventArray;
 @property (strong, nonatomic) NSDate *dateNSEvent;
+
+- (IBAction)CreateEventAction:(id)sender;
 
 @end
 
@@ -31,7 +35,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self fetchEvents];
-    self.eventArray = [NSArray new];
+    self.eventArray = [NSMutableArray new];
 }
 
 - (void) fetchEvents {
@@ -83,6 +87,7 @@
             //NSLog(@"RIGHT GESTURE");
             [self nextEvent];
             self.tabBarController.selectedIndex = 2;
+            
         }
         
         else {
@@ -148,14 +153,22 @@
     self.eventDate.text =  [NSString stringWithFormat:@"%@", self.dateNSEvent];
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)didCreate:(Event *)newEvent {
+    [self.eventArray addObject:newEvent];
+    [self nextEvent];
+    [self resetCard];
 }
-*/
 
+- (IBAction)CreateEventAction:(id)sender {
+    [self performSegueWithIdentifier:@"CreateEventSegue" sender:nil];
+}
+     
+#pragma mark - Navigation
+     
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    UINavigationController *navigationController = [segue destinationViewController];
+    CreateEventViewController *createEventController = (CreateEventViewController *)navigationController.topViewController;
+    createEventController.delegate = self;
+}
+     
 @end
