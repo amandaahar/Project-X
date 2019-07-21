@@ -13,12 +13,12 @@
 #pragma mark - Init
 -(instancetype) init
 {
-    self = [self initWithInfo:@"" :@"" :@"" : [[NSDate alloc] init] :@""];
+    self = [self initWithInfo:@"" :@"" :@"" : [[NSDate alloc] init] :@"" : @""];
     return self;
 }
 
 
--(instancetype) initWithInfo : (NSString *) name  : (NSString *) summary : (NSString *) idEvent : (NSDate *) date : (NSString *) url
+-(instancetype) initWithInfo : (NSString *) name  : (NSString *) summary : (NSString *) idEvent : (NSDate *) date : (NSString *) url : (NSString *) category
 {
     self = [super init];
     if(self)
@@ -28,6 +28,7 @@
         self.idEvent = idEvent;
         self.date = date;
         self.logo = url;
+        self.category = category;
     }
     return self;
 }

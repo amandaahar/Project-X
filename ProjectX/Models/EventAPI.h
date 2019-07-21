@@ -16,8 +16,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSString *idEvent;
 @property (strong, nonatomic) NSDate *date;
 @property (strong, nonatomic) NSString *logo;
+@property (strong, nonatomic) NSString *category;
 
--(instancetype) initWithInfo : (NSString *) name  : (NSString *) summary : (NSString *) idEvent : (NSDate *) date : (NSString *) url;
+
+-(instancetype) initWithInfo : (NSString *) name  : (NSString *) summary : (NSString *) idEvent : (NSDate *) date : (NSString *) url : (NSString *) category;
 @end
 
 NS_ASSUME_NONNULL_END
