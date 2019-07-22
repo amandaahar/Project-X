@@ -67,7 +67,6 @@
                  NSLog(@"%@ => %@", document.documentID, document.data);
                  Event * myEvent = [[Event alloc] initWithDictionary:document.data];
                  [events addObject:myEvent];
-//                 Events = [NSArray arrayWithObjects: @"name", @"description", @"numAttendees", @"location", @"eventDate", nil];
              }
              completion(events, nil);
          }
