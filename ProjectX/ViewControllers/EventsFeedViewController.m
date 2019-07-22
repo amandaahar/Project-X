@@ -42,45 +42,25 @@ CLLocation *currentLocation;
     NSDateFormatter *format = [[NSDateFormatter alloc] init];
     [format setDateFormat:@"MMM dd, yyyy HH:mm"];
     NSDate *now = [[NSDate alloc] init];
+    #pragma clang diagnostic push
+    #pragma clang diagnostic ignored "-Wunused-variable"
     NSString *dateString = [format stringFromDate:now];
-   
-   
-
-    [self currentLocationIdentifier]; // call this method
+    #pragma clang diagnostic pop
+    [self currentLocationIdentifier];
 }
 
--(void) fetchArrayEvents
-{
-    [[APIEventsManager sharedManager] getCategories:^(NSArray * _Nonnull categories, NSError * _Nonnull error) {
-        if(error == nil)
-        {
-//            NSSortDescriptor * descriptor = [[NSSortDescriptor alloc] initWithKey:@"id" ascending:YES];
-//            categories = [categories sortedArrayUsingDescriptors:@[descriptor]];
-//            NSMutableArray *orderedArray = [categories copy];
-//            NSLog(@"%@",orderedArray);
-            self.categories = categories;
-            [self getEventsFromCategories];
-        }
-    }];
-    
-    
-}
 
+#pragma mark - Location methods
      
 -(void)currentLocationIdentifier
 {
-
     locationManager = [CLLocationManager new];
     [locationManager requestWhenInUseAuthorization];
     locationManager.delegate = self;
-    
     locationManager.distanceFilter = kCLDistanceFilterNone;
-    
     locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-    [self fetchArrayEvents];
+    [self fetchArrayCategories];
     [locationManager startUpdatingLocation];
-    
-
 }
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
@@ -90,11 +70,25 @@ CLLocation *currentLocation;
     [geocoder reverseGeocodeLocation:currentLocation completionHandler:^(NSArray *placemarks, NSError *error)
      {
          CLPlacemark *placemark = [placemarks objectAtIndex:0];
-      
          NSString *Area = [[NSString alloc]initWithString:placemark.locality];
-  
          [self.navigationItem.rightBarButtonItem setTitle:Area];
      }];
+}
+
+
+
+
+#pragma mark - get Information by the API Manager
+
+-(void) fetchArrayCategories
+{
+    [[APIEventsManager sharedManager] getCategories:^(NSArray * _Nonnull categories, NSError * _Nonnull error) {
+        if(error == nil)
+        {
+            self.categories = categories;
+            [self getEventsFromCategories];
+        }
+    }];
 }
 
 -(void) getEventsFromCategories
@@ -113,49 +107,44 @@ CLLocation *currentLocation;
                 
                     for(NSDictionary * eventbriteDic in eventsEventbrite)
                     {
-
                         NSDictionary *stringURL =   eventbriteDic[@"logo"];
-
-
                         @try {
                             NSString * url = stringURL[@"url"];
                          
                             [arrayCategory addObject:[[EventAPI alloc] initWithInfo:eventbriteDic[@"name"][@"text"] :eventbriteDic[@"summary"] :eventbriteDic[@"id"] :eventbriteDic[@"start"][@"local"] :url :category[@"name"] : category[@"short_name"] : @"Eventbrite"]];
                         } @catch (NSException *exception) {
                             [arrayCategory addObject:[[EventAPI alloc] initWithInfo:eventbriteDic[@"name"][@"text"] :eventbriteDic[@"summary"] :eventbriteDic[@"id"] :eventbriteDic[@"start"][@"local"] :@"https://www.daviespaints.com.ph/wp-content/uploads/img/color-ideas/1008-colors/2036P.png" :category[@"name"] : category[@"short_name"] : @"Eventbrite"]];
-                            
                         }
-
-
-
-
                     }
-                
-
                 [self.events addObject:arrayCategory];
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [self.tableViewEventCategories reloadData];
                 });
-                
             }
             }
         ];
         
         }
-        double delayInSeconds = 5.0;
+        double delayInSeconds = 10.0;
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        
             [self.activityView setHidden:YES];
             [self.activityView stopAnimating];
-        
         });
-    
-    
 }
 
+#pragma mark - Design Methods
+/**
+    setTitle
+    This method is going to set a title and subtitle like in the App store.We are using it in the header section of the table view.
 
-
+ -Parameters:
+ -title: Title that we want to display
+ -Subtile: Subtitle that we want to display
+ 
+ -Return:
+    A UIVIew that can be set in the eader of each section of the table view.
+ */
 -(UIView *) setTitle: (NSString *) title subtitle:(NSString *) subtitle
 {
     int navigationBarHeight = self.navigationController.navigationBar.frame.size.height;
@@ -170,7 +159,6 @@ CLLocation *currentLocation;
             case 1136:
                 y_Title = 22;
                 y_Subtitle = 12;
-                
                 break;
             case 1334:
             case 1920:
@@ -266,12 +254,6 @@ CLLocation *currentLocation;
 {
     return 5;
 }
-
-//- (void)tableView:(UITableView *)tableView willDisplayCell:(nonnull HomeFeedTableViewCell *)cell forRowAtIndexPath:(nonnull NSIndexPath *)indexPath
-//{
-//    //[cell setMyEvent: self.events[indexPath.row]];
-//
-//}
 
      
 

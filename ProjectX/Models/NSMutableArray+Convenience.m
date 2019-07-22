@@ -12,9 +12,8 @@
 
 - (void)moveObjectAtIndex:(NSUInteger)fromIndex toIndex:(NSUInteger)toIndex
 {
-    // Optional toIndex adjustment if you think toIndex refers to the position in the array before the move (as per Richard's comment)
     if (fromIndex < toIndex) {
-        toIndex--; // Optional
+        toIndex--; 
     }
     
     id object = [self objectAtIndex:fromIndex];

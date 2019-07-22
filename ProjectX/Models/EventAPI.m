@@ -23,7 +23,6 @@
     self = [super init];
     if(self)
     {
-        
         self.name = name;
         self.summary = summary;
         self.idEvent = idEvent;

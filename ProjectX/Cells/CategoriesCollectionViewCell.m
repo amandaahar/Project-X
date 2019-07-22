@@ -12,6 +12,7 @@
 
 @implementation CategoriesCollectionViewCell
 
+
 - (void)awakeFromNib {
     [super awakeFromNib];
     self.threeEvents = [NSArray new];
@@ -19,6 +20,8 @@
     self.tableViewEvents.dataSource = self;
     [self.tableViewEvents reloadData];
 }
+
+#pragma mark - Protocol methods
 
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
     NSString *identifier = @"feedCell";
