@@ -13,26 +13,52 @@
 @implementation Chat
 
 #pragma mark - Chat Initializer
+
+
+/*
 -(instancetype) init {
     NSDictionary *defaultDictionary = [NSDictionary dictionaryWithObjectsAndKeys:[NSDate new],@"createdAt",[NSDate new],@"endAt",@"",@"name", @[], @"users",@"", @"event",nil];
+    
+    // how to initialize with empty fircollectionreference
     self = [self initWithDictionary:defaultDictionary];
     return self;
 }
+ */
 
--(instancetype) initWithDictionary:(NSDictionary *)dictionary {
+//-(instancetype) initWithDictionary:(NSDictionary *)dictionary {
+//    self = [super init];
+//    if(self) {
+//        FIRTimestamp *createdDate = dictionary[@"createdAt"];
+//        FIRTimestamp *endDate = dictionary[@"endAt"];
+//        [self setCreatedAt:createdDate.dateValue];
+//        [self setEndAt:endDate.dateValue];
+//        [self setName:dictionary[@"name"]];
+//        [self setUsers:dictionary[@"users"]];
+//        [self setEvent:dictionary[@"event"]];
+//
+//    }
+//    return self;
+//}
+
+-(instancetype) initWithFIRCollectionReference:(FIRCollectionReference *)chatCollection {
     self = [super init];
     if(self) {
-        FIRTimestamp *createdDate = dictionary[@"createdAt"];
-        FIRTimestamp *endDate = dictionary[@"endAt"];
-        [self setCreatedAt:createdDate.dateValue];
-        [self setEndAt:endDate.dateValue];
-        [self setName:dictionary[@"name"]];
-        [self setUsers:dictionary[@"users"]];
-        [self setEvent:dictionary[@"event"]];
-        
+        [chatCollection getDocumentsWithCompletion:^(FIRQuerySnapshot *snapshot, NSError *error) {
+            if (error != nil) {
+                NSLog(@"error getting messages in chat collection");
+            } else {
+                for (FIRDocumentSnapshot *document in snapshot.documents) {
+                    Message *message = [[Message alloc] initWithDictionary:document.data];
+                    [self.messages addObject:message];
+                }
+            }
+        }];
     }
     return self;
 }
+
+
+
 
 - (void)getEventForChat:(void(^)(Event *event, NSError *error))completion {
     
@@ -59,16 +85,19 @@
 }
 
 
--(BOOL) isExpired {
-    NSDate *today = [NSDate date];
-    if ([today compare:self.endAt] == NSOrderedDescending) {
-       //  NSLog(@"comparison result %d", [self.createdAt compare:self.endAt] == NSOrderedDescending);
-        
-        return YES;
-    } else {
-        return NO;
-    }
-}
+
+
+//-(BOOL) isExpired {
+//    NSDate *today = [NSDate date];
+//    if ([today compare:self.] == NSOrderedDescending) {
+//       //  NSLog(@"comparison result %d", [self.createdAt compare:self.endAt] == NSOrderedDescending);
+//        
+//        return YES;
+//    } else {
+//        return NO;
+//    }
+//}
+
  
     
     

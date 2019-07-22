@@ -12,7 +12,7 @@
 
 #pragma mark - Message Initializer
 -(instancetype) init {
-    NSDictionary *defaultDictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"",@"text",[NSDate new],@"textDate",[FIRDocumentReference new],@"userID",nil];
+    NSDictionary *defaultDictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"",@"text",[NSDate new],@"timeSent",@"",@"userID",nil];
     self = [self initWithDictionary:defaultDictionary];
     return self;
 }
@@ -20,9 +20,9 @@
 -(instancetype) initWithDictionary:(NSDictionary *)dictionary {
     self = [super init];
     if(self) {
-        FIRTimestamp *textDate = dictionary[@"textDate"];
+        FIRTimestamp *timeSent = dictionary[@"timeSent"];
         [self setText:dictionary[@"text"]];
-        [self setTextDate:textDate.dateValue];
+        [self setTimeSent:timeSent.dateValue];
         [self setUserID:dictionary[@"userID"]];
     }
     return self;

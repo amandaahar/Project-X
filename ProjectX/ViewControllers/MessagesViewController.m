@@ -7,13 +7,15 @@
 //
 
 #import "MessagesViewController.h"
+#import "MessageTableViewCell.h"
 
 
 @interface MessagesViewController () <UITableViewDelegate, UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITextField *messageText;
 @property (weak, nonatomic) IBOutlet UIButton *sendButton;
 @property (weak, nonatomic) IBOutlet UITableView *messagesTableView;
-@property (strong, nonatomic) Chat *chat;
+@property(nonatomic, strong) NSMutableArray *messagesInChat;
+
 
 @end
 
@@ -25,9 +27,7 @@
     // [self.tabBarItem setAccessibilityElementsHidden:YES];
 }
 
--(void)setChat:(Chat *)chat{
-    self.chat = chat;
-}
+
 
 /*
 #pragma mark - Navigation
@@ -39,6 +39,30 @@
 }
 */
 
+/*
+-(void)getMessages {
+    FIRFirestore *db = [FIRFirestore firestore];
+    FIRCollectionReference *messages = [[[[db collectionWithPath:@"Event"] documentWithPath:self.chat.event] collectionWithPath:@"Chats"] documentWithPath:self.chat.
+}
+ */
+                                        
 
+                                        
+
+- (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
+    MessageTableViewCell *cell = [self.messagesTableView dequeueReusableCellWithIdentifier:@"messageCell"];
+    
+    return cell;
+    
+}
+
+- (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return self.messagesInChat.count;
+}
 
 @end
+
+
+
+
+

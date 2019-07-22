@@ -17,6 +17,7 @@
 		E76311BB22E241BB00A1B674 /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = E76311BA22E241BB00A1B674 /* Message.m */; };
 		E76311BF22E2746400A1B674 /* topCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E76311BD22E2746400A1B674 /* topCollectionViewCell.xib */; };
 		E76311C022E2746400A1B674 /* topCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E76311BE22E2746400A1B674 /* topCollectionViewCell.m */; };
+		E76311C322E2768800A1B674 /* MessageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E76311C222E2768800A1B674 /* MessageTableViewCell.m */; };
 		E77FCBFE22E0DFF100A4E3AC /* EventAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = E77FCBFC22E0DFF100A4E3AC /* EventAPI.m */; };
 		E7AEA0A622DE8A8E00A77CC2 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AEA0A522DE8A8E00A77CC2 /* ProfileViewController.m */; };
 		E7AEA0A922DE8C4400A77CC2 /* EventsFeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AEA0A822DE8C4400A77CC2 /* EventsFeedViewController.m */; };
@@ -84,6 +85,8 @@
 		E76311BC22E2746300A1B674 /* topCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = topCollectionViewCell.h; sourceTree = "<group>"; };
 		E76311BD22E2746400A1B674 /* topCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = topCollectionViewCell.xib; sourceTree = "<group>"; };
 		E76311BE22E2746400A1B674 /* topCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = topCollectionViewCell.m; sourceTree = "<group>"; };
+		E76311C122E2768800A1B674 /* MessageTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MessageTableViewCell.h; sourceTree = "<group>"; };
+		E76311C222E2768800A1B674 /* MessageTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MessageTableViewCell.m; sourceTree = "<group>"; };
 		E77FCBFC22E0DFF100A4E3AC /* EventAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventAPI.m; sourceTree = "<group>"; };
 		E77FCBFD22E0DFF100A4E3AC /* EventAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventAPI.h; sourceTree = "<group>"; };
 		E7A6133222E184EF00030D44 /* FirebaseManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FirebaseManager.h; sourceTree = "<group>"; };
@@ -217,6 +220,8 @@
 			children = (
 				E7AEA0BC22DFD8BC00A77CC2 /* GroupTableViewCell.h */,
 				E7AEA0BD22DFD8BC00A77CC2 /* GroupTableViewCell.m */,
+				E76311C122E2768800A1B674 /* MessageTableViewCell.h */,
+				E76311C222E2768800A1B674 /* MessageTableViewCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -559,6 +564,7 @@
 				0ECF088D22DE792900F5A8AA /* LogInViewController.m in Sources */,
 				E7AEA0B722DF9D7700A77CC2 /* EditProfileViewController.m in Sources */,
 				0ECF088922DE791300F5A8AA /* SignUpViewController.m in Sources */,
+				E76311C322E2768800A1B674 /* MessageTableViewCell.m in Sources */,
 				E7AEA0A622DE8A8E00A77CC2 /* ProfileViewController.m in Sources */,
 				EA54ECEF22DE3F3800D0D7A2 /* ProjectX.xcdatamodeld in Sources */,
 				EA54ED2522DE9E3600D0D7A2 /* Event.m in Sources */,

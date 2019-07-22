@@ -14,7 +14,7 @@
 #pragma mark - User Initializer
 -(instancetype) init
 {
-    NSDictionary *defaultDictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"", @"chats", @"", @"firstName",@"",@"lastName",@"",@"username",@"", @"profileImage",@"", @"location",@[], @"preferences" , nil];
+    NSDictionary *defaultDictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"", @"firstName",@"",@"lastName",@"",@"username",@"", @"profileImage",@"", @"location",@[], @"preferences", @"", @"events", nil];
     self = [self initWithDictionary:defaultDictionary];
     return self;
 }
@@ -39,7 +39,7 @@
         [self setPreferences:dictionary[@"preferences"]];
         [self setLocation:dictionary[@"location"]];
         [self setProfileImageURL:dictionary[@"profileImage"]];
-        [self setChats:dictionary[@"chats"]];
+        [self setEvents:dictionary[@"events"]];
         [self setProfileImage];
     }
     return self;
@@ -66,16 +66,6 @@
     }failure:^(NSURLRequest * _Nonnull request, NSHTTPURLResponse * _Nullable response, NSError * _Nonnull error) {
         self.profileImage = nil;
     }];
-}
-
--(void)removeExpiredChats {
-    for(Chat *chat in self.chats) {
-        if(chat.isExpired) {
-            [self.chats removeObject:chat];
-            
-        }
-    }
-    
 }
 
 

@@ -48,55 +48,71 @@
             NSLog(@"Error getting user");
         } else {
             self.currentUser = user;
-            for (FIRDocumentReference *chatDoc in self.currentUser.chats) {
-                NSLog(@"loopxyz");
-                [chatDoc getDocumentWithCompletion:^(FIRDocumentSnapshot *snapshot, NSError *error) {
-                    Chat *chat = [[Chat alloc] initWithDictionary:snapshot.data];
-                    NSLog(@"%@", snapshot.data);
-
-                    if (snapshot.exists) {
-                        // [self.chats arrayByAddingObject:<#(nonnull id)#>]
-                        
-                        // NSString *imageURL = [[NSString alloc]init];
-                        
-                        // [self.chats addObject:chat];
-                        if (!chat.isExpired){
-                            NSLog(@"chat is not expired");
-                            [self.chats addObject:chat];
-                        } else {
-                             NSLog(@"chat is expired");
-                        }
-                        //[self.chats addObject:chat];
-                       
-                        [self.chatsTableView reloadData];
-                        
-                        NSLog(@"chat array: %@", self.chats);
-                        //NSLog(@"chat w data: %@", chat);
-                        
-                        //NSLog(@"Document w data: %@", snapshot.data);
-                    } else {
-                        NSLog(@"no data");
-                        NSLog(@"2nd chat%@", chat.name);
-                    }
-                }];
+            for(FIRDocumentReference *eventDoc in self.currentUser.events) {
+                FIRCollectionReference *chatCollectionRef = [[[self.db collectionWithPath:@"Event"]documentWithPath:eventDoc.documentID] collectionWithPath:@"Chat"];
+                Chat *chat = [[Chat alloc]initWithFIRCollectionReference:chatCollectionRef];
+                [chat setEvent:eventDoc.documentID];
+                [self.chats addObject:chat];
+                [self.chatsTableView reloadData];
+                
             }
+            
+            
+            
+//            for (FIRDocumentReference *chatDoc in self.currentUser.chats) {
+//                NSLog(@"loopxyz");
+//                [chatDoc getDocumentWithCompletion:^(FIRDocumentSnapshot *snapshot, NSError *error) {
+//                    Chat *chat = [[Chat alloc] initWithDictionary:snapshot.data];
+//                    NSLog(@"%@", snapshot.data);
+//
+//                    if (snapshot.exists) {
+//                        // [self.chats arrayByAddingObject:<#(nonnull id)#>]
+//
+//                        // NSString *imageURL = [[NSString alloc]init];
+//
+//                        // [self.chats addObject:chat];
+//                        if (!chat.isExpired){
+//                            NSLog(@"chat is not expired");
+//                            [self.chats addObject:chat];
+//                        } else {
+//                             NSLog(@"chat is expired");
+//                        }
+//                        //[self.chats addObject:chat];
+//
+//                        [self.chatsTableView reloadData];
+//
+//                        NSLog(@"chat array: %@", self.chats);
+//                        //NSLog(@"chat w data: %@", chat);
+//
+//                        //NSLog(@"Document w data: %@", snapshot.data);
+//                    } else {
+//                        NSLog(@"no data");
+//                        NSLog(@"2nd chat%@", chat.name);
+//                    }
+//                }];
+//            }
            
             NSLog(@"end loop");
             
         }
         
-    }];
+     }];
 
 
 }
--(void)removeExpiredChats {
-    for (Chat *chat in self.chats) {
-        if(chat.isExpired) {
-            [self.chats removeObject:chat];
-        }
-    }
 
-}
+
+
+
+//-(void)removeExpiredChats {
+//    for (Chat *chat in self.chats) {
+//        if(chat.isExpired) {
+//            [self.chats removeObject:chat];
+//        }
+//    }
+//
+//}
+
 
 #pragma mark - Navigation
 
@@ -107,7 +123,7 @@
     Chat *chatToPass = self.chats[indexPath.row];
     MessagesViewController *messagesViewController = [segue destinationViewController];
     
-    [messagesViewController setChat:chatToPass];
+    messagesViewController.chat = chatToPass;
     
 }
 
@@ -116,9 +132,9 @@
     GroupTableViewCell *cell = [self.chatsTableView dequeueReusableCellWithIdentifier:@"GroupsCell"];
     
     Chat *chat = self.chats[indexPath.row];
-    NSLog(@"created at date%@", chat.createdAt);
+    // NSLog(@"created at date%@", chat.createdAt);
     
-    
+    /*
     [chat getEventForChat:^(Event *event, NSError *error) {
         if (error != nil) {
             NSLog(@"Error getting event");
@@ -133,11 +149,12 @@
         }
         
     }];
+     */
      
     
     
 
-    [cell setNameOfChatText:chat.name];
+    [cell setNameOfChatText:chat.event];
     
     
     return cell;

@@ -1,5 +1,5 @@
 //
-//  MessagesViewController.h
+//  MessageTableViewCell.h
 //  ProjectX
 //
 //  Created by amandahar on 7/19/19.
@@ -7,14 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Chat.h"
-#import "../Models/FirebaseManager.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MessagesViewController : UIViewController
-@property (strong, nonatomic) Chat *chat;
-
+@interface MessageTableViewCell : UITableViewCell
 
 @end
 

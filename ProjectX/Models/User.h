@@ -24,12 +24,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSString *profileImageURL;
 @property (strong, nonatomic) NSString *profileImage;
 @property (strong, nonatomic) NSArray *preferences;
-@property (strong, nonatomic) NSMutableArray *chats;
+@property (strong, nonatomic) NSMutableArray *events;
 
 #pragma mark - User Initializer
 -(instancetype) initWithDictionary : (NSDictionary *) dictionary;
-// -(void) getImageFromString : (NSString *) stringURL;
--(void)removeExpiredChats;
+-(void) setProfileImage;
 @end
 
 NS_ASSUME_NONNULL_END

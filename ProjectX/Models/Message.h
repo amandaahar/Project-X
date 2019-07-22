@@ -16,8 +16,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Message Attributes
 @property(strong, nonatomic) NSString *text;
-@property(strong, nonatomic) NSDate *textDate;
-@property(strong, nonatomic) User *userID;
+@property(strong, nonatomic) NSDate *timeSent;
+@property(strong, nonatomic) NSString *userID;
+
+-(instancetype) initWithDictionary:(NSDictionary *)dictionary;
 
 
 @end
