@@ -12,6 +12,7 @@
 
 @implementation CategoriesCollectionViewCell
 
+
 - (void)awakeFromNib {
     [super awakeFromNib];
     self.threeEvents = [NSArray new];
@@ -19,6 +20,8 @@
     self.tableViewEvents.dataSource = self;
     [self.tableViewEvents reloadData];
 }
+
+#pragma mark - Protocol methods
 
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
     NSString *identifier = @"feedCell";
@@ -29,7 +32,8 @@
         cell = [tableView dequeueReusableCellWithIdentifier:identifier];
         
     }
-   // [cell setMyEvent:self.threeEvents[indexPath.row]];
+
+    [cell setMyEvent:self.threeEvents[indexPath.row]];
     
     return cell;
 }
@@ -38,11 +42,7 @@
     return self.threeEvents.count;
 }
 
-- (void)tableView:(UITableView *)tableView willDisplayCell:(nonnull HomeFeedTableViewCell *)cell forRowAtIndexPath:(nonnull NSIndexPath *)indexPath
-{
-    [cell setMyEvent: self.threeEvents[indexPath.row]];
-    
-}
+
 
 
 

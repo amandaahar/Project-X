@@ -22,6 +22,16 @@
     // Configure the view for the selected state
 }
 
+#pragma mark - Setter
+/**
+ setMyEvent
+ Description:
+ This method is going to set the properties fo the cell dependieng of the event sent by the table view. And also the image from the event is downloaded and loaded in the image view.
+ 
+ -Parameters:
+ 
+ -event: Its a object EventAPI that stores the information of the event to be displayed in the details view
+ */
 -(void) setMyEvent:(EventAPI *)event
 {
     self.event = event;
@@ -44,6 +54,7 @@
     self.imageEvent.layer.cornerRadius = 15;
     self.infoButton.layer.cornerRadius = 10;
     self.infoButton.clipsToBounds = YES;
+    self.api.text = [event api];
     
     [self.imageEvent setClipsToBounds:YES];
 

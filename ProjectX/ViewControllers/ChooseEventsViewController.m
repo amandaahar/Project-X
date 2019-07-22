@@ -9,11 +9,13 @@
 #import "ChooseEventsViewController.h"
 #import "AppDelegate.h"
 #import "../Models/FirebaseManager.h"
+#import "CreateEventViewController.h"
+#import "Event.h"
 #import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
 @import Firebase;
 
-@interface ChooseEventsViewController () <CLLocationManagerDelegate>
+@interface ChooseEventsViewController () <CLLocationManagerDelegate, CreateEventControllerDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *eventDate;
 @property (weak, nonatomic) IBOutlet UILabel *numAttendees;
 @property (weak, nonatomic) IBOutlet UILabel *eventName;
@@ -21,7 +23,10 @@
 @property (nonatomic, readwrite) FIRFirestore *db;
 @property (weak, nonatomic) IBOutlet UIView *card;
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
-@property (strong, nonatomic) NSArray *eventArray;
+@property (strong, nonatomic) NSMutableArray *eventArray;
+@property (strong, nonatomic) NSDate *dateNSEvent;
+
+- (IBAction)CreateEventAction:(id)sender;
 
 @end
 
@@ -30,7 +35,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self fetchEvents];
-    self.eventArray = [NSArray new];
+    self.eventArray = [NSMutableArray new];
 }
 
 - (void) fetchEvents {
@@ -42,12 +47,12 @@
         {
             NSLog(@"%@", event);
             Event * myEvent = event.firstObject;
-            //self.eventDate = myEvent.date;
+            
             self.numAttendees.text = [NSString stringWithFormat:@"%@", myEvent.attendees];
             self.eventName.text = myEvent.name;
             self.Eventdescription.text = myEvent.descriptionEvent;
             self.eventArray = event;
-            
+            [self eventDateIdentifier];
             [self eventLocationIdentifier];
             
             self.card.layer.cornerRadius = 15;
@@ -82,6 +87,7 @@
             //NSLog(@"RIGHT GESTURE");
             [self nextEvent];
             self.tabBarController.selectedIndex = 2;
+            
         }
         
         else {
@@ -115,11 +121,11 @@
     
     else {
         Event *nextEvent = self.eventArray.firstObject;
-        //self.eventDate = nextEvent.date;
         self.numAttendees.text = [NSString stringWithFormat:@"%@", nextEvent.attendees];
         self.eventName.text = nextEvent.name;
         self.Eventdescription.text = nextEvent.descriptionEvent;
         [self eventLocationIdentifier];
+        [self eventDateIdentifier];
         [self resetCard];
     }
 }
@@ -139,14 +145,30 @@
     self.mapView.layer.masksToBounds = true;
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+ - (void) eventDateIdentifier {
+    Event *event = self.eventArray.firstObject;
+     
+    FIRTimestamp *eventTimestamp = event.date;
+    [self setDateNSEvent:eventTimestamp.dateValue];
+    self.eventDate.text =  [NSString stringWithFormat:@"%@", self.dateNSEvent];
 }
-*/
 
+- (void)didCreate:(Event *)newEvent {
+    [self.eventArray addObject:newEvent];
+    [self nextEvent];
+    [self resetCard];
+}
+
+- (IBAction)CreateEventAction:(id)sender {
+    [self performSegueWithIdentifier:@"CreateEventSegue" sender:nil];
+}
+     
+#pragma mark - Navigation
+     
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    UINavigationController *navigationController = [segue destinationViewController];
+    CreateEventViewController *createEventController = (CreateEventViewController *)navigationController.topViewController;
+    createEventController.delegate = self;
+}
+     
 @end

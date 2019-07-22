@@ -12,7 +12,10 @@
 #import "Chat.h"
 #import "Event.h"
 #import "User.h"
+<<<<<<< HEAD
+=======
 #import "MessagesViewController.h"
+>>>>>>> 17049d49953be6d33cbf4ef4219438ba1589644b
 
 
 
@@ -43,13 +46,21 @@
 }
 
 -(void) getChats {
+<<<<<<< HEAD
     // [self removeExpiredChats];
     
     
     [[FirebaseManager sharedManager] getCurrentUser:^(User * _Nonnull user, NSError * _Nonnull error) {
         if(error != nil) {
 
+=======
+    [[FirebaseManager sharedManager] getCurrentUser:^(User * _Nonnull user, NSError * _Nonnull error) {
+        if(error != nil) {
+<<<<<<< HEAD
+=======
 
+>>>>>>> 1680e217bb3b0750d8bc5c41077dcc9d9d4faf0f
+>>>>>>> 17049d49953be6d33cbf4ef4219438ba1589644b
             NSLog(@"Error getting user");
         } else {
             self.currentUser = user;
@@ -91,10 +102,22 @@
         }
         
     }];
+<<<<<<< HEAD
+<<<<<<< HEAD
 
+}
+=======
 }
 
 
+>>>>>>> 00e976c97de65616756f38a082209740d565513c
+=======
+}
+
+=======
+
+}
+>>>>>>> 17049d49953be6d33cbf4ef4219438ba1589644b
 -(void)removeExpiredChats {
     for (Chat *chat in self.chats) {
         if(chat.isExpired) {
@@ -103,11 +126,23 @@
     }
 
 }
+<<<<<<< HEAD
 
+/*
+=======
+>>>>>>> 1680e217bb3b0750d8bc5c41077dcc9d9d4faf0f
+
+>>>>>>> 17049d49953be6d33cbf4ef4219438ba1589644b
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+<<<<<<< HEAD
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+=======
     UITableViewCell *tappedCell = sender;
     NSIndexPath *indexPath = [self.chatsTableView indexPathForCell:tappedCell];
     Chat *chatToPass = self.chats[indexPath.row];
@@ -117,6 +152,7 @@
     
 }
 
+>>>>>>> 17049d49953be6d33cbf4ef4219438ba1589644b
 
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
     GroupTableViewCell *cell = [self.chatsTableView dequeueReusableCellWithIdentifier:@"GroupsCell"];

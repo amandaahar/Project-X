@@ -16,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UILabel *descriptionEvent;
 @property (strong, nonatomic) EventAPI *event;
 @property (weak, nonatomic) IBOutlet UIButton *infoButton;
+@property (weak, nonatomic) IBOutlet UILabel *api;
 -(void) setMyEvent:(EventAPI *)event;
 @end
 
