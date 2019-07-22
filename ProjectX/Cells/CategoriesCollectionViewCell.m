@@ -29,7 +29,8 @@
         cell = [tableView dequeueReusableCellWithIdentifier:identifier];
         
     }
-   // [cell setMyEvent:self.threeEvents[indexPath.row]];
+
+    [cell setMyEvent:self.threeEvents[indexPath.row]];
     
     return cell;
 }
@@ -38,11 +39,7 @@
     return self.threeEvents.count;
 }
 
-- (void)tableView:(UITableView *)tableView willDisplayCell:(nonnull HomeFeedTableViewCell *)cell forRowAtIndexPath:(nonnull NSIndexPath *)indexPath
-{
-    [cell setMyEvent: self.threeEvents[indexPath.row]];
-    
-}
+
 
 
 

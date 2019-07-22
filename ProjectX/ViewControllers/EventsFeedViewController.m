@@ -99,14 +99,18 @@ CLLocation *currentLocation;
 
 -(void) getEventsFromCategories
 {
-    
-    for(size_t i = 0; i < self.categories.count; i++)
+    for(NSDictionary * category in self.categories)
     {
-       
-        [[APIEventsManager sharedManager] getEventsByLocation:[NSString stringWithFormat:@"%f", currentLocation.coordinate.latitude]  longitude:[NSString stringWithFormat:@"%f", currentLocation.coordinate.longitude] category:self.categories[i][@"id"] shortName:self.categories[i][@"short_name"] completion:^(NSArray * _Nonnull eventsEventbrite, NSArray * _Nonnull eventsTicketmaster, NSError * _Nonnull error) {
+   
+        [[APIEventsManager sharedManager] getEventsByLocation:[NSString stringWithFormat:@"%f", currentLocation.coordinate.latitude]  longitude:[NSString stringWithFormat:@"%f", currentLocation.coordinate.longitude] category:category[@"id"] shortName:category[@"short_name"] completion:^(NSArray * _Nonnull eventsEventbrite, NSArray * _Nonnull eventsTicketmaster, NSError * _Nonnull error) {
             if(error == nil)
             {
-                    NSMutableArray *arrayCategory = [NSMutableArray new];
+                 NSMutableArray *arrayCategory = [NSMutableArray new];
+                for(NSDictionary * ticketmasterDic in eventsTicketmaster)
+                {
+                    [arrayCategory addObject:[[EventAPI alloc] initWithInfo:ticketmasterDic[@"name"] :ticketmasterDic[@"name"] :ticketmasterDic[@"id"] :ticketmasterDic[@"dates"][@"start"][@"dateTime"] :ticketmasterDic[@"images"][0][@"url"] :category[@"name"] : category[@"short_name"] : @"Ticketmaster"]];
+                }
+                
                     for(NSDictionary * eventbriteDic in eventsEventbrite)
                     {
 
@@ -116,9 +120,9 @@ CLLocation *currentLocation;
                         @try {
                             NSString * url = stringURL[@"url"];
                          
-                            [arrayCategory addObject:[[EventAPI alloc] initWithInfo:eventbriteDic[@"name"][@"text"] :eventbriteDic[@"summary"] :eventbriteDic[@"id"] :eventbriteDic[@"start"][@"local"] :url :self.categories[i][@"name"]]];
+                            [arrayCategory addObject:[[EventAPI alloc] initWithInfo:eventbriteDic[@"name"][@"text"] :eventbriteDic[@"summary"] :eventbriteDic[@"id"] :eventbriteDic[@"start"][@"local"] :url :category[@"name"] : category[@"short_name"] : @"Eventbrite"]];
                         } @catch (NSException *exception) {
-                             [arrayCategory addObject:[[EventAPI alloc] initWithInfo:eventbriteDic[@"name"][@"text"] :eventbriteDic[@"summary"] :eventbriteDic[@"id"] :eventbriteDic[@"start"][@"local"] :@"https://www.daviespaints.com.ph/wp-content/uploads/img/color-ideas/1008-colors/2036P.png" :self.categories[i][@"name"]]];
+                            [arrayCategory addObject:[[EventAPI alloc] initWithInfo:eventbriteDic[@"name"][@"text"] :eventbriteDic[@"summary"] :eventbriteDic[@"id"] :eventbriteDic[@"start"][@"local"] :@"https://www.daviespaints.com.ph/wp-content/uploads/img/color-ideas/1008-colors/2036P.png" :category[@"name"] : category[@"short_name"] : @"Eventbrite"]];
                             
                         }
 
@@ -126,12 +130,9 @@ CLLocation *currentLocation;
 
 
                     }
-                    for(NSDictionary * ticketmasterDic in eventsTicketmaster)
-                    {
-                        [arrayCategory addObject:[[EventAPI alloc] initWithInfo:ticketmasterDic[@"name"] :ticketmasterDic[@"name"] :ticketmasterDic[@"id"] :ticketmasterDic[@"dates"][@"start"][@"dateTime"] :ticketmasterDic[@"images"][0][@"url"] :self.categories[i][@"name"] ]];
-                    }
+                
 
-                [self.events insertObject:arrayCategory atIndex:0];
+                [self.events addObject:arrayCategory];
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [self.tableViewEventCategories reloadData];
                 });
@@ -253,7 +254,7 @@ CLLocation *currentLocation;
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     EventAPI * event = self.events[section][0];
-    return  [self setTitle:event.category subtitle:event.category];
+    return  [self setTitle:event.category subtitle:event.subtitle];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section

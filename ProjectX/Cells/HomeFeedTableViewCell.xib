@@ -42,7 +42,7 @@
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Yb-YE-kHZ">
                         <rect key="frame" x="240" y="29" width="73" height="24"/>
-                        <color key="backgroundColor" white="0.78401360547551013" alpha="0.61872874149659862" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" white="0.94131324408095229" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="73" id="AsP-a4-4G3"/>
                             <constraint firstAttribute="height" constant="24" id="O1z-U6-FWa"/>
@@ -50,6 +50,15 @@
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <state key="normal" title="Check out"/>
                     </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TFg-V2-ISH">
+                        <rect key="frame" x="240" y="55" width="73" height="10"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="10" id="ttV-QI-gKe"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="9"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
@@ -62,11 +71,14 @@
                     <constraint firstItem="1hG-Ed-Ic7" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="5" id="Egk-Kl-miu"/>
                     <constraint firstItem="bvw-cX-pFH" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="1hG-Ed-Ic7" secondAttribute="trailing" constant="12" id="JNS-vA-cOy"/>
                     <constraint firstItem="6Yb-YE-kHZ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="bvw-cX-pFH" secondAttribute="trailing" constant="5" id="KXA-vd-Qyg"/>
+                    <constraint firstAttribute="trailing" secondItem="TFg-V2-ISH" secondAttribute="trailing" constant="7" id="N9a-5B-YRM"/>
                     <constraint firstItem="ODm-yF-c6o" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="R8l-nf-Zh2"/>
-                    <constraint firstAttribute="bottom" secondItem="6Yb-YE-kHZ" secondAttribute="bottom" constant="30.5" id="Sn2-Xg-tLl"/>
+                    <constraint firstItem="TFg-V2-ISH" firstAttribute="bottom" secondItem="6Yb-YE-kHZ" secondAttribute="bottom" constant="12" id="Sn2-Xg-tLl"/>
+                    <constraint firstItem="TFg-V2-ISH" firstAttribute="width" secondItem="6Yb-YE-kHZ" secondAttribute="width" id="grh-xe-Mr0"/>
                     <constraint firstItem="6Yb-YE-kHZ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="29" id="hqP-ZL-xCR"/>
                     <constraint firstItem="6Yb-YE-kHZ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ODm-yF-c6o" secondAttribute="trailing" constant="5" id="ncq-c2-yIH"/>
                     <constraint firstItem="ODm-yF-c6o" firstAttribute="leading" secondItem="1hG-Ed-Ic7" secondAttribute="trailing" constant="12" id="tWA-fP-7lO"/>
+                    <constraint firstAttribute="bottom" secondItem="TFg-V2-ISH" secondAttribute="bottom" constant="18.5" id="tvw-70-Jtq"/>
                     <constraint firstAttribute="bottom" secondItem="bvw-cX-pFH" secondAttribute="bottom" constant="5.5" id="wXN-y5-7Tl"/>
                     <constraint firstItem="ODm-yF-c6o" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="1hG-Ed-Ic7" secondAttribute="trailing" constant="12" id="yV3-md-a3Y"/>
                 </constraints>
@@ -74,6 +86,7 @@
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>
             <connections>
+                <outlet property="api" destination="TFg-V2-ISH" id="d7k-ZU-7pz"/>
                 <outlet property="descriptionEvent" destination="bvw-cX-pFH" id="20B-RH-ZWj"/>
                 <outlet property="imageEvent" destination="1hG-Ed-Ic7" id="P3u-Ua-vfH"/>
                 <outlet property="infoButton" destination="6Yb-YE-kHZ" id="b8F-zs-2wE"/>

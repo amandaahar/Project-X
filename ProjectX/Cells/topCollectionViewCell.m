@@ -19,6 +19,7 @@
 {
     self.event = event;
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString: event.logo]];
+
     self.imageEvent.layer.cornerRadius = 20;
     self.imageEvent.clipsToBounds = YES;
     [self.imageEvent setImageWithURLRequest:request placeholderImage:nil
