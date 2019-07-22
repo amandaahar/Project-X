@@ -30,6 +30,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.db = [FIRFirestore firestore];
     // Do any additional setup after loading the view.
 }
 
@@ -86,7 +87,7 @@
      */
     
     __block FIRDocumentReference *ref = [[self.db collectionWithPath:@"Event"] addDocumentWithData:@{
-                                                                                                     @"name": self.createEventName.text, @"description": self.createEventDescription.text, @"location": self.createEventLocation.text, @"date": self.createEventDate.text, @"numAttendees": self.createAttendees.text } completion:^(NSError * _Nullable error) {
+                                                                                                     @"name": @"Hey", @"description": @"HEY", @"location": [FIRGeoPoint new], @"date": [NSDate new], @"numAttendees": @10 } completion:^(NSError * _Nullable error) {
                                                                                                          if (error != nil) {
                                                                                                              NSLog(@"Error adding document: %@", error);
                                                                                                          } else {

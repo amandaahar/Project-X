@@ -44,6 +44,7 @@
     self.imageEvent.layer.cornerRadius = 15;
     self.infoButton.layer.cornerRadius = 10;
     self.infoButton.clipsToBounds = YES;
+    self.api.text = [event api];
     
     [self.imageEvent setClipsToBounds:YES];
 

@@ -10,6 +10,8 @@
 #import "CategoriesCollectionViewCell.h"
 #import "../Models/EventAPI.h"
 #import "topCollectionViewCell.h"
+#import "QuartzCore/QuartzCore.h"
+
 @implementation GroupEventsTableViewCell
 
 - (void)awakeFromNib {
@@ -46,6 +48,7 @@
             cellCollection = [collectionView dequeueReusableCellWithReuseIdentifier:newIdentifier forIndexPath:indexPath];
             
         }
+       
         [cellCollection setMyEvent:self.groupedEvents[indexPath.row]];
         
         return cellCollection;
@@ -62,7 +65,7 @@
         < ((indexPath.row + 1) * 3); i++)
     {
         EventAPI * myEvent = self.groupedEvents[i];
-        NSLog(@"%i%@",i,myEvent.name);
+       
         [groupEventsOfThree addObject:myEvent];
     }
     NSLog(@"%@",groupEventsOfThree);
@@ -77,13 +80,14 @@
 }
 
 - (NSInteger)collectionView:(nonnull UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    int numberOfItems = ceil(self.groupedEvents.count / 3);
+    int numberOfItems = floor(self.groupedEvents.count / 3) - 1;
     return numberOfItems;
 }
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     return CGSizeMake(CGRectGetWidth(collectionView.frame), (CGRectGetHeight(collectionView.frame)));
 }
+
 
 
 @end
