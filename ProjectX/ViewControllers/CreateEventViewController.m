@@ -22,6 +22,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *createPicture; //Do later
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *createButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelButton;
+@property (nonatomic, readwrite) FIRFirestore *db;
 
 @end
 
@@ -59,6 +60,7 @@
 }
 
 - (IBAction)didTapCreate:(id)sender {
+    /*
     [[FirebaseManager sharedManager] getEvent:^(NSArray * _Nonnull event, NSError * _Nonnull error) {
         if(error){
             NSLog(@"Error creating event: %@", error.localizedDescription);
@@ -69,7 +71,31 @@
             [self dismissViewControllerAnimated:YES completion:nil];
         }
     }];
+     */
+    
+    /*
+     [[[self.db collectionWithPath:@"Event"] documentWithPath:FIRAuth.auth.currentUser.uid] setData:@{
+           @"name": self.createEventName.text, @"description": self.createEventDescription.text, @"location": self.createEventLocation.text, @"date": self.createEventDate.text, @"numAttendees": self.createAttendees.text } completion:^(NSError * _Nullable error) {
+                if (error != nil) {
+                     NSLog(@"Error writing document: %@", error);
+                } else {
+                    NSLog(@"Document successfully written!");
+                    [self dismissViewControllerAnimated:YES completion:nil];
+                  }
+          }];
+     */
+    
+    __block FIRDocumentReference *ref = [[self.db collectionWithPath:@"Event"] addDocumentWithData:@{
+                                                                                                     @"name": self.createEventName.text, @"description": self.createEventDescription.text, @"location": self.createEventLocation.text, @"date": self.createEventDate.text, @"numAttendees": self.createAttendees.text } completion:^(NSError * _Nullable error) {
+                                                                                                         if (error != nil) {
+                                                                                                             NSLog(@"Error adding document: %@", error);
+                                                                                                         } else {
+                                                                                                             NSLog(@"Document added with ID: %@", ref.documentID);
+                                                                                                             [self dismissViewControllerAnimated:YES completion:nil];
+                                                                                                         }
+                                                                                                     }];
 }
+                                                                                                     
 
 - (IBAction)didTapCancel:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];

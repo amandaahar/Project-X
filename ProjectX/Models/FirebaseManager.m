@@ -74,28 +74,20 @@
      }];
 }
 // gets the local copy of the server Event, will need to send info to server then get back the unique ID for the newly created event.
+
 /*
  - (void)setEvent:(void(^)(NSArray *events, NSError *error))completion {
-    [[database collectionWithPath:@"Event"]
-     getDocumentsWithCompletion:^(FIRQuerySnapshot *snapshot, NSError *error) {
-         if (error != nil) {
-             NSLog(@"Error getting documents: %@", error);
-             completion(nil,error);
-         } else {
-             NSMutableArray *events = [NSMutableArray new];
-             for (FIRDocumentSnapshot *document in snapshot.documents) {
-                 NSLog(@"%@ => %@", document.documentID, document.data);
-                 Event * myEvent = [[Event alloc] initWithDictionary:document.data];
-                 [events addObject:myEvent];
-                 // Events = [NSArray arrayWithObjects: @"name", @"description", @"numAttendees", @"location", @"eventDate", nil];
-             }
-             completion(events, nil);
-         }
-     }];
+     [[database collectionWithPath:@"Event"] documentWithPath:FIRAuth.auth.currentUser.uid] setData:@{
+                                                                                                           @"name": self.createEventName.text, @"description": self.createEventDescription.text, @"location": self.createEventLocation.text, @"date": self.createEventDate.text, @"numAttendees": self.createAttendees.text } completion:^(NSError * _Nullable error) {
+                                                                                                               if (error != nil) {
+                                                                                                                   NSLog(@"Error writing document: %@", error);
+                                                                                                               } else {
+                                                                                                                   NSLog(@"Document successfully written!");
+                                                                                                                   [self dismissViewControllerAnimated:YES completion:nil];
+                                                                                                               }
+                                                                                                           }];
 }
 */
-
-
 
 #pragma mark - Set methods
 
