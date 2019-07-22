@@ -24,6 +24,7 @@
     return self;
 }
  */
+ 
 
 
 -(instancetype) initWithFIRCollectionReference:(FIRCollectionReference *)chatCollection {
@@ -33,15 +34,22 @@
             if (error != nil) {
                 NSLog(@"error getting messages in chat collection");
             } else {
+                self.messages = [[NSMutableArray alloc] init];
                 for (FIRDocumentSnapshot *document in snapshot.documents) {
                     Message *message = [[Message alloc] initWithDictionary:document.data];
+                    NSLog(@"this is the message%@", message);
                     [self.messages addObject:message];
+                    NSLog(@" these are the messages%@", self.messages);
                 }
+                NSLog(@"ello govena");
             }
         }];
     }
     return self;
 }
+
+
+
 
 
 

@@ -45,6 +45,10 @@
     return self;
 }
 
+-(void) composeMessage:(NSString *)text {
+    
+}
+
 #pragma mark - Getter and setter
 /**
  getProfileImage

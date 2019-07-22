@@ -51,6 +51,7 @@
             for(FIRDocumentReference *eventDoc in self.currentUser.events) {
                 FIRCollectionReference *chatCollectionRef = [[[self.db collectionWithPath:@"Event"]documentWithPath:eventDoc.documentID] collectionWithPath:@"Chat"];
                 Chat *chat = [[Chat alloc]initWithFIRCollectionReference:chatCollectionRef];
+                NSLog(@"here is the messages %@", chat.messages);
                 [chat setEvent:eventDoc.documentID];
                 [self.chats addObject:chat];
                 [self.chatsTableView reloadData];

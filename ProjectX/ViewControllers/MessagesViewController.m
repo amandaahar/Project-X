@@ -23,8 +23,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.messagesTableView.delegate = self;
+    self.messagesTableView.dataSource = self;
     // [self.tabBarController setViewControllers:@[]];
     // [self.tabBarItem setAccessibilityElementsHidden:YES];
+    
+   //  [self fetchMessages];
+   // [self.messagesTableView reloadData];
 }
 
 
@@ -46,18 +52,29 @@
 }
  */
                                         
-
+-(void) fetchMessages {
+    [self.messagesTableView reloadData];
+   
+    
+    
+}
                                         
 
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
     MessageTableViewCell *cell = [self.messagesTableView dequeueReusableCellWithIdentifier:@"messageCell"];
+    Message *message = self.chat.messages[indexPath.row];
+    
+   //  [cell setMessageText:message.text];
+    
+    [cell setMessageText:message.text];
+    [cell setUserLabelText:message.nameOfSender];
     
     return cell;
     
 }
 
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.messagesInChat.count;
+    return self.chat.messages.count;
 }
 
 @end
