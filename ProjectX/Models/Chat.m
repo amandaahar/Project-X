@@ -25,20 +25,6 @@
 }
  */
 
-//-(instancetype) initWithDictionary:(NSDictionary *)dictionary {
-//    self = [super init];
-//    if(self) {
-//        FIRTimestamp *createdDate = dictionary[@"createdAt"];
-//        FIRTimestamp *endDate = dictionary[@"endAt"];
-//        [self setCreatedAt:createdDate.dateValue];
-//        [self setEndAt:endDate.dateValue];
-//        [self setName:dictionary[@"name"]];
-//        [self setUsers:dictionary[@"users"]];
-//        [self setEvent:dictionary[@"event"]];
-//
-//    }
-//    return self;
-//}
 
 -(instancetype) initWithFIRCollectionReference:(FIRCollectionReference *)chatCollection {
     self = [super init];

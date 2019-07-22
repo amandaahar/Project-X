@@ -56,41 +56,6 @@
                 [self.chatsTableView reloadData];
                 
             }
-            
-            
-            
-//            for (FIRDocumentReference *chatDoc in self.currentUser.chats) {
-//                NSLog(@"loopxyz");
-//                [chatDoc getDocumentWithCompletion:^(FIRDocumentSnapshot *snapshot, NSError *error) {
-//                    Chat *chat = [[Chat alloc] initWithDictionary:snapshot.data];
-//                    NSLog(@"%@", snapshot.data);
-//
-//                    if (snapshot.exists) {
-//                        // [self.chats arrayByAddingObject:<#(nonnull id)#>]
-//
-//                        // NSString *imageURL = [[NSString alloc]init];
-//
-//                        // [self.chats addObject:chat];
-//                        if (!chat.isExpired){
-//                            NSLog(@"chat is not expired");
-//                            [self.chats addObject:chat];
-//                        } else {
-//                             NSLog(@"chat is expired");
-//                        }
-//                        //[self.chats addObject:chat];
-//
-//                        [self.chatsTableView reloadData];
-//
-//                        NSLog(@"chat array: %@", self.chats);
-//                        //NSLog(@"chat w data: %@", chat);
-//
-//                        //NSLog(@"Document w data: %@", snapshot.data);
-//                    } else {
-//                        NSLog(@"no data");
-//                        NSLog(@"2nd chat%@", chat.name);
-//                    }
-//                }];
-//            }
            
             NSLog(@"end loop");
             
@@ -134,11 +99,12 @@
     Chat *chat = self.chats[indexPath.row];
     // NSLog(@"created at date%@", chat.createdAt);
     
-    /*
+    
     [chat getEventForChat:^(Event *event, NSError *error) {
         if (error != nil) {
             NSLog(@"Error getting event");
         } else {
+            [cell setNameOfChatText:event.name];
             if (event.pictures[0] != nil) {
                 [cell setImage:event.pictures[0]];
             } else {
@@ -149,12 +115,6 @@
         }
         
     }];
-     */
-     
-    
-    
-
-    [cell setNameOfChatText:chat.event];
     
     
     return cell;
