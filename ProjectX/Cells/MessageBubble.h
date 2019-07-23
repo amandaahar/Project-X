@@ -11,7 +11,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface MessageBubble : UITableViewCell
-
+@property (nonatomic, strong) NSString * text;
+-(void) setMyText:(NSString *)text;
 @end
 
 NS_ASSUME_NONNULL_END

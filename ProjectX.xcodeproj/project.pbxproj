@@ -48,6 +48,7 @@
 		EA73F82C22E6412A00385689 /* MainTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA73F82B22E6412A00385689 /* MainTabBarController.m */; };
 		EA73F83D22E6848D00385689 /* MessageBubble.m in Sources */ = {isa = PBXBuildFile; fileRef = EA73F83B22E6848D00385689 /* MessageBubble.m */; };
 		EA73F83E22E6848D00385689 /* MessageBubble.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA73F83C22E6848D00385689 /* MessageBubble.xib */; };
+		EA73F84122E6B96500385689 /* BubbleView.m in Sources */ = {isa = PBXBuildFile; fileRef = EA73F84022E6B96500385689 /* BubbleView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -147,6 +148,8 @@
 		EA73F83A22E6848D00385689 /* MessageBubble.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MessageBubble.h; sourceTree = "<group>"; };
 		EA73F83B22E6848D00385689 /* MessageBubble.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MessageBubble.m; sourceTree = "<group>"; };
 		EA73F83C22E6848D00385689 /* MessageBubble.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageBubble.xib; sourceTree = "<group>"; };
+		EA73F83F22E6B96500385689 /* BubbleView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BubbleView.h; sourceTree = "<group>"; };
+		EA73F84022E6B96500385689 /* BubbleView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BubbleView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -341,6 +344,8 @@
 				E7AEA0B922DFCC3A00A77CC2 /* Chat.m */,
 				E76311B922E241BB00A1B674 /* Message.h */,
 				E76311BA22E241BB00A1B674 /* Message.m */,
+				EA73F83F22E6B96500385689 /* BubbleView.h */,
+				EA73F84022E6B96500385689 /* BubbleView.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -603,6 +608,7 @@
 				E76311C322E2768800A1B674 /* MessageTableViewCell.m in Sources */,
 				E7AEA0A622DE8A8E00A77CC2 /* ProfileViewController.m in Sources */,
 				EA54ECEF22DE3F3800D0D7A2 /* ProjectX.xcdatamodeld in Sources */,
+				EA73F84122E6B96500385689 /* BubbleView.m in Sources */,
 				0E496C0922E285AA00DEF38C /* CreateEventViewController.m in Sources */,
 				EA54ED2522DE9E3600D0D7A2 /* Event.m in Sources */,
 				E7AEA0BA22DFCC3A00A77CC2 /* Chat.m in Sources */,
