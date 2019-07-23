@@ -45,9 +45,27 @@
     return self;
 }
 
--(void) composeMessage:(NSString *)text {
+-(void) composeMessage:(NSString *)text chat: (Chat *)chat{
+    FIRFirestore *db = [FIRFirestore firestore];
+    FIRTimestamp *currentTime = [FIRTimestamp timestamp];
+    // FIR
+    __block FIRDocumentReference *ref = [[db collectionWithPath:chat.path] addDocumentWithData:
+  @{
+    @"text": text,
+    @"timeSent": currentTime,
+    @"nameOfSender": self.username
+    } completion:^(NSError * _Nullable error) {
+        if (error != nil) {
+            NSLog(@"Error adding document: %@", error);
+        } else {
+            NSLog(@"Document added with ID: %@", ref.documentID);
+        }
+        }];
     
 }
+
+
+
 
 #pragma mark - Getter and setter
 /**

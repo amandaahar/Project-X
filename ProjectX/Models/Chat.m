@@ -8,7 +8,7 @@
 
 #import "Chat.h"
 #import "Event.h"
-#import "User.h"
+// #import "User.h"
 
 @implementation Chat
 
@@ -29,23 +29,37 @@
 
 -(instancetype) initWithFIRCollectionReference:(FIRCollectionReference *)chatCollection {
     self = [super init];
+    self.path = chatCollection.path;
     if(self) {
         [chatCollection getDocumentsWithCompletion:^(FIRQuerySnapshot *snapshot, NSError *error) {
             if (error != nil) {
                 NSLog(@"error getting messages in chat collection");
             } else {
                 self.messages = [[NSMutableArray alloc] init];
+                
+                NSLog(@"chat path%@", self.path);
                 for (FIRDocumentSnapshot *document in snapshot.documents) {
                     Message *message = [[Message alloc] initWithDictionary:document.data];
-                    NSLog(@"this is the message%@", message);
                     [self.messages addObject:message];
-                    NSLog(@" these are the messages%@", self.messages);
                 }
-                NSLog(@"ello govena");
             }
         }];
     }
     return self;
+}
+
+-(void) fetchMessages{
+    FIRFirestore *db = [FIRFirestore firestore];
+    [[db collectionWithPath:self.path] getDocumentsWithCompletion: ^(FIRQuerySnapshot *snapshot, NSError *error) {
+        if (error != nil) {
+            NSLog(@"error getting messages in chat collection");
+        } else {
+            
+        }
+    }];
+     
+        
+    
 }
 
 
