@@ -24,8 +24,18 @@
         [self setText:dictionary[@"text"]];
         [self setTimeSent:timeSent.dateValue];
         [self setNameOfSender:dictionary[@"nameOfSender"]];
+        [self setUserID:dictionary[@"userID"]];
     }
     return self;
+}
+
++ (NSMutableArray *)messagesWithArray:(NSArray *)dictionaries{
+    NSMutableArray *messages = [NSMutableArray array];
+    for (NSDictionary *dictionary in dictionaries) {
+        Message *message = [[Message alloc] initWithDictionary:dictionary];
+        [messages addObject:message];
+    }
+    return messages;
 }
 
 

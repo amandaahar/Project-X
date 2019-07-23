@@ -62,28 +62,28 @@
              NSMutableArray *events = [NSMutableArray new];
              for (FIRDocumentSnapshot *document in snapshot.documents) {
                  NSLog(@"%@ => %@", document.documentID, document.data);
-                 Event * myEvent = [[Event alloc] initWithDictionary:document.data];
+                 Event * myEvent = [[Event alloc] initWithDictionary:document.data eventID:document.documentID];
                  [events addObject:myEvent];
              }
              completion(events, nil);
          }
      }];
 }
-// gets the local copy of the server Event, will need to send info to server then get back the unique ID for the newly created event.
 
-/*
- - (void)setEvent:(void(^)(NSArray *events, NSError *error))completion {
-     [[database collectionWithPath:@"Event"] documentWithPath:FIRAuth.auth.currentUser.uid] setData:@{
-                                                                                                           @"name": self.createEventName.text, @"description": self.createEventDescription.text, @"location": self.createEventLocation.text, @"date": self.createEventDate.text, @"numAttendees": self.createAttendees.text } completion:^(NSError * _Nullable error) {
-                                                                                                               if (error != nil) {
-                                                                                                                   NSLog(@"Error writing document: %@", error);
-                                                                                                               } else {
-                                                                                                                   NSLog(@"Document successfully written!");
-                                                                                                                   [self dismissViewControllerAnimated:YES completion:nil];
-                                                                                                               }
-                                                                                                           }];
+- (void)getMessagesFromEvent:(NSString *) eventID completion: (void(^)(NSArray *messages, NSError *error))completion {
+    [[[[[database collectionWithPath:@"Event"] documentWithPath:eventID] collectionWithPath:@"Chat"] queryOrderedByField:@"timeSent" descending:YES] addSnapshotListener:^(FIRQuerySnapshot * _Nullable snapshot, NSError * _Nullable error) {
+        if (error != nil) {
+            completion(nil, error);
+        } else {
+            NSMutableArray * messages = [Message messagesWithArray:snapshot.documents];
+            NSLog(@" messages %@", messages);
+            completion(messages, nil);
+            }
+        
+    }];
+
 }
-*/
+
 
 #pragma mark - Set methods
 

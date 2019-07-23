@@ -7,6 +7,10 @@
 //
 
 #import "MessageBubble.h"
+<<<<<<< HEAD
+#import <Foundation/Foundation.h>
+=======
+>>>>>>> 66a3942693bd7272f0f3daf0855b0925ac30be27
 #import <UIKit/UIKit.h>
 #import "../Models/BubbleView.h"
 @implementation MessageBubble

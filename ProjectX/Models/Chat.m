@@ -37,7 +37,7 @@
             } else {
                 self.messages = [[NSMutableArray alloc] init];
                 
-                NSLog(@"chat path%@", self.path);
+                // NSLog(@"chat path%@", self.path);
                 for (FIRDocumentSnapshot *document in snapshot.documents) {
                     Message *message = [[Message alloc] initWithDictionary:document.data];
                     [self.messages addObject:message];
@@ -78,7 +78,7 @@
         if (snapshot.exists) {
             // Document data may be nil if the document exists but has no keys or values.
             NSLog(@"Document data: %@", snapshot.data);
-            Event *event = [[Event alloc] initWithDictionary:snapshot.data];
+            Event *event = [[Event alloc] initWithDictionary:snapshot.data eventID:snapshot.documentID];
             completion(event, nil);
             // [cell setImage:event.pictures[0]];
 

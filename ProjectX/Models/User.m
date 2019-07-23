@@ -14,7 +14,7 @@
 #pragma mark - User Initializer
 -(instancetype) init
 {
-    NSDictionary *defaultDictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"", @"firstName",@"",@"lastName",@"",@"username",@"", @"profileImage",@"", @"location",@[], @"preferences", @"", @"events", nil];
+    NSDictionary *defaultDictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"", @"firstName",@"",@"lastName",@"",@"username",@"", @"profileImage",@"", @"location",@[], @"preferences", @"", @"events", FIRAuth.auth.currentUser.uid,@"userID",  nil];
     self = [self initWithDictionary:defaultDictionary];
     return self;
 }
@@ -40,20 +40,23 @@
         [self setLocation:dictionary[@"location"]];
         [self setProfileImageURL:dictionary[@"profileImage"]];
         [self setEvents:dictionary[@"events"]];
-        [self setProfileImage];
+        [self setUserID:FIRAuth.auth.currentUser.uid];
+        
     }
     return self;
 }
 
--(void) composeMessage:(NSString *)text chat: (Chat *)chat{
+-(void) composeMessage:(NSString *)text chat: (NSString *)event{
     FIRFirestore *db = [FIRFirestore firestore];
     FIRTimestamp *currentTime = [FIRTimestamp timestamp];
     // FIR
-    __block FIRDocumentReference *ref = [[db collectionWithPath:chat.path] addDocumentWithData:
+    
+    __block FIRDocumentReference *ref = [[[[db collectionWithPath:@"Event"] documentWithPath:event] collectionWithPath:@"Chat"] addDocumentWithData:
   @{
     @"text": text,
     @"timeSent": currentTime,
-    @"nameOfSender": self.username
+    @"nameOfSender": self.username,
+    @"userID": self.userID
     } completion:^(NSError * _Nullable error) {
         if (error != nil) {
             NSLog(@"Error adding document: %@", error);
@@ -65,30 +68,6 @@
 }
 
 
-
-
-#pragma mark - Getter and setter
-/**
- getProfileImage
- This method is going to get the real image from the string url that we receive from the database
- 
- 
- -Parameters:
- nil
- */
-
-
--(void) setProfileImage
-{
-    UIImage *image = [UIImage new];
-    AFImageDownloader * downloader = [[AFImageDownloader alloc] init];
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:self.profileImage]];
-    [downloader downloadImageForURLRequest:request success:^(NSURLRequest * _Nonnull request, NSHTTPURLResponse * _Nullable response, UIImage * _Nonnull responseObject) {
-        self.profileImage = responseObject;
-    }failure:^(NSURLRequest * _Nonnull request, NSHTTPURLResponse * _Nullable response, NSError * _Nonnull error) {
-        self.profileImage = nil;
-    }];
-}
 
 
 

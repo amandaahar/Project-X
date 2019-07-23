@@ -8,30 +8,66 @@
 
 #import "MessagesViewController.h"
 #import "MessageTableViewCell.h"
-
+#import "../Cells/MessageBubble.h"
 
 @interface MessagesViewController () <UITableViewDelegate, UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITextField *messageText;
 @property (weak, nonatomic) IBOutlet UIButton *sendButton;
 @property (weak, nonatomic) IBOutlet UITableView *messagesTableView;
 @property(nonatomic, strong) NSMutableArray *messagesInChat;
+@property (weak, nonatomic) IBOutlet UIView *containerView;
 
+@property (nonatomic, readwrite) FIRFirestore *db;
 
 @end
 
 @implementation MessagesViewController
 
+NSLayoutConstraint *bottom;
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
+    [self.tabBarController.tabBar setHidden: YES];
+    self.messagesTableView.delegate = self;
+    self.messagesTableView.dataSource = self;
+    
+    
+    [[FirebaseManager sharedManager] getMessagesFromEvent:@"8DEd1ZIlomSBf6FAqNUG" completion:^(NSArray * _Nonnull messages, NSError * _Nonnull error) {
+        if (error) {
+            NSLog(@"error getting messages");
+        } else  {
+            self.messagesInChat = messages;
+            [self.messagesTableView reloadData];
+        }
+    }];
+
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.messagesTableView.delegate = self;
-    self.messagesTableView.dataSource = self;
-    // [self.tabBarController setViewControllers:@[]];
-    // [self.tabBarItem setAccessibilityElementsHidden:YES];
-    // [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(fetchMessages) userInfo:nil repeats:true];
     
-   //  [self fetchMessages];
-   // [self.messagesTableView reloadData];
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(handleKeyboardNotifications:) name:UIKeyboardWillShowNotification object:nil];
+    bottom = [NSLayoutConstraint constraintWithItem:self.containerView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1 constant:0];
+    [self.view addConstraint:bottom];
+
+
+}
+
+-(void) handleKeyboardNotifications : (NSNotification*) notification
+{
+    CGRect keyboardFrame = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    
+    for (NSLayoutConstraint * constraint in self.view.constraints)
+    {
+        if([constraint.identifier isEqualToString:@"bottom"])
+        {
+           bottom.constant = -keyboardFrame.size.height;
+            
+        }
+    }
+    [self.view layoutIfNeeded];
+   
 }
 
 - (IBAction)didTapSend:(id)sender {
@@ -40,10 +76,11 @@
         if (error != nil) {
             NSLog(@"Error getting user");
         } else {
-            [user composeMessage:self.messageText.text chat:self.chat];
+            [user composeMessage:self.messageText.text chat:self.eventID];
+            self.messageText.text = @"";
         }
     }];
-    self.messageText.text = @"";
+    
 }
 
 
@@ -64,28 +101,32 @@
 }
  */
                                         
--(void) fetchMessages {
-    
-    [self.messagesTableView reloadData];
+-(void) fetchMessages{
+
     
 }
-                                        
 
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
-    MessageTableViewCell *cell = [self.messagesTableView dequeueReusableCellWithIdentifier:@"messageCell"];
-    Message *message = self.chat.messages[indexPath.row];
+    NSString * identifier = @"bubble";
+    MessageBubble *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    if(!cell)
+    {
+        [tableView registerNib:[UINib nibWithNibName:@"MessageBubble" bundle:nil] forCellReuseIdentifier:@"bubble"];
+        cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+        
+    }
+    Message *message = self.messagesInChat[indexPath.row];
+    [cell setMyText:message.text];
     
-   //  [cell setMessageText:message.text];
-    
-    [cell setMessageText:message.text];
-    [cell setUserLabelText:message.nameOfSender];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     return cell;
     
 }
 
+
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.chat.messages.count;
+    return self.messagesInChat.count;
 }
 
 @end
