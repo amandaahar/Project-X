@@ -17,6 +17,7 @@
 @property(nonatomic, strong) NSMutableArray *messagesInChat;
 @property (weak, nonatomic) IBOutlet UIView *containerView;
 
+@property (nonatomic, readwrite) FIRFirestore *db;
 
 @end
 
@@ -28,13 +29,23 @@ NSLayoutConstraint *bottom;
 {
     [super viewWillAppear:YES];
     [self.tabBarController.tabBar setHidden: YES];
+    self.messagesTableView.delegate = self;
+    self.messagesTableView.dataSource = self;
+    
+    
+    [[FirebaseManager sharedManager] getMessagesFromEvent:@"8DEd1ZIlomSBf6FAqNUG" completion:^(NSArray * _Nonnull messages, NSError * _Nonnull error) {
+        if (error) {
+            NSLog(@"error getting messages");
+        } else  {
+            self.messagesInChat = messages;
+            [self.messagesTableView reloadData];
+        }
+    }];
 
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.messagesTableView.delegate = self;
-    self.messagesTableView.dataSource = self;
     
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(handleKeyboardNotifications:) name:UIKeyboardWillShowNotification object:nil];
     bottom = [NSLayoutConstraint constraintWithItem:self.containerView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1 constant:0];
@@ -65,7 +76,7 @@ NSLayoutConstraint *bottom;
         if (error != nil) {
             NSLog(@"Error getting user");
         } else {
-            [user composeMessage:self.messageText.text chat:self.chat];
+            [user composeMessage:self.messageText.text chat:self.eventID];
             self.messageText.text = @"";
         }
     }];
@@ -91,22 +102,7 @@ NSLayoutConstraint *bottom;
  */
                                         
 -(void) fetchMessages{
-    FIRFirestore *db = [FIRFirestore firestore];
-  //  Fircol
-    self.chat = [self.chat initWithFIRCollectionReference:[db collectionWithPath:self.chat.path]];
-    [self.messagesTableView reloadData];
-    
-    
-//    FIRFirestore *db = [FIRFirestore firestore];
-//    [[db collectionWithPath:self.chat.path] getDocumentsWithCompletion: ^(FIRQuerySnapshot *snapshot, NSError *error) {
-//        if (error != nil) {
-//            NSLog(@"error getting messages in chat collection");
-//        } else {
-//
-//        }
-//    }];
-    
-    
+
     
 }
 
@@ -119,11 +115,8 @@ NSLayoutConstraint *bottom;
         cell = [tableView dequeueReusableCellWithIdentifier:identifier];
         
     }
-    Message *message = self.chat.messages[indexPath.row];
-   if(cell.text == nil)
-   {
-      [cell setMyText:message.text];
-   }
+    Message *message = self.messagesInChat[indexPath.row];
+    [cell setMyText:message.text];
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
@@ -133,7 +126,7 @@ NSLayoutConstraint *bottom;
 
 
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.chat.messages.count;
+    return self.messagesInChat.count;
 }
 
 @end

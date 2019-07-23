@@ -17,7 +17,7 @@
 
 
 @interface GroupsViewController () <UITableViewDelegate, UITableViewDataSource>
-@property (nonatomic, strong) NSMutableArray *chats;
+@property (nonatomic, strong) NSMutableArray *events;
 @property (weak, nonatomic) IBOutlet UITableView *chatsTableView;
 @property (nonatomic, strong) User *currentUser;
 @property (nonatomic, readwrite) FIRFirestore *db;
@@ -37,7 +37,7 @@
     self.chatsTableView.dataSource = self;
     self.chatsTableView.delegate = self;
     
-    self.chats = [[NSMutableArray alloc] init];
+    self.events = [[NSMutableArray alloc] init];
     
      
 }
@@ -49,11 +49,12 @@
         } else {
             self.currentUser = user;
             for(FIRDocumentReference *eventDoc in self.currentUser.events) {
-                FIRCollectionReference *chatCollectionRef = [[[self.db collectionWithPath:@"Event"]documentWithPath:eventDoc.documentID] collectionWithPath:@"Chat"];
-                Chat *chat = [[Chat alloc]initWithFIRCollectionReference:chatCollectionRef];
-                [chat setEvent:eventDoc.documentID];
-                [self.chats addObject:chat];
-                [self.chatsTableView reloadData];
+                [eventDoc getDocumentWithCompletion:^(FIRDocumentSnapshot * _Nullable snapshot, NSError * _Nullable error) {
+                    NSLog(@"%@",snapshot.data);
+                    Event * myEvent = [[Event alloc] initWithDictionary:snapshot.data eventID:snapshot.documentID];
+                    [self.events addObject: myEvent];
+                    [self.chatsTableView reloadData];
+                }];
                 
             }
             
@@ -80,10 +81,10 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     UITableViewCell *tappedCell = sender;
     NSIndexPath *indexPath = [self.chatsTableView indexPathForCell:tappedCell];
-    Chat *chatToPass = self.chats[indexPath.row];
+    Event *eventToPass = self.events[indexPath.row];
     MessagesViewController *messagesViewController = [segue destinationViewController];
     
-    messagesViewController.chat = chatToPass;
+    messagesViewController.eventID = eventToPass.eventID;
     
 }
 
@@ -91,14 +92,11 @@
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
     GroupTableViewCell *cell = [self.chatsTableView dequeueReusableCellWithIdentifier:@"GroupsCell"];
     
-    Chat *chat = self.chats[indexPath.row];
+    Event *event = self.events[indexPath.row];
     // NSLog(@"created at date%@", chat.createdAt);
     
     
-    [chat getEventForChat:^(Event *event, NSError *error) {
-        if (error != nil) {
-            NSLog(@"Error getting event");
-        } else {
+    
             [cell setNameOfChatText:event.name];
             if (event.pictures[0] != nil) {
                 [cell setImage:event.pictures[0]];
@@ -107,16 +105,15 @@
             }
             
             
-        }
-        
-    }];
+    
+
     
     
     return cell;
 }
 
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.chats.count;
+    return self.events.count;
 }
 
 

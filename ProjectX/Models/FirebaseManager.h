@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (id)sharedManager;
 - (void)getCurrentUser:(void(^)(User *user, NSError *error))completion;
 - (void)getEvent:(void(^)(NSArray *event, NSError *error))completion;
+- (void)getMessagesFromEvent:(NSString *) eventID completion: (void(^)(NSArray *messages, NSError *error))completion;
 
 @end
 

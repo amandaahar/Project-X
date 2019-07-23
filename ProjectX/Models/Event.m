@@ -14,10 +14,10 @@
 -(instancetype) init
 {
     NSDictionary *defaultDictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"", @"name",@"",@"description",0,@"attendees",@[], @"pictures",@"", @"location", [NSDate new], @"date", nil];
-    self = [self initWithDictionary:defaultDictionary];
+    self = [self initWithDictionary:defaultDictionary eventID:@""];
     return self;
 }
--(instancetype) initWithDictionary : (NSDictionary *) dictionary
+-(instancetype) initWithDictionary : (NSDictionary *) dictionary eventID: (NSString *)eventID
 {
     self = [super init];
     if(self)
@@ -29,6 +29,7 @@
         self.pictures = dictionary[@"pictures"];
         self.location = dictionary[@"location"];
         self.date = dictionary[@"eventDate"];
+        self.eventID = eventID;
     }
     return self;
 }

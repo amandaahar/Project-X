@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface MessagesViewController : UIViewController
 @property (strong, nonatomic) Chat *chat;
+@property (strong, nonatomic) NSString *eventID;
 
 
 @end
