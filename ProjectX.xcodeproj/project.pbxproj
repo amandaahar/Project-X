@@ -45,6 +45,10 @@
 		EA54ED3022DFD1D800D0D7A2 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA54ED2F22DFD1D800D0D7A2 /* CoreLocation.framework */; };
 		EA73F81322E10AE200385689 /* CategoriesCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA73F81122E10AE200385689 /* CategoriesCollectionViewCell.m */; };
 		EA73F81D22E11B4700385689 /* GroupEventsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA73F81B22E11B4700385689 /* GroupEventsTableViewCell.m */; };
+		EA73F82C22E6412A00385689 /* MainTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA73F82B22E6412A00385689 /* MainTabBarController.m */; };
+		EA73F83D22E6848D00385689 /* MessageBubble.m in Sources */ = {isa = PBXBuildFile; fileRef = EA73F83B22E6848D00385689 /* MessageBubble.m */; };
+		EA73F83E22E6848D00385689 /* MessageBubble.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA73F83C22E6848D00385689 /* MessageBubble.xib */; };
+		EA73F84122E6B96500385689 /* BubbleView.m in Sources */ = {isa = PBXBuildFile; fileRef = EA73F84022E6B96500385689 /* BubbleView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -138,6 +142,14 @@
 		EA73F81122E10AE200385689 /* CategoriesCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CategoriesCollectionViewCell.m; sourceTree = "<group>"; };
 		EA73F81A22E11B4700385689 /* GroupEventsTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GroupEventsTableViewCell.h; sourceTree = "<group>"; };
 		EA73F81B22E11B4700385689 /* GroupEventsTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GroupEventsTableViewCell.m; sourceTree = "<group>"; };
+		EA73F82A22E6412A00385689 /* MainTabBarController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainTabBarController.h; sourceTree = "<group>"; };
+		EA73F82B22E6412A00385689 /* MainTabBarController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainTabBarController.m; sourceTree = "<group>"; };
+		EA73F83122E676B200385689 /* ProjectX.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ProjectX.entitlements; sourceTree = "<group>"; };
+		EA73F83A22E6848D00385689 /* MessageBubble.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MessageBubble.h; sourceTree = "<group>"; };
+		EA73F83B22E6848D00385689 /* MessageBubble.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MessageBubble.m; sourceTree = "<group>"; };
+		EA73F83C22E6848D00385689 /* MessageBubble.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageBubble.xib; sourceTree = "<group>"; };
+		EA73F83F22E6B96500385689 /* BubbleView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BubbleView.h; sourceTree = "<group>"; };
+		EA73F84022E6B96500385689 /* BubbleView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BubbleView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -191,6 +203,8 @@
 				E76311B722E23E8E00A1B674 /* MessagesViewController.m */,
 				0E496C0722E285AA00DEF38C /* CreateEventViewController.h */,
 				0E496C0822E285AA00DEF38C /* CreateEventViewController.m */,
+				EA73F82A22E6412A00385689 /* MainTabBarController.h */,
+				EA73F82B22E6412A00385689 /* MainTabBarController.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -244,6 +258,9 @@
 				EA73F81122E10AE200385689 /* CategoriesCollectionViewCell.m */,
 				EA73F81A22E11B4700385689 /* GroupEventsTableViewCell.h */,
 				EA73F81B22E11B4700385689 /* GroupEventsTableViewCell.m */,
+				EA73F83A22E6848D00385689 /* MessageBubble.h */,
+				EA73F83B22E6848D00385689 /* MessageBubble.m */,
+				EA73F83C22E6848D00385689 /* MessageBubble.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -273,6 +290,8 @@
 		EA54ECE322DE3F3800D0D7A2 /* ProjectX */ = {
 			isa = PBXGroup;
 			children = (
+				EA73F83122E676B200385689 /* ProjectX.entitlements */,
+				EA73F82D22E6417B00385689 /* Helpers */,
 				EA3A502622E1006B004F2FFD /* Cells */,
 				E7AEA0BB22DFD88C00A77CC2 /* Views */,
 				EA54ED2222DE867D00D0D7A2 /* Models */,
@@ -325,8 +344,17 @@
 				E7AEA0B922DFCC3A00A77CC2 /* Chat.m */,
 				E76311B922E241BB00A1B674 /* Message.h */,
 				E76311BA22E241BB00A1B674 /* Message.m */,
+				EA73F83F22E6B96500385689 /* BubbleView.h */,
+				EA73F84022E6B96500385689 /* BubbleView.m */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		EA73F82D22E6417B00385689 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -400,6 +428,11 @@
 				TargetAttributes = {
 					EA54ECE022DE3F3800D0D7A2 = {
 						CreatedOnToolsVersion = 10.2.1;
+						SystemCapabilities = {
+							com.apple.SafariKeychain = {
+								enabled = 0;
+							};
+						};
 					};
 					EA54ECFB22DE3F3900D0D7A2 = {
 						CreatedOnToolsVersion = 10.2.1;
@@ -437,6 +470,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EA54ECF422DE3F3900D0D7A2 /* LaunchScreen.storyboard in Resources */,
+				EA73F83E22E6848D00385689 /* MessageBubble.xib in Resources */,
 				EA54ED1E22DE674000D0D7A2 /* GoogleService-Info.plist in Resources */,
 				E76311BF22E2746400A1B674 /* topCollectionViewCell.xib in Resources */,
 				EA3A502522E0F2FC004F2FFD /* HomeFeedTableViewCell.xib in Resources */,
@@ -559,6 +593,7 @@
 				E77FCBFE22E0DFF100A4E3AC /* EventAPI.m in Sources */,
 				EA54ED2E22DFBA2700D0D7A2 /* APIEventsManager.m in Sources */,
 				EA73F81D22E11B4700385689 /* GroupEventsTableViewCell.m in Sources */,
+				EA73F83D22E6848D00385689 /* MessageBubble.m in Sources */,
 				EA54ECE622DE3F3800D0D7A2 /* AppDelegate.m in Sources */,
 				E7AEA0A922DE8C4400A77CC2 /* EventsFeedViewController.m in Sources */,
 				E76311C022E2746400A1B674 /* topCollectionViewCell.m in Sources */,
@@ -566,12 +601,14 @@
 				EA3A502422E0F2FC004F2FFD /* HomeFeedTableViewCell.m in Sources */,
 				EA54ECF722DE3F3900D0D7A2 /* main.m in Sources */,
 				EA54ED2122DE819900D0D7A2 /* User.m in Sources */,
+				EA73F82C22E6412A00385689 /* MainTabBarController.m in Sources */,
 				0ECF088D22DE792900F5A8AA /* LogInViewController.m in Sources */,
 				E7AEA0B722DF9D7700A77CC2 /* EditProfileViewController.m in Sources */,
 				0ECF088922DE791300F5A8AA /* SignUpViewController.m in Sources */,
 				E76311C322E2768800A1B674 /* MessageTableViewCell.m in Sources */,
 				E7AEA0A622DE8A8E00A77CC2 /* ProfileViewController.m in Sources */,
 				EA54ECEF22DE3F3800D0D7A2 /* ProjectX.xcdatamodeld in Sources */,
+				EA73F84122E6B96500385689 /* BubbleView.m in Sources */,
 				0E496C0922E285AA00DEF38C /* CreateEventViewController.m in Sources */,
 				EA54ED2522DE9E3600D0D7A2 /* Event.m in Sources */,
 				E7AEA0BA22DFCC3A00A77CC2 /* Chat.m in Sources */,

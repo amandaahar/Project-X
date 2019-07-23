@@ -1,0 +1,74 @@
+//
+//  MessageBubble.m
+//  ProjectX
+//
+//  Created by alexhl09 on 7/22/19.
+//  Copyright © 2019 Charge. All rights reserved.
+//
+
+#import "MessageBubble.h"
+#import <UIKit/UIKit.h>
+#import "../Models/BubbleView.h"
+@implementation MessageBubble
+
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    
+    // Initialization code
+}
+
+-(void) setMyText:(NSString *)text
+{
+    self.text = text;
+    [self showOutgoingMessage:text];
+}
+
+-(void) showIncomingMessage
+{
+    CGFloat width = 0.66 * self.frame.size.width;
+    CGFloat height = width / 0.75;
+    
+    BubbleView * maskView = [BubbleView new];
+    maskView.isIncoming = YES;
+    maskView.backgroundColor = [UIColor clearColor];
+    maskView.frame = CGRectMake(maskView.frame.origin.x, maskView.frame.origin.y, width, height);
+    
+   
+}
+
+
+-(void) showOutgoingMessage : (NSString *) text
+{
+    UILabel * label = [[UILabel alloc] init];
+    [label setNumberOfLines:0];
+    [label setFont:[UIFont systemFontOfSize:14]];
+    [label setTextColor:[UIColor blackColor]];
+    [label setText: text];
+    
+    [label setTextColor:[UIColor whiteColor]];
+    
+    CGSize constraintRect = CGSizeMake(0.66 * self.frame.size.width, CGFLOAT_MAX);
+    CGRect boundingBox = [text boundingRectWithSize:constraintRect options:(NSStringDrawingUsesLineFragmentOrigin) attributes:@{NSFontAttributeName : label.font } context:nil];
+    label.frame = boundingBox;
+    CGSize bubbleSize = CGSizeMake(label.frame.size.width + 28, label.frame.size.height + 20);
+    
+    BubbleView * bubbleView = [BubbleView new];
+    bubbleView.frame = CGRectMake(bubbleView.frame.origin.x, bubbleView.frame.origin.y, label.frame.size.width + 28, label.frame.size.height + 20);
+    bubbleView.backgroundColor = [UIColor clearColor];
+
+    bubbleView.center = CGPointMake(self.frame.size.width - bubbleView.frame.size.width / 2 - 90, self.center.y);
+    [self addSubview:bubbleView];
+    
+    label.center = bubbleView.center;
+    [self addSubview:label];
+    
+    
+}
+
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
+    [super setSelected:selected animated:animated];
+
+    // Configure the view for the selected state
+}
+
+@end

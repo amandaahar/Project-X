@@ -7,9 +7,13 @@
 //
 
 #import "ProfileViewController.h"
-#import "../Models/FirebaseManager.h"
 #import "UIImageView+AFNetworking.h"
 #import "User.h"
+#import "LogInViewController.h"
+#import "../AppDelegate.h"
+#import "../Models/FirebaseManager.h"
+
+
 
 @import Firebase;
 //@class FirebaseManager;
@@ -79,6 +83,21 @@
     NSURL *imageURL = [NSURL URLWithString:photoURL];
     [self.profilePictureImage setImageWithURL:imageURL];
     
+    
+}
+- (IBAction)logOut:(id)sender {
+    NSError *signOutError;
+    BOOL status = [[FIRAuth auth] signOut:&signOutError];
+    if (!status) {
+        NSLog(@"Error signing out: %@", signOutError);
+        return;
+    }else{
+        AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        LogInViewController *loginViewController = [storyboard instantiateViewControllerWithIdentifier:@"LogIn"];
+        appDelegate.window.rootViewController = loginViewController;
+        NSLog(@"Successfully Signout");
+    }
     
 }
 

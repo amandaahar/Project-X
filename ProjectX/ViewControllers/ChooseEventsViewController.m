@@ -16,12 +16,12 @@
 @import Firebase;
 
 @interface ChooseEventsViewController () <CLLocationManagerDelegate, CreateEventControllerDelegate>
-@property (weak, nonatomic) IBOutlet UILabel *eventDate;
+@property (weak, nonatomic) IBOutlet UILabel *eventDate;//improve format
 @property (weak, nonatomic) IBOutlet UILabel *numAttendees;
 @property (weak, nonatomic) IBOutlet UILabel *eventName;
 @property (weak, nonatomic) IBOutlet UILabel *Eventdescription;
 @property (nonatomic, readwrite) FIRFirestore *db;
-@property (weak, nonatomic) IBOutlet UIView *card;
+@property (weak, nonatomic) IBOutlet UIView *card;//make sure card leaves page and not seen at all
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (strong, nonatomic) NSMutableArray *eventArray;
 @property (strong, nonatomic) NSDate *dateNSEvent;
@@ -31,6 +31,7 @@
 @end
 
 @implementation ChooseEventsViewController
+BOOL swipeDecision;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -67,27 +68,25 @@
     sender.view.center = CGPointMake(sender.view.center.x + translation.x, sender.view.center.y + translation.y);
     [sender setTranslation:CGPointMake(0.0, 0.0) inView:sender.view.superview];
     
-    
     if(sender.state == UIGestureRecognizerStateEnded) {
         if (self.card.center.x < 75) {
+            swipeDecision = NO;
             //Move to left side
             [UIView animateWithDuration:0.3 animations:^{
                 self.card.center = CGPointMake(self.card.center.x - 200, self.card.center.y + 75);
             }];
-            //NSLog(@"LEFT GESTURE");
             [self nextEvent];
             //[self resetCard];
         }
         
         else if ((self.card.center.x) > (self.card.frame.size.width - 75)){
+            swipeDecision = YES;
             //move off to right side
             [UIView animateWithDuration:0.3 animations:^{
                 self.card.center = CGPointMake(self.card.center.x + 200, self.card.center.y + 75);
             }];
-            //NSLog(@"RIGHT GESTURE");
             [self nextEvent];
             self.tabBarController.selectedIndex = 2;
-            
         }
         
         else {
@@ -102,7 +101,6 @@
     self.eventArray = tempArray;
     
     if (self.eventArray.firstObject == nil) {
-        //NSLog(@"No events found");
         
         UIView *emptyCard = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 100)];
         emptyCard.center = self.view.center;
@@ -155,12 +153,14 @@
 
 - (void)didCreate:(Event *)newEvent {
     [self.eventArray addObject:newEvent];
+    [self resetCard];
     [self nextEvent];
     [self resetCard];
 }
 
 - (IBAction)CreateEventAction:(id)sender {
     [self performSegueWithIdentifier:@"CreateEventSegue" sender:nil];
+//    [self resetCard];
 }
      
 #pragma mark - Navigation
