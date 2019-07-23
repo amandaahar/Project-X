@@ -26,17 +26,18 @@
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (strong, nonatomic) NSMutableArray *eventArray;
 @property (strong, nonatomic) NSDate *dateNSEvent;
+@property (strong, nonatomic) NSString *eventID;
 
 - (IBAction)CreateEventAction:(id)sender;
 
 @end
 
 @implementation ChooseEventsViewController
-BOOL swipeDecision;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self fetchEvents];
+    self.db = [FIRFirestore firestore];
     self.eventArray = [NSMutableArray new];
 }
 
@@ -47,13 +48,14 @@ BOOL swipeDecision;
             NSLog(@"Error showing documents: %@", error);
         }else
         {
-            NSLog(@"%@", event);
+            //NSLog(@"%@", event);
             Event * myEvent = event.firstObject;
             
             self.numAttendees.text = [NSString stringWithFormat:@"%@", myEvent.attendees];
             self.eventName.text = myEvent.name;
             self.Eventdescription.text = myEvent.descriptionEvent;
             self.eventArray = event;
+            self.eventID = myEvent.eventID;
             [self eventDateIdentifier];
             [self eventLocationIdentifier];
             
@@ -71,7 +73,6 @@ BOOL swipeDecision;
     
     if(sender.state == UIGestureRecognizerStateEnded) {
         if (self.card.center.x < 75) {
-            swipeDecision = NO;
             //Move to left side
             [UIView animateWithDuration:0.3 animations:^{
                 self.card.center = CGPointMake(self.card.center.x - 200, self.card.center.y + 75);
@@ -81,11 +82,15 @@ BOOL swipeDecision;
         }
         
         else if ((self.card.center.x) > (self.card.frame.size.width - 75)){
-            swipeDecision = YES;
             //move off to right side
             [UIView animateWithDuration:0.3 animations:^{
                 self.card.center = CGPointMake(self.card.center.x + 200, self.card.center.y + 75);
             }];
+            
+            Event * myEvent = self.eventArray.firstObject;
+            
+            FIRDocumentReference *eventRef = [[self.db collectionWithPath:@"Users"] documentWithPath:FIRAuth.auth.currentUser.uid];
+            [eventRef updateData:@{ @"events": [FIRFieldValue fieldValueForArrayUnion:@[myEvent.eventID]] }];
             [self nextEvent];
             self.tabBarController.selectedIndex = 2;
         }
