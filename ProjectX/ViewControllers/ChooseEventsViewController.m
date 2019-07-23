@@ -151,9 +151,7 @@ BOOL swipeDecision;
     eventAnnotation.placeName = [NSString stringWithFormat:@"%@", event.location];
     eventAnnotation.coordinate = location.center;
     [self.mapView addAnnotation:eventAnnotation];
-    
-//    self.mapView.layer.cornerRadius = 15;
-//    self.mapView.layer.masksToBounds = true;
+
 }
 
  - (void) eventDateIdentifier {
@@ -163,7 +161,7 @@ BOOL swipeDecision;
     [self setDateNSEvent:eventTimestamp.dateValue];
     
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"dd/MMM/YYYY hh:minmin a"];
+    [formatter setDateFormat:@"MMM d, h:mm a"];
     
     self.eventDate.text = [NSString stringWithFormat:@"%@", [formatter stringFromDate:self.dateNSEvent]];
 }
