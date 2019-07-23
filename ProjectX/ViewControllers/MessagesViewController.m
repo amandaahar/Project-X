@@ -66,9 +66,10 @@ NSLayoutConstraint *bottom;
             NSLog(@"Error getting user");
         } else {
             [user composeMessage:self.messageText.text chat:self.chat];
+            self.messageText.text = @"";
         }
     }];
-    self.messageText.text = @"";
+    
 }
 
 
