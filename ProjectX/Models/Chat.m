@@ -37,7 +37,7 @@
             } else {
                 self.messages = [[NSMutableArray alloc] init];
                 
-                NSLog(@"chat path%@", self.path);
+                // NSLog(@"chat path%@", self.path);
                 for (FIRDocumentSnapshot *document in snapshot.documents) {
                     Message *message = [[Message alloc] initWithDictionary:document.data];
                     [self.messages addObject:message];

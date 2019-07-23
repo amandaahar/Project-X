@@ -28,7 +28,7 @@
     self.messagesTableView.dataSource = self;
     // [self.tabBarController setViewControllers:@[]];
     // [self.tabBarItem setAccessibilityElementsHidden:YES];
-    // [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(fetchMessages) userInfo:nil repeats:true];
+    [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(fetchMessages) userInfo:nil repeats:true];
     
    //  [self fetchMessages];
    // [self.messagesTableView reloadData];
@@ -64,12 +64,25 @@
 }
  */
                                         
--(void) fetchMessages {
-    
+-(void) fetchMessages{
+    FIRFirestore *db = [FIRFirestore firestore];
+  //  Fircol
+    self.chat = [self.chat initWithFIRCollectionReference:[db collectionWithPath:self.chat.path]];
     [self.messagesTableView reloadData];
     
+    
+//    FIRFirestore *db = [FIRFirestore firestore];
+//    [[db collectionWithPath:self.chat.path] getDocumentsWithCompletion: ^(FIRQuerySnapshot *snapshot, NSError *error) {
+//        if (error != nil) {
+//            NSLog(@"error getting messages in chat collection");
+//        } else {
+//
+//        }
+//    }];
+    
+    
+    
 }
-                                        
 
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
     MessageTableViewCell *cell = [self.messagesTableView dequeueReusableCellWithIdentifier:@"messageCell"];
