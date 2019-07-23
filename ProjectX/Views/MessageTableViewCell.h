@@ -11,6 +11,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface MessageTableViewCell : UITableViewCell
+-(void) setUserLabelText:(NSString *)userLabelText;
+-(void) setMessageText:(NSString *)messageTextLabel;
 
 @end
 

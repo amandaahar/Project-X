@@ -9,6 +9,7 @@
 #import "LogInViewController.h"
 #import "AppDelegate.h"
 #import "../Models/APIEventsManager.h"
+#import "MainTabBarController.h"
 @import Firebase;
 
 @interface LogInViewController ()
@@ -39,7 +40,7 @@
             NSLog(@"User logged in successfully");
             AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-            LogInViewController *loginViewController = [storyboard instantiateViewControllerWithIdentifier:@"TabBarVC"];
+            MainTabBarController *loginViewController = [storyboard instantiateViewControllerWithIdentifier:@"TabBarVC"];
             appDelegate.window.rootViewController = loginViewController;
         }
     }];

@@ -23,7 +23,7 @@
         FIRTimestamp *timeSent = dictionary[@"timeSent"];
         [self setText:dictionary[@"text"]];
         [self setTimeSent:timeSent.dateValue];
-        [self setUserID:dictionary[@"userID"]];
+        [self setNameOfSender:dictionary[@"nameOfSender"]];
     }
     return self;
 }

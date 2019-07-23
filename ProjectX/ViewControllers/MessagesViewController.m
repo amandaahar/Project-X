@@ -23,10 +23,28 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.messagesTableView.delegate = self;
+    self.messagesTableView.dataSource = self;
     // [self.tabBarController setViewControllers:@[]];
     // [self.tabBarItem setAccessibilityElementsHidden:YES];
+    // [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(fetchMessages) userInfo:nil repeats:true];
+    
+   //  [self fetchMessages];
+   // [self.messagesTableView reloadData];
 }
 
+- (IBAction)didTapSend:(id)sender {
+   //  User *currentUser = [[User alloc]init];
+    [[FirebaseManager sharedManager] getCurrentUser:^(User *user, NSError *error) {
+        if (error != nil) {
+            NSLog(@"Error getting user");
+        } else {
+            [user composeMessage:self.messageText.text chat:self.chat];
+        }
+    }];
+    self.messageText.text = @"";
+}
 
 
 /*
@@ -46,18 +64,28 @@
 }
  */
                                         
-
+-(void) fetchMessages {
+    
+    [self.messagesTableView reloadData];
+    
+}
                                         
 
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
     MessageTableViewCell *cell = [self.messagesTableView dequeueReusableCellWithIdentifier:@"messageCell"];
+    Message *message = self.chat.messages[indexPath.row];
+    
+   //  [cell setMessageText:message.text];
+    
+    [cell setMessageText:message.text];
+    [cell setUserLabelText:message.nameOfSender];
     
     return cell;
     
 }
 
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.messagesInChat.count;
+    return self.chat.messages.count;
 }
 
 @end

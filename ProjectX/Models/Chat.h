@@ -26,6 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (strong, nonatomic) NSMutableArray *messages;
 @property(strong, nonatomic) NSString *event;
+@property(strong, nonatomic) NSString *path;
 
 #pragma mark - Chat Initializer
 // -(instancetype) initWithDictionary : (NSDictionary *) dictionary;
