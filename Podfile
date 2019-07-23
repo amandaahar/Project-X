@@ -16,6 +16,7 @@ target 'ProjectX' do
   pod 'FirebaseStorage'
   pod 'GeoFire'
   pod 'AFNetworking'
+  pod 'MaterialTextField'
 
   target 'ProjectXTests' do
     inherit! :search_paths
