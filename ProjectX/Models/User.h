@@ -28,7 +28,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - User Initializer
 -(instancetype) initWithDictionary : (NSDictionary *) dictionary;
+-(void) composeMessage:(NSString *)text chat: (Chat *)chat;
 -(void) setProfileImage;
+
 @end
 
 NS_ASSUME_NONNULL_END

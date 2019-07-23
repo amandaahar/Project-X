@@ -50,9 +50,6 @@
             completion(nil, error);
         }
     }];
-    
-
-
 }
 
 - (void)getEvent:(void(^)(NSArray *events, NSError *error))completion {

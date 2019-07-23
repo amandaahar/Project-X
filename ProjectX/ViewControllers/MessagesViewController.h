@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Chat.h"
 #import "../Models/FirebaseManager.h"
+#import "User.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
