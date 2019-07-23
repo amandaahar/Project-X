@@ -27,6 +27,7 @@
 @property (strong, nonatomic) NSMutableArray *eventArray;
 @property (strong, nonatomic) NSDate *dateNSEvent;
 @property (strong, nonatomic) NSString *eventID;
+@property (strong, nonatomic) FIRDocumentReference *eventIDRef;
 
 - (IBAction)CreateEventAction:(id)sender;
 
@@ -90,7 +91,7 @@
             Event * myEvent = self.eventArray.firstObject;
             
             FIRDocumentReference *eventRef = [[self.db collectionWithPath:@"Users"] documentWithPath:FIRAuth.auth.currentUser.uid];
-            [eventRef updateData:@{ @"events": [FIRFieldValue fieldValueForArrayUnion:@[myEvent.eventID]] }];
+            [eventRef updateData:@{ @"events": [FIRFieldValue fieldValueForArrayUnion:@[myEvent.eventIDRef]] }];
             [self nextEvent];
             self.tabBarController.selectedIndex = 2;
         }
