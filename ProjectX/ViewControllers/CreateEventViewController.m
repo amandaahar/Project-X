@@ -18,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *createEventDescription;
 @property (weak, nonatomic) IBOutlet UITextField *createEventLocation;
 @property (weak, nonatomic) IBOutlet UITextField *createEventDate;//Fix time
+@property (weak, nonatomic) IBOutlet UITextField *eventTime;
 @property (weak, nonatomic) IBOutlet UITextField *createAttendees;//Change to slider
 @property (weak, nonatomic) IBOutlet UIImageView *createPicture; //Finish later
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *createButton;
@@ -48,10 +49,25 @@ UIDatePicker *datePicker;
 
 - (void) ShowSelectedDate {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"dd/MMMM/YYYY hh:minmin a"];
+    [formatter setDateFormat:@"dd/MMM/YYYY"];
+    
+//    [formatter setTimeStyle:NSDateFormatterShortStyle];
+//    [self.eventTime setText:[formatter stringFromDate:self.eventTime.text]];
+    
+//    self.createEventDate.text = [NSString stringWithFormat:@"%@ %@", [formatter stringFromDate:datePicker.date],  self.eventTime];
     self.createEventDate.text = [NSString stringWithFormat:@"%@", [formatter stringFromDate:datePicker.date]];
     [self.createEventDate resignFirstResponder];
 }
+
+/*
+ - (void) selectedTime {
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"dd/MMMM/YYYY"];
+    
+    // [formatter setTimeStyle:NSDateFormatterShortStyle];
+    // [self.eventTime setText:[formatter stringFromDate:self.eventTime]];
+}
+ */
 
 - (IBAction)OpenCameraButton:(id)sender {
     UIImagePickerController *imagePickerVC = [UIImagePickerController new];
