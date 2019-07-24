@@ -123,6 +123,7 @@ NSLayoutConstraint *bottom;
     if([self.idCurrentUser isEqualToString:message.userID])
     {
         [cell showOutgoingMessage:message];
+        
     }else
     {
         [cell showIncomingMessage:message];

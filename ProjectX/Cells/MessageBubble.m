@@ -29,8 +29,13 @@
     self.bubbleView.incomingColor = [UIColor colorWithWhite:0.6 alpha:1];
    [self.bubbleLabel setTextAlignment:(NSTextAlignmentLeft)];
     
+
+    [self.rightConstraint setActive:NO];
+    [self.leftConstraint setActive:YES];
+    [self.bubbleLabel layoutIfNeeded];
     [self.bubbleLabel sizeToFit];
     [self.bubbleView setNeedsDisplay];
+    
     [self sizeToFit];
 }
 
@@ -38,29 +43,16 @@
 - (void)showOutgoingMessage:(Message *)message
 {
     self.message = message;
-    self.nameLabel.text = message.nameOfSender;
+    self.nameLabel.text = @"";
     [self.bubbleLabel setText:message.text];
     [self.bubbleLabel sizeToFit];
-    for (NSLayoutConstraint * constraint in self.bubbleLabel.constraints)
-    {
-        NSLog(@"%@",constraint.identifier);
-        if([constraint.identifier isEqualToString:@"right"])
-        {
-            [self removeConstraint:constraint];
-        }
-    }
-    NSLayoutConstraint *rightButtonXConstraint = [NSLayoutConstraint
-                                                 constraintWithItem:self.bubbleLabel attribute:NSLayoutAttributeLeft
-                                                 relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:
-                                                 NSLayoutAttributeLeft multiplier:1.0 constant:30];
-    
-    [self addConstraints:@[rightButtonXConstraint]];
-    
+    [self.leftConstraint setActive:NO];
+    [self.rightConstraint setActive:YES];
+    [self.bubbleLabel layoutIfNeeded];
     [self.bubbleLabel setTextAlignment:(NSTextAlignmentRight)];
     self.bubbleView.isIncoming = NO;
      self.bubbleView.outgoingColor = [UIColor colorWithRed:0.09 green:0.54 blue:1 alpha:1];
     [self.bubbleView setNeedsDisplay];
-
    [self sizeToFit];
     //[self.bubbleView drawRect:self.bubbleView.frame];
    

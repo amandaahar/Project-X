@@ -99,11 +99,17 @@
     
     
             [cell setNameOfChatText:event.name];
-            if (event.pictures[0] != nil) {
-                [cell setImage:event.pictures[0]];
-            } else {
-                [cell setImage:@"http://pngimg.com/uploads/earth/earth_PNG39.png"];
-            }
+    @try {
+        if (event.pictures[0] != nil) {
+            [cell setImage:event.pictures[0]];
+        } else {
+            [cell setImage:@"http://pngimg.com/uploads/earth/earth_PNG39.png"];
+        }
+    } @catch (NSException *exception) {
+         [cell setImage:@"http://pngimg.com/uploads/earth/earth_PNG39.png"];
+    }
+    
+    
             
             
     
