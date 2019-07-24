@@ -20,6 +20,7 @@
 @property (strong, nonatomic, readwrite) FIRFirestore *db;
 @property (weak, nonatomic) IBOutlet MFTextField *secondPasswordField;
 @property (weak, nonatomic) IBOutlet MFTextField *lastName;
+@property (weak, nonatomic) IBOutlet MFTextField *username;
 
 @end
 
@@ -34,6 +35,8 @@
     self.emailField.delegate = self;
     self.emailField.textContentType  = UITextContentTypeEmailAddress;
     self.passwordField.delegate = self;
+    self.username.delegate = self;
+    self.username.textContentType = UITextContentTypeUsername;
     self.passwordField.textContentType = UITextContentTypeNewPassword;
     self.passwordField.passwordRules = [UITextInputPasswordRules passwordRulesWithDescriptor: @"required: upper; required: digit; max-consecutive: 2; minlength: 6;"];
     self.secondPasswordField.delegate = self;
@@ -60,6 +63,12 @@
         [self.lastName becomeFirstResponder];
         return YES;
     }else if (textField == self.lastName)
+    {
+        [textField resignFirstResponder];
+        [self.username becomeFirstResponder];
+        return YES;
+        
+    }else if (textField == self.username)
     {
         [textField resignFirstResponder];
         [self.emailField becomeFirstResponder];
@@ -114,7 +123,9 @@
                 [[[self.db collectionWithPath:@"Users"] documentWithPath:FIRAuth.auth.currentUser.uid] setData:@{
                   @"firstName": self.usernameField.text,
                   @"email": self.emailField.text,
-                  @"lastName" : self.lastName.text
+                  @"lastName" : self.lastName.text,
+                  @"username" : self.username.text,
+                  @"profileImage" : @"https://profiles.utdallas.edu/img/default.png"
                   } completion:^(NSError * _Nullable error) {
                      if (error != nil)
                      {
@@ -139,7 +150,9 @@
 
  -(BOOL) verifyPasswords : (NSString *) passwordOne : (NSString *) passwordTwo
  {
-     return (passwordOne.length > 5 && passwordOne == passwordTwo);
+     NSLog(@"%@",passwordOne);
+     NSLog(@"%@",passwordTwo);
+     return (passwordOne.length > 5 && [passwordOne isEqualToString: passwordTwo]);
  }
 
 
