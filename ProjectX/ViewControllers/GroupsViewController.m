@@ -36,7 +36,7 @@
     
     self.chatsTableView.dataSource = self;
     self.chatsTableView.delegate = self;
-     [self getChats];
+    [self getChats];
     self.events = [[NSMutableArray alloc] init];
     
 //    [[FirebaseManager sharedManager] getEventsFromUser:@"DAhDAxEMoJNpOcjkaWe1cyevl9v2"
@@ -68,9 +68,11 @@
             NSLog(@"Error getting user");
         } else {
             self.currentUser = user;
+            [self.events removeAllObjects];
             for(FIRDocumentReference *eventDoc in self.currentUser.events) {
                 [eventDoc addSnapshotListener:^(FIRDocumentSnapshot * _Nullable snapshot, NSError * _Nullable error) {
                     if(error == nil){
+                    
                     Event * myEvent = [[Event alloc] initWithDictionary:snapshot.data eventID:snapshot.documentID];
                     [self.events addObject: myEvent];
                     [self.chatsTableView reloadData];
