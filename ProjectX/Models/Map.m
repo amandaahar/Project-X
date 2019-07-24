@@ -10,6 +10,6 @@
 
 @implementation Map
 
-@synthesize title, placeName, coordinate;
+@synthesize title, placeName, coordinate, photo;
 
 @end

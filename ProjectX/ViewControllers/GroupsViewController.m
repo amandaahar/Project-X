@@ -69,11 +69,12 @@
         } else {
             self.currentUser = user;
             for(FIRDocumentReference *eventDoc in self.currentUser.events) {
-                [eventDoc getDocumentWithCompletion:^(FIRDocumentSnapshot * _Nullable snapshot, NSError * _Nullable error) {
-                    NSLog(@"%@",snapshot.data);
+                [eventDoc addSnapshotListener:^(FIRDocumentSnapshot * _Nullable snapshot, NSError * _Nullable error) {
+                    if(error == nil){
                     Event * myEvent = [[Event alloc] initWithDictionary:snapshot.data eventID:snapshot.documentID];
                     [self.events addObject: myEvent];
                     [self.chatsTableView reloadData];
+                    }
                 }];
                 
             }

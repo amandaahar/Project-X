@@ -16,13 +16,13 @@
 @property (weak, nonatomic) IBOutlet UITableView *messagesTableView;
 @property(nonatomic, strong) NSMutableArray *messagesInChat;
 @property (weak, nonatomic) IBOutlet UIView *containerView;
-
+@property (strong, nonatomic) NSString * idCurrentUser;
 @property (nonatomic, readwrite) FIRFirestore *db;
 
 @end
 
 @implementation MessagesViewController
-
+NSString * identifier = @"bubble";
 NSLayoutConstraint *bottom;
 
 - (void)viewWillAppear:(BOOL)animated
@@ -31,14 +31,22 @@ NSLayoutConstraint *bottom;
     [self.tabBarController.tabBar setHidden: YES];
     self.messagesTableView.delegate = self;
     self.messagesTableView.dataSource = self;
-    
-    
+    self.messagesTableView.allowsSelection = NO;
+    self.idCurrentUser = FIRAuth.auth.currentUser.uid;
+    [self.messagesTableView registerNib:[UINib nibWithNibName:@"MessageBubble" bundle:nil] forCellReuseIdentifier:identifier];
+
     [[FirebaseManager sharedManager] getMessagesFromEvent:@"8DEd1ZIlomSBf6FAqNUG" completion:^(NSArray * _Nonnull messages, NSError * _Nonnull error) {
         if (error) {
             NSLog(@"error getting messages");
         } else  {
-            self.messagesInChat = messages;
+            self.messagesInChat = messages.mutableCopy;
             [self.messagesTableView reloadData];
+            if(self.messagesInChat.count > 0)
+            {
+            NSIndexPath * indexPath = [NSIndexPath indexPathForItem:self.messagesInChat.count - 1 inSection:0];
+            [self.messagesTableView scrollToRowAtIndexPath:indexPath atScrollPosition:(UITableViewScrollPositionBottom) animated:YES];
+            }
+            
         }
     }];
 
@@ -46,15 +54,12 @@ NSLayoutConstraint *bottom;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(handleKeyboardNotifications:) name:UIKeyboardWillShowNotification object:nil];
     bottom = [NSLayoutConstraint constraintWithItem:self.containerView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1 constant:0];
     [self.view addConstraint:bottom];
-
-
 }
 
--(void) handleKeyboardNotifications : (NSNotification*) notification
+- (void)handleKeyboardNotifications:(NSNotification*)notification
 {
     CGRect keyboardFrame = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
     
@@ -72,14 +77,19 @@ NSLayoutConstraint *bottom;
 
 - (IBAction)didTapSend:(id)sender {
    //  User *currentUser = [[User alloc]init];
-    [[FirebaseManager sharedManager] getCurrentUser:^(User *user, NSError *error) {
-        if (error != nil) {
-            NSLog(@"Error getting user");
-        } else {
-            [user composeMessage:self.messageText.text chat:self.eventID];
-            self.messageText.text = @"";
-        }
-    }];
+    if(![self.messageText.text isEqualToString: @""])
+    {
+        [[FirebaseManager sharedManager] getCurrentUser:^(User *user, NSError *error) {
+            if (error != nil) {
+                NSLog(@"Error getting user");
+            } else {
+                [user composeMessage:self.messageText.text chat:self.eventID];
+                self.messageText.text = @"";
+            }
+            
+        }];
+    }
+    
     
 }
 
@@ -101,29 +111,48 @@ NSLayoutConstraint *bottom;
 }
  */
                                         
+- (void)fetchMessages{
 
-- (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
-    NSString * identifier = @"bubble";
-    MessageBubble *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-    if(!cell)
-    {
-        [tableView registerNib:[UINib nibWithNibName:@"MessageBubble" bundle:nil] forCellReuseIdentifier:@"bubble"];
-        cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-        
-    }
-    Message *message = self.messagesInChat[indexPath.row];
-    [cell setMyText:message.text];
-    
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
-    return cell;
     
 }
+
+- (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
+    MessageBubble *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    Message *message = self.messagesInChat[indexPath.row];
+    
+    if([self.idCurrentUser isEqualToString:message.userID])
+    {
+        [cell showOutgoingMessage:message];
+    }else
+    {
+        [cell showIncomingMessage:message];
+    }
+    
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    [cell autoresizesSubviews];
+    return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    CGFloat cellheight = 70; //assuming that your TextView's origin.y is 30 and TextView is the last UI element in your cell
+    
+    NSString *text = [[self.messagesInChat objectAtIndex:indexPath.row] text];
+    UIFont *font = [UIFont systemFontOfSize:14];// The font should be the same as that of your textView
+    CGSize constraintSize = CGSizeMake(150, CGFLOAT_MAX);// maxWidth = max width for the textView
+    
+    CGSize size = [text sizeWithFont:font constrainedToSize:constraintSize lineBreakMode:UILineBreakModeWordWrap];
+    
+    cellheight += size.height; //you can also add a cell padding if you want some space below textView
+    return cellheight;
+}
+
 
 
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.messagesInChat.count;
 }
+//
+
 
 @end
 

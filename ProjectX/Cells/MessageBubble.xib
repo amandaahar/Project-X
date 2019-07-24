@@ -12,15 +12,61 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="bubble" rowHeight="92" id="KGk-i7-Jjw" customClass="MessageBubble">
-            <rect key="frame" x="0.0" y="0.0" width="440" height="92"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="bubble" id="KGk-i7-Jjw" customClass="MessageBubble">
+            <rect key="frame" x="0.0" y="0.0" width="440" height="99"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="440" height="91.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="440" height="98.5"/>
                 <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kv7-kO-f9M" userLabel="Vivian">
+                        <rect key="frame" x="10" y="4" width="133" height="18"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="18" id="Zt5-lK-DZk"/>
+                            <constraint firstAttribute="width" constant="133" id="gAs-by-CSK"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X0S-hK-d1w" customClass="BubbleView">
+                        <rect key="frame" x="10" y="22" width="65.5" height="43"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KNl-vt-ErM">
+                        <rect key="frame" x="25" y="30" width="35.5" height="25"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="30" id="IG8-6c-oNw"/>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="25" id="Z5i-73-4ZE"/>
+                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="200" id="wpX-NL-cvp"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="kv7-kO-f9M" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="4" id="ArD-5g-l08"/>
+                    <constraint firstItem="KNl-vt-ErM" firstAttribute="trailing" secondItem="X0S-hK-d1w" secondAttribute="trailing" constant="-15" id="K3f-6W-li4"/>
+                    <constraint firstItem="KNl-vt-ErM" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="25" identifier="left" id="R4u-5k-0uD"/>
+                    <constraint firstItem="KNl-vt-ErM" firstAttribute="top" secondItem="X0S-hK-d1w" secondAttribute="top" constant="8" id="dM4-kg-7IQ"/>
+                    <constraint firstItem="X0S-hK-d1w" firstAttribute="top" secondItem="kv7-kO-f9M" secondAttribute="bottom" id="msO-QR-Cxx"/>
+                    <constraint firstItem="kv7-kO-f9M" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="pfU-Wc-e9x"/>
+                    <constraint firstItem="KNl-vt-ErM" firstAttribute="leading" secondItem="X0S-hK-d1w" secondAttribute="leading" constant="15" id="rnH-q8-GMT"/>
+                    <constraint firstItem="KNl-vt-ErM" firstAttribute="bottom" secondItem="X0S-hK-d1w" secondAttribute="bottom" constant="-10" id="sj8-NO-HRi"/>
+                </constraints>
             </tableViewCellContentView>
+            <accessibility key="accessibilityConfiguration">
+                <accessibilityTraits key="traits" notEnabled="YES"/>
+            </accessibility>
             <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>
-            <point key="canvasLocation" x="217.39130434782609" y="169.41964285714286"/>
+            <connections>
+                <outlet property="bubbleLabel" destination="KNl-vt-ErM" id="4FF-a1-N9z"/>
+                <outlet property="bubbleView" destination="X0S-hK-d1w" id="D7W-ch-VmS"/>
+                <outlet property="nameLabel" destination="kv7-kO-f9M" id="2hx-KW-g18"/>
+            </connections>
+            <point key="canvasLocation" x="217.39130434782609" y="171.76339285714286"/>
         </tableViewCell>
     </objects>
 </document>

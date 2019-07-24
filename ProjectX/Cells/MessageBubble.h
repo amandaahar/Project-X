@@ -7,12 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "../Models/Message.h"
+#import "../Models/BubbleView.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface MessageBubble : UITableViewCell
-@property (nonatomic, strong) NSString * text;
--(void) setMyText:(NSString *)text;
+@property (nonatomic, strong) Message * message;
+@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (weak, nonatomic) IBOutlet BubbleView *bubbleView;
+@property (weak, nonatomic) IBOutlet UILabel *bubbleLabel;
+
+-(void) showIncomingMessage : (Message *) message;
+- (void)showOutgoingMessage:(Message *)message;
+
 @end
 
 NS_ASSUME_NONNULL_END

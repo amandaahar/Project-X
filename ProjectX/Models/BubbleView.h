@@ -11,11 +11,10 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface BubbleView : UIView
+
 @property (assign, nonatomic) BOOL isIncoming;
 @property (nonatomic, strong) UIColor * incomingColor;
 @property (nonatomic, strong) UIColor * outgoingColor;
-
-
 @end
 
 NS_ASSUME_NONNULL_END

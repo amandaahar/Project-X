@@ -14,13 +14,14 @@
 {
     self = [super init];
     if (self) {
-        self.incomingColor = [UIColor colorWithWhite:0.9 alpha:1];
+        self.incomingColor = [UIColor colorWithWhite:0.6 alpha:1];
         self.outgoingColor = [UIColor colorWithRed:0.09 green:0.54 blue:1 alpha:1];
         self.isIncoming = NO;
         
     }
     return self;
 }
+
 
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
