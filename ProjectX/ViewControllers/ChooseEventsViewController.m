@@ -39,6 +39,7 @@
     [super viewDidLoad];
     [self fetchEvents];
     self.db = [FIRFirestore firestore];
+    
     self.eventArray = [NSMutableArray new];
 }
 
@@ -88,10 +89,12 @@
                 self.card.center = CGPointMake(self.card.center.x + 200, self.card.center.y + 75);
             }];
             
-            Event * myEvent = self.eventArray.firstObject;
+            Event *myEvent = self.eventArray.firstObject;
             
             FIRDocumentReference *eventRef = [[self.db collectionWithPath:@"Users"] documentWithPath:FIRAuth.auth.currentUser.uid];
-            [eventRef updateData:@{ @"events": [FIRFieldValue fieldValueForArrayUnion:@[myEvent.eventIDRef]] }];
+            [eventRef updateData:@{ @"events": [FIRFieldValue fieldValueForArrayUnion:@[myEvent.eventIDRef]]
+            }];
+            
             [self nextEvent];
             self.tabBarController.selectedIndex = 2;
         }
@@ -141,7 +144,6 @@
 
 - (void) resetCard {
     [UIView animateWithDuration:0.65 animations:^{
-    //[self.card setCenter:self.view.center];
     [self.card setCenter:CGPointMake(self.view.center.x, self.view.center.y + 190)];
     }];
 }
@@ -156,6 +158,7 @@
     //eventAnnotation.placeName = toString(event.location);
     eventAnnotation.placeName = [NSString stringWithFormat:@"%@", event.location];
     eventAnnotation.coordinate = location.center;
+    //eventAnnotation.photo = [self resizeImage:event.photo withSize:CGSizeMake(50.0, 50.0)];
     [self.mapView addAnnotation:eventAnnotation];
 
 }
@@ -174,14 +177,17 @@
 
 - (void)didCreate:(Event *)newEvent {
     [self.eventArray addObject:newEvent];
-    [self resetCard];
+    //[self resetCard];
+    [self fetchEvents];
+//    NSLog(@"printing the new event: %@", newEvent.name);
+//    NSLog(@"printing the new event description: %@", newEvent.description);
     [self nextEvent];
     [self resetCard];
 }
 
 - (IBAction)CreateEventAction:(id)sender {
     [self performSegueWithIdentifier:@"CreateEventSegue" sender:nil];
-//    [self resetCard];
+//  [self resetCard];
 }
      
 #pragma mark - Navigation
