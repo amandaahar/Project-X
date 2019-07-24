@@ -40,8 +40,8 @@
 - (void)getCurrentUser:(void(^)(User *user, NSError *error))completion
 {
     FIRDocumentReference *docRef =
-    [[database collectionWithPath:@"Users"] documentWithPath:@"DAhDAxEMoJNpOcjkaWe1cyevl9v2"];
-    // [[database collectionWithPath:@"Users"] documentWithPath:[[[FIRAuth auth] currentUser] uid]];
+    //[[database collectionWithPath:@"Users"] documentWithPath:@"DAhDAxEMoJNpOcjkaWe1cyevl9v2"];
+     [[database collectionWithPath:@"Users"] documentWithPath:[[[FIRAuth auth] currentUser] uid]];
     [docRef getDocumentWithCompletion:^(FIRDocumentSnapshot *snapshot, NSError *error) {
         if (snapshot.exists) {
             User * newUser = [[User alloc] initWithDictionary:snapshot.data];
@@ -71,7 +71,7 @@
 }
 
 - (void)getMessagesFromEvent:(NSString *) eventID completion: (void(^)(NSArray *messages, NSError *error))completion {
-    [[[[[database collectionWithPath:@"Event"] documentWithPath:eventID] collectionWithPath:@"Chat"] queryOrderedByField:@"timeSent" descending:YES] addSnapshotListener:^(FIRQuerySnapshot * _Nullable snapshot, NSError * _Nullable error) {
+    [[[[[database collectionWithPath:@"Event"] documentWithPath:eventID] collectionWithPath:@"Chat"] queryOrderedByField:@"timeSent" descending:NO] addSnapshotListener:^(FIRQuerySnapshot * _Nullable snapshot, NSError * _Nullable error) {
         if (error != nil) {
             completion(nil, error);
         } else {

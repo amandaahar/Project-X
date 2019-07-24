@@ -492,14 +492,14 @@
                                 </connections>
                             </button>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" textAlignment="natural" minimumFontSize="17" clearButtonMode="unlessEditing" translatesAutoresizingMaskIntoConstraints="NO" id="iFv-4r-uk1" customClass="MFTextField">
-                                <rect key="frame" x="40" y="228" width="295" height="40"/>
+                                <rect key="frame" x="40" y="261" width="295" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" keyboardType="emailAddress" returnKeyType="next"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="natural" minimumFontSize="17" clearButtonMode="unlessEditing" translatesAutoresizingMaskIntoConstraints="NO" id="5wt-FP-7Sl" customClass="MFTextField">
-                                <rect key="frame" x="40" y="276" width="295" height="40"/>
+                                <rect key="frame" x="40" y="309" width="295" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -513,7 +513,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="natural" minimumFontSize="17" clearButtonMode="unlessEditing" translatesAutoresizingMaskIntoConstraints="NO" id="RtT-RY-llc" customClass="MFTextField">
-                                <rect key="frame" x="40" y="324" width="295" height="40"/>
+                                <rect key="frame" x="40" y="357" width="295" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -536,14 +536,21 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Last Name" textAlignment="natural" minimumFontSize="17" clearButtonMode="unlessEditing" translatesAutoresizingMaskIntoConstraints="NO" id="STj-4n-Frg" customClass="MFTextField">
-                                <rect key="frame" x="40" y="180" width="295" height="40"/>
+                                <rect key="frame" x="40" y="169" width="295" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" keyboardType="alphabet" returnKeyType="next"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="First Name" textAlignment="natural" minimumFontSize="17" clearButtonMode="unlessEditing" translatesAutoresizingMaskIntoConstraints="NO" id="C2W-gq-eQW" customClass="MFTextField">
-                                <rect key="frame" x="40" y="132" width="295" height="40"/>
+                                <rect key="frame" x="40" y="121" width="295" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" keyboardType="alphabet" returnKeyType="next"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Username" textAlignment="natural" minimumFontSize="17" clearButtonMode="unlessEditing" translatesAutoresizingMaskIntoConstraints="NO" id="DoL-K9-mkP" customClass="MFTextField">
+                                <rect key="frame" x="40" y="217" width="295" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -563,6 +570,7 @@
                         <outlet property="passwordField" destination="5wt-FP-7Sl" id="Ht8-Hu-n2p"/>
                         <outlet property="secondPasswordField" destination="RtT-RY-llc" id="lO9-U0-VS9"/>
                         <outlet property="signUpButton" destination="fOK-x7-4pD" id="zyk-Rb-RpS"/>
+                        <outlet property="username" destination="DoL-K9-mkP" id="amM-69-3Uf"/>
                         <outlet property="usernameField" destination="C2W-gq-eQW" id="CIS-EE-mUp"/>
                     </connections>
                 </viewController>
@@ -739,27 +747,7 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="9oe-OI-GeX" id="AIY-8j-CdU">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="83"/>
                                             <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="User" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fet-gF-EHb">
-                                                    <rect key="frame" x="15" y="11" width="345" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Message Text" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bvf-72-AR3">
-                                                    <rect key="frame" x="15" y="30" width="345" height="36"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
                                         </tableViewCellContentView>
-                                        <connections>
-                                            <outlet property="messageTextLabel" destination="bvf-72-AR3" id="9Jl-z1-uyA"/>
-                                            <outlet property="userLabel" destination="fet-gF-EHb" id="gKx-rR-usZ"/>
-                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -780,6 +768,7 @@
                         <outlet property="containerView" destination="H0u-Al-5de" id="cSj-J0-w9c"/>
                         <outlet property="messageText" destination="RFh-0O-0c5" id="hUt-Cw-SFK"/>
                         <outlet property="messagesTableView" destination="gRf-25-0Kp" id="j3t-6J-jLJ"/>
+                        <outlet property="sendButton" destination="y9E-af-9As" id="o9z-1k-7ov"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="exe-QF-HZL" userLabel="First Responder" sceneMemberID="firstResponder"/>
