@@ -18,9 +18,9 @@
 @property (weak, nonatomic) IBOutlet UITextField *createEventDescription;
 @property (weak, nonatomic) IBOutlet UITextField *createEventLocation;
 @property (weak, nonatomic) IBOutlet UITextField *createEventDate;
-@property (weak, nonatomic) IBOutlet UITextField *createAttendees;//Change to slider
-@property (weak, nonatomic) IBOutlet UIImageView *createPicture; //Finish later
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *createButton;
+@property (weak, nonatomic) IBOutlet UITextField *createAttendees;//Change to slider later
+@property (weak, nonatomic) IBOutlet UIImageView *createPicture;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *createButton;//Make sure doesnt crash if not complete
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelButton;
 @property (nonatomic, readwrite) FIRFirestore *db;
 
@@ -33,6 +33,12 @@ UIDatePicker *datePicker;
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.db = [FIRFirestore firestore];
+//    self.createEventName.delegate = self;
+//    self.createEventDescription.delegate = self;
+//    self.createEventLocation.delegate = self;
+//    self.createEventDate.delegate = self;
+//    self.createAttendees.delegate = self;
+    
     datePicker = [[UIDatePicker alloc]init];
     datePicker.datePickerMode = UIDatePickerModeDateAndTime;
     [self.createEventDate setInputView:datePicker];
@@ -77,7 +83,7 @@ UIDatePicker *datePicker;
     //UIImage *editedImage = info[UIImagePickerControllerEditedImage];//Do I really need this
     
     self.createPicture.image = [self resizeImage:originalImage withSize:CGSizeMake(400, 400)];
-                                
+//    [self imageStorage];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -95,8 +101,43 @@ UIDatePicker *datePicker;
     return newImage;
 }
 
-- (IBAction)didTapCreate:(id)sender {
+- (void) imageStorage {
+    
+    FIRStorage *storage = [FIRStorage storage];
+    NSUUID *randomID = [[NSUUID alloc] init];
+    FIRStorageReference *storageRef = [storage referenceWithPath:[@"images/" stringByAppendingString:[NSString stringWithFormat: @"%@", randomID.description, @".jpg"]]];
+    //NSURL *localFile = [NSURL URLWithString:[NSString stringWithFormat:@"%@", storageRef]];
+    NSData *data = UIImageJPEGRepresentation(self.createPicture.image, 0.75);
+    //FIRStorageReference *eventImagesRef = [storageRef child:@"images/mountains.jpg"];
+    FIRStorageMetadata *uploadMetaData = [[FIRStorageMetadata alloc] init];
+    uploadMetaData.contentType = @"image/jpeg";
+    
+    FIRStorageUploadTask *uploadTask = [storageRef putData:data metadata:uploadMetaData completion:^(FIRStorageMetadata *metadata, NSError *error) {
+        if (error != nil) {
+            NSLog(@"Uh-oh, first error occurred!");
+        } else {
+            // Metadata contains file metadata such as size, content-type, and download URL.
+            int size = metadata.size;
+            // You can also access to download URL after upload.
+            [storageRef downloadURLWithCompletion:^(NSURL * _Nullable URL, NSError * _Nullable error) {
+                if (error != nil) {
+                    NSLog(@"Uh-oh, second error occurred!");
+                } else {
+                    NSURL *downloadURL = URL;
+                    NSLog(@"Here is your downloaded URL: %@", downloadURL);
+                }
+            }];
+        }
+    }];
+    
+    [uploadTask observeStatus:FIRStorageTaskStatusSuccess handler:^(FIRStorageTaskSnapshot *snapshot) {
+        // Upload completed successfully
+        NSLog(@"Picture sending success!");
+    }];
+}
 
+- (IBAction)didTapCreate:(id)sender {
+    
     NSString *address = [NSString stringWithFormat:@"%@", self.createEventLocation.text];
     [[[CLGeocoder alloc] init] geocodeAddressString:address completionHandler:^(NSArray *placemarks, NSError *error) {
         if ([placemarks count] > 0) {
@@ -109,18 +150,23 @@ UIDatePicker *datePicker;
         NSNumberFormatter *Attendeesformatter = [[NSNumberFormatter alloc]init];
         NSNumber *formattedNumOfAttendees = [Attendeesformatter numberFromString:self.createAttendees.text];
         
+        [self imageStorage];
+        
+//        NSData *imageData = UIImageJPEGRepresentation(self.createPicture.image, 1.0);
+//        , @"pictures": imageData
         __block FIRDocumentReference *ref = [[self.db collectionWithPath:@"Event"] addDocumentWithData:@{@"name": self.createEventName.text, @"description": self.createEventDescription.text, @"location": geoPoint, @"eventDate": [FIRTimestamp timestampWithDate: datePicker.date], @"numAttendees": formattedNumOfAttendees} completion:^(NSError * _Nullable error) {
             if (error != nil) {
                 NSLog(@"Error adding document: %@", error);
             } else {
                 NSLog(@"Document added with ID: %@", ref.documentID);
+//                [self.delegate didCreate:self.createEventName.text];
+//                [self.delegate didCreate:self.createEventDescription];
                 [self dismissViewControllerAnimated:YES completion:nil];
             }
         }];
     }];
     
 }
-                                                                                                     
 
 - (IBAction)didTapCancel:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];

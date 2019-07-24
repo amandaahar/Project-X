@@ -64,10 +64,6 @@
 
 
 
-
-
-
-
 - (void)getEventForChat:(void(^)(Event *event, NSError *error))completion {
     
     FIRFirestore *db = [FIRFirestore firestore];
