@@ -101,10 +101,6 @@ NSLayoutConstraint *bottom;
 }
  */
                                         
--(void) fetchMessages{
-
-    
-}
 
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
     NSString * identifier = @"bubble";

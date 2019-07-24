@@ -43,7 +43,7 @@
 }
 
 - (void) fetchEvents {
-    [[FirebaseManager sharedManager] getEvent:^(NSArray * _Nonnull event, NSError * _Nonnull error) {
+    [[FirebaseManager sharedManager] getEvents:^(NSArray * _Nonnull event, NSError * _Nonnull error) {
         if(error != nil)
         {
             NSLog(@"Error showing documents: %@", error);
@@ -91,6 +91,7 @@
             Event * myEvent = self.eventArray.firstObject;
             
             FIRDocumentReference *eventRef = [[self.db collectionWithPath:@"Users"] documentWithPath:FIRAuth.auth.currentUser.uid];
+            //FIRDocumentReference *eventRef = [[self.db collectionWithPath:@"Users"] documentWithPath:@"DAhDAxEMoJNpOcjkaWe1cyevl9v2"];
             [eventRef updateData:@{ @"events": [FIRFieldValue fieldValueForArrayUnion:@[myEvent.eventIDRef]] }];
             [self nextEvent];
             self.tabBarController.selectedIndex = 2;
