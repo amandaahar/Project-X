@@ -17,7 +17,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *createEventName;
 @property (weak, nonatomic) IBOutlet UITextField *createEventDescription;
 @property (weak, nonatomic) IBOutlet UITextField *createEventLocation;
-@property (weak, nonatomic) IBOutlet UITextField *createEventDate;//Fix time
+@property (weak, nonatomic) IBOutlet UITextField *createEventDate;
 @property (weak, nonatomic) IBOutlet UITextField *createAttendees;//Change to slider
 @property (weak, nonatomic) IBOutlet UIImageView *createPicture; //Finish later
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *createButton;
@@ -33,9 +33,8 @@ UIDatePicker *datePicker;
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.db = [FIRFirestore firestore];
-    // Do any additional setup after loading the view.
     datePicker = [[UIDatePicker alloc]init];
-    datePicker.datePickerMode = UIDatePickerModeDate;
+    datePicker.datePickerMode = UIDatePickerModeDateAndTime;
     [self.createEventDate setInputView:datePicker];
     
     UIToolbar *toolBar=[[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, 320, 44)];
@@ -48,7 +47,8 @@ UIDatePicker *datePicker;
 
 - (void) ShowSelectedDate {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"dd/MMMM/YYYY hh:minmin a"];
+    [formatter setDateFormat:@"MMM d, h:mm a"];
+
     self.createEventDate.text = [NSString stringWithFormat:@"%@", [formatter stringFromDate:datePicker.date]];
     [self.createEventDate resignFirstResponder];
 }

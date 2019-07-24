@@ -21,6 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSNumber *attendees;
 @property (strong, nonatomic) NSArray *users;
 @property (strong, nonatomic) NSString *eventID;
+@property (strong, nonatomic) FIRDocumentReference *eventIDRef;
 
 -(instancetype) initWithDictionary : (NSDictionary *) dictionary eventID: (NSString *)eventID;
 @end

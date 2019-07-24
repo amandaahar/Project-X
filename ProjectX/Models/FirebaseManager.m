@@ -41,7 +41,7 @@
 {
     FIRDocumentReference *docRef =
     //[[database collectionWithPath:@"Users"] documentWithPath:@"DAhDAxEMoJNpOcjkaWe1cyevl9v2"];
-     [[database collectionWithPath:@"Users"] documentWithPath:[[[FIRAuth auth] currentUser] uid]];
+    [[database collectionWithPath:@"Users"] documentWithPath:[[[FIRAuth auth] currentUser] uid]];
     [docRef getDocumentWithCompletion:^(FIRDocumentSnapshot *snapshot, NSError *error) {
         if (snapshot.exists) {
             User * newUser = [[User alloc] initWithDictionary:snapshot.data];
@@ -63,6 +63,7 @@
              for (FIRDocumentSnapshot *document in snapshot.documents) {
                  NSLog(@"%@ => %@", document.documentID, document.data);
                  Event * myEvent = [[Event alloc] initWithDictionary:document.data eventID:document.documentID];
+                 myEvent.eventIDRef = document.reference;
                  [events addObject:myEvent];
              }
              completion(events, nil);
