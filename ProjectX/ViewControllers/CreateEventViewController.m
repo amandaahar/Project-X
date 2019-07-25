@@ -32,17 +32,11 @@
 @implementation CreateEventViewController
 CLLocationCoordinate2D coordinate;
 UIDatePicker *datePicker;
+NSURL *imageURL;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.db = [FIRFirestore firestore];
-//    self.createEventName.delegate = self;
-//    self.createEventDescription.delegate = self;
-//    self.createEventLocation.delegate = self;
-//    self.createEventDate.delegate = self;
-//    self.createAttendees.delegate = self;
-    //self.userFriendlyLocation.delegate = self;
-    
     
     datePicker = [[UIDatePicker alloc]init];
     datePicker.datePickerMode = UIDatePickerModeDateAndTime;
@@ -158,11 +152,14 @@ UIDatePicker *datePicker;
                 } else {
                     NSURL *downloadURL = URL;
                     NSLog(@"Here is your downloaded URL: %@", downloadURL);
+                    imageURL = downloadURL;
+                    NSLog(@"Image URL in else of image storage: %@", imageURL);
                 }
             }];
         }
     }];
     
+    NSLog(@"IMage URL in image storage: %@", imageURL);
     [uploadTask observeStatus:FIRStorageTaskStatusSuccess handler:^(FIRStorageTaskSnapshot *snapshot) {
         // Upload completed successfully
         NSLog(@"Picture sending success!");
@@ -211,8 +208,9 @@ UIDatePicker *datePicker;
         }
         
         [self imageStorage];
+        NSLog(@"Downloaded URL is: %@", imageURL);
         
-        __block FIRDocumentReference *ref = [[self.db collectionWithPath:@"Event"] addDocumentWithData:@{@"name": self.createEventName.text, @"description": self.createEventDescription.text, @"location": geoPoint, @"eventDate": [FIRTimestamp timestampWithDate: datePicker.date], @"numAttendees": formattedNumOfAttendees, @"categoryIndex": storeCategory} completion:^(NSError * _Nullable error) {
+        __block FIRDocumentReference *ref = [[self.db collectionWithPath:@"Event"] addDocumentWithData:@{@"name": self.createEventName.text, @"description": self.createEventDescription.text, @"location": geoPoint, @"eventDate": [FIRTimestamp timestampWithDate: datePicker.date], @"numAttendees": formattedNumOfAttendees, @"categoryIndex": storeCategory, @"userFriendlyLocation": address} completion:^(NSError * _Nullable error) {
             if (error != nil) {
                 NSLog(@"Error adding document: %@", error);
             } else {
@@ -222,7 +220,7 @@ UIDatePicker *datePicker;
         }];
     }];
     
-    self.userFriendlyLocation = address;
+    //self.userFriendlyLocation = address;
     //self.userFriendlyLocation.delegate = self;
 }
 

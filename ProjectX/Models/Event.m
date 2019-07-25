@@ -13,7 +13,7 @@
 
 -(instancetype) init
 {
-    NSDictionary *defaultDictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"", @"name",@"",@"description",0,@"attendees",@[], @"pictures",@"", @"location", [NSDate new], @"date",0,@"categories", nil];
+    NSDictionary *defaultDictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"", @"name",@"",@"description",0,@"attendees",@[], @"pictures",@"", @"location", [NSDate new], @"date",0,@"categories",@"",@"userFriendlyLocation", nil];
     self = [self initWithDictionary:defaultDictionary eventID:@""];
     return self;
 }
@@ -32,6 +32,7 @@
         self.date = dictionary[@"eventDate"];
         self.eventID = eventID;
         self.categories = dictionary[@"categoryIndex"];
+        self.userFriendlyLocation = dictionary[@"userFriendlyLocation"];
     }
     return self;
 }

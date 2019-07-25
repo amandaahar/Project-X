@@ -31,6 +31,8 @@
 @property (strong, nonatomic) FIRDocumentReference *eventIDRef;
 @property (weak, nonatomic) IBOutlet UIImageView *eventPhoto;
 @property (strong, nonatomic) NSString *annotationID;
+@property (weak, nonatomic) IBOutlet UILabel *eventLocation;
+//@property (nonatomic, assign) BOOL animationInProgress;
 
 - (IBAction)CreateEventAction:(id)sender;
 
@@ -48,6 +50,8 @@
     self.annotationID = @"Pin";
     [self.mapView registerClass:[MKAnnotationView class] forAnnotationViewWithReuseIdentifier:self.annotationID];
     self.eventArray = [NSMutableArray new];
+    
+    [self movingPreview];
     
 }
 
@@ -69,6 +73,8 @@
             self.eventID = myEvent.eventID;
             [self eventDateIdentifier];
             [self eventLocationIdentifier];
+            self.eventLocation.text =
+            self.eventLocation.text = myEvent.userFriendlyLocation;
             
             if(myEvent.categories.intValue == 0){ //Fix that everything is food if none available
                 self.categoryIndex.text = @"Food";
@@ -113,6 +119,34 @@
     
 }
 
+- (void) movingPreview {
+    
+    
+    [UIView animateKeyframesWithDuration:1.0 delay:1.5 options:nil animations:^{self.card.frame = CGRectMake(self.card.frame.origin.x + 200, self.card.frame.origin.y - 75, self.card.frame.size.width, self.card.frame.size.height);
+        
+    }
+                              completion:^(BOOL finished) {
+                                  [UIView animateWithDuration:1.0 delay:0.0 options:nil animations:^{
+                                      self.card.frame = CGRectMake(self.card.frame.origin.x - 200, self.card.frame.origin.y + 75, self.card.frame.size.width, self.card.frame.size.height);
+                                  } completion:^(BOOL finished) {
+                                      //self.animationInProgress = YES;
+                                  }];
+                              }];
+    
+    /*
+    CABasicAnimation *animation =
+    [CABasicAnimation animationWithKeyPath:@"position"];
+    [animation setDuration:0.2];
+    [animation setRepeatCount:2];
+    [animation setAutoreverses:YES];
+    [animation setFromValue:[NSValue valueWithCGPoint:
+                             CGPointMake([self.card center].x - 20.0f, [self.card center].y)]];
+    [animation setToValue:[NSValue valueWithCGPoint:
+                           CGPointMake([self.card center].x + 20.0f, [self.card center].y)]];
+    [[self.card layer] addAnimation:animation forKey:@"position"];
+    */
+}
+
 - (IBAction)didPan:(UIPanGestureRecognizer *)sender {
     
     CGPoint translation = [sender translationInView:sender.view.superview];
@@ -138,7 +172,6 @@
             Event *myEvent = self.eventArray.firstObject;
             
             FIRDocumentReference *eventRef = [[self.db collectionWithPath:@"Users"] documentWithPath:FIRAuth.auth.currentUser.uid];
-            //FIRDocumentReference *eventRef = [[self.db collectionWithPath:@"Users"] documentWithPath:@"DAhDAxEMoJNpOcjkaWe1cyevl9v2"];
             [eventRef updateData:@{ @"events": [FIRFieldValue fieldValueForArrayUnion:@[myEvent.eventIDRef]] }];
             [self nextEvent];
             self.tabBarController.selectedIndex = 2;
@@ -184,6 +217,7 @@
         [self eventLocationIdentifier];
         [self eventDateIdentifier];
         [self resetCard];
+        self.eventLocation.text = nextEvent.userFriendlyLocation;
         
         if(nextEvent.categories.intValue == 0){
             self.categoryIndex.text = @"Food";
@@ -220,10 +254,11 @@
     MKCoordinateRegion location = MKCoordinateRegionMake(CLLocationCoordinate2DMake(event.location.latitude, event.location.longitude), MKCoordinateSpanMake(0.05, 0.05));
     [self.mapView setRegion:location animated:YES];
     
-    
     Map *eventAnnotation = [[Map alloc] init];
     eventAnnotation.title = self.eventName.text;
-    eventAnnotation.placeName = [NSString stringWithFormat:@"%@", event.location];
+    //eventAnnotation.placeName = self.eventLocation.text;
+    eventAnnotation.placeName = @"testing location";
+    //eventAnnotation.placeName = [NSString stringWithFormat:@"%@", event.location];
     eventAnnotation.coordinate = location.center;
     
     [self.mapView addAnnotation:eventAnnotation];
@@ -236,7 +271,7 @@
     
     MKAnnotationView *eventView = [self.mapView dequeueReusableAnnotationViewWithIdentifier:self.annotationID];
     eventView.canShowCallout = true;
-    eventView.leftCalloutAccessoryView = [[UIImageView alloc] initWithFrame:CGRectMake(0.0, 0.0, 50.0, 50.0)];
+    eventView.leftCalloutAccessoryView = [[UIImageView alloc] initWithFrame:CGRectMake(0.0, 0.0, 25.0, 50.0)];
     //eventView.image = [UIImage imageNamed:@"home"];
     
     Event *event = self.eventArray.firstObject;
