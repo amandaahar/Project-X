@@ -9,13 +9,14 @@
 #import "EditProfileViewController.h"
 #import "../Models/FirebaseManager.h"
 
-@interface EditProfileViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
-@property (weak, nonatomic) IBOutlet UIPickerView *interestsPicker;
+@interface EditProfileViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource>
+//@property (weak, nonatomic) IBOutlet UIPickerView *interestsPicker;
 @property (weak, nonatomic) IBOutlet UIImageView *editedProfileImage;
 @property (weak, nonatomic) IBOutlet UITextField *firstNameText;
 @property (weak, nonatomic) IBOutlet UITextField *lastNameText;
 @property (weak, nonatomic) IBOutlet UITextField *bioText;
 @property (weak, nonatomic) IBOutlet UITextField *interests;
+@property (strong, nonatomic) NSMutableArray *interestsCategories;
 
 @end
 
@@ -23,8 +24,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    UIPickerView *interestsPicker = [[UIPickerView alloc]init];
+    
     [self.tabBarController.tabBar setHidden: YES];
-    // Do any additional setup after loading the view.
+    
+    interestsPicker.delegate = self;
+    interestsPicker.dataSource = self;
+    self.interests.inputView = interestsPicker;
+    self.interestsCategories = [[NSMutableArray alloc] initWithObjects:@"hiking", @"fishing", @"music", nil];
+    
 }
 
 - (IBAction)didTapSave:(id)sender {
@@ -120,5 +129,22 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+- (NSInteger)numberOfComponentsInPickerView:(nonnull UIPickerView *)pickerView {
+    NSInteger *numComponents = 1;
+    return numComponents;
+}
+
+- (NSInteger)pickerView:(nonnull UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
+    return self.interestsCategories.count;
+}
+
+-(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
+    return self.interestsCategories[row];
+}
+
+-(void) pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
+    self.interests.text = self.interestsCategories[row];
+}
 
 @end

@@ -895,10 +895,6 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="I3o-AB-dXn">
-                                <rect key="frame" x="0.0" y="485" width="375" height="133"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                            </pickerView>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="First Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="UGR-wk-IE5">
                                 <rect key="frame" x="16" y="272" width="97" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -945,7 +941,6 @@
                         <outlet property="editedProfileImage" destination="7Wo-z5-7yh" id="Qet-pZ-cQ4"/>
                         <outlet property="firstNameText" destination="UGR-wk-IE5" id="guF-Ez-Cea"/>
                         <outlet property="interests" destination="KdV-lF-py1" id="9Mn-gq-AQt"/>
-                        <outlet property="interestsPicker" destination="I3o-AB-dXn" id="FXx-F9-Xt3"/>
                         <outlet property="lastNameText" destination="BA7-xG-ow9" id="x2V-oe-9Be"/>
                     </connections>
                 </viewController>
