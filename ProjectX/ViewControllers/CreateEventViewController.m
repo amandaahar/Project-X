@@ -23,6 +23,9 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *createButton;//Make sure doesnt crash if not complete
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelButton;
 @property (nonatomic, readwrite) FIRFirestore *db;
+@property (strong, nonatomic) NSString *userFriendlyLocation;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
+@property (weak, nonatomic) IBOutlet UILabel *categoryLabel;
 
 @end
 
@@ -38,6 +41,8 @@ UIDatePicker *datePicker;
 //    self.createEventLocation.delegate = self;
 //    self.createEventDate.delegate = self;
 //    self.createAttendees.delegate = self;
+    //self.userFriendlyLocation.delegate = self;
+    
     
     datePicker = [[UIDatePicker alloc]init];
     datePicker.datePickerMode = UIDatePickerModeDateAndTime;
@@ -106,9 +111,7 @@ UIDatePicker *datePicker;
     FIRStorage *storage = [FIRStorage storage];
     NSUUID *randomID = [[NSUUID alloc] init];
     FIRStorageReference *storageRef = [storage referenceWithPath:[@"images/" stringByAppendingString:[NSString stringWithFormat: @"%@", randomID.description, @".jpg"]]];
-    //NSURL *localFile = [NSURL URLWithString:[NSString stringWithFormat:@"%@", storageRef]];
     NSData *data = UIImageJPEGRepresentation(self.createPicture.image, 0.75);
-    //FIRStorageReference *eventImagesRef = [storageRef child:@"images/mountains.jpg"];
     FIRStorageMetadata *uploadMetaData = [[FIRStorageMetadata alloc] init];
     uploadMetaData.contentType = @"image/jpeg";
     
@@ -136,6 +139,44 @@ UIDatePicker *datePicker;
     }];
 }
 
+- (IBAction)chooseCategory:(id)sender {
+    /*
+     switch (self.segmentedControl.selectedSegmentIndex)
+    {
+    case 0:
+            self.categoryLabel.text = @"Food";
+    case 1:
+            self.categoryLabel.text = @"Culture";
+    case 2:
+            self.categoryLabel.text = @"Fitness";
+    case 3:
+            self.categoryLabel.text = @"Education";
+    case 4:
+            self.categoryLabel.text = @"Other";
+    default:
+            break;
+    }
+    */
+    if(self.segmentedControl.selectedSegmentIndex == 0){
+        self.categoryLabel.text = @"Food";
+    }
+    else if(self.segmentedControl.selectedSegmentIndex == 1){
+        self.categoryLabel.text = @"Culture";
+    }
+    else if(self.segmentedControl.selectedSegmentIndex == 2){
+        self.categoryLabel.text = @"Fitness";
+    }
+    else if(self.segmentedControl.selectedSegmentIndex == 3){
+        self.categoryLabel.text = @"Education";
+    }
+    else if(self.segmentedControl.selectedSegmentIndex == 4){
+        self.categoryLabel.text = @"Other";
+    }
+    else{
+        self.categoryLabel.text = @"Select";
+    }
+}
+
 - (IBAction)didTapCreate:(id)sender {
     
     NSString *address = [NSString stringWithFormat:@"%@", self.createEventLocation.text];
@@ -152,20 +193,18 @@ UIDatePicker *datePicker;
         
         [self imageStorage];
         
-//        NSData *imageData = UIImageJPEGRepresentation(self.createPicture.image, 1.0);
-//        , @"pictures": imageData
         __block FIRDocumentReference *ref = [[self.db collectionWithPath:@"Event"] addDocumentWithData:@{@"name": self.createEventName.text, @"description": self.createEventDescription.text, @"location": geoPoint, @"eventDate": [FIRTimestamp timestampWithDate: datePicker.date], @"numAttendees": formattedNumOfAttendees} completion:^(NSError * _Nullable error) {
             if (error != nil) {
                 NSLog(@"Error adding document: %@", error);
             } else {
                 NSLog(@"Document added with ID: %@", ref.documentID);
-//                [self.delegate didCreate:self.createEventName.text];
-//                [self.delegate didCreate:self.createEventDescription];
                 [self dismissViewControllerAnimated:YES completion:nil];
             }
         }];
     }];
     
+    self.userFriendlyLocation = address;
+    //self.userFriendlyLocation.delegate = self;
 }
 
 - (IBAction)didTapCancel:(id)sender {

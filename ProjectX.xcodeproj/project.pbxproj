@@ -209,8 +209,8 @@
 				E76311B722E23E8E00A1B674 /* MessagesViewController.m */,
 				0E496C0722E285AA00DEF38C /* CreateEventViewController.h */,
 				0E496C0822E285AA00DEF38C /* CreateEventViewController.m */,
-				EA73F82A22E6412A00385689 /* MainTabBarController.h */,
 				EA73F82B22E6412A00385689 /* MainTabBarController.m */,
+				EA73F82A22E6412A00385689 /* MainTabBarController.h */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
