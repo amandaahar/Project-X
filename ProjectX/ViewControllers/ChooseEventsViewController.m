@@ -21,6 +21,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *numAttendees;
 @property (weak, nonatomic) IBOutlet UILabel *eventName;
 @property (weak, nonatomic) IBOutlet UILabel *Eventdescription;
+@property (weak, nonatomic) IBOutlet UILabel *categoryIndex;
 @property (nonatomic, readwrite) FIRFirestore *db;
 @property (weak, nonatomic) IBOutlet UIView *card;
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
@@ -36,7 +37,6 @@
 @end
 
 @implementation ChooseEventsViewController
-
 
 - (void)viewDidLoad {
     
@@ -69,6 +69,25 @@
             self.eventID = myEvent.eventID;
             [self eventDateIdentifier];
             [self eventLocationIdentifier];
+            
+            if(myEvent.categories.intValue == 0){ //Fix that everything is food if none available
+                self.categoryIndex.text = @"Food";
+            }
+            else if(myEvent.categories.intValue == 1){
+                self.categoryIndex.text = @"Culture";
+            }
+            else if(myEvent.categories.intValue == 2){
+                self.categoryIndex.text = @"Fitness";
+            }
+            else if(myEvent.categories.intValue == 3){
+                self.categoryIndex.text = @"Education";
+            }
+            else if(myEvent.categories.intValue == 4){
+                self.categoryIndex.text = @"Other";
+            }
+            else{
+                self.categoryIndex.text = @"Not available";
+            }
             
             self.card.layer.cornerRadius = 15;
             self.card.layer.masksToBounds = true;
@@ -159,11 +178,31 @@
     else {
         Event *nextEvent = self.eventArray.firstObject;
         self.numAttendees.text = [NSString stringWithFormat:@"%@", nextEvent.attendees];
+        //self.categoryIndex.text = [NSString stringWithFormat:@"%@", nextEvent.categories];
         self.eventName.text = nextEvent.name;
         self.Eventdescription.text = nextEvent.descriptionEvent;
         [self eventLocationIdentifier];
         [self eventDateIdentifier];
         [self resetCard];
+        
+        if(nextEvent.categories.intValue == 0){
+            self.categoryIndex.text = @"Food";
+        }
+        else if(nextEvent.categories.intValue == 1){
+            self.categoryIndex.text = @"Culture";
+        }
+        else if(nextEvent.categories.intValue == 2){
+            self.categoryIndex.text = @"Fitness";
+        }
+        else if(nextEvent.categories.intValue == 3){
+            self.categoryIndex.text = @"Education";
+        }
+        else if(nextEvent.categories.intValue == 4){
+            self.categoryIndex.text = @"Other";
+        }
+        else{
+            self.categoryIndex.text = @" ";
+        }
     }
 }
 
@@ -188,7 +227,7 @@
     eventAnnotation.coordinate = location.center;
     
     [self.mapView addAnnotation:eventAnnotation];
-    
+
 }
 
 #pragma mark MKMapViewDelegate Methods
@@ -198,7 +237,35 @@
     MKAnnotationView *eventView = [self.mapView dequeueReusableAnnotationViewWithIdentifier:self.annotationID];
     eventView.canShowCallout = true;
     eventView.leftCalloutAccessoryView = [[UIImageView alloc] initWithFrame:CGRectMake(0.0, 0.0, 50.0, 50.0)];
-    eventView.image = [UIImage imageNamed:@"home"];
+    //eventView.image = [UIImage imageNamed:@"home"];
+    
+    Event *event = self.eventArray.firstObject;
+    
+    if(event.categories.intValue == 0){
+        //self.categoryIndex.text = @"Food";
+        eventView.image = [UIImage imageNamed:@"home"];
+    }
+    else if(event.categories.intValue == 1){
+       // self.categoryIndex.text = @"Culture";
+        eventView.image = [UIImage imageNamed:@"account"];
+    }
+    else if(event.categories.intValue == 2){
+        //self.categoryIndex.text = @"Fitness";
+        eventView.image = [UIImage imageNamed:@"chat"];
+    }
+    else if(event.categories.intValue == 3){
+        //self.categoryIndex.text = @"Education";
+        eventView.image = [UIImage imageNamed:@"location"];
+    }
+    else if(event.categories.intValue == 4){
+        //self.categoryIndex.text = @"Other";
+        eventView.image = [UIImage imageNamed:@"map"];
+    }
+    else{
+        //self.categoryIndex.text = @" ";
+        eventView.image = [UIImage imageNamed:@"home"];
+    }
+    
     return eventView;
     
 }

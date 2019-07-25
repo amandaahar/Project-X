@@ -106,6 +106,36 @@ UIDatePicker *datePicker;
     return newImage;
 }
 
+- (IBAction)chooseCategory:(id)sender {
+
+    NSNumber *storeCategory = [[NSNumber alloc]init];
+    
+    if(self.segmentedControl.selectedSegmentIndex == 0){
+        self.categoryLabel.text = @"Food";
+        storeCategory = [NSNumber numberWithInt:0];
+    }
+    else if(self.segmentedControl.selectedSegmentIndex == 1){
+        self.categoryLabel.text = @"Culture";
+        storeCategory = [NSNumber numberWithInt:1];
+    }
+    else if(self.segmentedControl.selectedSegmentIndex == 2){
+        self.categoryLabel.text = @"Fitness";
+        storeCategory = [NSNumber numberWithInt:2];
+    }
+    else if(self.segmentedControl.selectedSegmentIndex == 3){
+        self.categoryLabel.text = @"Education";
+        storeCategory = [NSNumber numberWithInt:3];
+    }
+    else if(self.segmentedControl.selectedSegmentIndex == 4){
+        self.categoryLabel.text = @"Other";
+        storeCategory = [NSNumber numberWithInt:4];
+    }
+    else{
+        self.categoryLabel.text = @"Select";
+        storeCategory = [NSNumber numberWithInt:4];
+    }
+}
+
 - (void) imageStorage {
     
     FIRStorage *storage = [FIRStorage storage];
@@ -139,44 +169,6 @@ UIDatePicker *datePicker;
     }];
 }
 
-- (IBAction)chooseCategory:(id)sender {
-    /*
-     switch (self.segmentedControl.selectedSegmentIndex)
-    {
-    case 0:
-            self.categoryLabel.text = @"Food";
-    case 1:
-            self.categoryLabel.text = @"Culture";
-    case 2:
-            self.categoryLabel.text = @"Fitness";
-    case 3:
-            self.categoryLabel.text = @"Education";
-    case 4:
-            self.categoryLabel.text = @"Other";
-    default:
-            break;
-    }
-    */
-    if(self.segmentedControl.selectedSegmentIndex == 0){
-        self.categoryLabel.text = @"Food";
-    }
-    else if(self.segmentedControl.selectedSegmentIndex == 1){
-        self.categoryLabel.text = @"Culture";
-    }
-    else if(self.segmentedControl.selectedSegmentIndex == 2){
-        self.categoryLabel.text = @"Fitness";
-    }
-    else if(self.segmentedControl.selectedSegmentIndex == 3){
-        self.categoryLabel.text = @"Education";
-    }
-    else if(self.segmentedControl.selectedSegmentIndex == 4){
-        self.categoryLabel.text = @"Other";
-    }
-    else{
-        self.categoryLabel.text = @"Select";
-    }
-}
-
 - (IBAction)didTapCreate:(id)sender {
     
     NSString *address = [NSString stringWithFormat:@"%@", self.createEventLocation.text];
@@ -188,12 +180,39 @@ UIDatePicker *datePicker;
         }
         FIRGeoPoint *geoPoint = [[FIRGeoPoint alloc] initWithLatitude:coordinate.latitude longitude:coordinate.longitude];
         
-        NSNumberFormatter *Attendeesformatter = [[NSNumberFormatter alloc]init];
+        NSNumberFormatter *Attendeesformatter = [[NSNumberFormatter alloc] init];
         NSNumber *formattedNumOfAttendees = [Attendeesformatter numberFromString:self.createAttendees.text];
+
+        NSNumber *storeCategory = [[NSNumber alloc] init];
+        
+        if(self.segmentedControl.selectedSegmentIndex == 0){
+            self.categoryLabel.text = @"Food";
+            storeCategory = [NSNumber numberWithInt:0];
+        }
+        else if(self.segmentedControl.selectedSegmentIndex == 1){
+            self.categoryLabel.text = @"Culture";
+            storeCategory = [NSNumber numberWithInt:1];
+        }
+        else if(self.segmentedControl.selectedSegmentIndex == 2){
+            self.categoryLabel.text = @"Fitness";
+            storeCategory = [NSNumber numberWithInt:2];
+        }
+        else if(self.segmentedControl.selectedSegmentIndex == 3){
+            self.categoryLabel.text = @"Education";
+            storeCategory = [NSNumber numberWithInt:3];
+        }
+        else if(self.segmentedControl.selectedSegmentIndex == 4){
+            self.categoryLabel.text = @"Other";
+            storeCategory = [NSNumber numberWithInt:4];
+        }
+        else{
+            self.categoryLabel.text = @"Select";
+            storeCategory = [NSNumber numberWithInt:4];
+        }
         
         [self imageStorage];
         
-        __block FIRDocumentReference *ref = [[self.db collectionWithPath:@"Event"] addDocumentWithData:@{@"name": self.createEventName.text, @"description": self.createEventDescription.text, @"location": geoPoint, @"eventDate": [FIRTimestamp timestampWithDate: datePicker.date], @"numAttendees": formattedNumOfAttendees} completion:^(NSError * _Nullable error) {
+        __block FIRDocumentReference *ref = [[self.db collectionWithPath:@"Event"] addDocumentWithData:@{@"name": self.createEventName.text, @"description": self.createEventDescription.text, @"location": geoPoint, @"eventDate": [FIRTimestamp timestampWithDate: datePicker.date], @"numAttendees": formattedNumOfAttendees, @"categoryIndex": storeCategory} completion:^(NSError * _Nullable error) {
             if (error != nil) {
                 NSLog(@"Error adding document: %@", error);
             } else {
