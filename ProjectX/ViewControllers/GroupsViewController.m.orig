@@ -17,7 +17,7 @@
 
 
 @interface GroupsViewController () <UITableViewDelegate, UITableViewDataSource>
-@property (nonatomic, strong) NSMutableArray *chats;
+@property (nonatomic, strong) NSMutableArray *events;
 @property (weak, nonatomic) IBOutlet UITableView *chatsTableView;
 @property (nonatomic, strong) User *currentUser;
 @property (nonatomic, readwrite) FIRFirestore *db;
@@ -29,7 +29,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // [self.chatsTableView reloadData];
+    
     self.db = [FIRFirestore firestore];
     
     [self getChats];
@@ -37,72 +37,64 @@
     self.chatsTableView.dataSource = self;
     self.chatsTableView.delegate = self;
     
-    self.chats = [[NSMutableArray alloc] init];
+    self.events = [[NSMutableArray alloc] init];
+    
+//    [[FirebaseManager sharedManager] getEventsFromUser:@"DAhDAxEMoJNpOcjkaWe1cyevl9v2"
+// completion:^(NSArray * _Nonnull events, NSError * _Nonnull error) {
+//        if (error != nil) {
+//            NSLog(@"Error getting evens for chat");
+//        } else {
+//            self.events = events;
+//            [self.chatsTableView reloadData];
+//        }
+//    }];
+    
+    
+    
+    
+    // [self getChats];
+    
+   
+    
+    
+    
     
      
 }
 
 -(void) getChats {
-    // [self removeExpiredChats];
-    
-    
     [[FirebaseManager sharedManager] getCurrentUser:^(User * _Nonnull user, NSError * _Nonnull error) {
         if(error != nil) {
-
-
             NSLog(@"Error getting user");
         } else {
             self.currentUser = user;
-            for (FIRDocumentReference *chatDoc in self.currentUser.chats) {
-                NSLog(@"loopxyz");
-                [chatDoc getDocumentWithCompletion:^(FIRDocumentSnapshot *snapshot, NSError *error) {
-                    Chat *chat = [[Chat alloc] initWithDictionary:snapshot.data];
-                    NSLog(@"%@", snapshot.data);
-
-                    if (snapshot.exists) {
-                        // [self.chats arrayByAddingObject:<#(nonnull id)#>]
-                        
-                        // NSString *imageURL = [[NSString alloc]init];
-                        
-                        // [self.chats addObject:chat];
-                        if (!chat.isExpired){
-                            NSLog(@"chat is not expired");
-                            [self.chats addObject:chat];
-                        } else {
-                             NSLog(@"chat is expired");
-                        }
-                        //[self.chats addObject:chat];
-                       
-                        [self.chatsTableView reloadData];
-                        
-                        NSLog(@"chat array: %@", self.chats);
-                        //NSLog(@"chat w data: %@", chat);
-                        
-                        //NSLog(@"Document w data: %@", snapshot.data);
-                    } else {
-                        NSLog(@"no data");
-                        NSLog(@"2nd chat%@", chat.name);
+            for(FIRDocumentReference *eventDoc in self.currentUser.events) {
+                [eventDoc addSnapshotListener:^(FIRDocumentSnapshot * _Nullable snapshot, NSError * _Nullable error) {
+                    if(error == nil){
+                    Event * myEvent = [[Event alloc] initWithDictionary:snapshot.data eventID:snapshot.documentID];
+                    [self.events addObject: myEvent];
+                    [self.chatsTableView reloadData];
                     }
                 }];
+                
             }
-           
-            NSLog(@"end loop");
             
         }
         
-    }];
+     }];
 
 }
 
 
--(void)removeExpiredChats {
-    for (Chat *chat in self.chats) {
-        if(chat.isExpired) {
-            [self.chats removeObject:chat];
-        }
-    }
+//-(void)removeExpiredChats {
+//    for (Chat *chat in self.chats) {
+//        if(chat.isExpired) {
+//            [self.chats removeObject:chat];
+//        }
+//    }
+//
+//}
 
-}
 
 #pragma mark - Navigation
 
@@ -110,10 +102,10 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     UITableViewCell *tappedCell = sender;
     NSIndexPath *indexPath = [self.chatsTableView indexPathForCell:tappedCell];
-    Chat *chatToPass = self.chats[indexPath.row];
+    Event *eventToPass = self.events[indexPath.row];
     MessagesViewController *messagesViewController = [segue destinationViewController];
     
-    [messagesViewController setChat:chatToPass];
+    messagesViewController.eventID = eventToPass.eventID;
     
 }
 
@@ -121,36 +113,43 @@
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
     GroupTableViewCell *cell = [self.chatsTableView dequeueReusableCellWithIdentifier:@"GroupsCell"];
     
-    Chat *chat = self.chats[indexPath.row];
-    NSLog(@"created at date%@", chat.createdAt);
+    Event *event = self.events[indexPath.row];
+    [cell setNameOfChatText:event.name];
     
     
-    [chat getEventForChat:^(Event *event, NSError *error) {
-        if (error != nil) {
-            NSLog(@"Error getting event");
+    
+<<<<<<< HEAD
+            [cell setNameOfChatText:event.name];
+    @try {
+        if (event.pictures[0] != nil) {
+            [cell setImage:event.pictures[0]];
         } else {
-            if (event.pictures[0] != nil) {
-                [cell setImage:event.pictures[0]];
-            } else {
-                [cell setImage:@"http://pngimg.com/uploads/earth/earth_PNG39.png"];
-            }
-            
-            
+            [cell setImage:@"http://pngimg.com/uploads/earth/earth_PNG39.png"];
         }
-        
-    }];
-     
+    } @catch (NSException *exception) {
+         [cell setImage:@"http://pngimg.com/uploads/earth/earth_PNG39.png"];
+    }
     
+    
+            
+=======
+    if (event.pictures.count > 0) {
+        [cell setImage:event.pictures[0]];
+    } else {
+        [cell setImage:@"http://pngimg.com/uploads/earth/earth_PNG39.png"];
+    }
+>>>>>>> b2178ce5f9676f8b5ea6e032c6dc4e7201e636b8
+            
+     //[self.chatsTableView reloadData];
     
 
-    [cell setNameOfChatText:chat.name];
     
     
     return cell;
 }
 
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.chats.count;
+    return self.events.count;
 }
 
 

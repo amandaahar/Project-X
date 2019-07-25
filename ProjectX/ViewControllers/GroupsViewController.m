@@ -29,15 +29,35 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // [self.chatsTableView reloadData];
+    
     self.db = [FIRFirestore firestore];
     
-    [self getChats];
+   
     
     self.chatsTableView.dataSource = self;
     self.chatsTableView.delegate = self;
-    
+     [self getChats];
     self.events = [[NSMutableArray alloc] init];
+    
+//    [[FirebaseManager sharedManager] getEventsFromUser:@"DAhDAxEMoJNpOcjkaWe1cyevl9v2"
+// completion:^(NSArray * _Nonnull events, NSError * _Nonnull error) {
+//        if (error != nil) {
+//            NSLog(@"Error getting evens for chat");
+//        } else {
+//            self.events = events;
+//            [self.chatsTableView reloadData];
+//        }
+//    }];
+    
+    
+    
+    
+    // [self getChats];
+    
+   
+    
+    
+    
     
      
 }
@@ -94,18 +114,25 @@
     GroupTableViewCell *cell = [self.chatsTableView dequeueReusableCellWithIdentifier:@"GroupsCell"];
     
     Event *event = self.events[indexPath.row];
-    // NSLog(@"created at date%@", chat.createdAt);
+    [cell setNameOfChatText:event.name];
     
     
     
             [cell setNameOfChatText:event.name];
-            if (event.pictures[0] != nil) {
-                [cell setImage:event.pictures[0]];
-            } else {
-                [cell setImage:@"http://pngimg.com/uploads/earth/earth_PNG39.png"];
-            }
+    @try {
+        if (event.pictures[0] != nil) {
+            [cell setImage:event.pictures[0]];
+        } else {
+            [cell setImage:@"http://pngimg.com/uploads/earth/earth_PNG39.png"];
+        }
+    } @catch (NSException *exception) {
+         [cell setImage:@"http://pngimg.com/uploads/earth/earth_PNG39.png"];
+    }
+    
+    
             
             
+     //[self.chatsTableView reloadData];
     
 
     

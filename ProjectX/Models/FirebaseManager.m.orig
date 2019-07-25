@@ -40,9 +40,13 @@
 - (void)getCurrentUser:(void(^)(User *user, NSError *error))completion
 {
     FIRDocumentReference *docRef =
-    // [[database collectionWithPath:@"Users"] documentWithPath:@"DAhDAxEMoJNpOcjkaWe1cyevl9v2"];
+    //[[database collectionWithPath:@"Users"] documentWithPath:@"DAhDAxEMoJNpOcjkaWe1cyevl9v2"];
+<<<<<<< HEAD
+     [[database collectionWithPath:@"Users"] documentWithPath:[[[FIRAuth auth] currentUser] uid]];
+=======
     [[database collectionWithPath:@"Users"] documentWithPath:[[[FIRAuth auth] currentUser] uid]];
-    [docRef addSnapshotListener:^(FIRDocumentSnapshot *snapshot, NSError *error) {
+>>>>>>> a1b05b77c9ca207fe9309a5be9c96345795ab071
+    [docRef getDocumentWithCompletion:^(FIRDocumentSnapshot *snapshot, NSError *error) {
         if (snapshot.exists) {
             User * newUser = [[User alloc] initWithDictionary:snapshot.data];
             completion(newUser, nil);
@@ -52,7 +56,7 @@
     }];
 }
 
-- (void)getEvents:(void(^)(NSArray *events, NSError *error))completion {
+- (void)getEvent:(void(^)(NSArray *events, NSError *error))completion {
     [[database collectionWithPath:@"Event"]
      getDocumentsWithCompletion:^(FIRQuerySnapshot *snapshot, NSError *error) {
          if (error != nil) {
@@ -84,42 +88,6 @@
     }];
 
 }
-
-//- (void)getEventsFromUser:(NSString *)userID completion:(void(^)(NSArray *events, NSError *error))completion {
-//    [[[database collectionWithPath:@"Users"] documentWithPath:userID] addSnapshotListener:^(FIRDocumentSnapshot * _Nullable snapshot, NSError * _Nullable error) {
-////        if (error !=nil) {
-////            completion(nil, error);
-////        } else  {
-////            NSLog(@"the events%@", snapshot.data);
-////
-//////            NSMutableArray *events = [Event eventsWithSnapshot:snapshot.data[@"events"]];
-////            for (FIRDocumentReference *ref in snapshot.data) {
-////                [ref getDocumentWithCompletion:^(FIRDocumentSnapshot * _Nullable snapshot, NSError * _Nullable error) {
-////                    // now we have the snapshot.data for the event
-////
-////                }];
-////            }
-////            [[[database collectionWithPath:@"Event"] documentWithPath:event] addSnapshotListener:^(FIRDocumentSnapshot * _Nullable snapshot, NSError * _Nullable error
-//            completion(nil, nil);
-//        }
-//
-//}];
-//
-//
-////    [[[database collectionWithPath:@"User"] documentWithPath:userID] addSnapshotListener:^(FIRQuerySnapshot * _Nullable snapshot, NSError * _Nullable error) {
-////        if (error != nil) {
-////            completion(nil, error);
-////        } else {
-////            NSMutableArray * messages = [Message messagesWithArray:snapshot.documents];
-////            NSLog(@" messages %@", messages);
-////            completion(messages, nil);
-////        }
-////
-////    }];
-//
-//}
-
-
 
 
 #pragma mark - Set methods

@@ -52,8 +52,12 @@
 }
 
 - (void) fetchEvents {
+<<<<<<< HEAD
     
+    [[FirebaseManager sharedManager] getEvent:^(NSArray * _Nonnull event, NSError * _Nonnull error) {
+=======
     [[FirebaseManager sharedManager] getEvents:^(NSArray * _Nonnull event, NSError * _Nonnull error) {
+>>>>>>> 67ccd46bcd838b13f0dd3c9ae0a5166a6d8d9c18
         if(error != nil)
         {
             NSLog(@"Error showing documents: %@", error);
