@@ -29,6 +29,7 @@
 @property (strong, nonatomic) NSString *eventID;
 @property (strong, nonatomic) FIRDocumentReference *eventIDRef;
 @property (weak, nonatomic) IBOutlet UIImageView *eventPhoto;
+@property (strong, nonatomic) NSString *annotationID;
 
 - (IBAction)CreateEventAction:(id)sender;
 
@@ -37,18 +38,21 @@
 @implementation ChooseEventsViewController
 
 
-
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
     [self fetchEvents];
     [self fetchImage];
     self.db = [FIRFirestore firestore];
     self.mapView.delegate = self;
-    [self.mapView registerClass:[MKAnnotationView class] forAnnotationViewWithReuseIdentifier:@"Pin"];
+    self.annotationID = @"Pin";
+    [self.mapView registerClass:[MKAnnotationView class] forAnnotationViewWithReuseIdentifier:self.annotationID];
     self.eventArray = [NSMutableArray new];
+    
 }
 
 - (void) fetchEvents {
+    
     [[FirebaseManager sharedManager] getEvent:^(NSArray * _Nonnull event, NSError * _Nonnull error) {
         if(error != nil)
         {
@@ -74,6 +78,7 @@
 }
 
 - (void) fetchImage {
+    
     FIRStorage *storage = [FIRStorage storage];
     FIRStorageReference *storageRef = [storage reference];
     FIRStorageReference *eventImageRef = [storageRef child:@"images/02DC7684-D657-4B5B-82FC-8D1DA735E300"];
@@ -86,6 +91,7 @@
             self.eventPhoto.image = eventImage;
         }
     }];
+    
 }
 
 - (IBAction)didPan:(UIPanGestureRecognizer *)sender {
@@ -127,16 +133,14 @@
 }
 
 - (void) nextEvent {
+    
     NSMutableArray * tempArray = [self.eventArray mutableCopy];
     [tempArray removeObjectAtIndex:0];
     self.eventArray = tempArray;
     
     if (self.eventArray.firstObject == nil) {
-        
-        self.card.alpha = 0;//keep?
-        //self.mapView.isHidden; //hide map!
-       // self.mapView.setVisibility(View.GONE);
-        //self.mapView.mapType = .mutedStandard
+        self.card.alpha = 0;
+        [self.mapView removeFromSuperview];
        
         UIView *emptyCard = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 100)];
         emptyCard.center = self.view.center;
@@ -165,12 +169,15 @@
 }
 
 - (void) resetCard {
+    
     [UIView animateWithDuration:0.65 animations:^{
     [self.card setCenter:CGPointMake(self.view.center.x, self.view.center.y + 190)];
     }];
+    
 }
 
 - (void) eventLocationIdentifier {
+    
     Event *event = self.eventArray.firstObject;
     MKCoordinateRegion location = MKCoordinateRegionMake(CLLocationCoordinate2DMake(event.location.latitude, event.location.longitude), MKCoordinateSpanMake(0.05, 0.05));
     [self.mapView setRegion:location animated:YES];
@@ -180,58 +187,38 @@
     eventAnnotation.title = self.eventName.text;
     eventAnnotation.placeName = [NSString stringWithFormat:@"%@", event.location];
     eventAnnotation.coordinate = location.center;
-    //eventAnnotation.placeName = toString(event.location);
-    
-    //eventAnnotation.photo = [self resizeImage:event.photo withSize:CGSizeMake(50.0, 50.0)];
-//    MKAnnotationView *annotationView = [[MKAnnotationView alloc] initWithAnnotation:eventAnnotation reuseIdentifier:@"Pin"];
-//    if (annotationView == nil) {
-//        annotationView = (MKAnnotationView*)[self.mapView dequeueReusableAnnotationViewWithIdentifier:@"Pin"];
-//        //annotationView = [MKAnnotationView AnnotationViewWithImage ];
-//    }
-//    annotationView.canShowCallout = true;
-//    annotationView.leftCalloutAccessoryView = [[UIImageView alloc] initWithFrame:CGRectMake(0.0, 0.0, 50.0, 50.0)];
-//    annotationView.image = [UIImage imageNamed:@"home"];
-
     
     [self.mapView addAnnotation:eventAnnotation];
-//    if ([annotationView conformsToProtocol:@protocol(MKAnnotation)]) {
-//        [self.mapView addAnnotation:(id<MKAnnotation>)annotationView];
-//    }
     
-//    MKAnnotationView *annotationView = (MKAnnotationView*)[self.mapView dequeueReusableAnnotationViewWithIdentifier:@"Pin"];
-//    if (annotationView == nil) {
-//        annotationView = [[MKAnnotationView alloc] initWithAnnotation:eventAnnotation reuseIdentifier:@"Pin"];
-//    }
-//    annotationView.image = [UIImage imageNamed:@"02DC7684-D657-4B5B-82FC-8D1DA735E300.png"];
 }
 
 #pragma mark MKMapViewDelegate Methods
 
 - (MKAnnotationView *)eventHomeView:(id<MKAnnotation>)annotation {
-    MKAnnotationView *eventView = [self.mapView dequeueReusableAnnotationViewWithIdentifier:@"Pin"];
+    
+    MKAnnotationView *eventView = [self.mapView dequeueReusableAnnotationViewWithIdentifier:self.annotationID];
     eventView.canShowCallout = true;
     eventView.leftCalloutAccessoryView = [[UIImageView alloc] initWithFrame:CGRectMake(0.0, 0.0, 50.0, 50.0)];
     eventView.image = [UIImage imageNamed:@"home"];
     return eventView;
+    
+}
+
+- (nullable MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation {
+    return [self eventHomeView:annotation];
 }
 
 - (void) eventDateIdentifier {
+    
     Event *event = self.eventArray.firstObject;
      
     FIRTimestamp *eventTimestamp = event.date;
     [self setDateNSEvent:eventTimestamp.dateValue];
-    
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"MMM d, h:mm a"];
-    
     self.eventDate.text = [NSString stringWithFormat:@"%@", [formatter stringFromDate:self.dateNSEvent]];
+    
 }
-
-- (nullable MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
-{
-    return [self eventHomeView:annotation];
-}
-
 
 - (void)didCreate:(Event *)newEvent {
     [self.eventArray addObject:newEvent];
