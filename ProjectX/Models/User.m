@@ -14,7 +14,7 @@
 #pragma mark - User Initializer
 -(instancetype) init
 {
-    NSDictionary *defaultDictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"", @"firstName",@"",@"lastName",@"",@"username",@"", @"profileImage",@"", @"location",@[], @"preferences", @"", @"events", FIRAuth.auth.currentUser.uid,@"userID",  nil];
+    NSDictionary *defaultDictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"", @"firstName",@"",@"lastName",@"",@"username",@"", @"profileImage",@"", @"location",@[], @"preferences", @"", @"events", FIRAuth.auth.currentUser.uid,@"userID",@"", @"bio",  nil];
     self = [self initWithDictionary:defaultDictionary];
     return self;
 }
@@ -41,6 +41,7 @@
         [self setProfileImageURL:dictionary[@"profileImage"]];
         [self setEvents:dictionary[@"events"]];
         [self setUserID:FIRAuth.auth.currentUser.uid];
+        [self setBio:dictionary[@"bio"]];
         
     }
     return self;

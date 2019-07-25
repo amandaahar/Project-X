@@ -27,6 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSArray *preferences;
 @property (strong, nonatomic) NSMutableArray *events;
 @property (strong, nonatomic) NSString *userID;
+@property (strong, nonatomic) NSString *bio;
 
 #pragma mark - User Initializer
 -(instancetype) initWithDictionary : (NSDictionary *) dictionary;
