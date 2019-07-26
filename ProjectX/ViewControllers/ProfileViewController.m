@@ -29,19 +29,25 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self setup];
+    
+    
+    
+}
+
+- (void) setup {
+    
     [[FirebaseManager sharedManager] getCurrentUser:^(User * _Nonnull user, NSError * _Nonnull error) {
         if(error != nil)
         {
             
-        }else
+        } else
         {
             self.currentUser = user;
-            NSLog(@"%@",user.username);
+            //NSLog(@"%@",user.username);
             
             self.nameText.text = [[self.currentUser.firstName stringByAppendingString:@" "] stringByAppendingString:self.currentUser.lastName];
-            
             self.username.text = self.currentUser.username;
-            
             [self setImage:self.currentUser.profileImageURL];
             
             for (NSString *category in self.currentUser.preferences) {

@@ -11,7 +11,7 @@
 
 
 @interface EditProfileViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource>
-//@property (weak, nonatomic) IBOutlet UIPickerView *interestsPicker;
+
 @property (weak, nonatomic) IBOutlet UIImageView *editedProfileImage;
 @property (weak, nonatomic) IBOutlet UITextField *firstNameText;
 @property (weak, nonatomic) IBOutlet UITextField *lastNameText;
@@ -88,16 +88,11 @@ UIToolbar *interestsToolBar;
             
         }
     }];
-    
-    
-    
 }
 
 - (void)doneCategoryPicker: (UIButton *) button {
     [self.usersInterests addObject:self.selectedRowText];
-    NSLog(@"user interestsarray%@", self.usersInterests);
     self.interests.text = [self.usersInterests componentsJoinedByString:@"\n,"];
-    //[self.interestsPicker]
     [self.interestsPicker removeFromSuperview];
     [interestsToolBar setHidden:YES];
     [self.interests endEditing:YES];
@@ -106,15 +101,13 @@ UIToolbar *interestsToolBar;
 
 -(UIBarButtonItem *) setUpDoneButton {
     UIBarButtonItem *barButtonDone = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(doneCategoryPicker:)];
-    barButtonDone.title = @"Done";
+    
     barButtonDone.style = UIBarButtonItemStyleDone;
-    //interestsToolBar.items = @[barButtonDone];
     barButtonDone.tintColor = [UIColor blueColor];
     
     return barButtonDone;
     
 }
-
 
 - (IBAction)changeProfileImageButton:(id)sender {
     UIImagePickerController *imagePickerVC = [UIImagePickerController new];
@@ -132,6 +125,24 @@ UIToolbar *interestsToolBar;
     
     [self presentViewController:imagePickerVC animated:YES completion:nil];
     
+}
+
+- (void) updateUserProperties {
+    FIRDocumentReference *userRef = [[self.db collectionWithPath:@"Users"] documentWithPath:self.currentUser.userID];
+    [userRef updateData:
+     @{
+       @"firstName": self.firstNameText.text,
+       @"lastName": self.lastNameText.text,
+       @"bio": self.bioText.text,
+       @"preferences": self.usersInterests,
+       @"profileImage": self.profileImageString,
+       } completion:^(NSError * _Nullable error) {
+           if (error != nil) {
+               NSLog(@"Error updating document: %@", error);
+           } else {
+               NSLog(@"Docuement updated from edit profile");
+           }
+       }];
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
@@ -187,23 +198,7 @@ UIToolbar *interestsToolBar;
                     NSLog(@"Here is your downloaded URL: %@", downloadURL);
                     NSLog(@" here is image url%@", self.profileImageString);
                     
-                    
-                    FIRDocumentReference *userRef = [[self.db collectionWithPath:@"Users"] documentWithPath:self.currentUser.userID];
-                    [userRef updateData:
-                     @{
-                       @"firstName": self.firstNameText.text,
-                       @"lastName": self.lastNameText.text,
-                       @"bio": self.bioText.text,
-                       @"preferences": self.usersInterests,
-                       @"profileImage": self.profileImageString,
-                       } completion:^(NSError * _Nullable error) {
-                           if (error != nil) {
-                               NSLog(@"Error updating document: %@", error);
-                           } else {
-                               NSLog(@"Docuement updated from edit profile");
-                           }
-                       }];
-                    
+                    [self updateUserProperties];
                 }
             }];
         }
@@ -243,13 +238,8 @@ UIToolbar *interestsToolBar;
 }
 
 -(void) pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-    //if ([self.doneButton selec)
     [interestsToolBar setHidden:NO];
     self.selectedRowText = self.interestsCategories[row];
-    
-    //[self.usersInterests addObject:self.interestsCategories[row]];
 }
-
-
 
 @end
