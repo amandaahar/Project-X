@@ -44,8 +44,6 @@
 //    }];
 
     // [self getChats];
-    
-    [self.chatsTableView setEditing:YES animated:YES];
 }
 
 -(void) getChats {
@@ -123,11 +121,10 @@
     static NSString *GroupchatID = @"cell";
     GroupTableViewCell *cell = [self.chatsTableView dequeueReusableCellWithIdentifier:GroupchatID];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:GroupchatID];
+        cell = [[GroupTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:GroupchatID];
     }
     Event *event = self.events[indexPath.row];
     [cell setNameOfChatText:event.name];
-    //[cell.textLabel setText:event.name];
     
     return cell;
 }
@@ -136,5 +133,36 @@
     return self.events.count;
 }
 
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        
+        NSMutableArray *copyEvents = self.events.mutableCopy;
+        [copyEvents removeObjectAtIndex:indexPath.row];
+        
+        NSMutableArray *references = [NSMutableArray new];
+        for (Event *event in copyEvents) {
+            FIRDocumentReference *eventRef = [[self.db collectionWithPath:@"Event"] documentWithPath: event.eventID];
+            [references addObject:eventRef];
+        }
+        
+        FIRDocumentReference *deleteRef = [[self.db collectionWithPath:@"Users"] documentWithPath:FIRAuth.auth.currentUser.uid];
+        [deleteRef updateData:@{ @"events":references} completion:^(NSError * _Nullable error) {
+            if (error != nil) {
+                NSLog(@"Error deleting document: %@", error);
+            } else {
+                NSLog(@"Document successfully deleted");
+            }
+        }];
+    }
+    
+}
+
+#pragma mark - UITableView Delegate
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    return UITableViewCellEditingStyleDelete;
+}
 
 @end
