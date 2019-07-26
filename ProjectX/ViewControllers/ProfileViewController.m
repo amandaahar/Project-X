@@ -13,10 +13,7 @@
 #import "../AppDelegate.h"
 #import "../Models/FirebaseManager.h"
 
-
-
 @import Firebase;
-//@class FirebaseManager;
 @interface ProfileViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *nameText;
 @property (weak, nonatomic) IBOutlet UIImageView *profilePictureImage;
@@ -31,8 +28,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    
     
     [[FirebaseManager sharedManager] getCurrentUser:^(User * _Nonnull user, NSError * _Nonnull error) {
         if(error != nil)
@@ -60,19 +55,6 @@
         }
     }];
     
-    
-    
-     
-    /*
-    for (NSString *category in self.currentUser.preferences) {
-        
-        
-    }
-     */
-    
-    
-    
-
 }
 - (IBAction)didTapEditProfile:(id)sender {
     [self performSegueWithIdentifier:@"editProfileSegue" sender:nil];
@@ -82,9 +64,8 @@
 -(void) setImage: (NSString *) photoURL {
     NSURL *imageURL = [NSURL URLWithString:photoURL];
     [self.profilePictureImage setImageWithURL:imageURL];
-    
-    
 }
+
 - (IBAction)logOut:(id)sender {
     NSError *signOutError;
     BOOL status = [[FIRAuth auth] signOut:&signOutError];

@@ -18,34 +18,19 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    // Initialization code
 }
-
-
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
 }
 
--(void) setUserLabelText:(NSString *)userLabelText {
+- (void) setUserLabelText:(NSString *)userLabelText {
     self.userLabel.text = userLabelText;
     
 }
 
-
--(void)setMessageText:(NSString *)messageText {
-    NSLog(@"message text%@", messageText);
+- (void)setMessageText:(NSString *)messageText {
     self.messageTextLabel.text = messageText;
-    NSLog(@"message of text after%@", self.messageTextLabel.text);
-    
 }
-
-/*
--(void) setMessageTextLabel:(NSString *)messageTextLabel {
-    self.messageTextLabel.text = messageTextLabel;
-}
- */
 
 @end
