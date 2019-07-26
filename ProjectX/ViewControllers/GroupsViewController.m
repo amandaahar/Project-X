@@ -32,34 +32,10 @@
     
     self.db = [FIRFirestore firestore];
     
-   
-    
     self.chatsTableView.dataSource = self;
     self.chatsTableView.delegate = self;
-     [self getChats];
+    [self getChats];
     self.events = [[NSMutableArray alloc] init];
-    
-//    [[FirebaseManager sharedManager] getEventsFromUser:@"DAhDAxEMoJNpOcjkaWe1cyevl9v2"
-// completion:^(NSArray * _Nonnull events, NSError * _Nonnull error) {
-//        if (error != nil) {
-//            NSLog(@"Error getting evens for chat");
-//        } else {
-//            self.events = events;
-//            [self.chatsTableView reloadData];
-//        }
-//    }];
-    
-    
-    
-    
-    // [self getChats];
-    
-   
-    
-    
-    
-    
-     
 }
 
 -(void) getChats {
@@ -68,9 +44,11 @@
             NSLog(@"Error getting user");
         } else {
             self.currentUser = user;
+            [self.events removeAllObjects];
             for(FIRDocumentReference *eventDoc in self.currentUser.events) {
                 [eventDoc addSnapshotListener:^(FIRDocumentSnapshot * _Nullable snapshot, NSError * _Nullable error) {
                     if(error == nil){
+                    
                     Event * myEvent = [[Event alloc] initWithDictionary:snapshot.data eventID:snapshot.documentID];
                     [self.events addObject: myEvent];
                     [self.chatsTableView reloadData];
@@ -116,8 +94,6 @@
     Event *event = self.events[indexPath.row];
     [cell setNameOfChatText:event.name];
     
-    
-    
             [cell setNameOfChatText:event.name];
     @try {
         if (event.pictures[0] != nil) {
@@ -128,14 +104,6 @@
     } @catch (NSException *exception) {
          [cell setImage:@"http://pngimg.com/uploads/earth/earth_PNG39.png"];
     }
-    
-    
-            
-            
-     //[self.chatsTableView reloadData];
-    
-
-    
     
     return cell;
 }

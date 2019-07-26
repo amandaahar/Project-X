@@ -14,20 +14,11 @@
 #pragma mark - User Initializer
 -(instancetype) init
 {
-    NSDictionary *defaultDictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"", @"firstName",@"",@"lastName",@"",@"username",@"", @"profileImage",@"", @"location",@[], @"preferences", @"", @"events", FIRAuth.auth.currentUser.uid,@"userID",  nil];
+    NSDictionary *defaultDictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"", @"firstName",@"",@"lastName",@"",@"username",@"", @"profileImage",@"", @"location",@[], @"preferences", @"", @"events", FIRAuth.auth.currentUser.uid,@"userID",@"", @"bio",  nil];
     self = [self initWithDictionary:defaultDictionary];
     return self;
 }
 
-/**
- initWithDictonary
- 
- This is going to get a dictionary and set all the properties of the class
- 
- 
- -Parameters:
-    dictionary (NSDictionary *) This is the dictionary that we receive from the database
- */
 -(instancetype) initWithDictionary: (NSDictionary *)  dictionary
 {
     self = [super init];
@@ -41,6 +32,7 @@
         [self setProfileImageURL:dictionary[@"profileImage"]];
         [self setEvents:dictionary[@"events"]];
         [self setUserID:FIRAuth.auth.currentUser.uid];
+        [self setBio:dictionary[@"bio"]];
         
     }
     return self;
@@ -49,8 +41,8 @@
 -(void) composeMessage:(NSString *)text chat: (NSString *)event{
     FIRFirestore *db = [FIRFirestore firestore];
     FIRTimestamp *currentTime = [FIRTimestamp timestamp];
-    // FIR
     
+    // adds message document
     __block FIRDocumentReference *ref = [[[[db collectionWithPath:@"Event"] documentWithPath:event] collectionWithPath:@"Chat"] addDocumentWithData:
   @{
     @"text": text,
@@ -64,12 +56,6 @@
             NSLog(@"Document added with ID: %@", ref.documentID);
         }
         }];
-    
 }
-
-
-
-
-
 
 @end

@@ -7,10 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "User.h"
+#import "UIImageView+AFNetworking.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface EditProfileViewController : UIViewController
+- (void)doneCategoryPicker: (UIButton *) button;
+- (void)setUpCurrentProperties;
+
 
 @end
 

@@ -21,7 +21,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property(strong, nonatomic) NSString *userID;
 
 -(instancetype) initWithDictionary:(NSDictionary *)dictionary;
-
 + (NSMutableArray *)messagesWithArray:(NSArray *)dictionaries;
 @end
 
