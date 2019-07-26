@@ -28,6 +28,7 @@
 		E7AEA0B722DF9D7700A77CC2 /* EditProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AEA0B622DF9D7700A77CC2 /* EditProfileViewController.m */; };
 		E7AEA0BA22DFCC3A00A77CC2 /* Chat.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AEA0B922DFCC3A00A77CC2 /* Chat.m */; };
 		E7AEA0BE22DFD8BC00A77CC2 /* GroupTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AEA0BD22DFD8BC00A77CC2 /* GroupTableViewCell.m */; };
+		EA06399222EA1E0B0070AF46 /* DetailHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA06399122EA1E0B0070AF46 /* DetailHomeViewController.m */; };
 		E7BA0FFA22EA5B2A00467978 /* PillLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = E7BA0FF922EA5B2A00467978 /* PillLabel.m */; };
 		E7BA0FFD22EB67B900467978 /* InterestsCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E7BA0FFC22EB67B900467978 /* InterestsCollectionViewCell.m */; };
 		EA3A502422E0F2FC004F2FFD /* HomeFeedTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3A502222E0F2FC004F2FFD /* HomeFeedTableViewCell.m */; };
@@ -52,6 +53,7 @@
 		EA73F83D22E6848D00385689 /* MessageBubble.m in Sources */ = {isa = PBXBuildFile; fileRef = EA73F83B22E6848D00385689 /* MessageBubble.m */; };
 		EA73F83E22E6848D00385689 /* MessageBubble.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA73F83C22E6848D00385689 /* MessageBubble.xib */; };
 		EA73F84122E6B96500385689 /* BubbleView.m in Sources */ = {isa = PBXBuildFile; fileRef = EA73F84022E6B96500385689 /* BubbleView.m */; };
+		EA949E7A22EA5BF200263E1B /* MapAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = EA949E7922EA5BF200263E1B /* MapAnnotation.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -116,6 +118,8 @@
 		E7AEA0B922DFCC3A00A77CC2 /* Chat.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Chat.m; sourceTree = "<group>"; };
 		E7AEA0BC22DFD8BC00A77CC2 /* GroupTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GroupTableViewCell.h; sourceTree = "<group>"; };
 		E7AEA0BD22DFD8BC00A77CC2 /* GroupTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GroupTableViewCell.m; sourceTree = "<group>"; };
+		EA06399022EA1E0B0070AF46 /* DetailHomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailHomeViewController.h; sourceTree = "<group>"; };
+		EA06399122EA1E0B0070AF46 /* DetailHomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailHomeViewController.m; sourceTree = "<group>"; };
 		E7BA0FF822EA5B2A00467978 /* PillLabel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PillLabel.h; sourceTree = "<group>"; };
 		E7BA0FF922EA5B2A00467978 /* PillLabel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PillLabel.m; sourceTree = "<group>"; };
 		E7BA0FFB22EB67B900467978 /* InterestsCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InterestsCollectionViewCell.h; sourceTree = "<group>"; };
@@ -159,6 +163,8 @@
 		EA73F83C22E6848D00385689 /* MessageBubble.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageBubble.xib; sourceTree = "<group>"; };
 		EA73F83F22E6B96500385689 /* BubbleView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BubbleView.h; sourceTree = "<group>"; };
 		EA73F84022E6B96500385689 /* BubbleView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BubbleView.m; sourceTree = "<group>"; };
+		EA949E7822EA5BF200263E1B /* MapAnnotation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MapAnnotation.h; sourceTree = "<group>"; };
+		EA949E7922EA5BF200263E1B /* MapAnnotation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MapAnnotation.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -213,6 +219,8 @@
 				0E496C0722E285AA00DEF38C /* CreateEventViewController.h */,
 				0E496C0822E285AA00DEF38C /* CreateEventViewController.m */,
 				EA73F82B22E6412A00385689 /* MainTabBarController.m */,
+				EA06399022EA1E0B0070AF46 /* DetailHomeViewController.h */,
+				EA06399122EA1E0B0070AF46 /* DetailHomeViewController.m */,
 				EA73F82A22E6412A00385689 /* MainTabBarController.h */,
 			);
 			path = ViewControllers;
@@ -361,6 +369,8 @@
 				0E496C0B22E793A100DEF38C /* Map.m */,
 				EA73F83F22E6B96500385689 /* BubbleView.h */,
 				EA73F84022E6B96500385689 /* BubbleView.m */,
+				EA949E7822EA5BF200263E1B /* MapAnnotation.h */,
+				EA949E7922EA5BF200263E1B /* MapAnnotation.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -607,6 +617,7 @@
 				E7AEA0AC22DE8C8A00A77CC2 /* GroupsViewController.m in Sources */,
 				E77FCBFE22E0DFF100A4E3AC /* EventAPI.m in Sources */,
 				EA54ED2E22DFBA2700D0D7A2 /* APIEventsManager.m in Sources */,
+				EA949E7A22EA5BF200263E1B /* MapAnnotation.m in Sources */,
 				EA73F81D22E11B4700385689 /* GroupEventsTableViewCell.m in Sources */,
 				EA73F83D22E6848D00385689 /* MessageBubble.m in Sources */,
 				EA54ECE622DE3F3800D0D7A2 /* AppDelegate.m in Sources */,
@@ -619,6 +630,7 @@
 				EA73F82C22E6412A00385689 /* MainTabBarController.m in Sources */,
 				0ECF088D22DE792900F5A8AA /* LogInViewController.m in Sources */,
 				E7AEA0B722DF9D7700A77CC2 /* EditProfileViewController.m in Sources */,
+				EA06399222EA1E0B0070AF46 /* DetailHomeViewController.m in Sources */,
 				0ECF088922DE791300F5A8AA /* SignUpViewController.m in Sources */,
 				E7BA0FFA22EA5B2A00467978 /* PillLabel.m in Sources */,
 				E76311C322E2768800A1B674 /* MessageTableViewCell.m in Sources */,
@@ -804,8 +816,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 5UFVL3XXJ3;
+				DEVELOPMENT_TEAM = XYQR9G9T5T;
 				INFOPLIST_FILE = ProjectX/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -822,8 +835,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 5UFVL3XXJ3;
+				DEVELOPMENT_TEAM = XYQR9G9T5T;
 				INFOPLIST_FILE = ProjectX/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

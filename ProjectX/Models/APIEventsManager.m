@@ -86,7 +86,7 @@ static NSString * const clientSecret = @"XFZKXUDPWBPQANV7EWD237QVMMH35G4H47CHB3H
         [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:baseURLString]];
         [manager.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@", publicToken] forHTTPHeaderField:@"Authorization"];
         [manager GET:@"events/search/"
-          parameters:@{@"location.longitude" : longitude,@"location.latitude":latitude, @"high_affinity_categories": category}
+          parameters:@{@"location.longitude" : longitude,@"location.latitude":latitude, @"high_affinity_categories": category, @"expand" : @"venue"}
             progress:nil
              success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary*  _Nullable dictionaryEventbrite) {
                  eventbriteDic = dictionaryEventbrite;
