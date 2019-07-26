@@ -79,13 +79,27 @@
     return 1;
 }
 
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    if(self.fullView)
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"selectedEvent" object:self.groupedEvents[indexPath.row]];
+    }
+}
+
 /**
  In the collectionView I am sending the total number of events divided by 3, because I want to have 3 elements in each cell of the collection view that are going to be displayed by the table view inside the collection view.
  */
 
 - (NSInteger)collectionView:(nonnull UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    if(self.fullView)
+    {
+        return self.groupedEvents.count;
+    }else
+    {
     int numberOfItems = floor(self.groupedEvents.count / 3) - 1;
     return numberOfItems;
+    }
 }
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {

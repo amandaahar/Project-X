@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
+@import MapKit;
 NS_ASSUME_NONNULL_BEGIN
 
 @interface EventAPI : NSObject
@@ -19,9 +19,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSString *category;
 @property (strong, nonatomic) NSString *subtitle;
 @property (strong, nonatomic) NSString *api;
+@property (assign, nonatomic) CLLocationCoordinate2D location;
 
 
--(instancetype) initWithInfo : (NSString *) name  : (NSString *) summary : (NSString *) idEvent : (NSDate *) date : (NSString *) url : (NSString *) category : (NSString *) subtitle : (NSString *) api;
+-(instancetype) initWithInfo : (NSString *) name  : (NSString *) summary : (NSString *) idEvent : (NSDate *) date : (NSString *) url : (NSString *) category : (NSString *) subtitle : (NSString *) api : (CLLocationCoordinate2D) location;
 @end
 
 NS_ASSUME_NONNULL_END

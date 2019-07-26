@@ -42,6 +42,13 @@
     return self.threeEvents.count;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"selectedEvent" object:self.threeEvents[indexPath.row]];
+    
+    
+}
+
 
 
 

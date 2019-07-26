@@ -7,8 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "../Models/EventAPI.h"
 NS_ASSUME_NONNULL_BEGIN
+
+@protocol EventDidSelectedDelegate
+-(void) didSelected : (EventAPI *) eventSelected;
+
+
+@end
 
 @interface EventsFeedViewController : UIViewController
 

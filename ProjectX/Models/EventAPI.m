@@ -13,12 +13,12 @@
 #pragma mark - Init
 -(instancetype) init
 {
-    self = [self initWithInfo:@"" :@"" :@"" : [[NSDate alloc] init] :@"" : @"": @"": @""];
+    self = [self initWithInfo:@"" :@"" :@"" : [[NSDate alloc] init] :@"" : @"": @"": @"" : CLLocationCoordinate2DMake(37.77, -122.4)];
     return self;
 }
 
 
--(instancetype) initWithInfo : (NSString *) name  : (NSString *) summary : (NSString *) idEvent : (NSDate *) date : (NSString *) url : (NSString *) category : (NSString *) subtitle : (NSString *) api
+-(instancetype) initWithInfo : (NSString *) name  : (NSString *) summary : (NSString *) idEvent : (NSDate *) date : (NSString *) url : (NSString *) category : (NSString *) subtitle : (NSString *) api : (CLLocationCoordinate2D) location
 {
     self = [super init];
     if(self)
@@ -31,6 +31,7 @@
         self.category = category;
         self.subtitle = subtitle;
         self.api = api;
+        self.location = location;
     }
     return self;
 }
