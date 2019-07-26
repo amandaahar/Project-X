@@ -29,6 +29,7 @@
 		E7AEA0BA22DFCC3A00A77CC2 /* Chat.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AEA0B922DFCC3A00A77CC2 /* Chat.m */; };
 		E7AEA0BE22DFD8BC00A77CC2 /* GroupTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AEA0BD22DFD8BC00A77CC2 /* GroupTableViewCell.m */; };
 		E7BA0FFA22EA5B2A00467978 /* PillLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = E7BA0FF922EA5B2A00467978 /* PillLabel.m */; };
+		E7BA0FFD22EB67B900467978 /* InterestsCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E7BA0FFC22EB67B900467978 /* InterestsCollectionViewCell.m */; };
 		EA3A502422E0F2FC004F2FFD /* HomeFeedTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3A502222E0F2FC004F2FFD /* HomeFeedTableViewCell.m */; };
 		EA3A502522E0F2FC004F2FFD /* HomeFeedTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA3A502322E0F2FC004F2FFD /* HomeFeedTableViewCell.xib */; };
 		EA54ECE622DE3F3800D0D7A2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EA54ECE522DE3F3800D0D7A2 /* AppDelegate.m */; };
@@ -117,6 +118,8 @@
 		E7AEA0BD22DFD8BC00A77CC2 /* GroupTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GroupTableViewCell.m; sourceTree = "<group>"; };
 		E7BA0FF822EA5B2A00467978 /* PillLabel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PillLabel.h; sourceTree = "<group>"; };
 		E7BA0FF922EA5B2A00467978 /* PillLabel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PillLabel.m; sourceTree = "<group>"; };
+		E7BA0FFB22EB67B900467978 /* InterestsCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InterestsCollectionViewCell.h; sourceTree = "<group>"; };
+		E7BA0FFC22EB67B900467978 /* InterestsCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InterestsCollectionViewCell.m; sourceTree = "<group>"; };
 		EA3A502122E0F2FC004F2FFD /* HomeFeedTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HomeFeedTableViewCell.h; path = ProjectX/Cells/HomeFeedTableViewCell.h; sourceTree = SOURCE_ROOT; };
 		EA3A502222E0F2FC004F2FFD /* HomeFeedTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = HomeFeedTableViewCell.m; path = ProjectX/Cells/HomeFeedTableViewCell.m; sourceTree = SOURCE_ROOT; };
 		EA3A502322E0F2FC004F2FFD /* HomeFeedTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = HomeFeedTableViewCell.xib; path = ProjectX/Cells/HomeFeedTableViewCell.xib; sourceTree = SOURCE_ROOT; };
@@ -247,6 +250,8 @@
 				E7AEA0BD22DFD8BC00A77CC2 /* GroupTableViewCell.m */,
 				E76311C122E2768800A1B674 /* MessageTableViewCell.h */,
 				E76311C222E2768800A1B674 /* MessageTableViewCell.m */,
+				E7BA0FFB22EB67B900467978 /* InterestsCollectionViewCell.h */,
+				E7BA0FFC22EB67B900467978 /* InterestsCollectionViewCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -620,6 +625,7 @@
 				E7AEA0A622DE8A8E00A77CC2 /* ProfileViewController.m in Sources */,
 				EA54ECEF22DE3F3800D0D7A2 /* ProjectX.xcdatamodeld in Sources */,
 				0E496C0C22E793A100DEF38C /* Map.m in Sources */,
+				E7BA0FFD22EB67B900467978 /* InterestsCollectionViewCell.m in Sources */,
 				EA73F84122E6B96500385689 /* BubbleView.m in Sources */,
 				0E496C0922E285AA00DEF38C /* CreateEventViewController.m in Sources */,
 				EA54ED2522DE9E3600D0D7A2 /* Event.m in Sources */,

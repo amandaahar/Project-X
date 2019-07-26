@@ -10,13 +10,14 @@
 #import "../Models/FirebaseManager.h"
 
 
-@interface EditProfileViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource>
+@interface EditProfileViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UIImageView *editedProfileImage;
 @property (weak, nonatomic) IBOutlet UITextField *firstNameText;
 @property (weak, nonatomic) IBOutlet UITextField *lastNameText;
 @property (weak, nonatomic) IBOutlet UITextField *bioText;
 @property (weak, nonatomic) IBOutlet UITextField *interests;
+@property (weak, nonatomic) IBOutlet UICollectionView *interestsCollectionView;
 @property (strong, nonatomic) NSMutableArray *interestsCategories;
 @property (strong, nonatomic) NSMutableArray *usersInterests;
 @property (weak, nonatomic) NSString *selectedRowText;
@@ -36,8 +37,12 @@ UIToolbar *interestsToolBar;
     self.db = [FIRFirestore firestore];
     
     [self.tabBarController.tabBar setHidden: YES];
-    // [self.usersInterests alloc] init];
+    
     self.usersInterests = [[NSMutableArray alloc] init];
+    
+    self.interestsCollectionView.dataSource = self;
+    self.interestsCollectionView.delegate = self;
+    [self.interestsCollectionView reloadData];
     
     //UIPickerView *interestsPicker = [[UIPickerView alloc]init];
     self.interestsPicker = [[UIPickerView alloc]init];
@@ -61,13 +66,8 @@ UIToolbar *interestsToolBar;
 }
 
 - (IBAction)didTapSave:(id)sender {
-    //NSString * profilePicURL = [self imageStorage];
-    //NSURL * profilePicURL =
-    //[[NSURL alloc] initWithString:[self imageStorage].absoluteString];
     [self imageStorage] ;
-    
-    
-    
+
 }
 
 - (void)setUpCurrentProperties {
@@ -84,10 +84,14 @@ UIToolbar *interestsToolBar;
             self.firstNameText.text = self.currentUser.firstName;
             self.lastNameText.text = self.currentUser.lastName;
             self.bioText.text = self.currentUser.bio;
+            self.usersInterests = self.currentUser.preferences;
             [self.editedProfileImage setImageWithURL:imageURL];
+            [self.interestsCollectionView reloadData];
             
         }
     }];
+    
+    [self.interestsCollectionView reloadData];
 }
 
 - (void)doneCategoryPicker: (UIButton *) button {
@@ -241,5 +245,20 @@ UIToolbar *interestsToolBar;
     [interestsToolBar setHidden:NO];
     self.selectedRowText = self.interestsCategories[row];
 }
+
+- (nonnull __kindof UICollectionViewCell *)collectionView:(nonnull UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
+    InterestsCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"InterestsCell" forIndexPath:indexPath];
+    NSString *interest = self.usersInterests[indexPath.item];
+    
+    [cell setInterestLabelText:interest];
+    
+    return cell;
+}
+
+- (NSInteger)collectionView:(nonnull UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    NSInteger numOfInterests = self.usersInterests.count;
+    return numOfInterests;
+}
+
 
 @end

@@ -30,9 +30,6 @@
     [super viewDidLoad];
     
     [self setup];
-    
-    
-    
 }
 
 - (void) setup {
@@ -44,10 +41,11 @@
         } else
         {
             self.currentUser = user;
-            //NSLog(@"%@",user.username);
+            NSLog(@"current user %@",user.username);
             
             self.nameText.text = [[self.currentUser.firstName stringByAppendingString:@" "] stringByAppendingString:self.currentUser.lastName];
             self.username.text = self.currentUser.username;
+            self.bioText.text = self.currentUser.bio;
             [self setImage:self.currentUser.profileImageURL];
             
             for (NSString *category in self.currentUser.preferences) {
