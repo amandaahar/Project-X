@@ -22,6 +22,8 @@
 @property (weak, nonatomic) NSString *selectedRowText;
 @property (strong, nonatomic) UIPickerView *interestsPicker;
 @property (nonatomic, strong) User *currentUser;
+@property (nonatomic, readwrite) FIRFirestore *db;
+@property (weak, nonatomic) NSString *profileImageString;
 
 @end
 
@@ -31,6 +33,7 @@ UIToolbar *interestsToolBar;
     [super viewDidLoad];
     
     [self setUpCurrentProperties];
+    self.db = [FIRFirestore firestore];
     
     [self.tabBarController.tabBar setHidden: YES];
     // [self.usersInterests alloc] init];
@@ -58,7 +61,12 @@ UIToolbar *interestsToolBar;
 }
 
 - (IBAction)didTapSave:(id)sender {
-    [self imageStorage];
+    //NSString * profilePicURL = [self imageStorage];
+    //NSURL * profilePicURL =
+    //[[NSURL alloc] initWithString:[self imageStorage].absoluteString];
+    [self imageStorage] ;
+    
+    
     
 }
 
@@ -73,9 +81,9 @@ UIToolbar *interestsToolBar;
             
             NSURL *imageURL = [NSURL URLWithString:self.currentUser.profileImageURL];
             
-            self.firstNameText.placeholder = self.currentUser.firstName;
-            self.lastNameText.placeholder = self.currentUser.lastName;
-            self.bioText.placeholder = self.currentUser.bio;
+            self.firstNameText.text = self.currentUser.firstName;
+            self.lastNameText.text = self.currentUser.lastName;
+            self.bioText.text = self.currentUser.bio;
             [self.editedProfileImage setImageWithURL:imageURL];
             
         }
@@ -150,7 +158,7 @@ UIToolbar *interestsToolBar;
     return newImage;
 }
 
-- (void) imageStorage {
+- (NSString *) imageStorage {
     
     FIRStorage *storage = [FIRStorage storage];
     NSUUID *randomID = [[NSUUID alloc] init];
@@ -160,6 +168,7 @@ UIToolbar *interestsToolBar;
     //FIRStorageReference *eventImagesRef = [storageRef child:@"images/mountains.jpg"];
     FIRStorageMetadata *uploadMetaData = [[FIRStorageMetadata alloc] init];
     uploadMetaData.contentType = @"image/jpeg";
+    __block NSURL *downloadURL = [[NSURL alloc] init];
     
     FIRStorageUploadTask *uploadTask = [storageRef putData:data metadata:uploadMetaData completion:^(FIRStorageMetadata *metadata, NSError *error) {
         if (error != nil) {
@@ -172,8 +181,29 @@ UIToolbar *interestsToolBar;
                 if (error != nil) {
                     NSLog(@"Uh-oh, second error occurred!");
                 } else {
-                    NSURL *downloadURL = URL;
+                    downloadURL = URL;
+                    self.profileImageString = downloadURL.absoluteString;
+//                    NSURL *downloadURL = URL;
                     NSLog(@"Here is your downloaded URL: %@", downloadURL);
+                    NSLog(@" here is image url%@", self.profileImageString);
+                    
+                    
+                    FIRDocumentReference *userRef = [[self.db collectionWithPath:@"Users"] documentWithPath:self.currentUser.userID];
+                    [userRef updateData:
+                     @{
+                       @"firstName": self.firstNameText.text,
+                       @"lastName": self.lastNameText.text,
+                       @"bio": self.bioText.text,
+                       @"preferences": self.usersInterests,
+                       @"profileImage": self.profileImageString,
+                       } completion:^(NSError * _Nullable error) {
+                           if (error != nil) {
+                               NSLog(@"Error updating document: %@", error);
+                           } else {
+                               NSLog(@"Docuement updated from edit profile");
+                           }
+                       }];
+                    
                 }
             }];
         }
@@ -183,6 +213,8 @@ UIToolbar *interestsToolBar;
         // Upload completed successfully
         NSLog(@"Picture sending success!");
     }];
+    
+    return downloadURL.absoluteString;
 }
 
 
