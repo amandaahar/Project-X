@@ -256,8 +256,8 @@
     
     Map *eventAnnotation = [[Map alloc] init];
     eventAnnotation.title = self.eventName.text;
-    //eventAnnotation.placeName = self.eventLocation.text;
-    eventAnnotation.placeName = @"testing location";
+    eventAnnotation.placeName = self.eventLocation.text;
+    //eventAnnotation.placeName = @"testing location";
     //eventAnnotation.placeName = [NSString stringWithFormat:@"%@", event.location];
     eventAnnotation.coordinate = location.center;
     
@@ -278,7 +278,7 @@
     
     if(event.categories.intValue == 0){
         //self.categoryIndex.text = @"Food";
-        eventView.image = [UIImage imageNamed:@"home"];
+        eventView.image = [UIImage imageNamed:@"untitled"];
     }
     else if(event.categories.intValue == 1){
        // self.categoryIndex.text = @"Culture";
@@ -306,7 +306,7 @@
 }
 
 - (nullable MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation {
-    return [self eventHomeView:annotation];
+   return [self eventHomeView:annotation];
 }
 
 - (void) eventDateIdentifier {

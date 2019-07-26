@@ -15,7 +15,8 @@
 @property (weak, nonatomic) IBOutlet UIImageView *groupImage;
 @property (weak, nonatomic) IBOutlet UILabel *nameOfChat;
 @property (weak, nonatomic) IBOutlet UILabel *previewOfLatestMessage;
-
+@property (weak, nonatomic) IBOutlet UILabel *lastMessageUser;
+@property (weak, nonatomic) IBOutlet UILabel *timeOfLastMessage;
 
 @end
 
