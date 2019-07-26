@@ -102,8 +102,7 @@
     
     Event *event = self.events[indexPath.row];
     [cell setNameOfChatText:event.name];
-
-    
+     
 //    @try {
 //        if (event.pictures[0] != nil) {
 //            [cell setImage:event.pictures[0]];

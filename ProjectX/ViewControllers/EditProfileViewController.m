@@ -10,18 +10,21 @@
 #import "../Models/FirebaseManager.h"
 
 
-@interface EditProfileViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource>
-//@property (weak, nonatomic) IBOutlet UIPickerView *interestsPicker;
+@interface EditProfileViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource>
+
 @property (weak, nonatomic) IBOutlet UIImageView *editedProfileImage;
 @property (weak, nonatomic) IBOutlet UITextField *firstNameText;
 @property (weak, nonatomic) IBOutlet UITextField *lastNameText;
 @property (weak, nonatomic) IBOutlet UITextField *bioText;
 @property (weak, nonatomic) IBOutlet UITextField *interests;
+@property (weak, nonatomic) IBOutlet UICollectionView *interestsCollectionView;
 @property (strong, nonatomic) NSMutableArray *interestsCategories;
 @property (strong, nonatomic) NSMutableArray *usersInterests;
 @property (weak, nonatomic) NSString *selectedRowText;
 @property (strong, nonatomic) UIPickerView *interestsPicker;
 @property (nonatomic, strong) User *currentUser;
+@property (nonatomic, readwrite) FIRFirestore *db;
+@property (weak, nonatomic) NSString *profileImageString;
 
 @end
 
@@ -31,10 +34,15 @@ UIToolbar *interestsToolBar;
     [super viewDidLoad];
     
     [self setUpCurrentProperties];
+    self.db = [FIRFirestore firestore];
     
     [self.tabBarController.tabBar setHidden: YES];
-    // [self.usersInterests alloc] init];
+    
     self.usersInterests = [[NSMutableArray alloc] init];
+    
+    self.interestsCollectionView.dataSource = self;
+    self.interestsCollectionView.delegate = self;
+    [self.interestsCollectionView reloadData];
     
     //UIPickerView *interestsPicker = [[UIPickerView alloc]init];
     self.interestsPicker = [[UIPickerView alloc]init];
@@ -58,8 +66,8 @@ UIToolbar *interestsToolBar;
 }
 
 - (IBAction)didTapSave:(id)sender {
-    [self imageStorage];
-    
+    [self imageStorage] ;
+
 }
 
 - (void)setUpCurrentProperties {
@@ -73,23 +81,22 @@ UIToolbar *interestsToolBar;
             
             NSURL *imageURL = [NSURL URLWithString:self.currentUser.profileImageURL];
             
-            self.firstNameText.placeholder = self.currentUser.firstName;
-            self.lastNameText.placeholder = self.currentUser.lastName;
-            self.bioText.placeholder = self.currentUser.bio;
+            self.firstNameText.text = self.currentUser.firstName;
+            self.lastNameText.text = self.currentUser.lastName;
+            self.bioText.text = self.currentUser.bio;
+            self.usersInterests = self.currentUser.preferences;
             [self.editedProfileImage setImageWithURL:imageURL];
+            [self.interestsCollectionView reloadData];
             
         }
     }];
     
-    
-    
+    [self.interestsCollectionView reloadData];
 }
 
 - (void)doneCategoryPicker: (UIButton *) button {
     [self.usersInterests addObject:self.selectedRowText];
-    NSLog(@"user interestsarray%@", self.usersInterests);
     self.interests.text = [self.usersInterests componentsJoinedByString:@"\n,"];
-    //[self.interestsPicker]
     [self.interestsPicker removeFromSuperview];
     [interestsToolBar setHidden:YES];
     [self.interests endEditing:YES];
@@ -98,15 +105,13 @@ UIToolbar *interestsToolBar;
 
 -(UIBarButtonItem *) setUpDoneButton {
     UIBarButtonItem *barButtonDone = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(doneCategoryPicker:)];
-    barButtonDone.title = @"Done";
+    
     barButtonDone.style = UIBarButtonItemStyleDone;
-    //interestsToolBar.items = @[barButtonDone];
     barButtonDone.tintColor = [UIColor blueColor];
     
     return barButtonDone;
     
 }
-
 
 - (IBAction)changeProfileImageButton:(id)sender {
     UIImagePickerController *imagePickerVC = [UIImagePickerController new];
@@ -124,6 +129,24 @@ UIToolbar *interestsToolBar;
     
     [self presentViewController:imagePickerVC animated:YES completion:nil];
     
+}
+
+- (void) updateUserProperties {
+    FIRDocumentReference *userRef = [[self.db collectionWithPath:@"Users"] documentWithPath:self.currentUser.userID];
+    [userRef updateData:
+     @{
+       @"firstName": self.firstNameText.text,
+       @"lastName": self.lastNameText.text,
+       @"bio": self.bioText.text,
+       @"preferences": self.usersInterests,
+       @"profileImage": self.profileImageString,
+       } completion:^(NSError * _Nullable error) {
+           if (error != nil) {
+               NSLog(@"Error updating document: %@", error);
+           } else {
+               NSLog(@"Docuement updated from edit profile");
+           }
+       }];
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
@@ -150,7 +173,7 @@ UIToolbar *interestsToolBar;
     return newImage;
 }
 
-- (void) imageStorage {
+- (NSString *) imageStorage {
     
     FIRStorage *storage = [FIRStorage storage];
     NSUUID *randomID = [[NSUUID alloc] init];
@@ -160,6 +183,7 @@ UIToolbar *interestsToolBar;
     //FIRStorageReference *eventImagesRef = [storageRef child:@"images/mountains.jpg"];
     FIRStorageMetadata *uploadMetaData = [[FIRStorageMetadata alloc] init];
     uploadMetaData.contentType = @"image/jpeg";
+    __block NSURL *downloadURL = [[NSURL alloc] init];
     
     FIRStorageUploadTask *uploadTask = [storageRef putData:data metadata:uploadMetaData completion:^(FIRStorageMetadata *metadata, NSError *error) {
         if (error != nil) {
@@ -172,8 +196,13 @@ UIToolbar *interestsToolBar;
                 if (error != nil) {
                     NSLog(@"Uh-oh, second error occurred!");
                 } else {
-                    NSURL *downloadURL = URL;
+                    downloadURL = URL;
+                    self.profileImageString = downloadURL.absoluteString;
+//                    NSURL *downloadURL = URL;
                     NSLog(@"Here is your downloaded URL: %@", downloadURL);
+                    NSLog(@" here is image url%@", self.profileImageString);
+                    
+                    [self updateUserProperties];
                 }
             }];
         }
@@ -183,6 +212,8 @@ UIToolbar *interestsToolBar;
         // Upload completed successfully
         NSLog(@"Picture sending success!");
     }];
+    
+    return downloadURL.absoluteString;
 }
 
 
@@ -211,13 +242,23 @@ UIToolbar *interestsToolBar;
 }
 
 -(void) pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-    //if ([self.doneButton selec)
     [interestsToolBar setHidden:NO];
     self.selectedRowText = self.interestsCategories[row];
-    
-    //[self.usersInterests addObject:self.interestsCategories[row]];
 }
 
+- (nonnull __kindof UICollectionViewCell *)collectionView:(nonnull UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
+    InterestsCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"InterestsCell" forIndexPath:indexPath];
+    NSString *interest = self.usersInterests[indexPath.item];
+    
+    [cell setInterestLabelText:interest];
+    
+    return cell;
+}
+
+- (NSInteger)collectionView:(nonnull UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    NSInteger numOfInterests = self.usersInterests.count;
+    return numOfInterests;
+}
 
 
 @end

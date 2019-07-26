@@ -8,9 +8,9 @@
 
 #import "EventsFeedViewController.h"
 #import "../Models/APIEventsManager.h"
-#import "../Models/EventAPI.h"
 #import "../Models/NSMutableArray+Convenience.h"
 #import "../Cells/GroupEventsTableViewCell.h"
+#import "DetailHomeViewController.h"
 @import CoreLocation;
 @interface EventsFeedViewController () <UITableViewDelegate, UITableViewDataSource,CLLocationManagerDelegate, UIScrollViewDelegate>
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityView;
@@ -19,6 +19,7 @@
 @property (strong, nonatomic) NSMutableArray *topEvents;
 @property (strong, nonatomic) NSArray *categories;
 @property(assign, nonatomic) CGFloat currentOffset;
+@property (nonatomic, strong) EventAPI *eventSelected;
 @end
 
 @implementation EventsFeedViewController
@@ -47,6 +48,15 @@ CLLocation *currentLocation;
     NSString *dateString = [format stringFromDate:now];
     #pragma clang diagnostic pop
     [self currentLocationIdentifier];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showDetailView:) name:@"selectedEvent" object:nil];
+    
+}
+
+-(void)showDetailView : (NSNotification *) notification
+{
+    self.eventSelected = notification.object;
+    [self performSegueWithIdentifier:@"details" sender:self];
+    NSLog(@"Notification");
 }
 
 
@@ -102,7 +112,7 @@ CLLocation *currentLocation;
                  NSMutableArray *arrayCategory = [NSMutableArray new];
                 for(NSDictionary * ticketmasterDic in eventsTicketmaster)
                 {
-                    [arrayCategory addObject:[[EventAPI alloc] initWithInfo:ticketmasterDic[@"name"] :ticketmasterDic[@"name"] :ticketmasterDic[@"id"] :ticketmasterDic[@"dates"][@"start"][@"dateTime"] :ticketmasterDic[@"images"][0][@"url"] :category[@"name"] : category[@"short_name"] : @"Ticketmaster"]];
+                [arrayCategory addObject:[[EventAPI alloc] initWithInfo:ticketmasterDic[@"name"] :ticketmasterDic[@"name"] :ticketmasterDic[@"id"] :ticketmasterDic[@"dates"][@"start"][@"dateTime"] :ticketmasterDic[@"images"][0][@"url"] :category[@"name"] : category[@"short_name"] : @"Ticketmaster" : CLLocationCoordinate2DMake([ticketmasterDic[@"_embedded"][@"venues"][0][@"location"][@"latitude"] doubleValue],[ticketmasterDic[@"_embedded"][@"venues"][0][@"location"][@"longitude"] doubleValue])]];
                 }
                 
                     for(NSDictionary * eventbriteDic in eventsEventbrite)
@@ -110,10 +120,9 @@ CLLocation *currentLocation;
                         NSDictionary *stringURL =   eventbriteDic[@"logo"];
                         @try {
                             NSString * url = stringURL[@"url"];
-                         
-                            [arrayCategory addObject:[[EventAPI alloc] initWithInfo:eventbriteDic[@"name"][@"text"] :eventbriteDic[@"summary"] :eventbriteDic[@"id"] :eventbriteDic[@"start"][@"local"] :url :category[@"name"] : category[@"short_name"] : @"Eventbrite"]];
+                            [arrayCategory addObject:[[EventAPI alloc] initWithInfo:eventbriteDic[@"name"][@"text"] :eventbriteDic[@"summary"] :eventbriteDic[@"id"] :eventbriteDic[@"start"][@"local"] :url :category[@"name"] : category[@"short_name"] : @"Eventbrite" : CLLocationCoordinate2DMake([eventbriteDic[@"venue"][@"latitude"] doubleValue], [eventbriteDic[@"venue"][@"longitude"] doubleValue])]];
                         } @catch (NSException *exception) {
-                            [arrayCategory addObject:[[EventAPI alloc] initWithInfo:eventbriteDic[@"name"][@"text"] :eventbriteDic[@"summary"] :eventbriteDic[@"id"] :eventbriteDic[@"start"][@"local"] :@"https://www.daviespaints.com.ph/wp-content/uploads/img/color-ideas/1008-colors/2036P.png" :category[@"name"] : category[@"short_name"] : @"Eventbrite"]];
+                            [arrayCategory addObject:[[EventAPI alloc] initWithInfo:eventbriteDic[@"name"][@"text"] :eventbriteDic[@"summary"] :eventbriteDic[@"id"] :eventbriteDic[@"start"][@"local"] :@"https://www.daviespaints.com.ph/wp-content/uploads/img/color-ideas/1008-colors/2036P.png" :category[@"name"] : category[@"short_name"] : @"Eventbrite" :  CLLocationCoordinate2DMake([eventbriteDic[@"venue"][@"latitude"] doubleValue], [eventbriteDic[@"venue"][@"longitude"] doubleValue])]];
                         }
                     }
                 [self.events addObject:arrayCategory];
@@ -257,15 +266,20 @@ CLLocation *currentLocation;
 
      
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    if([segue.identifier isEqualToString:@"details"])
+    {
+        DetailHomeViewController * detailView = [segue destinationViewController];
+        [detailView setEvent:self.eventSelected];
+    }
 }
-*/
+
 
 
 

@@ -16,13 +16,6 @@ NS_ASSUME_NONNULL_BEGIN
 @interface Chat : NSObject
 
 #pragma mark - Chat Attributes
-//@property (strong, nonatomic) NSDate *createdAt;
-//@property (strong, nonatomic) NSDate *endAt;
-//@property (strong, nonatomic) NSString *name;
-//@property (strong, nonatomic) NSArray *users;
-//@property (strong, nonatomic) NSString *event;
-
-// @property (strong, nonatomic) User *user;
 
 @property (strong, nonatomic) NSMutableArray *messages;
 @property(strong, nonatomic) NSString *event;

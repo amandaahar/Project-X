@@ -40,7 +40,7 @@
 - (void)getCurrentUser:(void(^)(User *user, NSError *error))completion
 {
     FIRDocumentReference *docRef =
-   // [[database collectionWithPath:@"Users"] documentWithPath:@"DAhDAxEMoJNpOcjkaWe1cyevl9v2"];
+    //[[database collectionWithPath:@"Users"] documentWithPath:@"DAhDAxEMoJNpOcjkaWe1cyevl9v2"];
     [[database collectionWithPath:@"Users"] documentWithPath:[[[FIRAuth auth] currentUser] uid]];
     [docRef addSnapshotListener:^(FIRDocumentSnapshot *snapshot, NSError *error) {
         if (snapshot.exists) {

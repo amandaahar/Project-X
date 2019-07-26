@@ -19,15 +19,6 @@
     return self;
 }
 
-/**
- initWithDictonary
- 
- This is going to get a dictionary and set all the properties of the class
- 
- 
- -Parameters:
-    dictionary (NSDictionary *) This is the dictionary that we receive from the database
- */
 -(instancetype) initWithDictionary: (NSDictionary *)  dictionary
 {
     self = [super init];
@@ -50,8 +41,8 @@
 -(void) composeMessage:(NSString *)text chat: (NSString *)event{
     FIRFirestore *db = [FIRFirestore firestore];
     FIRTimestamp *currentTime = [FIRTimestamp timestamp];
-    // FIR
     
+    // adds message document
     __block FIRDocumentReference *ref = [[[[db collectionWithPath:@"Event"] documentWithPath:event] collectionWithPath:@"Chat"] addDocumentWithData:
   @{
     @"text": text,
@@ -65,12 +56,6 @@
             NSLog(@"Document added with ID: %@", ref.documentID);
         }
         }];
-    
 }
-
-
-
-
-
 
 @end

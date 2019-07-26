@@ -30,9 +30,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSString *bio;
 
 #pragma mark - User Initializer
--(instancetype) initWithDictionary : (NSDictionary *) dictionary;
--(void) composeMessage:(NSString *)text chat: (NSString *)event;
--(void) setProfileImage;
+- (instancetype) initWithDictionary : (NSDictionary *) dictionary;
+- (void) composeMessage:(NSString *)text chat: (NSString *)event;
+- (void) setProfileImage;
 
 @end
 

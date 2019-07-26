@@ -24,7 +24,6 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    // Initialization code
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -33,15 +32,15 @@
     // Configure the view for the selected state
 }
 
--(NSString *)getNameOfChat {
+- (NSString *)getNameOfChat {
     return self.nameOfChat.text;
 }
 
--(void)setNameOfChatText:(NSString *)nameOfChat {
+- (void)setNameOfChatText:(NSString *)nameOfChat {
     self.nameOfChat.text = nameOfChat;
 }
 
--(void) setImage: (NSString *) photoURL {
+- (void) setImage: (NSString *) photoURL {
     NSURL *imageURL = [NSURL URLWithString:photoURL];
     [self.groupImage setImageWithURL:imageURL];
     
