@@ -18,27 +18,28 @@
 @property (weak, nonatomic) IBOutlet UITextField *createEventDescription;
 @property (weak, nonatomic) IBOutlet UITextField *createEventLocation;
 @property (weak, nonatomic) IBOutlet UITextField *createEventDate;
-@property (weak, nonatomic) IBOutlet UITextField *createAttendees;//Change to slider later
+@property (weak, nonatomic) IBOutlet UITextField *createAttendees;//slider
 @property (weak, nonatomic) IBOutlet UIImageView *createPicture;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *createButton;//Make sure doesnt crash if not complete
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelButton;
-@property (nonatomic, readwrite) FIRFirestore *db;
-@property (strong, nonatomic) NSString *userFriendlyLocation;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
 @property (weak, nonatomic) IBOutlet UILabel *categoryLabel;
+@property (weak, nonatomic) NSString *EventImageString;
+@property (weak, nonatomic) NSString *userFriendlyLocation;
+@property (nonatomic, readwrite) FIRFirestore *db;
 
 @end
 
 @implementation CreateEventViewController
 CLLocationCoordinate2D coordinate;
 UIDatePicker *datePicker;
-NSURL *imageURL;
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
     self.db = [FIRFirestore firestore];
     
-    datePicker = [[UIDatePicker alloc]init];
+    datePicker = [[UIDatePicker alloc] init];
     datePicker.datePickerMode = UIDatePickerModeDateAndTime;
     [self.createEventDate setInputView:datePicker];
     
@@ -48,17 +49,23 @@ NSURL *imageURL;
     UIBarButtonItem *space=[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     [toolBar setItems:[NSArray arrayWithObjects:space,doneBtn, nil]];
     [self.createEventDate setInputAccessoryView:toolBar];
+    
 }
 
 - (void) ShowSelectedDate {
+    
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"MMM d, h:mm a"];
 
     self.createEventDate.text = [NSString stringWithFormat:@"%@", [formatter stringFromDate:datePicker.date]];
     [self.createEventDate resignFirstResponder];
+    
 }
 
+#pragma mark - Event Image
+
 - (IBAction)OpenCameraButton:(id)sender {
+    
     UIImagePickerController *imagePickerVC = [UIImagePickerController new];
     imagePickerVC.delegate = self;
     imagePickerVC.allowsEditing = YES;
@@ -79,7 +86,7 @@ NSURL *imageURL;
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
     
     UIImage *originalImage = info[UIImagePickerControllerOriginalImage];
-    //UIImage *editedImage = info[UIImagePickerControllerEditedImage];//Do I really need this
+//    UIImage *editedImage = info[UIImagePickerControllerEditedImage];//Do I really need this
     
     self.createPicture.image = [self resizeImage:originalImage withSize:CGSizeMake(400, 400)];
 //    [self imageStorage];
@@ -98,7 +105,67 @@ NSURL *imageURL;
     UIGraphicsEndImageContext();
     
     return newImage;
+    
 }
+
+- (NSString *) imageStorage {
+    
+    FIRStorage *storage = [FIRStorage storage];
+    NSUUID *randomID = [[NSUUID alloc] init];
+    FIRStorageReference *storageRef = [storage referenceWithPath:[@"images/" stringByAppendingString:[NSString stringWithFormat: @"%@", randomID.description, @".jpg"]]];
+    NSData *data = UIImageJPEGRepresentation(self.createPicture.image, 0.75);
+    FIRStorageMetadata *uploadMetaData = [[FIRStorageMetadata alloc] init];
+    uploadMetaData.contentType = @"image/jpeg";
+    __block NSURL *downloadURL = [[NSURL alloc] init];
+    
+    FIRStorageUploadTask *uploadTask = [storageRef putData:data metadata:uploadMetaData completion:^(FIRStorageMetadata *metadata, NSError *error) {
+        if (error != nil) {
+            NSLog(@"Error occurred: %@", error);
+        } else {
+            int size = metadata.size;
+            [storageRef downloadURLWithCompletion:^(NSURL * _Nullable URL, NSError * _Nullable error) {
+                if (error != nil) {
+                    NSLog(@"Error occurred: %@", error);
+                } else {
+                    downloadURL = URL;
+                    NSLog(@"Downloaded URL: %@", downloadURL);
+                    self.EventImageString = downloadURL.absoluteString;
+                    NSLog(@"Image URL: %@", self.EventImageString);
+                    //[self updateEventProperties];
+                }
+            }];
+        }
+    }];
+    
+    [uploadTask observeStatus:FIRStorageTaskStatusSuccess handler:^(FIRStorageTaskSnapshot *snapshot) {
+        NSLog(@"Picture sending success!");
+    }];
+    
+    return downloadURL.absoluteString;
+    
+}
+
+/*
+ - (void) updateEventProperties {
+ FIRDocumentReference *eventRef = [[self.db collectionWithPath:@"Event"] documentWithPath:self.currentUser.userID];
+ [userRef updateData:
+ @{
+ @"firstName": self.firstNameText.text,
+ @"lastName": self.lastNameText.text,
+ @"bio": self.bioText.text,
+ @"preferences": self.usersInterests,
+ @"profileImage": self.profileImageString,
+ } completion:^(NSError * _Nullable error) {
+ if (error != nil) {
+ NSLog(@"Error updating document: %@", error);
+ } else {
+ NSLog(@"Docuement updated from edit profile");
+ }
+ }];
+ }
+ */
+
+#pragma mark - Creating event
 
 - (IBAction)chooseCategory:(id)sender {
 
@@ -128,42 +195,7 @@ NSURL *imageURL;
         self.categoryLabel.text = @"Select";
         storeCategory = [NSNumber numberWithInt:4];
     }
-}
-
-- (void) imageStorage {
     
-    FIRStorage *storage = [FIRStorage storage];
-    NSUUID *randomID = [[NSUUID alloc] init];
-    FIRStorageReference *storageRef = [storage referenceWithPath:[@"images/" stringByAppendingString:[NSString stringWithFormat: @"%@", randomID.description, @".jpg"]]];
-    NSData *data = UIImageJPEGRepresentation(self.createPicture.image, 0.75);
-    FIRStorageMetadata *uploadMetaData = [[FIRStorageMetadata alloc] init];
-    uploadMetaData.contentType = @"image/jpeg";
-    
-    FIRStorageUploadTask *uploadTask = [storageRef putData:data metadata:uploadMetaData completion:^(FIRStorageMetadata *metadata, NSError *error) {
-        if (error != nil) {
-            NSLog(@"Uh-oh, first error occurred!");
-        } else {
-            // Metadata contains file metadata such as size, content-type, and download URL.
-            int size = metadata.size;
-            // You can also access to download URL after upload.
-            [storageRef downloadURLWithCompletion:^(NSURL * _Nullable URL, NSError * _Nullable error) {
-                if (error != nil) {
-                    NSLog(@"Uh-oh, second error occurred!");
-                } else {
-                    NSURL *downloadURL = URL;
-                    NSLog(@"Here is your downloaded URL: %@", downloadURL);
-                    imageURL = downloadURL;
-                    NSLog(@"Image URL in else of image storage: %@", imageURL);
-                }
-            }];
-        }
-    }];
-    
-    NSLog(@"IMage URL in image storage: %@", imageURL);
-    [uploadTask observeStatus:FIRStorageTaskStatusSuccess handler:^(FIRStorageTaskSnapshot *snapshot) {
-        // Upload completed successfully
-        NSLog(@"Picture sending success!");
-    }];
 }
 
 - (IBAction)didTapCreate:(id)sender {
@@ -208,7 +240,6 @@ NSURL *imageURL;
         }
         
         [self imageStorage];
-        NSLog(@"Downloaded URL is: %@", imageURL);
         
         __block FIRDocumentReference *ref = [[self.db collectionWithPath:@"Event"] addDocumentWithData:@{@"name": self.createEventName.text, @"description": self.createEventDescription.text, @"location": geoPoint, @"eventDate": [FIRTimestamp timestampWithDate: datePicker.date], @"numAttendees": formattedNumOfAttendees, @"categoryIndex": storeCategory, @"userFriendlyLocation": address} completion:^(NSError * _Nullable error) {
             if (error != nil) {
@@ -220,26 +251,38 @@ NSURL *imageURL;
         }];
     }];
     
-    //self.userFriendlyLocation = address;
-    //self.userFriendlyLocation.delegate = self;
 }
 
+- (void) addEventImage {
+    
+    FIRDocumentReference *eventRef = [self.db collectionWithPath:@"Event"];
+    [eventRef updateData:@{ @"images": [FIRFieldValue fieldValueForArrayUnion:@[self.EventImageString]]}];
+    
+    //second method looks like itll work more but this VC has no event ID so should I pass imageURLstring view protocol delegate to ChooseVC and then update the array?
+    /*
+    NSMutableArray *copyEvents = self.events.mutableCopy;
+    [copyEvents removeObjectAtIndex:indexPath.row];
+    
+    NSMutableArray *references = [NSMutableArray new];
+    for (Event *event in copyEvents) {
+        FIRDocumentReference *eventRef = [[self.db collectionWithPath:@"Event"] documentWithPath: event.eventID];
+        [references addObject:eventRef];
+     */
+    
+}
+
+#pragma mark - Done creating
+
 - (IBAction)didTapCancel:(id)sender {
+    
     [self dismissViewControllerAnimated:YES completion:nil];
+    
 }
 
 - (IBAction)closeKeyboard:(id)sender {
+    
     [self.view endEditing:YES];
+    
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

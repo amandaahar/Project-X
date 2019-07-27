@@ -33,17 +33,19 @@
     [self getChats];
     self.events = [[NSMutableArray alloc] init];
     
-//    [[FirebaseManager sharedManager] getEventsFromUser:@"DAhDAxEMoJNpOcjkaWe1cyevl9v2"
-// completion:^(NSArray * _Nonnull events, NSError * _Nonnull error) {
-//        if (error != nil) {
-//            NSLog(@"Error getting evens for chat");
-//        } else {
-//            self.events = events;
-//            [self.chatsTableView reloadData];
-//        }
-//    }];
+    /*
+    [[FirebaseManager sharedManager] getEventsFromUser:@"DAhDAxEMoJNpOcjkaWe1cyevl9v2"
+     completion:^(NSArray * _Nonnull events, NSError * _Nonnull error) {
+        if (error != nil) {
+            NSLog(@"Error getting evens for chat");
+        } else {
+            self.events = events;
+            [self.chatsTableView reloadData];
+        }
+    }];
 
-    // [self getChats];
+    [self getChats];
+     */
 }
 
 -(void) getChats {
