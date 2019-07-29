@@ -11,12 +11,15 @@ target 'ProjectX' do
   pod 'FirebaseCore'
   pod 'FirebaseDatabase'
   pod 'FirebaseFirestore'
+  pod 'Firebase/Analytics'
+  pod 'FirebaseMLNaturalLanguage'
   pod 'FirebaseFunctions'
   pod 'FirebaseMessaging'
   pod 'FirebaseStorage'
-  pod 'GeoFire'
+ pod 'GeoFire'
   pod 'AFNetworking'
   pod 'MaterialTextField'
+  pod 'BLBubbleFilters'
 
   target 'ProjectXTests' do
     inherit! :search_paths

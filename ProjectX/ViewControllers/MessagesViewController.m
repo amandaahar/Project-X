@@ -8,8 +8,10 @@
 
 #import "MessagesViewController.h"
 #import "MessageTableViewCell.h"
+#import "LanguagesTableViewController.h"
 #import "../Cells/MessageBubble.h"
-
+#import "../Helpers/TranslatorManager.h"
+#import "../Models/User.h"
 @interface MessagesViewController () <UITableViewDelegate, UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITextField *messageText;
 @property (weak, nonatomic) IBOutlet UIButton *sendButton;
@@ -17,6 +19,7 @@
 @property(nonatomic, strong) NSMutableArray *messagesInChat;
 @property (weak, nonatomic) IBOutlet UIView *containerView;
 @property (strong, nonatomic) NSString * idCurrentUser;
+@property (strong, nonatomic) User *user;
 @property (nonatomic, readwrite) FIRFirestore *db;
 
 @end
@@ -35,6 +38,10 @@ NSLayoutConstraint *bottom;
     self.idCurrentUser = FIRAuth.auth.currentUser.uid;
     [self.messagesTableView registerNib:[UINib nibWithNibName:@"MessageBubble" bundle:nil] forCellReuseIdentifier:identifier];
 
+    
+   
+    
+    
     [[FirebaseManager sharedManager] getMessagesFromEvent:@"8DEd1ZIlomSBf6FAqNUG" completion:^(NSArray * _Nonnull messages, NSError * _Nonnull error) {
         if (error) {
             NSLog(@"error getting messages");
@@ -51,13 +58,27 @@ NSLayoutConstraint *bottom;
     }];
 
 }
+
+-(void) chooseLanguage:(NSString *) text
+{
+    [self performSegueWithIdentifier:@"languages" sender:self];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    [[FirebaseManager sharedManager] getCurrentUser:^(User * _Nonnull user, NSError * _Nonnull error) {
+        if(error == nil)
+        {
+            self.user = user;
+            [[self navigationItem] setRightBarButtonItem:[[UIBarButtonItem alloc] initWithTitle:[@"Language: " stringByAppendingString:self.user.language] style:(UIBarButtonItemStylePlain) target:self action:@selector(chooseLanguage:)]];
+        }
+    }];
+    NSString * language = [[NSLocale preferredLanguages] firstObject];
+    NSLog(@"%@",language);
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(handleKeyboardNotifications:) name:UIKeyboardWillShowNotification object:nil];
     bottom = [NSLayoutConstraint constraintWithItem:self.containerView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1 constant:0];
     [self.view addConstraint:bottom];
 }
+
 
 - (void)handleKeyboardNotifications:(NSNotification*)notification
 {
@@ -94,15 +115,20 @@ NSLayoutConstraint *bottom;
 }
 
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    if([segue.identifier isEqualToString:@"languages"])
+    {
+        LanguagesTableViewController * vc = [segue destinationViewController];
+        vc.previousLanguage = self.user.language;
+    }
 }
-*/
+
 
 /*
 -(void)getMessages {
@@ -119,7 +145,7 @@ NSLayoutConstraint *bottom;
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
     MessageBubble *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     Message *message = self.messagesInChat[indexPath.row];
-    
+    [cell setUserLanguage:self.user.language];
     if([self.idCurrentUser isEqualToString:message.userID])
     {
         [cell showOutgoingMessage:message];
@@ -128,6 +154,7 @@ NSLayoutConstraint *bottom;
     {
         [cell showIncomingMessage:message];
     }
+    
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     [cell autoresizesSubviews];
@@ -138,6 +165,7 @@ NSLayoutConstraint *bottom;
     CGFloat cellheight = 70; //assuming that your TextView's origin.y is 30 and TextView is the last UI element in your cell
     
     NSString *text = [[self.messagesInChat objectAtIndex:indexPath.row] text];
+    
     UIFont *font = [UIFont systemFontOfSize:14];// The font should be the same as that of your textView
     CGSize constraintSize = CGSizeMake(150, CGFLOAT_MAX);// maxWidth = max width for the textView
     

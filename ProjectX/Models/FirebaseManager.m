@@ -123,6 +123,9 @@
 
 
 #pragma mark - Set methods
+-(void) setNewLanguage : (NSString *) newLanguage {
+    [[[database collectionWithPath:@"Users"] documentWithPath:FIRAuth.auth.currentUser.uid] updateData:@{@"lan": newLanguage}];
+}
 
 
 @end

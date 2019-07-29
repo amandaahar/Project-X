@@ -15,7 +15,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *createGroupButton;
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (weak, nonatomic) IBOutlet UILabel *location;
-@property (weak, nonatomic) IBOutlet UITextView *descriptionEvent;
+@property (weak, nonatomic) IBOutlet UILabel *descriptionEvent;
 @property (weak, nonatomic) IBOutlet UILabel *locationName;
 
 

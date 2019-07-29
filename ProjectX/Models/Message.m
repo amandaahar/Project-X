@@ -12,7 +12,7 @@
 
 #pragma mark - Message Initializer
 -(instancetype) init {
-    NSDictionary *defaultDictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"",@"text",[NSDate new],@"timeSent",@"",@"userID",nil];
+    NSDictionary *defaultDictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"",@"text",[NSDate new],@"timeSent",@"",@"userID", @"en", @"lan",nil];
     self = [self initWithDictionary:defaultDictionary];
     return self;
 }
@@ -25,6 +25,13 @@
         [self setTimeSent:timeSent.dateValue];
         [self setNameOfSender:dictionary[@"nameOfSender"]];
         [self setUserID:dictionary[@"userID"]];
+        if(dictionary[@"lan"])
+        {
+        [self setLanguage:dictionary[@"lan"]];
+        }else
+        {
+            [self setLanguage:@"en"];
+        }
     }
     return self;
 }

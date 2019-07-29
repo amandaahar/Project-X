@@ -28,8 +28,8 @@
 		E7AEA0B722DF9D7700A77CC2 /* EditProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AEA0B622DF9D7700A77CC2 /* EditProfileViewController.m */; };
 		E7AEA0BA22DFCC3A00A77CC2 /* Chat.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AEA0B922DFCC3A00A77CC2 /* Chat.m */; };
 		E7AEA0BE22DFD8BC00A77CC2 /* GroupTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AEA0BD22DFD8BC00A77CC2 /* GroupTableViewCell.m */; };
-		EA06399222EA1E0B0070AF46 /* DetailHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA06399122EA1E0B0070AF46 /* DetailHomeViewController.m */; };
 		E7BA0FFA22EA5B2A00467978 /* PillLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = E7BA0FF922EA5B2A00467978 /* PillLabel.m */; };
+		EA06399222EA1E0B0070AF46 /* DetailHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA06399122EA1E0B0070AF46 /* DetailHomeViewController.m */; };
 		EA3A502422E0F2FC004F2FFD /* HomeFeedTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3A502222E0F2FC004F2FFD /* HomeFeedTableViewCell.m */; };
 		EA3A502522E0F2FC004F2FFD /* HomeFeedTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA3A502322E0F2FC004F2FFD /* HomeFeedTableViewCell.xib */; };
 		EA54ECE622DE3F3800D0D7A2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EA54ECE522DE3F3800D0D7A2 /* AppDelegate.m */; };
@@ -46,6 +46,10 @@
 		EA54ED2822DEE23900D0D7A2 /* FirebaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EA54ED2722DEE23900D0D7A2 /* FirebaseManager.m */; };
 		EA54ED2E22DFBA2700D0D7A2 /* APIEventsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EA54ED2D22DFBA2700D0D7A2 /* APIEventsManager.m */; };
 		EA54ED3022DFD1D800D0D7A2 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA54ED2F22DFD1D800D0D7A2 /* CoreLocation.framework */; };
+		EA7078F722EBA43100D41CD1 /* TranslatorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EA7078F622EBA43100D41CD1 /* TranslatorManager.m */; };
+		EA7078FD22ED388200D41CD1 /* LanguagesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA7078FC22ED388200D41CD1 /* LanguagesTableViewController.m */; };
+		EA70790622ED648B00D41CD1 /* PreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA70790522ED648B00D41CD1 /* PreferencesViewController.m */; };
+		EA70790922ED656B00D41CD1 /* Bubble.m in Sources */ = {isa = PBXBuildFile; fileRef = EA70790822ED656B00D41CD1 /* Bubble.m */; };
 		EA73F81322E10AE200385689 /* CategoriesCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA73F81122E10AE200385689 /* CategoriesCollectionViewCell.m */; };
 		EA73F81D22E11B4700385689 /* GroupEventsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA73F81B22E11B4700385689 /* GroupEventsTableViewCell.m */; };
 		EA73F82C22E6412A00385689 /* MainTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA73F82B22E6412A00385689 /* MainTabBarController.m */; };
@@ -117,10 +121,10 @@
 		E7AEA0B922DFCC3A00A77CC2 /* Chat.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Chat.m; sourceTree = "<group>"; };
 		E7AEA0BC22DFD8BC00A77CC2 /* GroupTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GroupTableViewCell.h; sourceTree = "<group>"; };
 		E7AEA0BD22DFD8BC00A77CC2 /* GroupTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GroupTableViewCell.m; sourceTree = "<group>"; };
-		EA06399022EA1E0B0070AF46 /* DetailHomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailHomeViewController.h; sourceTree = "<group>"; };
-		EA06399122EA1E0B0070AF46 /* DetailHomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailHomeViewController.m; sourceTree = "<group>"; };
 		E7BA0FF822EA5B2A00467978 /* PillLabel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PillLabel.h; sourceTree = "<group>"; };
 		E7BA0FF922EA5B2A00467978 /* PillLabel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PillLabel.m; sourceTree = "<group>"; };
+		EA06399022EA1E0B0070AF46 /* DetailHomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailHomeViewController.h; sourceTree = "<group>"; };
+		EA06399122EA1E0B0070AF46 /* DetailHomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailHomeViewController.m; sourceTree = "<group>"; };
 		EA3A502122E0F2FC004F2FFD /* HomeFeedTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HomeFeedTableViewCell.h; path = ProjectX/Cells/HomeFeedTableViewCell.h; sourceTree = SOURCE_ROOT; };
 		EA3A502222E0F2FC004F2FFD /* HomeFeedTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = HomeFeedTableViewCell.m; path = ProjectX/Cells/HomeFeedTableViewCell.m; sourceTree = SOURCE_ROOT; };
 		EA3A502322E0F2FC004F2FFD /* HomeFeedTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = HomeFeedTableViewCell.xib; path = ProjectX/Cells/HomeFeedTableViewCell.xib; sourceTree = SOURCE_ROOT; };
@@ -148,6 +152,14 @@
 		EA54ED2C22DFBA2700D0D7A2 /* APIEventsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APIEventsManager.h; sourceTree = "<group>"; };
 		EA54ED2D22DFBA2700D0D7A2 /* APIEventsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APIEventsManager.m; sourceTree = "<group>"; };
 		EA54ED2F22DFD1D800D0D7A2 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		EA7078F522EBA43100D41CD1 /* TranslatorManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TranslatorManager.h; sourceTree = "<group>"; };
+		EA7078F622EBA43100D41CD1 /* TranslatorManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TranslatorManager.m; sourceTree = "<group>"; };
+		EA7078FB22ED388200D41CD1 /* LanguagesTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LanguagesTableViewController.h; sourceTree = "<group>"; };
+		EA7078FC22ED388200D41CD1 /* LanguagesTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LanguagesTableViewController.m; sourceTree = "<group>"; };
+		EA70790422ED648B00D41CD1 /* PreferencesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PreferencesViewController.h; sourceTree = "<group>"; };
+		EA70790522ED648B00D41CD1 /* PreferencesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PreferencesViewController.m; sourceTree = "<group>"; };
+		EA70790722ED656B00D41CD1 /* Bubble.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Bubble.h; sourceTree = "<group>"; };
+		EA70790822ED656B00D41CD1 /* Bubble.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Bubble.m; sourceTree = "<group>"; };
 		EA73F81022E10AE200385689 /* CategoriesCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CategoriesCollectionViewCell.h; sourceTree = "<group>"; };
 		EA73F81122E10AE200385689 /* CategoriesCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CategoriesCollectionViewCell.m; sourceTree = "<group>"; };
 		EA73F81A22E11B4700385689 /* GroupEventsTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GroupEventsTableViewCell.h; sourceTree = "<group>"; };
@@ -219,6 +231,10 @@
 				EA06399022EA1E0B0070AF46 /* DetailHomeViewController.h */,
 				EA06399122EA1E0B0070AF46 /* DetailHomeViewController.m */,
 				EA73F82A22E6412A00385689 /* MainTabBarController.h */,
+				EA7078FB22ED388200D41CD1 /* LanguagesTableViewController.h */,
+				EA7078FC22ED388200D41CD1 /* LanguagesTableViewController.m */,
+				EA70790422ED648B00D41CD1 /* PreferencesViewController.h */,
+				EA70790522ED648B00D41CD1 /* PreferencesViewController.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -366,6 +382,8 @@
 				EA73F84022E6B96500385689 /* BubbleView.m */,
 				EA949E7822EA5BF200263E1B /* MapAnnotation.h */,
 				EA949E7922EA5BF200263E1B /* MapAnnotation.m */,
+				EA70790722ED656B00D41CD1 /* Bubble.h */,
+				EA70790822ED656B00D41CD1 /* Bubble.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -373,6 +391,8 @@
 		EA73F82D22E6417B00385689 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				EA7078F522EBA43100D41CD1 /* TranslatorManager.h */,
+				EA7078F622EBA43100D41CD1 /* TranslatorManager.m */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -609,17 +629,21 @@
 				E7AEA0BE22DFD8BC00A77CC2 /* GroupTableViewCell.m in Sources */,
 				EA54ED2822DEE23900D0D7A2 /* FirebaseManager.m in Sources */,
 				E7AEA0AF22DE8CE800A77CC2 /* ChooseEventsViewController.m in Sources */,
+				EA70790922ED656B00D41CD1 /* Bubble.m in Sources */,
 				E7AEA0AC22DE8C8A00A77CC2 /* GroupsViewController.m in Sources */,
 				E77FCBFE22E0DFF100A4E3AC /* EventAPI.m in Sources */,
+				EA7078FD22ED388200D41CD1 /* LanguagesTableViewController.m in Sources */,
 				EA54ED2E22DFBA2700D0D7A2 /* APIEventsManager.m in Sources */,
 				EA949E7A22EA5BF200263E1B /* MapAnnotation.m in Sources */,
 				EA73F81D22E11B4700385689 /* GroupEventsTableViewCell.m in Sources */,
 				EA73F83D22E6848D00385689 /* MessageBubble.m in Sources */,
 				EA54ECE622DE3F3800D0D7A2 /* AppDelegate.m in Sources */,
 				E7AEA0A922DE8C4400A77CC2 /* EventsFeedViewController.m in Sources */,
+				EA70790622ED648B00D41CD1 /* PreferencesViewController.m in Sources */,
 				E76311C022E2746400A1B674 /* topCollectionViewCell.m in Sources */,
 				E76311BB22E241BB00A1B674 /* Message.m in Sources */,
 				EA3A502422E0F2FC004F2FFD /* HomeFeedTableViewCell.m in Sources */,
+				EA7078F722EBA43100D41CD1 /* TranslatorManager.m in Sources */,
 				EA54ECF722DE3F3900D0D7A2 /* main.m in Sources */,
 				EA54ED2122DE819900D0D7A2 /* User.m in Sources */,
 				EA73F82C22E6412A00385689 /* MainTabBarController.m in Sources */,

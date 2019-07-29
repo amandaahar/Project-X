@@ -119,12 +119,21 @@
                 [self displayAlert:@"Error" :error.localizedDescription];
             }else
             {
+                NSString * language = [[NSLocale preferredLanguages] firstObject];
+                if([language containsString:@"-"])
+                {
+                    NSRange range = [language rangeOfString:@"-"];
+                    NSString *newString = [language substringToIndex:range.location];
+                    language = newString;
+                }
                 NSLog(@"User registered successfully");
                 [[[self.db collectionWithPath:@"Users"] documentWithPath:FIRAuth.auth.currentUser.uid] setData:@{
                   @"firstName": self.usernameField.text,
                   @"email": self.emailField.text,
                   @"lastName" : self.lastName.text,
                   @"username" : self.username.text,
+                  @"lan": language,
+                  @"bio" : @"",
                   @"profileImage" : @"https://profiles.utdallas.edu/img/default.png"
                   } completion:^(NSError * _Nullable error) {
                      if (error != nil)

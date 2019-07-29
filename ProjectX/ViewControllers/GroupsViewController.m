@@ -84,6 +84,7 @@
     MessagesViewController *messagesViewController = [segue destinationViewController];
     
     messagesViewController.eventID = eventToPass.eventID;
+    [[messagesViewController navigationItem] setTitle:eventToPass.name];
     
 }
 
@@ -106,6 +107,12 @@
     }
     
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [self performSegueWithIdentifier:@"chat" sender:self];
 }
 
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
