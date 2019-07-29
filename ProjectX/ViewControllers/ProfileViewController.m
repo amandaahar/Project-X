@@ -30,9 +30,6 @@
     [super viewDidLoad];
     
     [self setup];
-    
-    
-    
 }
 
 - (void) setup {
@@ -44,10 +41,11 @@
         } else
         {
             self.currentUser = user;
-            //NSLog(@"%@",user.username);
+            NSLog(@"current user %@",user.username);
             
             self.nameText.text = [[self.currentUser.firstName stringByAppendingString:@" "] stringByAppendingString:self.currentUser.lastName];
             self.username.text = self.currentUser.username;
+            self.bioText.text = self.currentUser.bio;
             [self setImage:self.currentUser.profileImageURL];
             
             for (NSString *category in self.currentUser.preferences) {
@@ -72,18 +70,41 @@
     [self.profilePictureImage setImageWithURL:imageURL];
 }
 
+#pragma mark - Log Out
+
 - (IBAction)logOut:(id)sender {
+    
     NSError *signOutError;
     BOOL status = [[FIRAuth auth] signOut:&signOutError];
     if (!status) {
         NSLog(@"Error signing out: %@", signOutError);
         return;
     }else{
-        AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
-        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        LogInViewController *loginViewController = [storyboard instantiateViewControllerWithIdentifier:@"LogIn"];
-        appDelegate.window.rootViewController = loginViewController;
-        NSLog(@"Successfully Signout");
+    
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Log Out"
+                                                                   message:@"Are you sure you want to log out?"
+                                                            preferredStyle:(UIAlertControllerStyleAlert)];
+    
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel"
+                                                           style:UIAlertActionStyleCancel
+                                                         handler:^(UIAlertAction * _Nonnull action) {
+                                                             }];
+        
+        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK"
+                                                       style:UIAlertActionStyleDefault
+                                                       handler:^(UIAlertAction * _Nonnull action) {
+                                                             AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+                                                             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+                                                             LogInViewController *loginViewController = [storyboard instantiateViewControllerWithIdentifier:@"LogIn"];
+                                                             appDelegate.window.rootViewController = loginViewController;
+                                                             NSLog(@"Successfully Signout");
+                                                         }];
+        [alert addAction:cancelAction];
+        [alert addAction:okAction];
+        
+        [self presentViewController:alert animated:YES completion:^{
+        // optional code for what happens after the alert controller has finished presenting
+        }];
     }
     
 }

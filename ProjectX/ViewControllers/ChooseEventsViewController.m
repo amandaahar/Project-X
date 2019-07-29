@@ -17,39 +17,45 @@
 @import Firebase;
 
 @interface ChooseEventsViewController () <CLLocationManagerDelegate, CreateEventControllerDelegate, MKMapViewDelegate>
+
 @property (weak, nonatomic) IBOutlet UILabel *eventDate;
 @property (weak, nonatomic) IBOutlet UILabel *numAttendees;
 @property (weak, nonatomic) IBOutlet UILabel *eventName;
 @property (weak, nonatomic) IBOutlet UILabel *Eventdescription;
-@property (nonatomic, readwrite) FIRFirestore *db;
+@property (weak, nonatomic) IBOutlet UILabel *categoryIndex;
 @property (weak, nonatomic) IBOutlet UIView *card;
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
+@property (weak, nonatomic) IBOutlet UIImageView *eventPhoto;
+@property (weak, nonatomic) IBOutlet UILabel *eventLocation;
 @property (strong, nonatomic) NSMutableArray *eventArray;
 @property (strong, nonatomic) NSDate *dateNSEvent;
 @property (strong, nonatomic) NSString *eventID;
-@property (strong, nonatomic) FIRDocumentReference *eventIDRef;
-@property (weak, nonatomic) IBOutlet UIImageView *eventPhoto;
 @property (strong, nonatomic) NSString *annotationID;
-
+@property (strong, nonatomic) FIRDocumentReference *eventIDRef;
+@property (nonatomic, readwrite) FIRFirestore *db;
 - (IBAction)CreateEventAction:(id)sender;
 
 @end
 
 @implementation ChooseEventsViewController
 
-
 - (void)viewDidLoad {
     
     [super viewDidLoad];
     [self fetchEvents];
     [self fetchImage];
+    
     self.db = [FIRFirestore firestore];
     self.mapView.delegate = self;
     self.annotationID = @"Pin";
     [self.mapView registerClass:[MKAnnotationView class] forAnnotationViewWithReuseIdentifier:self.annotationID];
     self.eventArray = [NSMutableArray new];
     
+    [self movingPreview];
+    
 }
+
+#pragma mark - Fetching Events
 
 - (void) fetchEvents {
     
@@ -59,6 +65,21 @@
             NSLog(@"Error showing documents: %@", error);
         }else
         {
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"How to choose events:"
+                                                                           message:@"Swipe the event card right if you would like to attend, swipe left to see next event"
+                                                                    preferredStyle:(UIAlertControllerStyleAlert)];
+            
+            UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"I am ready!"
+                                                                   style:UIAlertActionStyleCancel
+                                                                 handler:^(UIAlertAction * _Nonnull action) {
+                                                                     //[self movingPreview];
+                                                                 }];
+            [alert addAction:cancelAction];
+            
+            [self presentViewController:alert animated:YES completion:^{
+                // optional code for what happens after the alert controller has finished presenting
+            }];
+            
             //NSLog(@"%@", event);
             Event * myEvent = event.firstObject;
             
@@ -69,6 +90,27 @@
             self.eventID = myEvent.eventID;
             [self eventDateIdentifier];
             [self eventLocationIdentifier];
+            self.eventLocation.text =
+            self.eventLocation.text = myEvent.userFriendlyLocation;
+            
+            if(myEvent.categories.intValue == 0){ //How to fix that everything is food if none available
+                self.categoryIndex.text = @"Food";
+            }
+            else if(myEvent.categories.intValue == 1){
+                self.categoryIndex.text = @"Culture";
+            }
+            else if(myEvent.categories.intValue == 2){
+                self.categoryIndex.text = @"Fitness";
+            }
+            else if(myEvent.categories.intValue == 3){
+                self.categoryIndex.text = @"Education";
+            }
+            else if(myEvent.categories.intValue == 4){
+                self.categoryIndex.text = @"Other";
+            }
+            else{
+                self.categoryIndex.text = @"Not available";
+            }
             
             self.card.layer.cornerRadius = 15;
             self.card.layer.masksToBounds = true;
@@ -94,6 +136,34 @@
     
 }
 
+- (void) movingPreview {
+    
+    [UIView animateKeyframesWithDuration:1.0 delay:1.5 options:nil animations:^{self.card.frame = CGRectMake(self.card.frame.origin.x + 200, self.card.frame.origin.y - 75, self.card.frame.size.width, self.card.frame.size.height);
+        
+    } completion:^(BOOL finished) {
+                                    [UIView animateWithDuration:1.0 delay:0.0 options:nil animations:^{self.card.frame = CGRectMake(self.card.frame.origin.x - 200, self.card.frame.origin.y + 75, self.card.frame.size.width, self.card.frame.size.height);
+                                    } completion:^(BOOL finished) {
+                                      //self.animationInProgress = YES;
+                                    }];
+                                }];
+    
+    /*
+    CABasicAnimation *animation =
+    [CABasicAnimation animationWithKeyPath:@"position"];
+    [animation setDuration:0.2];
+    [animation setRepeatCount:2];
+    [animation setAutoreverses:YES];
+    [animation setFromValue:[NSValue valueWithCGPoint:
+                             CGPointMake([self.card center].x - 20.0f, [self.card center].y)]];
+    [animation setToValue:[NSValue valueWithCGPoint:
+                           CGPointMake([self.card center].x + 20.0f, [self.card center].y)]];
+    [[self.card layer] addAnimation:animation forKey:@"position"];
+    */
+
+}
+
+#pragma mark - Choosing Events
+
 - (IBAction)didPan:(UIPanGestureRecognizer *)sender {
     
     CGPoint translation = [sender translationInView:sender.view.superview];
@@ -111,7 +181,7 @@
         }
         
         else if ((self.card.center.x) > (self.card.frame.size.width - 75)){
-            //move off to right side
+            //Move to right side
             [UIView animateWithDuration:0.3 animations:^{
                 self.card.center = CGPointMake(self.card.center.x + 200, self.card.center.y + 75);
             }];
@@ -119,7 +189,6 @@
             Event *myEvent = self.eventArray.firstObject;
             
             FIRDocumentReference *eventRef = [[self.db collectionWithPath:@"Users"] documentWithPath:FIRAuth.auth.currentUser.uid];
-            //FIRDocumentReference *eventRef = [[self.db collectionWithPath:@"Users"] documentWithPath:@"DAhDAxEMoJNpOcjkaWe1cyevl9v2"];
             [eventRef updateData:@{ @"events": [FIRFieldValue fieldValueForArrayUnion:@[myEvent.eventIDRef]] }];
             [self nextEvent];
             self.tabBarController.selectedIndex = 2;
@@ -159,11 +228,32 @@
     else {
         Event *nextEvent = self.eventArray.firstObject;
         self.numAttendees.text = [NSString stringWithFormat:@"%@", nextEvent.attendees];
+        //self.categoryIndex.text = [NSString stringWithFormat:@"%@", nextEvent.categories];
         self.eventName.text = nextEvent.name;
         self.Eventdescription.text = nextEvent.descriptionEvent;
         [self eventLocationIdentifier];
         [self eventDateIdentifier];
         [self resetCard];
+        self.eventLocation.text = nextEvent.userFriendlyLocation;
+        
+        if(nextEvent.categories.intValue == 0){
+            self.categoryIndex.text = @"Food";
+        }
+        else if(nextEvent.categories.intValue == 1){
+            self.categoryIndex.text = @"Culture";
+        }
+        else if(nextEvent.categories.intValue == 2){
+            self.categoryIndex.text = @"Fitness";
+        }
+        else if(nextEvent.categories.intValue == 3){
+            self.categoryIndex.text = @"Education";
+        }
+        else if(nextEvent.categories.intValue == 4){
+            self.categoryIndex.text = @"Other";
+        }
+        else{
+            self.categoryIndex.text = @" ";
+        }
     }
 }
 
@@ -175,36 +265,68 @@
     
 }
 
-- (void) eventLocationIdentifier {
-    
-    Event *event = self.eventArray.firstObject;
-    MKCoordinateRegion location = MKCoordinateRegionMake(CLLocationCoordinate2DMake(event.location.latitude, event.location.longitude), MKCoordinateSpanMake(0.05, 0.05));
-    [self.mapView setRegion:location animated:YES];
-    
-    
-    Map *eventAnnotation = [[Map alloc] init];
-    eventAnnotation.title = self.eventName.text;
-    eventAnnotation.placeName = [NSString stringWithFormat:@"%@", event.location];
-    eventAnnotation.coordinate = location.center;
-    
-    [self.mapView addAnnotation:eventAnnotation];
-    
-}
-
 #pragma mark MKMapViewDelegate Methods
 
 - (MKAnnotationView *)eventHomeView:(id<MKAnnotation>)annotation {
     
     MKAnnotationView *eventView = [self.mapView dequeueReusableAnnotationViewWithIdentifier:self.annotationID];
     eventView.canShowCallout = true;
-    eventView.leftCalloutAccessoryView = [[UIImageView alloc] initWithFrame:CGRectMake(0.0, 0.0, 50.0, 50.0)];
-    eventView.image = [UIImage imageNamed:@"home"];
+    eventView.leftCalloutAccessoryView = [[UIImageView alloc] initWithFrame:CGRectMake(0.0, 0.0, 25.0, 50.0)];
+    //eventView.image = [UIImage imageNamed:@"home"];
+    
+    Event *event = self.eventArray.firstObject;
+    
+    if(event.categories.intValue == 0){
+        //self.categoryIndex.text = @"Food";
+        eventView.image = [UIImage imageNamed:@"baseline_local_dining_black_18pt"];
+    }
+    else if(event.categories.intValue == 1){
+       // self.categoryIndex.text = @"Culture";
+        eventView.image = [UIImage imageNamed:@"baseline_color_lens_black_18pt"];
+    }
+    else if(event.categories.intValue == 2){
+        //self.categoryIndex.text = @"Fitness";
+        eventView.image = [UIImage imageNamed:@"baseline_directions_run_black_18pt"];
+    }
+    else if(event.categories.intValue == 3){
+        //self.categoryIndex.text = @"Education";
+        eventView.image = [UIImage imageNamed:@"baseline_local_library_black_18pt"];
+    }
+    else if(event.categories.intValue == 4){
+        //self.categoryIndex.text = @"Other";
+        eventView.image = [UIImage imageNamed:@"baseline_event_black_18pt"];
+    }
+    else{
+        //self.categoryIndex.text = @" ";
+        eventView.image = [UIImage imageNamed:@"home"];
+    }
+    
     return eventView;
     
 }
 
 - (nullable MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation {
-    return [self eventHomeView:annotation];
+   return [self eventHomeView:annotation];
+}
+
+#pragma mark - Creating Event
+
+- (void) eventLocationIdentifier {
+    
+    Event *event = self.eventArray.firstObject;
+    
+    MKCoordinateRegion location = MKCoordinateRegionMake(CLLocationCoordinate2DMake(event.location.latitude, event.location.longitude), MKCoordinateSpanMake(0.05, 0.05));
+    [self.mapView setRegion:location animated:YES];
+    
+    Map *eventAnnotation = [[Map alloc] init];
+    eventAnnotation.title = self.eventName.text;
+    eventAnnotation.placeName = self.eventLocation.text;
+    //eventAnnotation.placeName = @"testing location";
+    //eventAnnotation.placeName = [NSString stringWithFormat:@"%@", event.location];
+    eventAnnotation.coordinate = location.center;
+    
+    [self.mapView addAnnotation:eventAnnotation];
+    
 }
 
 - (void) eventDateIdentifier {
@@ -220,18 +342,17 @@
 }
 
 - (void)didCreate:(Event *)newEvent {
+    
     [self.eventArray addObject:newEvent];
-    //[self resetCard];
     [self fetchEvents];
-//    NSLog(@"printing the new event: %@", newEvent.name);
-//    NSLog(@"printing the new event description: %@", newEvent.description);
     [self nextEvent];
     [self resetCard];
+    
 }
 
 - (IBAction)CreateEventAction:(id)sender {
     [self performSegueWithIdentifier:@"CreateEventSegue" sender:nil];
-//  [self resetCard];
+//  [self resetCard]; Should I create a card for the created event or directly make a group
 }
      
 #pragma mark - Navigation

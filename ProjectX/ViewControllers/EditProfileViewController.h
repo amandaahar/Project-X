@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "User.h"
 #import "UIImageView+AFNetworking.h"
+#import "InterestsCollectionViewCell.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

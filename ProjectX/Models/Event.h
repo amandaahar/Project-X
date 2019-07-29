@@ -22,6 +22,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSArray *users;
 @property (strong, nonatomic) NSString *eventID;
 @property (strong, nonatomic) FIRDocumentReference *eventIDRef;
+@property (strong, nonatomic) NSNumber *categories;
+@property (strong, nonatomic) NSString *userFriendlyLocation;
 
 typedef void (^EventFetcher)(Event *_Nullable event, NSError *_Nullable error);
 

@@ -14,14 +14,11 @@
 #import "User.h"
 #import "MessagesViewController.h"
 
-
-
 @interface GroupsViewController () <UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) NSMutableArray *events;
 @property (weak, nonatomic) IBOutlet UITableView *chatsTableView;
 @property (nonatomic, strong) User *currentUser;
 @property (nonatomic, readwrite) FIRFirestore *db;
-
 
 @end
 
@@ -31,11 +28,24 @@
     [super viewDidLoad];
     
     self.db = [FIRFirestore firestore];
-    
     self.chatsTableView.dataSource = self;
     self.chatsTableView.delegate = self;
     [self getChats];
     self.events = [[NSMutableArray alloc] init];
+    
+    /*
+    [[FirebaseManager sharedManager] getEventsFromUser:@"DAhDAxEMoJNpOcjkaWe1cyevl9v2"
+     completion:^(NSArray * _Nonnull events, NSError * _Nonnull error) {
+        if (error != nil) {
+            NSLog(@"Error getting evens for chat");
+        } else {
+            self.events = events;
+            [self.chatsTableView reloadData];
+        }
+    }];
+
+    [self getChats];
+     */
 }
 
 -(void) getChats {
@@ -64,7 +74,7 @@
 }
 
 
-//-(void)removeExpiredChats {
+//- (void) removeExpiredChats {
 //    for (Chat *chat in self.chats) {
 //        if(chat.isExpired) {
 //            [self.chats removeObject:chat];
@@ -86,25 +96,39 @@
     messagesViewController.eventID = eventToPass.eventID;
     [[messagesViewController navigationItem] setTitle:eventToPass.name];
     
+
 }
 
 
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
-    GroupTableViewCell *cell = [self.chatsTableView dequeueReusableCellWithIdentifier:@"GroupsCell"];
+    
+    /*
+    GroupTableViewCell *cell = [self.chatsTableView dequeueReusableCellWithIdentifier:@"cell"];
     
     Event *event = self.events[indexPath.row];
     [cell setNameOfChatText:event.name];
+     
+//    @try {
+//        if (event.pictures[0] != nil) {
+//            [cell setImage:event.pictures[0]];
+//        } else {
+//            [cell setImage:@"http://pngimg.com/uploads/earth/earth_PNG39.png"];
+//        }
+//    } @catch (NSException *exception) {
+//         [cell setImage:@"http://pngimg.com/uploads/earth/earth_PNG39.png"];
+//    }
+//    [self.chatsTableView reloadData];
+   // [cell.textLabel setText:event.name];
+    return cell;
+     */
     
-            [cell setNameOfChatText:event.name];
-    @try {
-        if (event.pictures[0] != nil) {
-            [cell setImage:event.pictures[0]];
-        } else {
-            [cell setImage:@"http://pngimg.com/uploads/earth/earth_PNG39.png"];
-        }
-    } @catch (NSException *exception) {
-         [cell setImage:@"http://pngimg.com/uploads/earth/earth_PNG39.png"];
+    static NSString *GroupchatID = @"cell";
+    GroupTableViewCell *cell = [self.chatsTableView dequeueReusableCellWithIdentifier:GroupchatID];
+    if (cell == nil) {
+        cell = [[GroupTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:GroupchatID];
     }
+    Event *event = self.events[indexPath.row];
+    [cell setNameOfChatText:event.name];
     
     return cell;
 }
@@ -119,5 +143,36 @@
     return self.events.count;
 }
 
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        
+        NSMutableArray *copyEvents = self.events.mutableCopy;
+        [copyEvents removeObjectAtIndex:indexPath.row];
+        
+        NSMutableArray *references = [NSMutableArray new];
+        for (Event *event in copyEvents) {
+            FIRDocumentReference *eventRef = [[self.db collectionWithPath:@"Event"] documentWithPath: event.eventID];
+            [references addObject:eventRef];
+        }
+        
+        FIRDocumentReference *deleteRef = [[self.db collectionWithPath:@"Users"] documentWithPath:FIRAuth.auth.currentUser.uid];
+        [deleteRef updateData:@{ @"events":references} completion:^(NSError * _Nullable error) {
+            if (error != nil) {
+                NSLog(@"Error deleting document: %@", error);
+            } else {
+                NSLog(@"Document successfully deleted");
+            }
+        }];
+    }
+    
+}
+
+#pragma mark - UITableView Delegate
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    return UITableViewCellEditingStyleDelete;
+}
 
 @end
