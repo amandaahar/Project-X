@@ -12,6 +12,7 @@
 #import "../Cells/MessageBubble.h"
 #import "../Helpers/TranslatorManager.h"
 #import "../Models/User.h"
+#import "DetailEventViewController.h"
 @interface MessagesViewController () <UITableViewDelegate, UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITextField *messageText;
 @property (weak, nonatomic) IBOutlet UIButton *sendButton;
@@ -28,6 +29,26 @@
 NSString * identifier = @"bubble";
 NSLayoutConstraint *bottom;
 
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    [[FirebaseManager sharedManager] getCurrentUser:^(User * _Nonnull user, NSError * _Nonnull error) {
+        if(error == nil)
+        {
+            self.user = user;
+            UIBarButtonItem *lan = [[UIBarButtonItem alloc] initWithTitle:[@"Language: " stringByAppendingString:self.user.language] style:(UIBarButtonItemStylePlain) target:self action:@selector(chooseLanguage:)];
+            UIBarButtonItem *det = [[UIBarButtonItem alloc] initWithTitle:@"Details" style:(UIBarButtonItemStylePlain) target:self action:@selector(detailsSegue:)];
+            [[self navigationItem] setRightBarButtonItems:@[lan,det]];
+        }
+    }];
+    
+    NSString * language = [[NSLocale preferredLanguages] firstObject];
+    NSLog(@"%@",language);
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(handleKeyboardNotifications:) name:UIKeyboardWillShowNotification object:nil];
+    bottom = [NSLayoutConstraint constraintWithItem:self.containerView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1 constant:0];
+    [self.view addConstraint:bottom];
+    
+}
+
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
@@ -37,10 +58,6 @@ NSLayoutConstraint *bottom;
     self.messagesTableView.allowsSelection = NO;
     self.idCurrentUser = FIRAuth.auth.currentUser.uid;
     [self.messagesTableView registerNib:[UINib nibWithNibName:@"MessageBubble" bundle:nil] forCellReuseIdentifier:identifier];
-
-    
-   
-    
     
     [[FirebaseManager sharedManager] getMessagesFromEvent:self.eventID completion:^(NSArray * _Nonnull messages, NSError * _Nonnull error) {
         if (error) {
@@ -59,29 +76,14 @@ NSLayoutConstraint *bottom;
 
 }
 
--(void) chooseLanguage:(NSString *) text
-{
+-(void) chooseLanguage:(NSString *) text {
+    
     [self performSegueWithIdentifier:@"languages" sender:self];
-}
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    [[FirebaseManager sharedManager] getCurrentUser:^(User * _Nonnull user, NSError * _Nonnull error) {
-        if(error == nil)
-        {
-            self.user = user;
-            [[self navigationItem] setRightBarButtonItem:[[UIBarButtonItem alloc] initWithTitle:[@"Language: " stringByAppendingString:self.user.language] style:(UIBarButtonItemStylePlain) target:self action:@selector(chooseLanguage:)]];
-        }
-    }];
-    NSString * language = [[NSLocale preferredLanguages] firstObject];
-    NSLog(@"%@",language);
-    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(handleKeyboardNotifications:) name:UIKeyboardWillShowNotification object:nil];
-    bottom = [NSLayoutConstraint constraintWithItem:self.containerView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1 constant:0];
-    [self.view addConstraint:bottom];
+    
 }
 
 
-- (void)handleKeyboardNotifications:(NSNotification*)notification
-{
+- (void)handleKeyboardNotifications:(NSNotification*)notification {
     CGRect keyboardFrame = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
     
     for (NSLayoutConstraint * constraint in self.view.constraints)
@@ -89,7 +91,6 @@ NSLayoutConstraint *bottom;
         if([constraint.identifier isEqualToString:@"bottom"])
         {
            bottom.constant = -keyboardFrame.size.height;
-            
         }
     }
     [self.view layoutIfNeeded];
@@ -110,11 +111,8 @@ NSLayoutConstraint *bottom;
             
         }];
     }
-    
-    
+
 }
-
-
 
 #pragma mark - Navigation
 
@@ -127,8 +125,21 @@ NSLayoutConstraint *bottom;
         LanguagesTableViewController * vc = [segue destinationViewController];
         vc.previousLanguage = self.user.language;
     }
+    
+    else if([segue.identifier isEqualToString:@"eventDetails"])
+    {
+        DetailEventViewController * detailsVC = [segue destinationViewController];
+        detailsVC.title = self.title;
+        
+    }
+    
 }
 
+- (void) detailsSegue: (NSString *) text {
+    
+    [self performSegueWithIdentifier:@"eventDetails" sender:self];
+    
+}
 
 /*
 -(void)getMessages {
@@ -180,8 +191,6 @@ NSLayoutConstraint *bottom;
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.messagesInChat.count;
 }
-//
-
 
 @end
 
