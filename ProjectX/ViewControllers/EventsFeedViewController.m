@@ -96,7 +96,7 @@ CLLocation *currentLocation;
         if(error == nil)
         {
             self.categories = categories;
-            //[self getEventsFromCategories];
+            [self getEventsFromCategories];
         }
     }];
 }

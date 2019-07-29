@@ -150,18 +150,16 @@ UIDatePicker *datePicker;
  FIRDocumentReference *eventRef = [[self.db collectionWithPath:@"Event"] documentWithPath:self.currentUser.userID];
  [userRef updateData:
  @{
- @"firstName": self.firstNameText.text,
- @"lastName": self.lastNameText.text,
- @"bio": self.bioText.text,
- @"preferences": self.usersInterests,
- @"profileImage": self.profileImageString,
- } completion:^(NSError * _Nullable error) {
- if (error != nil) {
- NSLog(@"Error updating document: %@", error);
- } else {
- NSLog(@"Docuement updated from edit profile");
- }
- }];
+    @"firstName": self.firstNameText.text,
+    @"lastName": self.lastNameText.text,
+    @"eventImage": self.eventImageString,
+    } completion:^(NSError * _Nullable error) {
+        if (error != nil) {
+            NSLog(@"Error updating document: %@", error);
+        } else {
+            NSLog(@"Docuement updated from edit profile");
+        }
+    }];
  }
  */
 

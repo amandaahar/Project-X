@@ -278,23 +278,23 @@
     
     if(event.categories.intValue == 0){
         //self.categoryIndex.text = @"Food";
-        eventView.image = [UIImage imageNamed:@"untitled"];
+        eventView.image = [UIImage imageNamed:@"baseline_local_dining_black_18pt"];
     }
     else if(event.categories.intValue == 1){
        // self.categoryIndex.text = @"Culture";
-        eventView.image = [UIImage imageNamed:@"account"];
+        eventView.image = [UIImage imageNamed:@"baseline_color_lens_black_18pt"];
     }
     else if(event.categories.intValue == 2){
         //self.categoryIndex.text = @"Fitness";
-        eventView.image = [UIImage imageNamed:@"chat"];
+        eventView.image = [UIImage imageNamed:@"baseline_directions_run_black_18pt"];
     }
     else if(event.categories.intValue == 3){
         //self.categoryIndex.text = @"Education";
-        eventView.image = [UIImage imageNamed:@"blue_book_3x"];
+        eventView.image = [UIImage imageNamed:@"baseline_local_library_black_18pt"];
     }
     else if(event.categories.intValue == 4){
         //self.categoryIndex.text = @"Other";
-        eventView.image = [UIImage imageNamed:@"map"];
+        eventView.image = [UIImage imageNamed:@"baseline_event_black_18pt"];
     }
     else{
         //self.categoryIndex.text = @" ";

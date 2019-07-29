@@ -11,6 +11,7 @@
 		0E496C0622E1345200DEF38C /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E496C0522E1345200DEF38C /* MapKit.framework */; };
 		0E496C0922E285AA00DEF38C /* CreateEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E496C0822E285AA00DEF38C /* CreateEventViewController.m */; };
 		0E496C0C22E793A100DEF38C /* Map.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E496C0B22E793A100DEF38C /* Map.m */; };
+		0E496C0F22EE5AE200DEF38C /* DetailEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E496C0E22EE5AE200DEF38C /* DetailEventViewController.m */; };
 		0ECF088922DE791300F5A8AA /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ECF088822DE791300F5A8AA /* SignUpViewController.m */; };
 		0ECF088D22DE792900F5A8AA /* LogInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ECF088C22DE792900F5A8AA /* LogInViewController.m */; };
 		7A4BD0CE86A659CBEE639CD6 /* Pods_ProjectXTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70CEB876BE4019117E81D49A /* Pods_ProjectXTests.framework */; };
@@ -79,6 +80,8 @@
 		0E496C0822E285AA00DEF38C /* CreateEventViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CreateEventViewController.m; sourceTree = "<group>"; };
 		0E496C0A22E793A100DEF38C /* Map.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Map.h; sourceTree = "<group>"; };
 		0E496C0B22E793A100DEF38C /* Map.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Map.m; sourceTree = "<group>"; };
+		0E496C0D22EE5AE200DEF38C /* DetailEventViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailEventViewController.h; sourceTree = "<group>"; };
+		0E496C0E22EE5AE200DEF38C /* DetailEventViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailEventViewController.m; sourceTree = "<group>"; };
 		0ECF088722DE791300F5A8AA /* SignUpViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SignUpViewController.h; sourceTree = "<group>"; };
 		0ECF088822DE791300F5A8AA /* SignUpViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SignUpViewController.m; sourceTree = "<group>"; };
 		0ECF088B22DE792900F5A8AA /* LogInViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LogInViewController.h; sourceTree = "<group>"; };
@@ -222,6 +225,8 @@
 				EA06399022EA1E0B0070AF46 /* DetailHomeViewController.h */,
 				EA06399122EA1E0B0070AF46 /* DetailHomeViewController.m */,
 				EA73F82A22E6412A00385689 /* MainTabBarController.h */,
+				0E496C0D22EE5AE200DEF38C /* DetailEventViewController.h */,
+				0E496C0E22EE5AE200DEF38C /* DetailEventViewController.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -611,6 +616,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0E496C0F22EE5AE200DEF38C /* DetailEventViewController.m in Sources */,
 				E7AEA0BE22DFD8BC00A77CC2 /* GroupTableViewCell.m in Sources */,
 				EA54ED2822DEE23900D0D7A2 /* FirebaseManager.m in Sources */,
 				E7AEA0AF22DE8CE800A77CC2 /* ChooseEventsViewController.m in Sources */,
