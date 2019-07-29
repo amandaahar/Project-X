@@ -830,13 +830,11 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-
                                             <outlet property="groupImage" destination="uNQ-iz-tmj" id="vMQ-1G-TTk"/>
                                             <outlet property="lastMessageUser" destination="iYR-hw-nTa" id="Peq-e7-mQX"/>
                                             <outlet property="nameOfChat" destination="ffU-z1-Bfu" id="T25-88-w9X"/>
                                             <outlet property="previewOfLatestMessage" destination="y1y-L0-f9B" id="zHU-6A-JS0"/>
                                             <outlet property="timeOfLastMessage" destination="hEq-Wj-tci" id="Rdu-5K-yAE"/>
-                                            <segue destination="kQF-6t-QBu" kind="show" id="VK7-Ti-Ata"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -1053,7 +1051,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XTa-0T-pfY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3268" y="2478.7106446776615"/>
+            <point key="canvasLocation" x="4414" y="1614"/>
         </scene>
         <!--Languages-->
         <scene sceneID="G3Y-JP-tXt">
@@ -1097,7 +1095,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a1H-OH-Rys" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3292" y="2474.2128935532237"/>
+            <point key="canvasLocation" x="3874" y="2753"/>
         </scene>
         <!--Groups-->
         <scene sceneID="Lfr-Gl-wsA">
@@ -1163,14 +1161,15 @@
                         <viewLayoutGuide key="safeArea" id="V1W-q6-egF"/>
                     </view>
                     <navigationItem key="navigationItem" title="Profile" id="HfX-QS-zoY">
-                        <barButtonItem key="leftBarButtonItem" title="Log out" id="GNm-fI-gnh">
-                            <connections>
-                                <action selector="logOut:" destination="m3G-l6-Mez" id="cSK-Ai-L2r"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="mTd-8P-XWv">
+                        <barButtonItem key="leftBarButtonItem" systemItem="edit" id="mTd-8P-XWv">
                             <connections>
                                 <action selector="didTapEditProfile:" destination="m3G-l6-Mez" id="kQ4-kg-dMo"/>
+                                <segue destination="AB5-tH-Yf7" kind="show" id="e2f-qh-wmD"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Log out" id="GNm-fI-gnh">
+                            <connections>
+                                <action selector="logOut:" destination="m3G-l6-Mez" id="cSK-Ai-L2r"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -1180,7 +1179,6 @@
                         <outlet property="preferences" destination="MTp-Kr-3Nk" id="1eQ-6U-Shu"/>
                         <outlet property="profilePictureImage" destination="pix-av-Cx4" id="I4e-Uv-z0C"/>
                         <outlet property="username" destination="o6L-wR-HZT" id="7mh-kM-h8z"/>
-                        <segue destination="AB5-tH-Yf7" kind="show" identifier="editProfileSegue" id="BU5-6j-K1t"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OH2-fc-VoD" userLabel="First Responder" sceneMemberID="firstResponder"/>

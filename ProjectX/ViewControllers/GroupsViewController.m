@@ -18,6 +18,7 @@
 @property (nonatomic, strong) NSMutableArray *events;
 @property (weak, nonatomic) IBOutlet UITableView *chatsTableView;
 @property (nonatomic, strong) User *currentUser;
+@property (nonatomic, strong) Event *eventToPass;
 @property (nonatomic, readwrite) FIRFirestore *db;
 
 @end
@@ -88,13 +89,10 @@
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    UITableViewCell *tappedCell = sender;
-    NSIndexPath *indexPath = [self.chatsTableView indexPathForCell:tappedCell];
-    Event *eventToPass = self.events[indexPath.row];
     MessagesViewController *messagesViewController = [segue destinationViewController];
     
-    messagesViewController.eventID = eventToPass.eventID;
-    [[messagesViewController navigationItem] setTitle:eventToPass.name];
+    messagesViewController.eventID = self.eventToPass.eventID;
+    [[messagesViewController navigationItem] setTitle:self.eventToPass.name];
     
 
 }
@@ -136,6 +134,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    self.eventToPass = self.events[indexPath.row];
     [self performSegueWithIdentifier:@"chat" sender:self];
 }
 

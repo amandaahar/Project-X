@@ -30,6 +30,8 @@
 
 @implementation EditProfileViewController
 UIToolbar *interestsToolBar;
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     

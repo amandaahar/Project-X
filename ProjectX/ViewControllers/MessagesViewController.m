@@ -42,7 +42,7 @@ NSLayoutConstraint *bottom;
    
     
     
-    [[FirebaseManager sharedManager] getMessagesFromEvent:@"8DEd1ZIlomSBf6FAqNUG" completion:^(NSArray * _Nonnull messages, NSError * _Nonnull error) {
+    [[FirebaseManager sharedManager] getMessagesFromEvent:self.eventID completion:^(NSArray * _Nonnull messages, NSError * _Nonnull error) {
         if (error) {
             NSLog(@"error getting messages");
         } else  {

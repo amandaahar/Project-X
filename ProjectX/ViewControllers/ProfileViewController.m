@@ -26,6 +26,10 @@
 
 @implementation ProfileViewController
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self.tabBarController.tabBar setHidden: NO];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -60,10 +64,7 @@
     }];
     
 }
-- (IBAction)didTapEditProfile:(id)sender {
-    [self performSegueWithIdentifier:@"editProfileSegue" sender:nil];
-    
-}
+
 
 -(void) setImage: (NSString *) photoURL {
     NSURL *imageURL = [NSURL URLWithString:photoURL];
