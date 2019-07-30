@@ -16,7 +16,7 @@ static NSString * const baseURLString = @"https://translation.googleapis.com/lan
 static NSString * const publicToken = @"AIzaSyABntoESCxzEqLShs-KQV9pRwdIesmnQDI";
 
 
-#pragma mark Singleton Methods
+#pragma mark - Singleton Methods
 + (id)sharedManager {
     static TranslatorManager *sharedMyManager = nil;
     static dispatch_once_t onceToken;
@@ -33,16 +33,26 @@ static NSString * const publicToken = @"AIzaSyABntoESCxzEqLShs-KQV9pRwdIesmnQDI"
     return self;
 }
 
-- (void)dealloc {
-    
-}
+/**
+ Translate Tezt In Language
+ This methos receives a source Language, a target language and a text to be translated and its going to return a completion block with the text translated in the requested language.
+ 
+ Parameters:
+ -sourceLangauge:
+ -tagetLanguage:
+ -text
+ 
+ Returns:
+ Completion Block with the text translated or a NSError.
+ */
 
-- (void) translateTextInLanguage:(NSString *) sourceLanguage : (NSString *) targetLanguage : (NSString *) text completion
-                                :(void(^)(NSString *translated, NSError *error))completion
+- (void) translateTextInLanguage:(NSString *) sourceLanguage
+                                :(NSString *) targetLanguage
+                                :(NSString *) text
+completion :(void(^)(NSString *translated, NSError *error)) completion
 {
     AFHTTPSessionManager *manager =
     [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:baseURLString]];
-    //[manager.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@", publicToken] forHTTPHeaderField:@"Authorization"];
     [manager GET:@""
       parameters:@{@"key" : publicToken, @"format" : @"text", @"source": sourceLanguage, @"target" : targetLanguage, @"q" : text}
         progress:nil
@@ -57,12 +67,23 @@ static NSString * const publicToken = @"AIzaSyABntoESCxzEqLShs-KQV9pRwdIesmnQDI"
          }];
 }
 
+
+/**
+ DetectLanguage
+ This method is going to detect the language of a text.
+ 
+ Parameters:
+ -Text
+ 
+ Return:
+ -Completion block with a NSDictionary with the result or a NSError.
+ 
+ */
 - (void) detectLanguage:(NSString *) text completion
                                 :(void(^)(NSString *language, NSError *error))completion
 {
     AFHTTPSessionManager *manager =
     [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:baseURLString]];
-    //[manager.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@", publicToken] forHTTPHeaderField:@"Authorization"];
     [manager GET:@"detect"
       parameters:@{@"key" : publicToken, @"q" : text}
         progress:nil
@@ -77,7 +98,21 @@ static NSString * const publicToken = @"AIzaSyABntoESCxzEqLShs-KQV9pRwdIesmnQDI"
              completion(nil, error);
          }];
 }
-- (void) getLanguages:(NSString * ) previousLanguage completion:(void(^)(NSArray *language, NSError *error))completion
+
+
+/**
+ getLanguages
+ This methos looks for the available languages in the API, the result is going to be in the preovious language.
+ 
+ Parameters:
+ -previousLanguage:
+ 
+ Return:
+ Completion block with a NSArray with all the available languages or a NSError
+ 
+ */
+- (void) getLanguages:(NSString * ) previousLanguage completion
+                     :(void(^)(NSArray *language, NSError *error))completion
 {
     AFHTTPSessionManager *manager =
     [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:baseURLString]];
@@ -89,7 +124,6 @@ static NSString * const publicToken = @"AIzaSyABntoESCxzEqLShs-KQV9pRwdIesmnQDI"
              
          }
          failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-             // NSLog(@"Failure: %@", error);
              NSLog(@"Failure: %@", error);
              completion(nil, error);
          }];

@@ -10,6 +10,7 @@
 #import "User.h"
 #import "UIImageView+AFNetworking.h"
 #import "InterestsCollectionViewCell.h"
+#import "APIEventsManager.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

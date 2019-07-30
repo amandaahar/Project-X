@@ -40,11 +40,13 @@
 - (void)getCurrentUser:(void(^)(User *user, NSError *error))completion
 {
     FIRDocumentReference *docRef =
-    //[[database collectionWithPath:@"Users"] documentWithPath:@"DAhDAxEMoJNpOcjkaWe1cyevl9v2"];
-    [[database collectionWithPath:@"Users"] documentWithPath:[[[FIRAuth auth] currentUser] uid]];
+    //[[database collectionWithPath:@"Users"] documentWithPath:@"IfqQikuCzrZZ8sXK1VhmyVCgyqj2"];
+        [[database collectionWithPath:@"Users"] documentWithPath:[[[FIRAuth auth] currentUser] uid]];
     [docRef addSnapshotListener:^(FIRDocumentSnapshot *snapshot, NSError *error) {
         if (snapshot.exists) {
+            NSLog(@"user data%@", snapshot.data);
             User * newUser = [[User alloc] initWithDictionary:snapshot.data];
+            
             completion(newUser, nil);
         } else {
             completion(nil, error);
@@ -127,5 +129,10 @@
     [[[database collectionWithPath:@"Users"] documentWithPath:FIRAuth.auth.currentUser.uid] updateData:@{@"lan": newLanguage}];
 }
 
+
+-(void) setNewPreferences : (NSArray *) preferences
+{
+    [[[database collectionWithPath:@"Users"] documentWithPath:FIRAuth.auth.currentUser.uid] updateData:@{@"preferences" : preferences}];
+}
 
 @end

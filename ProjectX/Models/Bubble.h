@@ -14,8 +14,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)initWithDic:(NSDictionary *)dic;
 
-@property (nonatomic, assign) NSInteger index;
+@property (nonatomic, assign) NSNumber *index;
 @property (nonatomic, strong) NSString *name;
+
 + (NSMutableArray *)bubblesWithArray:(NSArray *)dictionaries;
 
 @end

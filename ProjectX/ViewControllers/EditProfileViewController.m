@@ -20,11 +20,14 @@
 @property (weak, nonatomic) IBOutlet UICollectionView *interestsCollectionView;
 @property (strong, nonatomic) NSMutableArray *interestsCategories;
 @property (strong, nonatomic) NSMutableArray *usersInterests;
+@property (strong, nonatomic) NSMutableArray *pickerViewRowTitles;
 @property (weak, nonatomic) NSString *selectedRowText;
+@property (weak, nonatomic) NSDictionary *selectedRowDictRef;
 @property (strong, nonatomic) UIPickerView *interestsPicker;
 @property (nonatomic, strong) User *currentUser;
 @property (nonatomic, readwrite) FIRFirestore *db;
 @property (weak, nonatomic) NSString *profileImageString;
+@property (weak, nonatomic) IBOutlet UIButton *addInterestsButton;
 
 @end
 
@@ -59,16 +62,28 @@ UIToolbar *interestsToolBar;
 
     self.interests.inputView = self.interestsPicker;
     self.interests.inputAccessoryView = interestsToolBar;
-    self.interestsCategories = [[NSMutableArray alloc] initWithObjects:@"hiking", @"fishing", @"music", nil];
+    [self fetchCategories];
+    // self.interestsCategories = [[NSMutableArray alloc] initWithObjects:@"hiking", @"fishing", @"music", nil];
     
-    UIBarButtonItem *space=[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    UIBarButtonItem *space = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     [interestsToolBar setItems:[NSArray arrayWithObjects:space,doneButton, nil]];
     [self.interests setInputAccessoryView:interestsToolBar];
 
 }
 
+-(void) fetchCategories {
+    [[APIEventsManager sharedManager] getCategories:^(NSArray * _Nonnull categories, NSError * _Nonnull error) {
+        if(error == nil)
+        {
+            self.interestsCategories = categories;
+            // for (NSDictionary * )
+            //[self getEventsFromCategories];
+        }
+    }];
+}
+
 - (IBAction)didTapSave:(id)sender {
-    [self imageStorage] ;
+    [self updateDocument];
 
 }
 
@@ -82,11 +97,18 @@ UIToolbar *interestsToolBar;
             self.currentUser = user;
             
             NSURL *imageURL = [NSURL URLWithString:self.currentUser.profileImageURL];
+            self.editedProfileImage.layer.cornerRadius = self.editedProfileImage.frame.size.height / 2;
+            self.editedProfileImage.layer.masksToBounds = YES;
             
             self.firstNameText.text = self.currentUser.firstName;
             self.lastNameText.text = self.currentUser.lastName;
             self.bioText.text = self.currentUser.bio;
+            //for (NSDictionary *category in )
             self.usersInterests = self.currentUser.preferences;
+//            for (NSDictionary *category in self.usersInterests) {
+//                //self.interests.text = [self.usersInterests componentsJoinedByString:@"\n,"];
+//                self.interests.text = [[self.interests.text stringByAppendingString:@" "] stringByAppendingString:category[@"short_name"]];
+//            }
             [self.editedProfileImage setImageWithURL:imageURL];
             [self.interestsCollectionView reloadData];
             
@@ -97,8 +119,12 @@ UIToolbar *interestsToolBar;
 }
 
 - (void)doneCategoryPicker: (UIButton *) button {
-    [self.usersInterests addObject:self.selectedRowText];
-    self.interests.text = [self.usersInterests componentsJoinedByString:@"\n,"];
+    [self.usersInterests addObject:self.selectedRowDictRef];
+    [self.interestsCollectionView reloadData];
+    for (NSDictionary *category in self.usersInterests) {
+        //self.interests.text = [self.usersInterests componentsJoinedByString:@"\n,"];
+        self.interests.text = [[self.interests.text stringByAppendingString:@" "] stringByAppendingString:category[@"short_name"]];
+    }
     [self.interestsPicker removeFromSuperview];
     [interestsToolBar setHidden:YES];
     [self.interests endEditing:YES];
@@ -175,7 +201,7 @@ UIToolbar *interestsToolBar;
     return newImage;
 }
 
-- (NSString *) imageStorage {
+- (NSString *) updateDocument {
     
     FIRStorage *storage = [FIRStorage storage];
     NSUUID *randomID = [[NSUUID alloc] init];
@@ -240,17 +266,20 @@ UIToolbar *interestsToolBar;
 }
 
 -(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
-    return self.interestsCategories[row];
+    return self.interestsCategories[row][@"short_name"];
 }
 
 -(void) pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
     [interestsToolBar setHidden:NO];
-    self.selectedRowText = self.interestsCategories[row];
+    
+    self.selectedRowDictRef = self.interestsCategories[row];
+    self.selectedRowText = self.interestsCategories[row][@"short_name"];
+    //[@"id"];
 }
 
 - (nonnull __kindof UICollectionViewCell *)collectionView:(nonnull UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
     InterestsCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"InterestsCell" forIndexPath:indexPath];
-    NSString *interest = self.usersInterests[indexPath.item];
+    NSString *interest = self.usersInterests[indexPath.item][@"short_name"];
     
     [cell setInterestLabelText:interest];
     

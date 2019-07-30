@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface InterestsCollectionViewCell : UICollectionViewCell
 - (void) setInterestLabelText:(NSString *)interestLabelText;
+- (void) setProfileInterestLabelText:(NSString *)profileInterestLabelText;
 
 @end
 

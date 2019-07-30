@@ -11,6 +11,7 @@
 
 @interface InterestsCollectionViewCell()
 @property (weak, nonatomic) IBOutlet PillLabel *interestLabel;
+@property (weak, nonatomic) IBOutlet PillLabel *profileInterestLabel;
 
 @end
 
@@ -18,6 +19,11 @@
 
 - (void) setInterestLabelText:(NSString *)interestLabelText {
     self.interestLabel.text = interestLabelText;
+}
+
+- (void) setProfileInterestLabelText:(NSString *)profileInterestLabelText {
+    self.profileInterestLabel.text = profileInterestLabelText;
+    
 }
 
 @end

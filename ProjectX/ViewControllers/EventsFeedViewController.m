@@ -37,7 +37,7 @@ CLLocation *currentLocation;
     [self.activityView startAnimating];
     self.tableViewEventCategories.delegate = self;
     self.tableViewEventCategories.dataSource = self;
-   
+    currentLocation = [[CLLocation alloc] initWithLatitude:36 longitude:-122];
     self.events = [NSMutableArray new];
     self.categories = [NSArray new];
     NSDateFormatter *format = [[NSDateFormatter alloc] init];
