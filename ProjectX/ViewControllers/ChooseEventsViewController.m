@@ -13,7 +13,7 @@
 #import "Event.h"
 #import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
-#import "Map.h"
+#import "../Models/MapAnnotation.h"
 @import Firebase;
 
 @interface ChooseEventsViewController () <CLLocationManagerDelegate, CreateEventControllerDelegate, MKMapViewDelegate>
@@ -90,7 +90,7 @@
             self.eventID = myEvent.eventID;
             [self eventDateIdentifier];
             [self eventLocationIdentifier];
-            self.eventLocation.text =
+            //self.eventLocation.text =
             self.eventLocation.text = myEvent.userFriendlyLocation;
             
             if(myEvent.categories.intValue == 0){ //How to fix that everything is food if none available
@@ -298,7 +298,7 @@
     }
     else{
         //self.categoryIndex.text = @" ";
-        eventView.image = [UIImage imageNamed:@"home"];
+        eventView.image = [UIImage imageNamed:@"baseline_event_black_18pt"];
     }
     
     return eventView;
@@ -318,9 +318,10 @@
     MKCoordinateRegion location = MKCoordinateRegionMake(CLLocationCoordinate2DMake(event.location.latitude, event.location.longitude), MKCoordinateSpanMake(0.05, 0.05));
     [self.mapView setRegion:location animated:YES];
     
-    Map *eventAnnotation = [[Map alloc] init];
+    MapAnnotation *eventAnnotation = [[MapAnnotation alloc] init];
     eventAnnotation.title = self.eventName.text;
-    eventAnnotation.placeName = self.eventLocation.text;
+    eventAnnotation.locationName = self.eventLocation.text;
+    //eventAnnotation.placeName = self.eventLocation.text;
     //eventAnnotation.placeName = @"testing location";
     //eventAnnotation.placeName = [NSString stringWithFormat:@"%@", event.location];
     eventAnnotation.coordinate = location.center;
