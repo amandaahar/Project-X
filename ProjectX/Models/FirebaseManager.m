@@ -132,7 +132,7 @@
 
 -(void) setNewPreferences : (NSArray *) preferences
 {
-    [[[database collectionWithPath:@"Users"] documentWithPath:FIRAuth.auth.currentUser.uid] setData:@{@"preferences" : preferences}];
+    [[[database collectionWithPath:@"Users"] documentWithPath:FIRAuth.auth.currentUser.uid] updateData:@{@"preferences" : preferences}];
 }
 
 @end

@@ -24,6 +24,7 @@
     self = [super init];
     if(self)
     {
+        
         [self setFirstName:dictionary[@"firstName"]];
         [self setLastName:dictionary[@"lastName"]];
         [self setUsername:dictionary[@"username"]];
