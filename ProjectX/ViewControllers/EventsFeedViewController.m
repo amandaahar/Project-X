@@ -26,6 +26,8 @@
 
 CLLocationManager *locationManager;
 CLLocation *currentLocation;
+NSDateFormatter *dateFormat;
+
 - (void)viewDidAppear:(BOOL)animated
 {
   
@@ -33,11 +35,18 @@ CLLocation *currentLocation;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    
+    
+    // convert to date
+    dateFormat = [[NSDateFormatter alloc] init];
+    // ignore +11 and use timezone name instead of seconds from gmt
+    [dateFormat setDateFormat:@"YYYY-MM-dd'T'HH:mm:ss'+11:00'"];
     [self.activityView setHidden:NO];
     [self.activityView startAnimating];
     self.tableViewEventCategories.delegate = self;
     self.tableViewEventCategories.dataSource = self;
-   
+    currentLocation = [[CLLocation alloc] initWithLatitude:36 longitude:-122];
     self.events = [NSMutableArray new];
     self.categories = [NSArray new];
     NSDateFormatter *format = [[NSDateFormatter alloc] init];
@@ -49,6 +58,7 @@ CLLocation *currentLocation;
     #pragma clang diagnostic pop
     [self currentLocationIdentifier];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showDetailView:) name:@"selectedEvent" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showAlert:) name:@"newEvent" object:nil];
     
 }
 
@@ -57,6 +67,15 @@ CLLocation *currentLocation;
     self.eventSelected = notification.object;
     [self performSegueWithIdentifier:@"details" sender:self];
     NSLog(@"Notification");
+}
+
+-(void)showAlert : (NSNotification *) notification
+{
+    NSString * name = notification.object;
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"New event" message:[name stringByAppendingString: @" has been added to your calendar"] preferredStyle:(UIAlertControllerStyleAlert)];
+    UIAlertAction *action= [UIAlertAction actionWithTitle:@"Accept" style:(UIAlertActionStyleCancel) handler:nil];
+    [alert addAction:action];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 
@@ -110,17 +129,21 @@ CLLocation *currentLocation;
             if(error == nil)
             {
                  NSMutableArray *arrayCategory = [NSMutableArray new];
+               
                 for(NSDictionary * ticketmasterDic in eventsTicketmaster)
                 {
-                [arrayCategory addObject:[[EventAPI alloc] initWithInfo:ticketmasterDic[@"name"] :ticketmasterDic[@"name"] :ticketmasterDic[@"id"] :ticketmasterDic[@"dates"][@"start"][@"dateTime"] :ticketmasterDic[@"images"][0][@"url"] :category[@"name"] : category[@"short_name"] : @"Ticketmaster" : CLLocationCoordinate2DMake([ticketmasterDic[@"_embedded"][@"venues"][0][@"location"][@"latitude"] doubleValue],[ticketmasterDic[@"_embedded"][@"venues"][0][@"location"][@"longitude"] doubleValue])]];
+                     NSDate *dte = [dateFormat dateFromString:ticketmasterDic[@"dates"][@"start"][@"dateTime"]];
+                [arrayCategory addObject:[[EventAPI alloc] initWithInfo:ticketmasterDic[@"name"] :ticketmasterDic[@"name"] :ticketmasterDic[@"id"] :dte :ticketmasterDic[@"images"][0][@"url"] :category[@"name"] : category[@"short_name"] : @"Ticketmaster" : CLLocationCoordinate2DMake([ticketmasterDic[@"_embedded"][@"venues"][0][@"location"][@"latitude"] doubleValue],[ticketmasterDic[@"_embedded"][@"venues"][0][@"location"][@"longitude"] doubleValue])]];
                 }
                 
                     for(NSDictionary * eventbriteDic in eventsEventbrite)
                     {
                         NSDictionary *stringURL =   eventbriteDic[@"logo"];
+                        NSDate *dte = [dateFormat dateFromString:eventbriteDic[@"start"][@"local"]];
                         @try {
+                            
                             NSString * url = stringURL[@"url"];
-                            [arrayCategory addObject:[[EventAPI alloc] initWithInfo:eventbriteDic[@"name"][@"text"] :eventbriteDic[@"summary"] :eventbriteDic[@"id"] :eventbriteDic[@"start"][@"local"] :url :category[@"name"] : category[@"short_name"] : @"Eventbrite" : CLLocationCoordinate2DMake([eventbriteDic[@"venue"][@"latitude"] doubleValue], [eventbriteDic[@"venue"][@"longitude"] doubleValue])]];
+                            [arrayCategory addObject:[[EventAPI alloc] initWithInfo:eventbriteDic[@"name"][@"text"] :eventbriteDic[@"summary"] :eventbriteDic[@"id"] : dte :url :category[@"name"] : category[@"short_name"] : @"Eventbrite" : CLLocationCoordinate2DMake([eventbriteDic[@"venue"][@"latitude"] doubleValue], [eventbriteDic[@"venue"][@"longitude"] doubleValue])]];
                         } @catch (NSException *exception) {
                             [arrayCategory addObject:[[EventAPI alloc] initWithInfo:eventbriteDic[@"name"][@"text"] :eventbriteDic[@"summary"] :eventbriteDic[@"id"] :eventbriteDic[@"start"][@"local"] :@"https://www.daviespaints.com.ph/wp-content/uploads/img/color-ideas/1008-colors/2036P.png" :category[@"name"] : category[@"short_name"] : @"Eventbrite" :  CLLocationCoordinate2DMake([eventbriteDic[@"venue"][@"latitude"] doubleValue], [eventbriteDic[@"venue"][@"longitude"] doubleValue])]];
                         }

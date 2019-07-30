@@ -24,6 +24,7 @@
     self = [super init];
     if(self)
     {
+        
         [self setFirstName:dictionary[@"firstName"]];
         [self setLastName:dictionary[@"lastName"]];
         [self setUsername:dictionary[@"username"]];
@@ -39,13 +40,16 @@
     return self;
 }
 
--(void) composeMessage:(NSString *)text chat: (NSString *)event{
+
+
+-(void) composeMessage:(NSString *)text chat
+                      : (NSString *)event
+{
     if(![text isEqualToString:@""])
     {
         FIRFirestore *db = [FIRFirestore firestore];
         FIRTimestamp *currentTime = [FIRTimestamp timestamp];
         [[TranslatorManager sharedManager] detectLanguage:text completion:^(NSString * _Nonnull language, NSError * _Nonnull error) {
-            // adds message document
             if(error == nil)
             {
                 __block FIRDocumentReference *ref = [[[[db collectionWithPath:@"Event"] documentWithPath:event] collectionWithPath:@"Chat"] addDocumentWithData:

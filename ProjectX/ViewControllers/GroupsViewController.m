@@ -13,6 +13,7 @@
 #import "Event.h"
 #import "User.h"
 #import "MessagesViewController.h"
+#import "DetailEventViewController.h"
 
 @interface GroupsViewController () <UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) NSMutableArray *events;
@@ -77,11 +78,10 @@
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     MessagesViewController *messagesViewController = [segue destinationViewController];
+    //DetailEventViewController *detailsViewController = [segue destinationViewController];
     
     messagesViewController.eventID = self.eventToPass.eventID;
     [[messagesViewController navigationItem] setTitle:self.eventToPass.name];
-    
-
 }
 
 

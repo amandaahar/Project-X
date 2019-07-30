@@ -86,30 +86,30 @@
 
 - (IBAction)logOut:(id)sender {
     
-    NSError *signOutError;
-    BOOL status = [[FIRAuth auth] signOut:&signOutError];
-    if (!status) {
-        NSLog(@"Error signing out: %@", signOutError);
-        return;
-    }else{
-    
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Log Out"
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Log Out"
                                                                    message:@"Are you sure you want to log out?"
                                                             preferredStyle:(UIAlertControllerStyleAlert)];
     
-        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel"
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel"
                                                            style:UIAlertActionStyleCancel
                                                          handler:^(UIAlertAction * _Nonnull action) {
-                                                             }];
+                                                            }];
         
-        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK"
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK"
                                                        style:UIAlertActionStyleDefault
                                                        handler:^(UIAlertAction * _Nonnull action) {
-                                                             AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
-                                                             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-                                                             LogInViewController *loginViewController = [storyboard instantiateViewControllerWithIdentifier:@"LogIn"];
-                                                             appDelegate.window.rootViewController = loginViewController;
-                                                             NSLog(@"Successfully Signout");
+                                                           NSError *signOutError;
+                                                           BOOL status = [[FIRAuth auth] signOut:&signOutError];
+                                                           if (!status) {
+                                                               NSLog(@"Error signing out: %@", signOutError);
+                                                               return;
+                                                           }else{
+                                                               AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+                                                               UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+                                                               LogInViewController *loginViewController = [storyboard instantiateViewControllerWithIdentifier:@"LogIn"];
+                                                               appDelegate.window.rootViewController = loginViewController;
+                                                               NSLog(@"Successfully Signout");
+                                                           }
                                                          }];
         [alert addAction:cancelAction];
         [alert addAction:okAction];
@@ -118,8 +118,6 @@
         // optional code for what happens after the alert controller has finished presenting
         }];
     }
-    
-}
 
 /*
 #pragma mark - Navigation

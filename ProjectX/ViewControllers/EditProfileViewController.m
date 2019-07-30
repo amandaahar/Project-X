@@ -37,13 +37,13 @@ UIToolbar *interestsToolBar;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    self.usersInterests = [[NSMutableArray alloc] init];
     [self setUpCurrentProperties];
     self.db = [FIRFirestore firestore];
     
     [self.tabBarController.tabBar setHidden: YES];
     
-    self.usersInterests = [[NSMutableArray alloc] init];
+ 
     
     self.interestsCollectionView.dataSource = self;
     self.interestsCollectionView.delegate = self;

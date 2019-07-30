@@ -13,7 +13,7 @@
 {
     self = [super init];
     if (self) {
-        self.index = [dic[@"id"] integerValue];
+        self.index = dic[@"id"];
         NSString *firstWord = [[dic[@"short_name"] componentsSeparatedByString:@" "] objectAtIndex:0];
 
         self.name = firstWord;
@@ -33,7 +33,6 @@
     NSMutableArray *bubbles = [NSMutableArray array];
     for (NSDictionary *dictionary in dictionaries) {
         Bubble *bubble = [[Bubble alloc] initWithDic:dictionary];
-        
         [bubbles addObject:bubble];
     }
     return bubbles;

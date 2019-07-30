@@ -20,6 +20,7 @@
     self.groupedEvents = [NSArray new];
     self.collectionViewGroupsEvents.delegate = self;
     self.collectionViewGroupsEvents.dataSource = self;
+   
 
     [self.collectionViewGroupsEvents reloadData];
 }
@@ -70,6 +71,7 @@
     }
     NSLog(@"%@",groupEventsOfThree);
     cell.threeEvents = groupEventsOfThree;
+
     [cell.tableViewEvents reloadData];
     return cell;
 }
@@ -98,6 +100,7 @@
     }else
     {
     int numberOfItems = floor(self.groupedEvents.count / 3) - 1;
+        
     return numberOfItems;
     }
 }

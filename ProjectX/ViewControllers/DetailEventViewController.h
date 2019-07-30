@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface DetailEventViewController : UIViewController
 
+@property (strong, nonatomic) NSString *detailEventID;
+
 @end
 
 NS_ASSUME_NONNULL_END

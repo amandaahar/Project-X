@@ -8,6 +8,7 @@
 
 #import "DetailHomeViewController.h"
 #import "../Models/MapAnnotation.h"
+#import "../Models/FirebaseManager.h"
 @import Contacts;
 @import AFNetworking;
 @interface DetailHomeViewController () <MKMapViewDelegate>
@@ -107,6 +108,24 @@
 - (IBAction)directionsToPlace:(UIButton *)sender {
     MapAnnotation * location = self.mapView.annotations[0];
     [[location mapItem] openInMapsWithLaunchOptions:@{MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving}];
+}
+- (IBAction)createGroup:(UIBarButtonItem *)sender {
+    [[FirebaseManager sharedManager] setNewAPIEvent:self.event completion:^(NSError * _Nonnull error) {
+        if(error == nil)
+        {
+   
+              self.tabBarController.selectedIndex = 2;
+        }else{
+            UIAlertController *alert =[UIAlertController alertControllerWithTitle:@"Error" message:error.localizedDescription preferredStyle:(UIAlertControllerStyleAlert)];
+            UIAlertAction *action = [UIAlertAction actionWithTitle:@"Accept" style:(UIAlertActionStyleCancel) handler:nil];
+            [alert addAction:action];
+            [self presentViewController:alert animated:YES completion:nil];
+        }
+    }];
+
+  
+    
+    
 }
 
 

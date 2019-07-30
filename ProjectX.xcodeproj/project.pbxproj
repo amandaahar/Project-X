@@ -10,7 +10,6 @@
 		02E1E8E427559EB8E3639068 /* Pods_ProjectXUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBD9E6E483995742FF9E6D06 /* Pods_ProjectXUITests.framework */; };
 		0E496C0622E1345200DEF38C /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E496C0522E1345200DEF38C /* MapKit.framework */; };
 		0E496C0922E285AA00DEF38C /* CreateEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E496C0822E285AA00DEF38C /* CreateEventViewController.m */; };
-		0E496C0C22E793A100DEF38C /* Map.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E496C0B22E793A100DEF38C /* Map.m */; };
 		0E496C0F22EE5AE200DEF38C /* DetailEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E496C0E22EE5AE200DEF38C /* DetailEventViewController.m */; };
 		0ECF088922DE791300F5A8AA /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ECF088822DE791300F5A8AA /* SignUpViewController.m */; };
 		0ECF088D22DE792900F5A8AA /* LogInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ECF088C22DE792900F5A8AA /* LogInViewController.m */; };
@@ -53,6 +52,7 @@
 		EA7078FD22ED388200D41CD1 /* LanguagesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA7078FC22ED388200D41CD1 /* LanguagesTableViewController.m */; };
 		EA70790622ED648B00D41CD1 /* PreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA70790522ED648B00D41CD1 /* PreferencesViewController.m */; };
 		EA70790922ED656B00D41CD1 /* Bubble.m in Sources */ = {isa = PBXBuildFile; fileRef = EA70790822ED656B00D41CD1 /* Bubble.m */; };
+		EA70790C22EF8F5C00D41CD1 /* PreferencesCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA70790B22EF8F5C00D41CD1 /* PreferencesCollectionViewCell.m */; };
 		EA73F81322E10AE200385689 /* CategoriesCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA73F81122E10AE200385689 /* CategoriesCollectionViewCell.m */; };
 		EA73F81D22E11B4700385689 /* GroupEventsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA73F81B22E11B4700385689 /* GroupEventsTableViewCell.m */; };
 		EA73F82C22E6412A00385689 /* MainTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA73F82B22E6412A00385689 /* MainTabBarController.m */; };
@@ -83,8 +83,6 @@
 		0E496C0522E1345200DEF38C /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		0E496C0722E285AA00DEF38C /* CreateEventViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CreateEventViewController.h; sourceTree = "<group>"; };
 		0E496C0822E285AA00DEF38C /* CreateEventViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CreateEventViewController.m; sourceTree = "<group>"; };
-		0E496C0A22E793A100DEF38C /* Map.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Map.h; sourceTree = "<group>"; };
-		0E496C0B22E793A100DEF38C /* Map.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Map.m; sourceTree = "<group>"; };
 		0E496C0D22EE5AE200DEF38C /* DetailEventViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailEventViewController.h; sourceTree = "<group>"; };
 		0E496C0E22EE5AE200DEF38C /* DetailEventViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailEventViewController.m; sourceTree = "<group>"; };
 		0ECF088722DE791300F5A8AA /* SignUpViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SignUpViewController.h; sourceTree = "<group>"; };
@@ -169,6 +167,8 @@
 		EA70790522ED648B00D41CD1 /* PreferencesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PreferencesViewController.m; sourceTree = "<group>"; };
 		EA70790722ED656B00D41CD1 /* Bubble.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Bubble.h; sourceTree = "<group>"; };
 		EA70790822ED656B00D41CD1 /* Bubble.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Bubble.m; sourceTree = "<group>"; };
+		EA70790A22EF8F5C00D41CD1 /* PreferencesCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PreferencesCollectionViewCell.h; sourceTree = "<group>"; };
+		EA70790B22EF8F5C00D41CD1 /* PreferencesCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PreferencesCollectionViewCell.m; sourceTree = "<group>"; };
 		EA73F81022E10AE200385689 /* CategoriesCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CategoriesCollectionViewCell.h; sourceTree = "<group>"; };
 		EA73F81122E10AE200385689 /* CategoriesCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CategoriesCollectionViewCell.m; sourceTree = "<group>"; };
 		EA73F81A22E11B4700385689 /* GroupEventsTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GroupEventsTableViewCell.h; sourceTree = "<group>"; };
@@ -308,6 +308,8 @@
 				EA73F83C22E6848D00385689 /* MessageBubble.xib */,
 				E7BA0FF822EA5B2A00467978 /* PillLabel.h */,
 				E7BA0FF922EA5B2A00467978 /* PillLabel.m */,
+				EA70790A22EF8F5C00D41CD1 /* PreferencesCollectionViewCell.h */,
+				EA70790B22EF8F5C00D41CD1 /* PreferencesCollectionViewCell.m */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -391,8 +393,6 @@
 				E7AEA0B922DFCC3A00A77CC2 /* Chat.m */,
 				E76311B922E241BB00A1B674 /* Message.h */,
 				E76311BA22E241BB00A1B674 /* Message.m */,
-				0E496C0A22E793A100DEF38C /* Map.h */,
-				0E496C0B22E793A100DEF38C /* Map.m */,
 				EA73F83F22E6B96500385689 /* BubbleView.h */,
 				EA73F84022E6B96500385689 /* BubbleView.m */,
 				EA949E7822EA5BF200263E1B /* MapAnnotation.h */,
@@ -652,6 +652,7 @@
 				EA7078FD22ED388200D41CD1 /* LanguagesTableViewController.m in Sources */,
 				EA54ED2E22DFBA2700D0D7A2 /* APIEventsManager.m in Sources */,
 				EA949E7A22EA5BF200263E1B /* MapAnnotation.m in Sources */,
+				EA70790C22EF8F5C00D41CD1 /* PreferencesCollectionViewCell.m in Sources */,
 				EA73F81D22E11B4700385689 /* GroupEventsTableViewCell.m in Sources */,
 				EA73F83D22E6848D00385689 /* MessageBubble.m in Sources */,
 				EA54ECE622DE3F3800D0D7A2 /* AppDelegate.m in Sources */,
@@ -672,7 +673,6 @@
 				E76311C322E2768800A1B674 /* MessageTableViewCell.m in Sources */,
 				E7AEA0A622DE8A8E00A77CC2 /* ProfileViewController.m in Sources */,
 				EA54ECEF22DE3F3800D0D7A2 /* ProjectX.xcdatamodeld in Sources */,
-				0E496C0C22E793A100DEF38C /* Map.m in Sources */,
 				E7BA0FFD22EB67B900467978 /* InterestsCollectionViewCell.m in Sources */,
 				EA73F84122E6B96500385689 /* BubbleView.m in Sources */,
 				0E496C0922E285AA00DEF38C /* CreateEventViewController.m in Sources */,
