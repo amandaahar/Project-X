@@ -26,6 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
 -(void) setNewPreferences : (NSArray *) preferences;
 -(void) setNewAPIEvent : (EventAPI *) event completion: (void(^)( NSError *error))completion;
 -(void) addUserToEvent : (FIRDocumentReference *) eventID;
+-(void)getCurrentEvent: (NSString *) detailEventID completion: (void(^)(Event * myEvent, NSError *error))completion;
 @end
 
 NS_ASSUME_NONNULL_END
