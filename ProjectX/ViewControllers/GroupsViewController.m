@@ -34,19 +34,6 @@
     [self getChats];
     self.events = [[NSMutableArray alloc] init];
     
-    /*
-    [[FirebaseManager sharedManager] getEventsFromUser:@"DAhDAxEMoJNpOcjkaWe1cyevl9v2"
-     completion:^(NSArray * _Nonnull events, NSError * _Nonnull error) {
-        if (error != nil) {
-            NSLog(@"Error getting evens for chat");
-        } else {
-            self.events = events;
-            [self.chatsTableView reloadData];
-        }
-    }];
-
-    [self getChats];
-     */
 }
 
 -(void) getChats {
@@ -99,27 +86,7 @@
 
 
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
-    
-    /*
-    GroupTableViewCell *cell = [self.chatsTableView dequeueReusableCellWithIdentifier:@"cell"];
-    
-    Event *event = self.events[indexPath.row];
-    [cell setNameOfChatText:event.name];
-     
-//    @try {
-//        if (event.pictures[0] != nil) {
-//            [cell setImage:event.pictures[0]];
-//        } else {
-//            [cell setImage:@"http://pngimg.com/uploads/earth/earth_PNG39.png"];
-//        }
-//    } @catch (NSException *exception) {
-//         [cell setImage:@"http://pngimg.com/uploads/earth/earth_PNG39.png"];
-//    }
-//    [self.chatsTableView reloadData];
-   // [cell.textLabel setText:event.name];
-    return cell;
-     */
-    
+
     static NSString *GroupchatID = @"cell";
     GroupTableViewCell *cell = [self.chatsTableView dequeueReusableCellWithIdentifier:GroupchatID];
     if (cell == nil) {

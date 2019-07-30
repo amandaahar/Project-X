@@ -8,17 +8,18 @@
 
 #import "EditProfileViewController.h"
 #import "../Models/FirebaseManager.h"
+@import MaterialTextField;
 
 
 @interface EditProfileViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UIImageView *editedProfileImage;
-@property (weak, nonatomic) IBOutlet UITextField *firstNameText;
-@property (weak, nonatomic) IBOutlet UITextField *lastNameText;
-@property (weak, nonatomic) IBOutlet UITextField *bioText;
-@property (weak, nonatomic) IBOutlet UITextField *interests;
+@property (weak, nonatomic) IBOutlet MFTextField *firstNameText;
+@property (weak, nonatomic) IBOutlet MFTextField *lastNameText;
+@property (weak, nonatomic) IBOutlet MFTextField *bioText;
+@property (weak, nonatomic) IBOutlet MFTextField *interests;
 @property (weak, nonatomic) IBOutlet UICollectionView *interestsCollectionView;
-@property (strong, nonatomic) NSMutableArray *interestsCategories;
+@property (strong, nonatomic) NSArray *interestsCategories;
 @property (strong, nonatomic) NSMutableArray *usersInterests;
 @property (strong, nonatomic) NSMutableArray *pickerViewRowTitles;
 @property (weak, nonatomic) NSString *selectedRowText;
@@ -27,7 +28,6 @@
 @property (nonatomic, strong) User *currentUser;
 @property (nonatomic, readwrite) FIRFirestore *db;
 @property (weak, nonatomic) NSString *profileImageString;
-@property (weak, nonatomic) IBOutlet UIButton *addInterestsButton;
 
 @end
 
@@ -68,6 +68,7 @@ UIToolbar *interestsToolBar;
     UIBarButtonItem *space = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     [interestsToolBar setItems:[NSArray arrayWithObjects:space,doneButton, nil]];
     [self.interests setInputAccessoryView:interestsToolBar];
+    
 
 }
 
@@ -76,8 +77,7 @@ UIToolbar *interestsToolBar;
         if(error == nil)
         {
             self.interestsCategories = categories;
-            // for (NSDictionary * )
-            //[self getEventsFromCategories];
+            self.selectedRowDictRef = self.interestsCategories[0];
         }
     }];
 }
@@ -105,10 +105,6 @@ UIToolbar *interestsToolBar;
             self.bioText.text = self.currentUser.bio;
             //for (NSDictionary *category in )
             self.usersInterests = self.currentUser.preferences;
-//            for (NSDictionary *category in self.usersInterests) {
-//                //self.interests.text = [self.usersInterests componentsJoinedByString:@"\n,"];
-//                self.interests.text = [[self.interests.text stringByAppendingString:@" "] stringByAppendingString:category[@"short_name"]];
-//            }
             [self.editedProfileImage setImageWithURL:imageURL];
             [self.interestsCollectionView reloadData];
             
@@ -118,15 +114,16 @@ UIToolbar *interestsToolBar;
     [self.interestsCollectionView reloadData];
 }
 
-- (void)doneCategoryPicker: (UIButton *) button {
-    [self.usersInterests addObject:self.selectedRowDictRef];
-    [self.interestsCollectionView reloadData];
-    for (NSDictionary *category in self.usersInterests) {
-        //self.interests.text = [self.usersInterests componentsJoinedByString:@"\n,"];
-        self.interests.text = [[self.interests.text stringByAppendingString:@" "] stringByAppendingString:category[@"short_name"]];
+- (void)doneCategoryPicker:(UIButton *) button {
+    if (! [self.usersInterests containsObject:self.selectedRowDictRef]) {
+        [self.usersInterests addObject:self.selectedRowDictRef];
     }
+    [self.interestsCollectionView reloadData];
+//    for (NSDictionary *category in self.usersInterests) {
+//        //self.interests.text = [self.usersInterests componentsJoinedByString:@"\n,"];
+//        self.interests.text = [[self.interests.text stringByAppendingString:@" "] stringByAppendingString:category[@"short_name"]];
+//    }
     [self.interestsPicker removeFromSuperview];
-    [interestsToolBar setHidden:YES];
     [self.interests endEditing:YES];
     
 }
@@ -272,9 +269,10 @@ UIToolbar *interestsToolBar;
 -(void) pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
     [interestsToolBar setHidden:NO];
     
+    //self.interests.text = self.interestsCategories[row];
     self.selectedRowDictRef = self.interestsCategories[row];
     self.selectedRowText = self.interestsCategories[row][@"short_name"];
-    //[@"id"];
+    
 }
 
 - (nonnull __kindof UICollectionViewCell *)collectionView:(nonnull UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
