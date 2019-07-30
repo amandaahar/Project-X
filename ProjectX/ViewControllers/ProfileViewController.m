@@ -12,6 +12,7 @@
 #import "LogInViewController.h"
 #import "../AppDelegate.h"
 #import "../Models/FirebaseManager.h"
+#import "ProfileHeaderCollectionReusableView.h"
 
 @import Firebase;
 @interface ProfileViewController () < UICollectionViewDelegate, UICollectionViewDataSource>
@@ -37,6 +38,8 @@
     self.interestsCollectionView.delegate = self;
     self.interestsCollectionView.dataSource = self;
     
+    [self.interestsCollectionView reloadData];
+    
     [self setup];
     
 }
@@ -55,7 +58,7 @@
             self.nameText.text = [[self.currentUser.firstName stringByAppendingString:@" "] stringByAppendingString:self.currentUser.lastName];
             self.username.text = [self.username.text stringByAppendingString:self.currentUser.username];
             self.bioText.text = self.currentUser.bio;
-            [self setImage:self.currentUser.profileImageURL];
+            //[self setImage:self.currentUser.profileImageURL];
             
             self.profilePictureImage.layer.cornerRadius = self.profilePictureImage.frame.size.height / 2;
             self.profilePictureImage.layer.masksToBounds = YES;
@@ -64,9 +67,10 @@
                 // NSString *interestsString = [[NSString alloc] init];
                 // self.preferences.text = @"";
                 //self.preferences.text = [[self.preferences.text stringByAppendingString:@" "] stringByAppendingString:category[@"short_name"]];
-                [self.interestsCollectionView reloadData];
+                
                 
             }
+            [self.interestsCollectionView reloadData];
         }
     }];
     
@@ -139,6 +143,24 @@
 - (NSInteger)collectionView:(nonnull UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     NSInteger numOfInterests = self.currentUser.preferences.count;
     return numOfInterests;
+}
+
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
+    
+    ProfileHeaderCollectionReusableView *reusableView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"ProfileHeader" forIndexPath:indexPath];
+    
+    [reusableView setProfileImageWithURL:self.currentUser.profileImageURL];
+    [reusableView setNameText:[[self.currentUser.firstName stringByAppendingString:@" "] stringByAppendingString:self.currentUser.lastName]];
+    [reusableView setUsernameText: self.currentUser.username];
+     
+     //[@"@" stringByAppendingString: self.currentUser.username]];
+     
+     //[self.username.text stringByAppendingString:self.currentUser.username]];
+    [reusableView setBioText:self.currentUser.bio];
+    
+    return reusableView;
+    
+    
 }
 
 

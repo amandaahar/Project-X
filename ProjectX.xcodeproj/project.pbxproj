@@ -31,6 +31,7 @@
 		E7AEA0BE22DFD8BC00A77CC2 /* GroupTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E7AEA0BD22DFD8BC00A77CC2 /* GroupTableViewCell.m */; };
 		E7BA0FFA22EA5B2A00467978 /* PillLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = E7BA0FF922EA5B2A00467978 /* PillLabel.m */; };
 		E7BA0FFD22EB67B900467978 /* InterestsCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E7BA0FFC22EB67B900467978 /* InterestsCollectionViewCell.m */; };
+		E7DC006A22F0E4E2007DD911 /* ProfileHeaderCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = E7DC006922F0E4E2007DD911 /* ProfileHeaderCollectionReusableView.m */; };
 		EA06399222EA1E0B0070AF46 /* DetailHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA06399122EA1E0B0070AF46 /* DetailHomeViewController.m */; };
 		EA3A502422E0F2FC004F2FFD /* HomeFeedTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3A502222E0F2FC004F2FFD /* HomeFeedTableViewCell.m */; };
 		EA3A502522E0F2FC004F2FFD /* HomeFeedTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA3A502322E0F2FC004F2FFD /* HomeFeedTableViewCell.xib */; };
@@ -129,6 +130,8 @@
 		E7BA0FF922EA5B2A00467978 /* PillLabel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PillLabel.m; sourceTree = "<group>"; };
 		E7BA0FFB22EB67B900467978 /* InterestsCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InterestsCollectionViewCell.h; sourceTree = "<group>"; };
 		E7BA0FFC22EB67B900467978 /* InterestsCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InterestsCollectionViewCell.m; sourceTree = "<group>"; };
+		E7DC006822F0E4E2007DD911 /* ProfileHeaderCollectionReusableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProfileHeaderCollectionReusableView.h; sourceTree = "<group>"; };
+		E7DC006922F0E4E2007DD911 /* ProfileHeaderCollectionReusableView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProfileHeaderCollectionReusableView.m; sourceTree = "<group>"; };
 		EA06399022EA1E0B0070AF46 /* DetailHomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailHomeViewController.h; sourceTree = "<group>"; };
 		EA06399122EA1E0B0070AF46 /* DetailHomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailHomeViewController.m; sourceTree = "<group>"; };
 		EA3A502122E0F2FC004F2FFD /* HomeFeedTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HomeFeedTableViewCell.h; path = ProjectX/Cells/HomeFeedTableViewCell.h; sourceTree = SOURCE_ROOT; };
@@ -281,6 +284,8 @@
 				E76311C222E2768800A1B674 /* MessageTableViewCell.m */,
 				E7BA0FFB22EB67B900467978 /* InterestsCollectionViewCell.h */,
 				E7BA0FFC22EB67B900467978 /* InterestsCollectionViewCell.m */,
+				E7DC006822F0E4E2007DD911 /* ProfileHeaderCollectionReusableView.h */,
+				E7DC006922F0E4E2007DD911 /* ProfileHeaderCollectionReusableView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -639,6 +644,7 @@
 				0E496C0F22EE5AE200DEF38C /* DetailEventViewController.m in Sources */,
 				E7AEA0BE22DFD8BC00A77CC2 /* GroupTableViewCell.m in Sources */,
 				EA54ED2822DEE23900D0D7A2 /* FirebaseManager.m in Sources */,
+				E7DC006A22F0E4E2007DD911 /* ProfileHeaderCollectionReusableView.m in Sources */,
 				E7AEA0AF22DE8CE800A77CC2 /* ChooseEventsViewController.m in Sources */,
 				EA70790922ED656B00D41CD1 /* Bubble.m in Sources */,
 				E7AEA0AC22DE8C8A00A77CC2 /* GroupsViewController.m in Sources */,
