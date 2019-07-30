@@ -34,18 +34,16 @@ static NSString * const publicToken = @"AIzaSyABntoESCxzEqLShs-KQV9pRwdIesmnQDI"
 }
 
 /**
- Translate Tezt In Language
- This methos receives a source Language, a target language and a text to be translated and its going to return a completion block with the text translated in the requested language.
- 
- Parameters:
- -sourceLangauge:
- -tagetLanguage:
- -text
- 
- Returns:
- Completion Block with the text translated or a NSError.
- */
+ Translate Text In Language
+ This methos receives a source Language, a target language and a text to be translated and its going to return a completion block with the text
+ translated in the requested language.
 
+ @param sourceLanguage  This is the sourceTarget of the request
+ @param targetLanguage  This is the target language of the request
+ @param text    This is the text to be translated
+ 
+ @note Completion Block with the text translated or a NSError.
+ */
 - (void) translateTextInLanguage:(NSString *) sourceLanguage
                                 :(NSString *) targetLanguage
                                 :(NSString *) text
@@ -72,15 +70,13 @@ completion :(void(^)(NSString *translated, NSError *error)) completion
  DetectLanguage
  This method is going to detect the language of a text.
  
- Parameters:
- -Text
+ @param text    This is the text that is going to be analized
  
- Return:
- -Completion block with a NSDictionary with the result or a NSError.
+@note Completion block with a NSDictionary with the result or a NSError.
  
  */
-- (void) detectLanguage:(NSString *) text completion
-                                :(void(^)(NSString *language, NSError *error))completion
+- (void) detectLanguage:(NSString *) text
+             completion:(void(^)(NSString *language, NSError *error))completion
 {
     AFHTTPSessionManager *manager =
     [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:baseURLString]];
@@ -104,15 +100,12 @@ completion :(void(^)(NSString *translated, NSError *error)) completion
  getLanguages
  This methos looks for the available languages in the API, the result is going to be in the preovious language.
  
- Parameters:
- -previousLanguage:
- 
- Return:
- Completion block with a NSArray with all the available languages or a NSError
+ @param previousLanguage    This is going to be the language that is going to be used in the request
+ @note Completion block with a NSArray with all the available languages or a NSError
  
  */
-- (void) getLanguages:(NSString * ) previousLanguage completion
-                     :(void(^)(NSArray *language, NSError *error))completion
+- (void) getLanguages:(NSString * ) previousLanguage
+           completion:(void(^)(NSArray *language, NSError *error))completion
 {
     AFHTTPSessionManager *manager =
     [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:baseURLString]];

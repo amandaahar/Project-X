@@ -14,7 +14,8 @@
 static NSString * const baseURLString = @"https://www.eventbriteapi.com/v3/";
 static NSString * const publicToken = @"T4HEDOIZWIOORGLUB4U6";
 static NSString * const clientSecret = @"XFZKXUDPWBPQANV7EWD237QVMMH35G4H47CHB3HE7CSJQA2PIT";
-
+static NSString * const baseURLStringTicketMaster = @"https://app.ticketmaster.com/";
+static NSString * const publicTokenTicketMaster = @"OgabuZXqzqkv0GJtbvl5hKlbAFZLxncm";
 
 @implementation APIEventsManager
 #pragma mark Singleton Methods
@@ -40,6 +41,13 @@ static NSString * const clientSecret = @"XFZKXUDPWBPQANV7EWD237QVMMH35G4H47CHB3H
 
 
 #pragma mark Get methods
+
+/**
+ Gets the categories available by the API
+ 
+
+ @note This is going to return in a completion block if there was an error or a NSArray with all the dictionaries with the categories
+ */
 - (void) getCategories:(void(^)(NSArray *categories, NSError *error))completion
 {
     AFHTTPSessionManager *manager =
@@ -56,6 +64,15 @@ static NSString * const clientSecret = @"XFZKXUDPWBPQANV7EWD237QVMMH35G4H47CHB3H
          }];
 }
 
+
+/**
+ This method gets the events depending on the category passed as paremter
+ 
+ @param categoryID  This is the categoryID that the method is going to use in the POST request in the API
+ @note This is going to return in a completion block if there was an error or a NSArray with all the events of that category
+
+ 
+ */
 - (void) getEventByCategory: (NSString *) categoryID completion:(void(^)(NSArray *events, NSError *error))completion
 {
     AFHTTPSessionManager *manager =
@@ -73,9 +90,26 @@ static NSString * const clientSecret = @"XFZKXUDPWBPQANV7EWD237QVMMH35G4H47CHB3H
          }];
 }
 
--(void) getEventsByLocation : (NSString *) latitude  longitude:(NSString *) longitude  category:(NSString *) category shortName : (NSString *) shortname completion:(void(^)(NSArray *eventsEventbrite,NSArray * eventsTicketmaster, NSError *error))completion{
-    __block NSDictionary *eventbriteDic;
+
+/**
+ This method going to get the events depending on the location of the user and on the category and keyword of the event
+ 
+ @param latitude    This is the latitude of the current user
+ @param longitude   This is the longitude of the current user
+ @param category    This is the category chosen by the user
+ @param shortname   This is a keyword used to look for relationated events
+ @note This is going to return in a completion block if there was an error or a NSArray with all the events of that category
+ 
+ 
+ */
+-(void) getEventsByLocation : (NSString *) latitude
+                    longitude:(NSString *) longitude
+                    category:(NSString *) category
+                    shortName : (NSString *) shortname
+                    completion:(void(^)(NSArray *eventsEventbrite,NSArray * eventsTicketmaster, NSError *error))completion{
     
+    
+    __block NSDictionary *eventbriteDic;
     __block NSDictionary *ticketmasterDic;
     NSLog(@"%@",[NSString stringWithFormat:@"%@,%@",latitude, longitude]);
     dispatch_group_t group = dispatch_group_create();
@@ -103,7 +137,7 @@ static NSString * const clientSecret = @"XFZKXUDPWBPQANV7EWD237QVMMH35G4H47CHB3H
     
     dispatch_group_async(group,dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^ {
         AFHTTPSessionManager *manager2 =
-        [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:@"https://app.ticketmaster.com/"]];
+        [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:baseURLStringTicketMaster]];
         [manager2 GET:@"discovery/v2/events.json" parameters:@{@"apikey" : @"OgabuZXqzqkv0GJtbvl5hKlbAFZLxncm",@"geoPoint":[NSString stringWithFormat:@"%@,%@",latitude, longitude], @"radius" : @"150",@"unit" : @"km",@"keyword": shortname}
              progress:nil
               success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary*  _Nullable dictionaryTicketmaster) {
@@ -139,8 +173,8 @@ static NSString * const clientSecret = @"XFZKXUDPWBPQANV7EWD237QVMMH35G4H47CHB3H
             progress:nil
              success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary*  _Nullable dictionaryEventbrite) {
                  AFHTTPSessionManager *manager2 =
-                 [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:@"https://app.ticketmaster.com/"]];
-                 [manager2 GET:@"discovery/v2/events.json" parameters:@{@"apikey" : @"OgabuZXqzqkv0GJtbvl5hKlbAFZLxncm",@"geoPoint":[NSString stringWithFormat:@"%@,%@",latitude, longitude], @"radius" : @"150",@"unit" : @"km",@"keyword": shortname}
+                 [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:baseURLStringTicketMaster]];
+                 [manager2 GET:@"discovery/v2/events.json" parameters:@{@"apikey" : publicTokenTicketMaster,@"geoPoint":[NSString stringWithFormat:@"%@,%@",latitude, longitude], @"radius" : @"150",@"unit" : @"km",@"keyword": shortname}
                       progress:nil
                        success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary*  _Nullable dictionaryTicketmaster) {
                            completion(dictionaryEventbrite[@"events"],dictionaryTicketmaster[@"_embedded"][@"events"], nil);
@@ -152,8 +186,8 @@ static NSString * const clientSecret = @"XFZKXUDPWBPQANV7EWD237QVMMH35G4H47CHB3H
              }
              failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                  AFHTTPSessionManager *manager2 =
-                 [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:@"https://app.ticketmaster.com/"]];
-                 [manager2 GET:@"discovery/v2/events.json" parameters:@{@"apikey" : @"OgabuZXqzqkv0GJtbvl5hKlbAFZLxncm",@"geoPoint":[NSString stringWithFormat:@"%@,%@",latitude, longitude], @"radius" : @"150",@"unit" : @"km",@"keyword": shortname}
+                 [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:baseURLStringTicketMaster]];
+                 [manager2 GET:@"discovery/v2/events.json" parameters:@{@"apikey" : publicTokenTicketMaster,@"geoPoint":[NSString stringWithFormat:@"%@,%@",latitude, longitude], @"radius" : @"150",@"unit" : @"km",@"keyword": shortname}
                       progress:nil
                        success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary*  _Nullable dictionaryTicketmaster) {
                            completion(nil,dictionaryTicketmaster[@"_embedded"][@"events"], error);

@@ -47,8 +47,8 @@
                             <constraint firstAttribute="width" constant="73" id="AsP-a4-4G3"/>
                             <constraint firstAttribute="height" constant="24" id="O1z-U6-FWa"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                        <state key="normal" title="Check out"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                        <state key="normal" title="Add calendar"/>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TFg-V2-ISH">
                         <rect key="frame" x="240" y="55" width="73" height="10"/>
@@ -86,6 +86,7 @@
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>
             <connections>
+                <outlet property="addCalendarButton" destination="6Yb-YE-kHZ" id="5pC-Sz-pUd"/>
                 <outlet property="api" destination="TFg-V2-ISH" id="d7k-ZU-7pz"/>
                 <outlet property="descriptionEvent" destination="bvw-cX-pFH" id="20B-RH-ZWj"/>
                 <outlet property="imageEvent" destination="1hG-Ed-Ic7" id="P3u-Ua-vfH"/>

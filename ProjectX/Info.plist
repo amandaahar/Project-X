@@ -8,6 +8,8 @@
 	<string>Asking for your location</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Asking for your location</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>Add events to your calerdar</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
