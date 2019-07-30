@@ -21,9 +21,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)getEvents:(void(^)(NSArray *event, NSError *error))completion;
 - (void)getMessagesFromEvent:(NSString *) eventID completion: (void(^)(NSArray *messages, NSError *error))completion;
 - (void)getEventsFromUser:(NSString *) userID completion: (void(^)(NSArray *events, NSError *error))completion;
--(void) setNewLanguage : (NSString *) newLanguage;
--(void) setNewPreferences : (NSArray *) preferences;
-//-(void)getCurrentEvent: (NSString *) detailEventID completion: (void(^)(NSArray *events, NSError *error))completion;
+- (void)setNewLanguage : (NSString *) newLanguage;
+- (void)setNewPreferences : (NSArray *) preferences;
+- (void)getCurrentEvent: (NSString *) detailEventID completion: (void(^)(Event *myEvent, NSError *error))completion;
 
 @end
 

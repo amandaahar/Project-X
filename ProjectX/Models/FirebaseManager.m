@@ -87,6 +87,22 @@
 
 }
 
+-(void)getCurrentEvent: (NSString *) detailEventID completion: (void(^)(Event * myEvent, NSError *error))completion {
+    
+    FIRDocumentReference *docRef =
+    [[database collectionWithPath:@"Event"] documentWithPath:detailEventID];
+    [docRef getDocumentWithCompletion:^(FIRDocumentSnapshot *snapshot, NSError *error) {
+        if (snapshot.exists) {
+            NSLog(@"Document data: %@", snapshot.data);
+            Event * myEvent = [[Event alloc] initWithDictionary:snapshot.data eventID:snapshot.documentID];
+            
+            completion(myEvent, nil);
+        } else {
+            completion(nil, error);
+        }
+    }];
+}
+
 //- (void)getEventsFromUser:(NSString *)userID completion:(void(^)(NSArray *events, NSError *error))completion {
 //    [[[database collectionWithPath:@"Users"] documentWithPath:userID] addSnapshotListener:^(FIRDocumentSnapshot * _Nullable snapshot, NSError * _Nullable error) {
 ////        if (error !=nil) {

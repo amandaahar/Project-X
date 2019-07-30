@@ -25,7 +25,7 @@
 @property (strong, nonatomic) NSString *eventID;
 @property (strong, nonatomic) NSDate *dateNSEvent;
 @property (strong, nonatomic) NSString *annotationID;
-@property (nonatomic, readwrite) FIRFirestore *db;
+@property (nonatomic, strong) Event *myEvent;
 
 @end
 
@@ -34,7 +34,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.db = [FIRFirestore firestore];
     [self fetchEvents];
     [self fetchImage];
     
@@ -44,23 +43,20 @@
     
 }
 
-#pragma mark - Fetching Events
+#pragma mark - Fetching Event details
 
 - (void) fetchEvents {
-    
-    FIRDocumentReference *docRef =
-    [[self.db collectionWithPath:@"Event"] documentWithPath:self.detailEventID];
-    [docRef getDocumentWithCompletion:^(FIRDocumentSnapshot *snapshot, NSError *error) {
-        if (snapshot.exists) {
-            NSLog(@"Document data: %@", snapshot.data);
-            Event * myEvent = [[Event alloc] initWithDictionary:snapshot.data eventID:snapshot.documentID];
+    [[FirebaseManager sharedManager] getCurrentEvent:self.detailEventID completion:^(Event * _Nonnull myEvent, NSError * _Nonnull error) {
+        if (error != nil) {
+            NSLog(@"Error getting event details.");
+        }
+        else {
+            self.myEvent = myEvent;
             
             self.attendeesNo.text = [NSString stringWithFormat:@"%@", myEvent.attendees];
-            //self.eventName.text = myEvent.name;
             self.eventDescription.text = myEvent.descriptionEvent;
             self.userFriendlyLocation.text = myEvent.userFriendlyLocation;
             self.eventCategory.text = myEvent.categories;
-            
             
             MKCoordinateRegion location = MKCoordinateRegionMake(CLLocationCoordinate2DMake(myEvent.location.latitude, myEvent.location.longitude), MKCoordinateSpanMake(0.05, 0.05));
             [self.mapView setRegion:location animated:YES];
@@ -73,15 +69,11 @@
             eventAnnotation.coordinate = location.center;
             [self.mapView addAnnotation:eventAnnotation];
             
-            
             FIRTimestamp *eventTimestamp = myEvent.date;
             [self setDateNSEvent:eventTimestamp.dateValue];
             NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
             [formatter setDateFormat:@"MMM d, h:mm a"];
             self.eventDate.text = [NSString stringWithFormat:@"%@", [formatter stringFromDate:self.dateNSEvent]];
-        
-        } else {
-            NSLog(@"Document does not exist");
         }
     }];
     
@@ -111,40 +103,37 @@
     MKAnnotationView *eventView = [self.mapView dequeueReusableAnnotationViewWithIdentifier:self.annotationID];
     eventView.canShowCallout = true;
     eventView.leftCalloutAccessoryView = [[UIImageView alloc] initWithFrame:CGRectMake(0.0, 0.0, 25.0, 50.0)];
+        
+    [[FirebaseManager sharedManager] getCurrentEvent:self.detailEventID completion:^(Event * _Nonnull myEvent, NSError * _Nonnull error) {
+        if (error != nil) {
+            NSLog(@"Error getting event details.");
+        }
+        else {
+            self.myEvent = myEvent;
     
-    FIRDocumentReference *docRef =
-    [[self.db collectionWithPath:@"Event"] documentWithPath:self.detailEventID];
-    [docRef getDocumentWithCompletion:^(FIRDocumentSnapshot *snapshot, NSError *error) {
-        if (snapshot.exists) {
-            NSLog(@"Document data: %@", snapshot.data);
-            Event *event = [[Event alloc] initWithDictionary:snapshot.data eventID:snapshot.documentID];
-    
-            if(event.categories.intValue == 0){
+            if(myEvent.categories.intValue == 0){
                 eventView.image = [UIImage imageNamed:@"baseline_local_dining_black_18pt"];
             }
-            else if(event.categories.intValue == 1){
+            else if(myEvent.categories.intValue == 1){
                 eventView.image = [UIImage imageNamed:@"baseline_color_lens_black_18pt"];
             }
-            else if(event.categories.intValue == 2){
+            else if(myEvent.categories.intValue == 2){
                 eventView.image = [UIImage imageNamed:@"baseline_directions_run_black_18pt"];
             }
-            else if(event.categories.intValue == 3){
+            else if(myEvent.categories.intValue == 3){
                 eventView.image = [UIImage imageNamed:@"baseline_local_library_black_18pt"];
             }
-            else if(event.categories.intValue == 4){
+            else if(myEvent.categories.intValue == 4){
                 eventView.image = [UIImage imageNamed:@"baseline_event_black_18pt"];
             }
             else{
                 eventView.image = [UIImage imageNamed:@"home"];
             }
-            
-        } else {
-                NSLog(@"Document does not exist");
-            }
-        }];
+        }
+        
+    }];
     
     return eventView;
-    
 }
 
 - (nullable MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation {
@@ -153,24 +142,21 @@
 
 
 - (IBAction)directionsToPlace:(UIButton *)sender {
-    FIRDocumentReference *docRef =
-    [[self.db collectionWithPath:@"Event"] documentWithPath:self.detailEventID];
-    [docRef getDocumentWithCompletion:^(FIRDocumentSnapshot *snapshot, NSError *error) {
-        if (snapshot.exists) {
-            NSLog(@"Document data: %@", snapshot.data);
-            Event *event = [[Event alloc] initWithDictionary:snapshot.data eventID:snapshot.documentID];
+    [[FirebaseManager sharedManager] getCurrentEvent:self.detailEventID completion:^(Event * _Nonnull myEvent, NSError * _Nonnull error) {
+        if (error != nil) {
+            NSLog(@"Error getting event details.");
+        }
+        else {
+            self.myEvent = myEvent;
             
             MapAnnotation * userLocation = self.mapView.annotations[0];
-            userLocation.locationName = event.userFriendlyLocation;
-            userLocation.title = event.name;
-            MKCoordinateRegion location = MKCoordinateRegionMake(CLLocationCoordinate2DMake(event.location.latitude, event.location.longitude), MKCoordinateSpanMake(0.05, 0.05));
+            userLocation.locationName = myEvent.userFriendlyLocation;
+            userLocation.title = myEvent.name;
+            MKCoordinateRegion location = MKCoordinateRegionMake(CLLocationCoordinate2DMake(myEvent.location.latitude, myEvent.location.longitude), MKCoordinateSpanMake(0.05, 0.05));
             userLocation.coordinate = location.center;
             
             MapAnnotation * locationAnnote = self.mapView.annotations.firstObject;
             [[locationAnnote mapItem] openInMapsWithLaunchOptions:@{MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving}];
-            
-        } else {
-            NSLog(@"Document does not exist");
         }
     }];
 }
