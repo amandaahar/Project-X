@@ -24,9 +24,10 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelButton;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
 @property (weak, nonatomic) IBOutlet UILabel *categoryLabel;
-@property (weak, nonatomic) NSString *EventImageString;
+@property (strong, nonatomic) NSString *EventImageString;
 @property (weak, nonatomic) NSString *userFriendlyLocation;
 @property (nonatomic, readwrite) FIRFirestore *db;
+@property (strong, nonatomic) NSString *eventID;
 
 @end
 
@@ -131,7 +132,6 @@ UIDatePicker *datePicker;
                     NSLog(@"Downloaded URL: %@", downloadURL);
                     self.EventImageString = downloadURL.absoluteString;
                     NSLog(@"Image URL: %@", self.EventImageString);
-                    //[self updateEventProperties];
                 }
             }];
         }
@@ -144,24 +144,6 @@ UIDatePicker *datePicker;
     return downloadURL.absoluteString;
     
 }
-
-/*
- - (void) updateEventProperties {
- FIRDocumentReference *eventRef = [[self.db collectionWithPath:@"Event"] documentWithPath:self.currentUser.userID];
- [userRef updateData:
- @{
-    @"firstName": self.firstNameText.text,
-    @"lastName": self.lastNameText.text,
-    @"eventImage": self.eventImageString,
-    } completion:^(NSError * _Nullable error) {
-        if (error != nil) {
-            NSLog(@"Error updating document: %@", error);
-        } else {
-            NSLog(@"Docuement updated from edit profile");
-        }
-    }];
- }
- */
 
 #pragma mark - Creating event
 
@@ -197,6 +179,8 @@ UIDatePicker *datePicker;
 }
 
 - (IBAction)didTapCreate:(id)sender {
+    
+    [self imageStorage];
     
     NSString *address = [NSString stringWithFormat:@"%@", self.createEventLocation.text];
     [[[CLGeocoder alloc] init] geocodeAddressString:address completionHandler:^(NSArray *placemarks, NSError *error) {
@@ -237,35 +221,34 @@ UIDatePicker *datePicker;
             storeCategory = [NSNumber numberWithInt:4];
         }
         
-        [self imageStorage];
         
-        __block FIRDocumentReference *ref = [[self.db collectionWithPath:@"Event"] addDocumentWithData:@{@"name": self.createEventName.text, @"description": self.createEventDescription.text, @"location": geoPoint, @"eventDate": [FIRTimestamp timestampWithDate: datePicker.date], @"numAttendees": formattedNumOfAttendees, @"categoryIndex": storeCategory, @"userFriendlyLocation": address} completion:^(NSError * _Nullable error) {
-            if (error != nil) {
-                NSLog(@"Error adding document: %@", error);
-            } else {
-                NSLog(@"Document added with ID: %@", ref.documentID);
-                [self dismissViewControllerAnimated:YES completion:nil];
-            }
-        }];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            __block FIRDocumentReference *ref = [[self.db collectionWithPath:@"Event"] addDocumentWithData:@{@"name": self.createEventName.text, @"description": self.createEventDescription.text, @"location": geoPoint, @"eventDate": [FIRTimestamp timestampWithDate: datePicker.date], @"numAttendees": formattedNumOfAttendees, @"categoryIndex": storeCategory, @"userFriendlyLocation": address} completion:^(NSError * _Nullable error) {
+                if (error != nil) {
+                    NSLog(@"Error adding document: %@", error);
+                } else {
+                    NSLog(@"Document added with ID: %@", ref.documentID);
+                    self.eventID = ref.documentID;
+                    [self addEventImage];
+                    [self dismissViewControllerAnimated:YES completion:nil];
+                }
+            }];
+        });
     }];
     
 }
 
 - (void) addEventImage {
     
-    FIRDocumentReference *eventRef = [self.db collectionWithPath:@"Event"];
-    [eventRef updateData:@{ @"images": [FIRFieldValue fieldValueForArrayUnion:@[self.EventImageString]]}];
-    
-    //second method looks like itll work more but this VC has no event ID so should I pass imageURLstring view protocol delegate to ChooseVC and then update the array?
-    /*
-    NSMutableArray *copyEvents = self.events.mutableCopy;
-    [copyEvents removeObjectAtIndex:indexPath.row];
-    
-    NSMutableArray *references = [NSMutableArray new];
-    for (Event *event in copyEvents) {
-        FIRDocumentReference *eventRef = [[self.db collectionWithPath:@"Event"] documentWithPath: event.eventID];
-        [references addObject:eventRef];
-     */
+    FIRDocumentReference *eventRef = [[self.db collectionWithPath:@"Event"] documentWithPath:self.eventID];
+    [eventRef updateData:@{ @"images": [FIRFieldValue fieldValueForArrayUnion:@[self.EventImageString]]}
+            completion:^(NSError * _Nullable error) {
+                if (error != nil) {
+                    NSLog(@"Error updating document: %@", error);
+                } else {
+                    NSLog(@"Document updated with Image");
+                }
+            }];
     
 }
 

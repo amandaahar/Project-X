@@ -63,6 +63,7 @@
             
             MapAnnotation *eventAnnotation = [[MapAnnotation alloc] init];
             eventAnnotation.title = self.eventName.text;
+            eventAnnotation.locationName = self.userFriendlyLocation.text;
             //eventAnnotation.placeName = self.eventLocation.text;
             //eventAnnotation.placeName = @"testing location";
             //eventAnnotation.placeName = [NSString stringWithFormat:@"%@", event.location];

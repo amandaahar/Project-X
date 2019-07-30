@@ -90,7 +90,8 @@
             self.eventID = myEvent.eventID;
             [self eventDateIdentifier];
             [self eventLocationIdentifier];
-            //self.eventLocation.text =
+            //[self setImage:myEvent.eventImageURL];
+            
             self.eventLocation.text = myEvent.userFriendlyLocation;
             
             if(myEvent.categories.intValue == 0){ //How to fix that everything is food if none available
@@ -119,6 +120,13 @@
 
 }
 
+/*
+ -(void) setImage: (NSString *) photoURL {
+    NSURL *imageURL = [NSURL URLWithString:photoURL];
+    [self.eventImageURL setImageWithURL:imageURL];
+}
+ */
+
 - (void) fetchImage {
     
     FIRStorage *storage = [FIRStorage storage];
@@ -135,6 +143,7 @@
     }];
     
 }
+
 
 - (void) movingPreview {
     
@@ -252,7 +261,7 @@
             self.categoryIndex.text = @"Other";
         }
         else{
-            self.categoryIndex.text = @" ";
+            self.categoryIndex.text = @"Other";
         }
     }
 }
@@ -272,32 +281,25 @@
     MKAnnotationView *eventView = [self.mapView dequeueReusableAnnotationViewWithIdentifier:self.annotationID];
     eventView.canShowCallout = true;
     eventView.leftCalloutAccessoryView = [[UIImageView alloc] initWithFrame:CGRectMake(0.0, 0.0, 25.0, 50.0)];
-    //eventView.image = [UIImage imageNamed:@"home"];
     
     Event *event = self.eventArray.firstObject;
     
     if(event.categories.intValue == 0){
-        //self.categoryIndex.text = @"Food";
         eventView.image = [UIImage imageNamed:@"baseline_local_dining_black_18pt"];
     }
     else if(event.categories.intValue == 1){
-       // self.categoryIndex.text = @"Culture";
         eventView.image = [UIImage imageNamed:@"baseline_color_lens_black_18pt"];
     }
     else if(event.categories.intValue == 2){
-        //self.categoryIndex.text = @"Fitness";
         eventView.image = [UIImage imageNamed:@"baseline_directions_run_black_18pt"];
     }
     else if(event.categories.intValue == 3){
-        //self.categoryIndex.text = @"Education";
         eventView.image = [UIImage imageNamed:@"baseline_local_library_black_18pt"];
     }
     else if(event.categories.intValue == 4){
-        //self.categoryIndex.text = @"Other";
         eventView.image = [UIImage imageNamed:@"baseline_event_black_18pt"];
     }
     else{
-        //self.categoryIndex.text = @" ";
         eventView.image = [UIImage imageNamed:@"baseline_event_black_18pt"];
     }
     
@@ -321,8 +323,6 @@
     MapAnnotation *eventAnnotation = [[MapAnnotation alloc] init];
     eventAnnotation.title = self.eventName.text;
     eventAnnotation.locationName = self.eventLocation.text;
-    //eventAnnotation.placeName = self.eventLocation.text;
-    //eventAnnotation.placeName = @"testing location";
     //eventAnnotation.placeName = [NSString stringWithFormat:@"%@", event.location];
     eventAnnotation.coordinate = location.center;
     
