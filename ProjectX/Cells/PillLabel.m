@@ -37,6 +37,14 @@
     
 }
 
+- (float)expectedWidth{
+    [self setNumberOfLines:1];
+    
+    CGSize expectedLabelSize = [[self text] sizeWithAttributes:@{NSFontAttributeName:self.font}];
+    
+    return expectedLabelSize.width;
+}
+
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.

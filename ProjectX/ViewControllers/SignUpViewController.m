@@ -7,7 +7,7 @@
 //
 
 #import "SignUpViewController.h"
-#import "AppDelegate.h"
+
 @import MaterialTextField;
 @import Firebase;
 @import CoreLocation;
@@ -142,10 +142,7 @@
                      }else
                      {
                          NSLog(@"Document successfully written!");
-                         AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
-                         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-                         SignUpViewController *SignUpViewController = [storyboard instantiateViewControllerWithIdentifier:@"TabBarVC"];
-                         appDelegate.window.rootViewController = SignUpViewController;
+                         [self performSegueWithIdentifier:@"preferences" sender:self];
                      }
                 }];
                 
