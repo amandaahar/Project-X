@@ -14,7 +14,7 @@
 #import "../Models/FirebaseManager.h"
 
 @import Firebase;
-@interface ProfileViewController ()
+@interface ProfileViewController () < UICollectionViewDelegate, UICollectionViewDataSource>
 @property (weak, nonatomic) IBOutlet UILabel *nameText;
 @property (weak, nonatomic) IBOutlet UIImageView *profilePictureImage;
 @property (weak, nonatomic) IBOutlet UILabel *username;
@@ -22,6 +22,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *bioText;
 @property (nonatomic, readwrite) FIRFirestore *db;
 @property (nonatomic, strong) User *currentUser;
+@property (weak, nonatomic) IBOutlet UICollectionView *interestsCollectionView;
 @end
 
 @implementation ProfileViewController
@@ -33,10 +34,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.interestsCollectionView.delegate = self;
+    self.interestsCollectionView.dataSource = self;
+    
     [self setup];
+    
 }
 
 - (void) setup {
+    
+    
     
     [[FirebaseManager sharedManager] getCurrentUser:^(User * _Nonnull user, NSError * _Nonnull error) {
         if(error != nil)
@@ -52,10 +59,11 @@
             self.bioText.text = self.currentUser.bio;
             [self setImage:self.currentUser.profileImageURL];
             
-            for (NSString *category in self.currentUser.preferences) {
+            for (NSDictionary *category in self.currentUser.preferences) {
                 // NSString *interestsString = [[NSString alloc] init];
                 // self.preferences.text = @"";
-                self.preferences.text = [[self.preferences.text stringByAppendingString:@" "] stringByAppendingString:category];
+                self.preferences.text = [[self.preferences.text stringByAppendingString:@" "] stringByAppendingString:category[@"short_name"]];
+                [self.interestsCollectionView reloadData];
                 
             }
             
@@ -119,5 +127,21 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+- (nonnull __kindof UICollectionViewCell *)collectionView:(nonnull UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
+    InterestsCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"InterestsCell" forIndexPath:indexPath];
+    NSString *interest = self.currentUser.preferences[indexPath.item][@"short_name"];
+    
+    [cell setProfileInterestLabelText:interest];
+    
+    return cell;
+}
+
+- (NSInteger)collectionView:(nonnull UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    NSInteger numOfInterests = self.currentUser.preferences.count;
+    return numOfInterests;
+}
+
+
 
 @end
