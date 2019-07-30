@@ -22,9 +22,10 @@
     return self;
 }
 
-
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
+/**
+ This is where I draw the message bubble that is very similar to the Apple Messeger bubble
+ 
+ */
 - (void)drawRect:(CGRect)rect {
     
     CGFloat width = rect.size.width;

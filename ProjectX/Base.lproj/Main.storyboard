@@ -196,7 +196,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6GJ-81-P3K">
-                                <rect key="frame" x="0.0" y="64" width="379" height="552"/>
+                                <rect key="frame" x="0.0" y="116" width="379" height="500"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="About the event" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="onV-gv-fCa">
                                         <rect key="frame" x="20" y="452" width="123" height="21"/>
@@ -298,8 +298,12 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="mLi-9J-qZm"/>
                     </view>
-                    <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="3tz-GA-ode">
-                        <barButtonItem key="rightBarButtonItem" title="Create group" id="agO-5b-4iw"/>
+                    <navigationItem key="navigationItem" largeTitleDisplayMode="always" id="3tz-GA-ode">
+                        <barButtonItem key="rightBarButtonItem" title="Create group" id="agO-5b-4iw">
+                            <connections>
+                                <action selector="createGroup:" destination="UOT-AV-1DE" id="jIz-P4-mky"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="createGroupButton" destination="3jC-1E-btR" id="KCR-wb-eCm"/>

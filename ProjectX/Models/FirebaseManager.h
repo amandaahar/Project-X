@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "Event.h"
+#import "EventAPI.h"
 NS_ASSUME_NONNULL_BEGIN
 @import Firebase;
 @class User;
@@ -23,6 +24,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)getEventsFromUser:(NSString *) userID completion: (void(^)(NSArray *events, NSError *error))completion;
 -(void) setNewLanguage : (NSString *) newLanguage;
 -(void) setNewPreferences : (NSArray *) preferences;
+-(void) setNewAPIEvent : (EventAPI *) event completion: (void(^)( NSError *error))completion;
+-(void) addUserToEvent : (FIRDocumentReference *) eventID;
 @end
 
 NS_ASSUME_NONNULL_END

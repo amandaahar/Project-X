@@ -12,9 +12,12 @@
 
 @implementation CategoriesCollectionViewCell
 
+NSDateFormatter *dateFormat2;
 
 - (void)awakeFromNib {
     [super awakeFromNib];
+    dateFormat2 = [[NSDateFormatter alloc] init];
+    [dateFormat2 setDateFormat:@"MM/dd/YY"];
     self.threeEvents = [NSArray new];
     self.tableViewEvents.delegate = self;
     self.tableViewEvents.dataSource = self;
@@ -34,7 +37,8 @@
     }
 
     [cell setMyEvent:self.threeEvents[indexPath.row]];
-    
+    NSString *dateString = [dateFormat2 stringFromDate:[self.threeEvents[indexPath.row] date]];
+    [cell.api setText:dateString];
     return cell;
 }
 

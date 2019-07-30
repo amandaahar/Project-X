@@ -8,11 +8,13 @@
 
 #import "HomeFeedTableViewCell.h"
 @import AFNetworking;
+@import EventKit;
 @implementation HomeFeedTableViewCell
 
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    [self.addCalendarButton addTarget:self action:@selector(addEventToCalendar) forControlEvents:(UIControlEventTouchDown)];
     
 }
 
@@ -54,10 +56,34 @@
     self.imageEvent.layer.cornerRadius = 15;
     self.infoButton.layer.cornerRadius = 10;
     self.infoButton.clipsToBounds = YES;
-    self.api.text = [event api];
+    //self.api.text = [event api];
     
     [self.imageEvent setClipsToBounds:YES];
 
+}
+
+#pragma mark - Actions in the cell
+
+-(void) addEventToCalendar{
+    EKEventStore * store = [EKEventStore new];
+    [store requestAccessToEntityType:(EKEntityTypeEvent) completion:^(BOOL granted, NSError * _Nullable error) {
+        
+        if(!granted)
+        {
+            return;
+        }
+        EKEvent *event = [EKEvent eventWithEventStore:store];
+        [event setTitle:self.event.name];
+        [event setStartDate:self.event.date];
+        [event setEndDate:[event.startDate dateByAddingTimeInterval:60*60]];
+        [event setCalendar:[store defaultCalendarForNewEvents]];
+        NSError *err = nil;
+        
+        [store saveEvent:event span:EKSpanThisEvent commit:YES error:&err];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"newEvent" object:self.event.name];
+        
+        
+    }];
 }
 
 @end

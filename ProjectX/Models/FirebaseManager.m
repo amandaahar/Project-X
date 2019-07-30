@@ -135,4 +135,34 @@
     [[[database collectionWithPath:@"Users"] documentWithPath:FIRAuth.auth.currentUser.uid] updateData:@{@"preferences" : preferences}];
 }
 
+
+
+-(void) setNewAPIEvent : (EventAPI *) event completion: (void(^)( NSError *error))completion
+{
+    CLGeocoder * geoCoder = [CLGeocoder new];
+    CLLocation *location = [[CLLocation alloc] initWithLatitude:event.location.latitude longitude:event.location.longitude];
+    [geoCoder reverseGeocodeLocation:location completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
+        if(error == nil)
+        {
+            CLPlacemark * placemark = placemarks[0];
+            FIRGeoPoint *geoPoint = [[FIRGeoPoint alloc] initWithLatitude:event.location.latitude longitude:event.location.longitude];
+            FIRDocumentReference *docReference = [[self->database collectionWithPath:@"Event"] addDocumentWithData:@{}];
+            
+            [docReference updateData:@{@"name": event.name, @"description": event.summary, @"location": geoPoint, @"eventDate": event.date, @"numAttendees": [NSNumber numberWithInt:1], @"categoryIndex": [NSNumber numberWithInt:5], @"userFriendlyLocation": placemark.name, @"images" : @[event.logo]}];
+            [[[self->database collectionWithPath:@"Users"] documentWithPath:FIRAuth.auth.currentUser.uid] updateData:@{ @"events": [FIRFieldValue fieldValueForArrayUnion:@[docReference]] }];
+            completion(nil);
+        }else
+        {
+            completion(error);
+        }
+        
+    }];
+    
+}
+
+-(void) addUserToEvent : (FIRDocumentReference *) eventID
+{
+   
+}
+
 @end
