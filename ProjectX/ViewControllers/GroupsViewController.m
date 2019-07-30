@@ -95,7 +95,6 @@
     
     messagesViewController.eventID = self.eventToPass.eventID;
     [[messagesViewController navigationItem] setTitle:self.eventToPass.name];
-    //[[detailsViewController navigationItem] setRightBarButtonItem:@"details"];
 }
 
 

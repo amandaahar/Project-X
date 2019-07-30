@@ -129,8 +129,7 @@ NSLayoutConstraint *bottom;
     else if([segue.identifier isEqualToString:@"eventDetails"])
     {
         DetailEventViewController * detailsVC = [segue destinationViewController];
-        detailsVC.title = self.title;
-        
+        detailsVC.detailEventID = self.eventID;
     }
     
 }

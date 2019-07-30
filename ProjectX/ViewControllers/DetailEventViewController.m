@@ -35,10 +35,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.db = [FIRFirestore firestore];
     [self fetchEvents];
     [self fetchImage];
     
-    self.db = [FIRFirestore firestore];
     self.mapView.delegate = self;
     self.annotationID = @"Pin";
     [self.mapView registerClass:[MKAnnotationView class] forAnnotationViewWithReuseIdentifier:self.annotationID];
@@ -50,6 +51,7 @@
 
 - (void) fetchEvents {
     
+    /*
     [[FirebaseManager sharedManager] getEvents:^(NSArray * _Nonnull event, NSError * _Nonnull error) {
         if(error != nil)
         {
@@ -61,12 +63,52 @@
             self.attendeesNo.text = [NSString stringWithFormat:@"%@", myEvent.attendees];
             //self.eventName.text = myEvent.name;
             self.eventDescription.text = myEvent.descriptionEvent;
-            self.eventArray = event;
+            //self.eventArray = event;
             self.eventID = myEvent.eventID;
             [self eventDateIdentifier];
             [self eventLocationIdentifier];
 //            self.eventLocation.text =
             self.userFriendlyLocation.text = myEvent.userFriendlyLocation;
+        }
+    }];
+     */
+    
+    FIRDocumentReference *docRef =
+    [[self.db collectionWithPath:@"Event"] documentWithPath:self.detailEventID];
+    [docRef getDocumentWithCompletion:^(FIRDocumentSnapshot *snapshot, NSError *error) {
+        if (snapshot.exists) {
+            NSLog(@"Document data: %@", snapshot.data);
+            Event * myEvent = [[Event alloc] initWithDictionary:snapshot.data eventID:snapshot.documentID];
+            
+            self.attendeesNo.text = [NSString stringWithFormat:@"%@", myEvent.attendees];
+            //self.eventName.text = myEvent.name;
+            self.eventDescription.text = myEvent.descriptionEvent;
+            self.userFriendlyLocation.text = myEvent.userFriendlyLocation;
+            //self.eventCategory.text = myEvent.eventCategory;
+            
+            
+            //[self eventLocationIdentifier];
+            MKCoordinateRegion location = MKCoordinateRegionMake(CLLocationCoordinate2DMake(myEvent.location.latitude, myEvent.location.longitude), MKCoordinateSpanMake(0.05, 0.05));
+            [self.mapView setRegion:location animated:YES];
+            
+            Map *eventAnnotation = [[Map alloc] init];
+            eventAnnotation.title = self.eventName.text;
+            //eventAnnotation.placeName = self.eventLocation.text;
+            //eventAnnotation.placeName = @"testing location";
+            //eventAnnotation.placeName = [NSString stringWithFormat:@"%@", event.location];
+            eventAnnotation.coordinate = location.center;
+            [self.mapView addAnnotation:eventAnnotation];
+            
+            
+            //[self eventDateIdentifier];
+            FIRTimestamp *eventTimestamp = myEvent.date;
+            [self setDateNSEvent:eventTimestamp.dateValue];
+            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+            [formatter setDateFormat:@"MMM d, h:mm a"];
+            self.eventDate.text = [NSString stringWithFormat:@"%@", [formatter stringFromDate:self.dateNSEvent]];
+        
+        } else {
+            NSLog(@"Document does not exist");
         }
     }];
     
@@ -90,10 +132,11 @@
 }
 
 #pragma mark - Creating Event
-
+/*
+ 
 - (void) eventLocationIdentifier {
     
-    Event *event = self.eventArray.firstObject;
+    Event *event = myEvent.location;
     
     MKCoordinateRegion location = MKCoordinateRegionMake(CLLocationCoordinate2DMake(event.location.latitude, event.location.longitude), MKCoordinateSpanMake(0.05, 0.05));
     [self.mapView setRegion:location animated:YES];
@@ -109,9 +152,10 @@
     
 }
 
+
 - (void) eventDateIdentifier {
     
-    Event *event = self.eventArray.firstObject;
+    Event *event = [[Event alloc] init];
     
     FIRTimestamp *eventTimestamp = event.date;
     [self setDateNSEvent:eventTimestamp.dateValue];
@@ -120,8 +164,8 @@
     self.eventDate.text = [NSString stringWithFormat:@"%@", [formatter stringFromDate:self.dateNSEvent]];
     
 }
+ */
 
-/*
 - (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
     MapAnnotation * location = view.annotation;
     [[location mapItem] openInMapsWithLaunchOptions:@{MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving}];
@@ -132,7 +176,6 @@
     MapAnnotation * location = self.mapView.annotations[0];
     [[location mapItem] openInMapsWithLaunchOptions:@{MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving}];
 }
-*/
 
 - (MKAnnotationView *)eventHomeView:(id<MKAnnotation>)annotation {
     
