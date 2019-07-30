@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 @import Firebase;
+@import FirebaseMLCommon;
 @interface AppDelegate ()
 
 @end
@@ -23,6 +24,8 @@
 #pragma clang diagnostic ignored "-Wunused-variable"
     FIRFirestore *defaultFirestore = [FIRFirestore firestore];
 #pragma clang diagnostic pop
+    
+    
     return YES;
 }
 

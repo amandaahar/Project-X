@@ -13,7 +13,7 @@
 
 -(instancetype) init
 {
-    NSDictionary *defaultDictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"", @"name",@"",@"description",0,@"attendees",@[], @"pictures",@"", @"location", [NSDate new], @"date", nil];
+    NSDictionary *defaultDictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"", @"name",@"",@"description",0,@"attendees",@[], @"pictures",@"", @"location", [NSDate new], @"date",0,@"categories",@"",@"userFriendlyLocation", nil];
     self = [self initWithDictionary:defaultDictionary eventID:@""];
     return self;
 }
@@ -31,6 +31,8 @@
         self.location = dictionary[@"location"];
         self.date = dictionary[@"eventDate"];
         self.eventID = eventID;
+        self.categories = dictionary[@"categoryIndex"];
+        self.userFriendlyLocation = dictionary[@"userFriendlyLocation"];
     }
     return self;
 }
@@ -66,6 +68,7 @@
     self.location = details[@"location"];
     self.date = details[@"eventDate"];
     self.eventID = eventID;
+    self.categories = details[@"categoryIndex"];
 }
 
 //+ (NSMutableArray *)eventsWithArray:(NSArray *)dictionaries{

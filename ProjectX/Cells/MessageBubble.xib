@@ -57,11 +57,6 @@
                     <constraint firstItem="KNl-vt-ErM" firstAttribute="leading" secondItem="X0S-hK-d1w" secondAttribute="leading" constant="15" id="rnH-q8-GMT"/>
                     <constraint firstItem="KNl-vt-ErM" firstAttribute="bottom" secondItem="X0S-hK-d1w" secondAttribute="bottom" constant="-10" id="sj8-NO-HRi"/>
                 </constraints>
-                <variation key="default">
-                    <mask key="constraints">
-                        <exclude reference="YsD-jv-XJP"/>
-                    </mask>
-                </variation>
             </tableViewCellContentView>
             <accessibility key="accessibilityConfiguration">
                 <accessibilityTraits key="traits" notEnabled="YES"/>

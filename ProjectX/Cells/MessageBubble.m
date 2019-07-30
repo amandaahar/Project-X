@@ -7,6 +7,7 @@
 //
 
 #import "MessageBubble.h"
+#import "../Helpers/TranslatorManager.h"
 #import <UIKit/UIKit.h>
 @implementation MessageBubble
 
@@ -23,28 +24,52 @@
 {
     self.message = message;
     self.nameLabel.text = message.nameOfSender;
-    [self.bubbleLabel setText:message.text];
+    //[self.bubbleLabel setText:message.text];
     
     self.bubbleView.isIncoming = YES;
     self.bubbleView.incomingColor = [UIColor colorWithWhite:0.6 alpha:1];
    [self.bubbleLabel setTextAlignment:(NSTextAlignmentLeft)];
-    
-
     [self.rightConstraint setActive:NO];
     [self.leftConstraint setActive:YES];
-    [self.bubbleLabel layoutIfNeeded];
-    [self.bubbleLabel sizeToFit];
-    [self.bubbleView setNeedsDisplay];
+   
+
+
+    if([self.message.language isEqualToString:self.userLanguage])
+    {
+        [self.bubbleLabel setText:message.text];
+        [self.bubbleLabel layoutIfNeeded];
+        [self.bubbleLabel sizeToFit];
+        [self.bubbleView setNeedsDisplay];
+        
+        [self sizeToFit];
+        
+    }else
+    {
+        [[TranslatorManager sharedManager] translateTextInLanguage:self.message.language :self.userLanguage :message.text completion:^(NSString * _Nonnull translated, NSError * _Nonnull error) {
+            if(error == nil)
+            {
+                [self.bubbleLabel setText:translated];
+                [self.bubbleLabel layoutIfNeeded];
+                [self.bubbleLabel sizeToFit];
+                [self.bubbleView setNeedsDisplay];
+                
+                [self sizeToFit];
+            }
+            
+        }];
+    }
     
-    [self sizeToFit];
 }
 
 
 - (void)showOutgoingMessage:(Message *)message
 {
     self.message = message;
+  
+
     self.nameLabel.text = @"";
     [self.bubbleLabel setText:message.text];
+    
     [self.bubbleLabel sizeToFit];
     [self.leftConstraint setActive:NO];
     [self.rightConstraint setActive:YES];
@@ -54,38 +79,6 @@
      self.bubbleView.outgoingColor = [UIColor colorWithRed:0.09 green:0.54 blue:1 alpha:1];
     [self.bubbleView setNeedsDisplay];
    [self sizeToFit];
-    //[self.bubbleView drawRect:self.bubbleView.frame];
-   
-//    UILabel * label = [[UILabel alloc] init];
-//    [label setNumberOfLines:0];
-//    [label setFont:[UIFont systemFontOfSize:14]];
-//    [label setTextColor:[UIColor blackColor]];
-//    [label setText: text];
-//
-//    [label setTextColor:[UIColor whiteColor]];
-//
-//    CGSize constraintRect = CGSizeMake(0.66 * self.frame.size.width, CGFLOAT_MAX);
-//    CGRect boundingBox = [text boundingRectWithSize:constraintRect options:(NSStringDrawingUsesLineFragmentOrigin) attributes:@{NSFontAttributeName : label.font } context:nil];
-//    label.frame = boundingBox;
-//    CGSize bubbleSize = CGSizeMake(label.frame.size.width + 28, label.frame.size.height + 20);
-//
-//    BubbleView * bubbleView = [BubbleView new];
-//    bubbleView.frame = CGRectMake(bubbleView.frame.origin.x, bubbleView.frame.origin.y, label.frame.size.width + 28, label.frame.size.height + 20);
-//    bubbleView.backgroundColor = [UIColor clearColor];
-//
-//    bubbleView.center = CGPointMake(self.frame.size.width - bubbleView.frame.size.width / 2 - 90, self.center.y);
-//    [self addSubview:bubbleView];
-//
-//    label.center = bubbleView.center;
-//    [self addSubview:label];
-//
-//
 }
-
-//- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-//    [super setSelected:selected animated:animated];
-//
-//    // Configure the view for the selected state
-//}
 
 @end

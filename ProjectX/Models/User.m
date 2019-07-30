@@ -7,14 +7,14 @@
 //
 
 #import "User.h"
-
+#import "../Helpers/TranslatorManager.h"
 @implementation User
 
 
 #pragma mark - User Initializer
 -(instancetype) init
 {
-    NSDictionary *defaultDictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"", @"firstName",@"",@"lastName",@"",@"username",@"", @"profileImage",@"", @"location",@[], @"preferences", @"", @"events", FIRAuth.auth.currentUser.uid,@"userID",@"", @"bio",  nil];
+    NSDictionary *defaultDictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"", @"firstName",@"",@"lastName",@"",@"username",@"", @"profileImage",@"", @"location",@[], @"preferences", @"", @"events", FIRAuth.auth.currentUser.uid,@"userID",@"", @"bio",@"en",@"lan",  nil];
     self = [self initWithDictionary:defaultDictionary];
     return self;
 }
@@ -33,29 +33,41 @@
         [self setEvents:dictionary[@"events"]];
         [self setUserID:FIRAuth.auth.currentUser.uid];
         [self setBio:dictionary[@"bio"]];
+        [self setLanguage:dictionary[@"lan"]];
         
     }
     return self;
 }
 
 -(void) composeMessage:(NSString *)text chat: (NSString *)event{
-    FIRFirestore *db = [FIRFirestore firestore];
-    FIRTimestamp *currentTime = [FIRTimestamp timestamp];
-    
-    // adds message document
-    __block FIRDocumentReference *ref = [[[[db collectionWithPath:@"Event"] documentWithPath:event] collectionWithPath:@"Chat"] addDocumentWithData:
-  @{
-    @"text": text,
-    @"timeSent": currentTime,
-    @"nameOfSender": self.username,
-    @"userID": self.userID
-    } completion:^(NSError * _Nullable error) {
-        if (error != nil) {
-            NSLog(@"Error adding document: %@", error);
-        } else {
-            NSLog(@"Document added with ID: %@", ref.documentID);
-        }
+    if(![text isEqualToString:@""])
+    {
+        FIRFirestore *db = [FIRFirestore firestore];
+        FIRTimestamp *currentTime = [FIRTimestamp timestamp];
+        [[TranslatorManager sharedManager] detectLanguage:text completion:^(NSString * _Nonnull language, NSError * _Nonnull error) {
+            // adds message document
+            if(error == nil)
+            {
+                __block FIRDocumentReference *ref = [[[[db collectionWithPath:@"Event"] documentWithPath:event] collectionWithPath:@"Chat"] addDocumentWithData:
+                                                     @{
+                                                       @"text": text,
+                                                       @"timeSent": currentTime,
+                                                       @"nameOfSender": self.username,
+                                                       @"userID": self.userID,
+                                                       @"lan" : language
+                                                       } completion:^(NSError * _Nullable error) {
+                                                           if (error != nil) {
+                                                               NSLog(@"Error adding document: %@", error);
+                                                           } else {
+                                                               NSLog(@"Document added with ID: %@", ref.documentID);
+                                                           }
+                                                       }];
+            }
         }];
+    }
+    
+    
+ 
 }
 
 @end

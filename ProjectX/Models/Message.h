@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(strong, nonatomic) NSDate *timeSent;
 @property(strong, nonatomic) NSString *nameOfSender;
 @property(strong, nonatomic) NSString *userID;
+@property(strong, nonatomic) NSString *language;
 
 -(instancetype) initWithDictionary:(NSDictionary *)dictionary;
 + (NSMutableArray *)messagesWithArray:(NSArray *)dictionaries;

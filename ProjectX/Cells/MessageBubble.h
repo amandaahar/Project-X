@@ -19,7 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UILabel *bubbleLabel;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *leftConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *rightConstraint;
-
+@property (strong, nonatomic) NSString *userLanguage;
 -(void) showIncomingMessage : (Message *) message;
 - (void)showOutgoingMessage:(Message *)message;
 
