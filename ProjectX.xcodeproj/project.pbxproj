@@ -15,6 +15,10 @@
 		0ECF088D22DE792900F5A8AA /* LogInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ECF088C22DE792900F5A8AA /* LogInViewController.m */; };
 		7A4BD0CE86A659CBEE639CD6 /* Pods_ProjectXTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70CEB876BE4019117E81D49A /* Pods_ProjectXTests.framework */; };
 		7F2A7DC42E2A0127BBFFA154 /* Pods_ProjectX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C296CF13ED1DF49E87C0289 /* Pods_ProjectX.framework */; };
+		E703B94422F248DD00C63563 /* EditProfileTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E703B94222F248DD00C63563 /* EditProfileTableViewCell.m */; };
+		E703B94522F248DD00C63563 /* EditProfileTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E703B94322F248DD00C63563 /* EditProfileTableViewCell.xib */; };
+		E703B94922F2548700C63563 /* ShowInterestsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E703B94722F2548700C63563 /* ShowInterestsTableViewCell.m */; };
+		E703B94A22F2548700C63563 /* ShowInterestsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E703B94822F2548700C63563 /* ShowInterestsTableViewCell.xib */; };
 		E76311B822E23E8E00A1B674 /* MessagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E76311B722E23E8E00A1B674 /* MessagesViewController.m */; };
 		E76311BB22E241BB00A1B674 /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = E76311BA22E241BB00A1B674 /* Message.m */; };
 		E76311BF22E2746400A1B674 /* topCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E76311BD22E2746400A1B674 /* topCollectionViewCell.xib */; };
@@ -98,6 +102,12 @@
 		C9EBBE401D4157199CB0DD86 /* Pods-ProjectXUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProjectXUITests.release.xcconfig"; path = "Target Support Files/Pods-ProjectXUITests/Pods-ProjectXUITests.release.xcconfig"; sourceTree = "<group>"; };
 		CBD9E6E483995742FF9E6D06 /* Pods_ProjectXUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ProjectXUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D45E39045F451DD5AAFB4ED8 /* Pods-ProjectX.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProjectX.debug.xcconfig"; path = "Target Support Files/Pods-ProjectX/Pods-ProjectX.debug.xcconfig"; sourceTree = "<group>"; };
+		E703B94122F248DD00C63563 /* EditProfileTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EditProfileTableViewCell.h; sourceTree = "<group>"; };
+		E703B94222F248DD00C63563 /* EditProfileTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EditProfileTableViewCell.m; sourceTree = "<group>"; };
+		E703B94322F248DD00C63563 /* EditProfileTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditProfileTableViewCell.xib; sourceTree = "<group>"; };
+		E703B94622F2548700C63563 /* ShowInterestsTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShowInterestsTableViewCell.h; sourceTree = "<group>"; };
+		E703B94722F2548700C63563 /* ShowInterestsTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShowInterestsTableViewCell.m; sourceTree = "<group>"; };
+		E703B94822F2548700C63563 /* ShowInterestsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ShowInterestsTableViewCell.xib; sourceTree = "<group>"; };
 		E76311B622E23E8E00A1B674 /* MessagesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MessagesViewController.h; sourceTree = "<group>"; };
 		E76311B722E23E8E00A1B674 /* MessagesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MessagesViewController.m; sourceTree = "<group>"; };
 		E76311B922E241BB00A1B674 /* Message.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
@@ -301,15 +311,21 @@
 				EA3A502322E0F2FC004F2FFD /* HomeFeedTableViewCell.xib */,
 				EA73F81022E10AE200385689 /* CategoriesCollectionViewCell.h */,
 				EA73F81122E10AE200385689 /* CategoriesCollectionViewCell.m */,
+				EA73F83B22E6848D00385689 /* MessageBubble.m */,
 				EA73F81A22E11B4700385689 /* GroupEventsTableViewCell.h */,
 				EA73F81B22E11B4700385689 /* GroupEventsTableViewCell.m */,
 				EA73F83A22E6848D00385689 /* MessageBubble.h */,
-				EA73F83B22E6848D00385689 /* MessageBubble.m */,
 				EA73F83C22E6848D00385689 /* MessageBubble.xib */,
 				E7BA0FF822EA5B2A00467978 /* PillLabel.h */,
 				E7BA0FF922EA5B2A00467978 /* PillLabel.m */,
 				EA70790A22EF8F5C00D41CD1 /* PreferencesCollectionViewCell.h */,
 				EA70790B22EF8F5C00D41CD1 /* PreferencesCollectionViewCell.m */,
+				E703B94122F248DD00C63563 /* EditProfileTableViewCell.h */,
+				E703B94222F248DD00C63563 /* EditProfileTableViewCell.m */,
+				E703B94322F248DD00C63563 /* EditProfileTableViewCell.xib */,
+				E703B94622F2548700C63563 /* ShowInterestsTableViewCell.h */,
+				E703B94722F2548700C63563 /* ShowInterestsTableViewCell.m */,
+				E703B94822F2548700C63563 /* ShowInterestsTableViewCell.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -528,9 +544,11 @@
 				EA73F83E22E6848D00385689 /* MessageBubble.xib in Resources */,
 				EA54ED1E22DE674000D0D7A2 /* GoogleService-Info.plist in Resources */,
 				E76311BF22E2746400A1B674 /* topCollectionViewCell.xib in Resources */,
+				E703B94A22F2548700C63563 /* ShowInterestsTableViewCell.xib in Resources */,
 				EA3A502522E0F2FC004F2FFD /* HomeFeedTableViewCell.xib in Resources */,
 				EA54ECF122DE3F3900D0D7A2 /* Assets.xcassets in Resources */,
 				EA54ECEC22DE3F3800D0D7A2 /* Main.storyboard in Resources */,
+				E703B94522F248DD00C63563 /* EditProfileTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -641,6 +659,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E703B94922F2548700C63563 /* ShowInterestsTableViewCell.m in Sources */,
 				0E496C0F22EE5AE200DEF38C /* DetailEventViewController.m in Sources */,
 				E7AEA0BE22DFD8BC00A77CC2 /* GroupTableViewCell.m in Sources */,
 				EA54ED2822DEE23900D0D7A2 /* FirebaseManager.m in Sources */,
@@ -680,6 +699,7 @@
 				E7AEA0BA22DFCC3A00A77CC2 /* Chat.m in Sources */,
 				EA73F81322E10AE200385689 /* CategoriesCollectionViewCell.m in Sources */,
 				E76311B822E23E8E00A1B674 /* MessagesViewController.m in Sources */,
+				E703B94422F248DD00C63563 /* EditProfileTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -852,14 +872,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 5UFVL3XXJ3;
+				DEVELOPMENT_TEAM = F49UV5JFM5;
 				INFOPLIST_FILE = ProjectX/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.fb.Charge.ProjectX;
+				PRODUCT_BUNDLE_IDENTIFIER = com.amandahar.ProjectX;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -871,14 +891,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 5UFVL3XXJ3;
+				DEVELOPMENT_TEAM = F49UV5JFM5;
 				INFOPLIST_FILE = ProjectX/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.fb.Charge.ProjectX;
+				PRODUCT_BUNDLE_IDENTIFIER = com.amandahar.ProjectX;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

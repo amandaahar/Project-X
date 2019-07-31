@@ -38,9 +38,16 @@
     self.interestsCollectionView.delegate = self;
     self.interestsCollectionView.dataSource = self;
     
-    [self.interestsCollectionView reloadData];
     
-    //[self setup];
+    UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout*)self.interestsCollectionView.collectionViewLayout;
+    layout.minimumInteritemSpacing = 2;
+    layout.minimumLineSpacing = 5;
+    
+    //[self.interestsCollectionView br]
+     [self setup];
+    
+    
+  
     
 }
 
@@ -53,26 +60,28 @@
         } else
         {
             self.currentUser = user;
-            NSLog(@"current user %@",user.username);
             
-            self.nameText.text = [[self.currentUser.firstName stringByAppendingString:@" "] stringByAppendingString:self.currentUser.lastName];
-            self.username.text = [self.username.text stringByAppendingString:self.currentUser.username];
-            self.bioText.text = self.currentUser.bio;
-            //[self setImage:self.currentUser.profileImageURL];
-            
-            self.profilePictureImage.layer.cornerRadius = self.profilePictureImage.frame.size.height / 2;
-            self.profilePictureImage.layer.masksToBounds = YES;
-            
-            for (NSDictionary *category in self.currentUser.preferences) {
-                // NSString *interestsString = [[NSString alloc] init];
-                // self.preferences.text = @"";
-                //self.preferences.text = [[self.preferences.text stringByAppendingString:@" "] stringByAppendingString:category[@"short_name"]];
-                
-                
-            }
+//            NSLog(@"current user %@",user.username);
+//
+//            self.nameText.text = [[self.currentUser.firstName stringByAppendingString:@" "] stringByAppendingString:self.currentUser.lastName];
+//            self.username.text = [self.username.text stringByAppendingString:self.currentUser.username];
+//            self.bioText.text = self.currentUser.bio;
+//            //[self setImage:self.currentUser.profileImageURL];
+//
+//            self.profilePictureImage.layer.cornerRadius = self.profilePictureImage.frame.size.height / 2;
+//            self.profilePictureImage.layer.masksToBounds = YES;
+//
+//            for (NSDictionary *category in self.currentUser.preferences) {
+//                // NSString *interestsString = [[NSString alloc] init];
+//                // self.preferences.text = @"";
+//                //self.preferences.text = [[self.preferences.text stringByAppendingString:@" "] stringByAppendingString:category[@"short_name"]];
+//
+//
+//            }
             [self.interestsCollectionView reloadData];
         }
     }];
+    
     
 }
 
@@ -132,7 +141,9 @@
 - (nonnull __kindof UICollectionViewCell *)collectionView:(nonnull UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
     InterestsCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"InterestsCell" forIndexPath:indexPath];
     
-    NSString *interest = self.currentUser.preferences[indexPath.item][@"short_name"];
+    //NSString *interest = [self.currentUser.preferences[indexPath.item][@"short_name"] componentsJoinedByString:@" "]
+    
+    NSString *interest = [[self.currentUser.preferences[indexPath.item][@"short_name"] componentsSeparatedByString:@" "] objectAtIndex:0];
     
     [cell setInterestLabelText:interest];
     
@@ -150,7 +161,15 @@
     
     [reusableView setProfileImageWithURL:self.currentUser.profileImageURL];
     [reusableView setNameText:[[self.currentUser.firstName stringByAppendingString:@" "] stringByAppendingString:self.currentUser.lastName]];
-    [reusableView setUsernameText: self.currentUser.username];
+    NSString *atSymbol = @"@";
+    if(self.currentUser.username != nil){
+        NSString *usernameText = [atSymbol stringByAppendingString:self.currentUser.username];
+        [reusableView setUsernameText: usernameText];
+    }else{
+      
+        [reusableView setUsernameText: self.currentUser.username];
+    }
+   
      
      //[@"@" stringByAppendingString: self.currentUser.usernam   e]];
      

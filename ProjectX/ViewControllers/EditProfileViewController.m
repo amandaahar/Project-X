@@ -7,11 +7,12 @@
 //
 
 #import "EditProfileViewController.h"
+#import "EditProfileTableViewCell.h"
 #import "../Models/FirebaseManager.h"
 @import MaterialTextField;
 
 
-@interface EditProfileViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource>
+@interface EditProfileViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, UITableViewDelegate, UITableViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UIImageView *editedProfileImage;
 @property (weak, nonatomic) IBOutlet MFTextField *firstNameText;
@@ -28,12 +29,16 @@
 @property (nonatomic, strong) User *currentUser;
 @property (nonatomic, readwrite) FIRFirestore *db;
 @property (weak, nonatomic) NSString *profileImageString;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *collectionVieHeightConstraint;
+@property (weak, nonatomic) IBOutlet UITableView *editProfileTableView;
 
 @end
 
 @implementation EditProfileViewController
 UIToolbar *interestsToolBar;
-
+NSString *cell0 = @"cell0";
+NSString *cell1 = @"cell1";
+NSString *cell2 = @"cell2";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -43,11 +48,22 @@ UIToolbar *interestsToolBar;
     
     [self.tabBarController.tabBar setHidden: YES];
     
- 
-    
     self.interestsCollectionView.dataSource = self;
     self.interestsCollectionView.delegate = self;
-    [self.interestsCollectionView reloadData];
+    
+    self.editProfileTableView.dataSource = self;
+    self.editProfileTableView.delegate = self;
+    
+    [self.editProfileTableView registerNib:[UINib nibWithNibName:@"EditProfileTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:cell0];
+    
+    [self.editProfileTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:cell1];
+    
+//    UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout*)self.interestsCollectionView.collectionViewLayout;
+//    layout.minimumInteritemSpacing = 5;
+//    layout.minimumLineSpacing = 5;
+    //[self.interestsCollectionView reloadData];
+    
+    
     
     //UIPickerView *interestsPicker = [[UIPickerView alloc]init];
     self.interestsPicker = [[UIPickerView alloc]init];
@@ -68,14 +84,14 @@ UIToolbar *interestsToolBar;
     UIBarButtonItem *space = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     [interestsToolBar setItems:[NSArray arrayWithObjects:space,doneButton, nil]];
     [self.interests setInputAccessoryView:interestsToolBar];
-    
-
 }
 
--(void) fetchCategories {
+- (void)fetchCategories {
     [[APIEventsManager sharedManager] getCategories:^(NSArray * _Nonnull categories, NSError * _Nonnull error) {
         if(error == nil)
         {
+            
+            //[[dic[@"short_name"] componentsSeparatedByString:@" "] objectAtIndex:0]
             self.interestsCategories = categories;
             self.selectedRowDictRef = self.interestsCategories[0];
         }
@@ -84,7 +100,51 @@ UIToolbar *interestsToolBar;
 
 - (IBAction)didTapSave:(id)sender {
     [self updateDocument];
+}
 
+# pragma mark UITableView Data Source initializations
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    // Return 3: the text field section, the add interest button and the interested
+    // collection view in a cell.
+    return 2;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+
+    if (indexPath.row == 0) {
+    EditProfileTableViewCell *profileCell = [self.editProfileTableView dequeueReusableCellWithIdentifier:cell0];
+    
+    NSURL *imageURL = [NSURL URLWithString:self.currentUser.profileImageURL];
+    profileCell.profileView.layer.cornerRadius = self.editedProfileImage.frame.size.height / 2;
+    profileCell.profileView.layer.masksToBounds = YES;
+    [profileCell.profileView setImageWithURL:imageURL];
+    
+    profileCell.firstName.text = self.currentUser.firstName;
+    profileCell.lastName.text = self.currentUser.lastName;
+    //    self.bioText.text = self.currentUser.bio;
+    return profileCell;
+    }
+    else {
+        UITableViewCell *chooseInterestsCell = [self.editProfileTableView dequeueReusableCellWithIdentifier:cell1];
+        chooseInterestsCell.backgroundColor = [UIColor blueColor];
+        return chooseInterestsCell;
+    }
+//    if (indexPath.row == 1) {
+//    }
+//    else {
+//    }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row == 0) {
+        return [EditProfileTableViewCell recommendedHeight].floatValue;
+    }
+    if (indexPath.row == 1) {
+        return 50;
+    }
+    return 100;
 }
 
 - (void)setUpCurrentProperties {
@@ -96,6 +156,7 @@ UIToolbar *interestsToolBar;
         } else {
             self.currentUser = user;
             
+            
             NSURL *imageURL = [NSURL URLWithString:self.currentUser.profileImageURL];
             self.editedProfileImage.layer.cornerRadius = self.editedProfileImage.frame.size.height / 2;
             self.editedProfileImage.layer.masksToBounds = YES;
@@ -105,9 +166,8 @@ UIToolbar *interestsToolBar;
             self.bioText.text = self.currentUser.bio;
             //for (NSDictionary *category in )
             self.usersInterests = self.currentUser.preferences;
-            [self.editedProfileImage setImageWithURL:imageURL];
             [self.interestsCollectionView reloadData];
-            
+            [self.editProfileTableView reloadData];
         }
     }];
     
@@ -118,7 +178,9 @@ UIToolbar *interestsToolBar;
     if (! [self.usersInterests containsObject:self.selectedRowDictRef]) {
         [self.usersInterests addObject:self.selectedRowDictRef];
     }
+    // Update our collection view, and then update content size of the scroll view.
     [self.interestsCollectionView reloadData];
+
 //    for (NSDictionary *category in self.usersInterests) {
 //        //self.interests.text = [self.usersInterests componentsJoinedByString:@"\n,"];
 //        self.interests.text = [[self.interests.text stringByAppendingString:@" "] stringByAppendingString:category[@"short_name"]];
@@ -277,15 +339,26 @@ UIToolbar *interestsToolBar;
 
 - (nonnull __kindof UICollectionViewCell *)collectionView:(nonnull UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
     InterestsCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"InterestsCell" forIndexPath:indexPath];
-    NSString *interest = self.usersInterests[indexPath.item][@"short_name"];
+    NSString *interest = [[self.usersInterests[indexPath.item][@"short_name"] componentsSeparatedByString:@" "] objectAtIndex:0];
+    
     
     [cell setInterestLabelText:interest];
+    
+    //if (self.usersInterests.count % 3 == 1) {
+    long rows = (self.usersInterests.count + 3 - 1)/3;
+        //self.collectionVieHeightConstraint.constant = self.interestsCollectionView.contentSize.height + cell.frame.size.height;
+    self.collectionVieHeightConstraint.constant = (double)(rows * cell.frame.size.height);
+        //[self.interestsCollectionView reloadData];
+    //}
     
     return cell;
 }
 
 - (NSInteger)collectionView:(nonnull UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     NSInteger numOfInterests = self.usersInterests.count;
+//    if (numOfInterests % 3 == 1) {
+//        self.interestsCollectionView.contentSize.height
+//    }
     return numOfInterests;
 }
 
