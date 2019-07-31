@@ -151,7 +151,7 @@
     [reusableView setNameText:[[self.currentUser.firstName stringByAppendingString:@" "] stringByAppendingString:self.currentUser.lastName]];
     [reusableView setUsernameText: self.currentUser.username];
      
-     //[@"@" stringByAppendingString: self.currentUser.username]];
+     //[@"@" stringByAppendingString: self.currentUser.usernam   e]];
      
      //[self.username.text stringByAppendingString:self.currentUser.username]];
     [reusableView setBioText:self.currentUser.bio];

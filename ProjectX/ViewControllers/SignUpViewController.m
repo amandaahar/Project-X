@@ -47,28 +47,23 @@
 
 #pragma mark - Design
 
--(void) buttonsDesign
-{
-    
-}
-
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     if ([textField.text  isEqualToString: @""])
     {
         return false;
-    }else if (textField == self.usernameField)
+    } else if (textField == self.usernameField)
     {
         [textField resignFirstResponder];
         [self.lastName becomeFirstResponder];
         return YES;
-    }else if (textField == self.lastName)
+    } else if (textField == self.lastName)
     {
         [textField resignFirstResponder];
         [self.username becomeFirstResponder];
         return YES;
         
-    }else if (textField == self.username)
+    } else if (textField == self.username)
     {
         [textField resignFirstResponder];
         [self.emailField becomeFirstResponder];
@@ -95,9 +90,8 @@
 
 
 - (void) viewWillAppear:(BOOL)animated {
-    self.handle = [[FIRAuth auth]
-        addAuthStateDidChangeListener:^(FIRAuth *_Nonnull auth, FIRUser *_Nullable user) {
-        }];
+    self.handle =
+        [[FIRAuth auth] addAuthStateDidChangeListener:^(FIRAuth *_Nonnull auth, FIRUser *_Nullable user) {}];
 }
 
 - (void) viewWillDisappear:(BOOL)animated {
@@ -107,16 +101,16 @@
 - (IBAction)signUpUser:(id)sender {
     // initialize a user object
 
-    if([self verifyPasswords: self.passwordField.text :self.secondPasswordField.text])
+    if([self verifyPasswords: self.passwordField.text passwordTwo:self.secondPasswordField.text])
     {
     // call sign up function on the object
     [[FIRAuth auth] createUserWithEmail:self.emailField.text
-                                   password:self.passwordField.text
-                                 completion:^(FIRAuthDataResult * _Nullable authResult, NSError * _Nullable error)
+                               password:self.passwordField.text
+                             completion:^(FIRAuthDataResult * _Nullable authResult, NSError * _Nullable error)
         {
             if (error != nil) {
                 NSLog(@"Error: %@", error.localizedDescription);
-                [self displayAlert:@"Error" :error.localizedDescription];
+                [self displayAlert:@"Error" subtitle:error.localizedDescription];
             }else
             {
                 NSString * language = [[NSLocale preferredLanguages] firstObject];
@@ -139,22 +133,21 @@
                      if (error != nil)
                      {
                           NSLog(@"Error writing document: %@", error);
-                     }else
+                     } else
                      {
                          NSLog(@"Document successfully written!");
                          [self performSegueWithIdentifier:@"preferences" sender:self];
                      }
                 }];
-                
         }
     }];
-    }else
+    } else
     {
-        [self displayAlert:@"Error" :@"Please try with a password with more than 6 characters"];
+        [self displayAlert:@"Error" subtitle:@"Please try with a password with more than 6 characters"];
     }
 }
 
- -(BOOL) verifyPasswords : (NSString *) passwordOne : (NSString *) passwordTwo
+- (BOOL)verifyPasswords:(NSString *)passwordOne passwordTwo:(NSString *)passwordTwo
  {
      NSLog(@"%@",passwordOne);
      NSLog(@"%@",passwordTwo);
@@ -162,7 +155,7 @@
  }
 
 
--(void) displayAlert : (NSString *) title : (NSString *) subtitle
+- (void)displayAlert:(NSString *)title subtitle:(NSString *)subtitle
 {
     UIAlertController * alert = [UIAlertController alertControllerWithTitle:title message:subtitle preferredStyle:(UIAlertControllerStyleAlert)];
     UIAlertAction * acceptAction = [UIAlertAction actionWithTitle:@"Accept" style:(UIAlertActionStyleDefault) handler:nil];

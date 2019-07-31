@@ -12,13 +12,13 @@
 #import "../Cells/GroupEventsTableViewCell.h"
 #import "DetailHomeViewController.h"
 @import CoreLocation;
-@interface EventsFeedViewController () <UITableViewDelegate, UITableViewDataSource,CLLocationManagerDelegate, UIScrollViewDelegate>
+@interface EventsFeedViewController () <UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate, UIScrollViewDelegate>
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityView;
 @property (weak, nonatomic) IBOutlet UITableView *tableViewEventCategories;
 @property (strong, nonatomic) NSMutableArray *events;
 @property (strong, nonatomic) NSMutableArray *topEvents;
 @property (strong, nonatomic) NSArray *categories;
-@property(assign, nonatomic) CGFloat currentOffset;
+@property (assign, nonatomic) CGFloat currentOffset;
 @property (nonatomic, strong) EventAPI *eventSelected;
 @end
 
@@ -59,29 +59,31 @@ NSDateFormatter *dateFormat;
     [self currentLocationIdentifier];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showDetailView:) name:@"selectedEvent" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showAlert:) name:@"newEvent" object:nil];
-    
 }
 
--(void)showDetailView : (NSNotification *) notification
+- (void)showDetailView:(NSNotification *) notification
 {
     self.eventSelected = notification.object;
     [self performSegueWithIdentifier:@"details" sender:self];
     NSLog(@"Notification");
 }
 
--(void)showAlert : (NSNotification *) notification
+- (void)showAlert:(NSNotification *) notification
 {
-    NSString * name = notification.object;
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"New event" message:[name stringByAppendingString: @" has been added to your calendar"] preferredStyle:(UIAlertControllerStyleAlert)];
-    UIAlertAction *action= [UIAlertAction actionWithTitle:@"Accept" style:(UIAlertActionStyleCancel) handler:nil];
+    NSString *name = notification.object;
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"New event"
+                                                                   message:[name stringByAppendingString: @" has been added to your calendar"]
+                                                            preferredStyle:(UIAlertControllerStyleAlert)];
+    
+    UIAlertAction *action = [UIAlertAction actionWithTitle:@"Accept" style:(UIAlertActionStyleCancel) handler:nil];
+    
     [alert addAction:action];
     [self presentViewController:alert animated:YES completion:nil];
 }
 
-
 #pragma mark - Location methods
      
--(void)currentLocationIdentifier
+- (void)currentLocationIdentifier
 {
     locationManager = [CLLocationManager new];
     [locationManager requestWhenInUseAuthorization];
@@ -91,6 +93,7 @@ NSDateFormatter *dateFormat;
     [self fetchArrayCategories];
     [locationManager startUpdatingLocation];
 }
+
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
     currentLocation = [locations objectAtIndex:0];
@@ -109,7 +112,7 @@ NSDateFormatter *dateFormat;
 
 #pragma mark - get Information by the API Manager
 
--(void) fetchArrayCategories
+- (void)fetchArrayCategories
 {
     [[APIEventsManager sharedManager] getCategories:^(NSArray * _Nonnull categories, NSError * _Nonnull error) {
         if(error == nil)
@@ -120,33 +123,69 @@ NSDateFormatter *dateFormat;
     }];
 }
 
--(void) getEventsFromCategories
+- (void)getEventsFromCategories
 {
     for(NSDictionary * category in self.categories)
     {
    
-        [[APIEventsManager sharedManager] getEventsByLocation:[NSString stringWithFormat:@"%f", currentLocation.coordinate.latitude]  longitude:[NSString stringWithFormat:@"%f", currentLocation.coordinate.longitude] category:category[@"id"] shortName:category[@"short_name"] completion:^(NSArray * _Nonnull eventsEventbrite, NSArray * _Nonnull eventsTicketmaster, NSError * _Nonnull error) {
+        [[APIEventsManager sharedManager] getEventsByLocation:[NSString stringWithFormat:@"%f", currentLocation.coordinate.latitude]
+                                                    longitude:[NSString stringWithFormat:@"%f", currentLocation.coordinate.longitude]
+                                                     category:category[@"id"]
+                                                    shortName:category[@"short_name"]
+                                                   completion:^(NSArray * _Nonnull eventsEventbrite, NSArray * _Nonnull eventsTicketmaster, NSError * _Nonnull error) {
             if(error == nil)
             {
-                 NSMutableArray *arrayCategory = [NSMutableArray new];
+                NSMutableArray *arrayCategory = [NSMutableArray new];
                
                 for(NSDictionary * ticketmasterDic in eventsTicketmaster)
                 {
-                     NSDate *dte = [dateFormat dateFromString:ticketmasterDic[@"dates"][@"start"][@"dateTime"]];
-                [arrayCategory addObject:[[EventAPI alloc] initWithInfo:ticketmasterDic[@"name"] :ticketmasterDic[@"name"] :ticketmasterDic[@"id"] :dte :ticketmasterDic[@"images"][0][@"url"] :category[@"name"] : category[@"short_name"] : @"Ticketmaster" : CLLocationCoordinate2DMake([ticketmasterDic[@"_embedded"][@"venues"][0][@"location"][@"latitude"] doubleValue],[ticketmasterDic[@"_embedded"][@"venues"][0][@"location"][@"longitude"] doubleValue])]];
+                    
+                    NSDate *dte = [dateFormat dateFromString:ticketmasterDic[@"dates"][@"start"][@"dateTime"]];
+                    
+                    [arrayCategory addObject:[[EventAPI alloc] initWithInfo:ticketmasterDic[@"name"]
+                                                                    summary:ticketmasterDic[@"name"]
+                                                                    idEvent:ticketmasterDic[@"id"]
+                                                                       date:dte
+                                                                        url:ticketmasterDic[@"images"][0][@"url"]
+                                                                   category:category[@"name"]
+                                                                   subtitle:category[@"short_name"]
+                                                                        api:@"Ticketmaster"
+                                                                   location:CLLocationCoordinate2DMake([ticketmasterDic[@"_embedded"][@"venues"][0][@"location"][@"latitude"] doubleValue],[ticketmasterDic[@"_embedded"][@"venues"][0][@"location"][@"longitude"] doubleValue])]];
+                    
+
                 }
                 
                     for(NSDictionary * eventbriteDic in eventsEventbrite)
                     {
                         NSDictionary *stringURL =   eventbriteDic[@"logo"];
                         NSDate *dte = [dateFormat dateFromString:eventbriteDic[@"start"][@"local"]];
-                        @try {
-                            
-                            NSString * url = stringURL[@"url"];
-                            [arrayCategory addObject:[[EventAPI alloc] initWithInfo:eventbriteDic[@"name"][@"text"] :eventbriteDic[@"summary"] :eventbriteDic[@"id"] : dte :url :category[@"name"] : category[@"short_name"] : @"Eventbrite" : CLLocationCoordinate2DMake([eventbriteDic[@"venue"][@"latitude"] doubleValue], [eventbriteDic[@"venue"][@"longitude"] doubleValue])]];
-                        } @catch (NSException *exception) {
-                            [arrayCategory addObject:[[EventAPI alloc] initWithInfo:eventbriteDic[@"name"][@"text"] :eventbriteDic[@"summary"] :eventbriteDic[@"id"] :eventbriteDic[@"start"][@"local"] :@"https://www.daviespaints.com.ph/wp-content/uploads/img/color-ideas/1008-colors/2036P.png" :category[@"name"] : category[@"short_name"] : @"Eventbrite" :  CLLocationCoordinate2DMake([eventbriteDic[@"venue"][@"latitude"] doubleValue], [eventbriteDic[@"venue"][@"longitude"] doubleValue])]];
+//                        @try {
+                        
+                        NSString * url = stringURL[@"url"];
+                        if (!url) {
+                            url = @"https://www.daviespaints.com.ph/wp-content/uploads/img/color-ideas/1008-colors/2036P.png";
                         }
+                        [arrayCategory addObject:[[EventAPI alloc] initWithInfo:eventbriteDic[@"name"][@"text"]
+                                                                        summary:eventbriteDic[@"summary"]
+                                                                        idEvent:eventbriteDic[@"id"]
+                                                                           date:dte
+                                                                            url:url
+                                                                       category:category[@"name"]
+                                                                       subtitle:category[@"short_name"]
+                                                                            api:@"Eventbrite"
+                                                                       location:CLLocationCoordinate2DMake([eventbriteDic[@"venue"][@"latitude"] doubleValue], [eventbriteDic[@"venue"][@"longitude"] doubleValue])]];
+//
+//                        } @catch (NSException *exception) {
+//                            [arrayCategory addObject:[[EventAPI alloc] initWithInfo:eventbriteDic[@"name"][@"text"]
+//                                                                            summary:eventbriteDic[@"summary"]
+//                                                                            idEvent:eventbriteDic[@"id"]
+//                                                                               date:eventbriteDic[@"start"][@"local"]
+//                                                                                url:@"https://www.daviespaints.com.ph/wp-content/uploads/img/color-ideas/1008-colors/2036P.png"
+//                                                                           category:category[@"name"]
+//                                                                           subtitle:category[@"short_name"]
+//                                                                                api:@"Eventbrite"
+//                                                                           location:CLLocationCoordinate2DMake([eventbriteDic[@"venue"][@"latitude"] doubleValue], [eventbriteDic[@"venue"][@"longitude"] doubleValue])]];
+//                        }
                     }
                 [self.events addObject:arrayCategory];
                 dispatch_async(dispatch_get_main_queue(), ^{
@@ -243,6 +282,7 @@ NSDateFormatter *dateFormat;
         [tableView registerNib:[UINib nibWithNibName:@"GroupEventsTableViewCell" bundle:nil] forCellReuseIdentifier:@"cellGrouped"];
         cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     }
+    // Why?? What is happening with fullview?
     if(indexPath.section % 2 == 0)
     {
         cell.fullView = YES;

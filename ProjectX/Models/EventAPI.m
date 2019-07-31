@@ -18,7 +18,7 @@
 }
 
 
--(instancetype) initWithInfo : (NSString *) name  : (NSString *) summary : (NSString *) idEvent : (NSDate *) date : (NSString *) url : (NSString *) category : (NSString *) subtitle : (NSString *) api : (CLLocationCoordinate2D) location
+- (instancetype)initWithInfo:(NSString *)name summary:(NSString *)summary idEvent:(NSString *)idEvent date:(NSDate *)date url:(NSString *)url category:(NSString *)category subtitle:(NSString *)subtitle api:(NSString *)api location:(CLLocationCoordinate2D) location
 {
     self = [super init];
     if(self)
