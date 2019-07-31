@@ -159,12 +159,10 @@ NSDateFormatter *dateFormat;
                     {
                         NSDictionary *stringURL =   eventbriteDic[@"logo"];
                         NSDate *dte = [dateFormat dateFromString:eventbriteDic[@"start"][@"local"]];
-//                        @try {
+                        @try {
                         
                         NSString * url = stringURL[@"url"];
-                        if (!url) {
-                            url = @"https://www.daviespaints.com.ph/wp-content/uploads/img/color-ideas/1008-colors/2036P.png";
-                        }
+                      
                         [arrayCategory addObject:[[EventAPI alloc] initWithInfo:eventbriteDic[@"name"][@"text"]
                                                                         summary:eventbriteDic[@"summary"]
                                                                         idEvent:eventbriteDic[@"id"]
@@ -174,18 +172,18 @@ NSDateFormatter *dateFormat;
                                                                        subtitle:category[@"short_name"]
                                                                             api:@"Eventbrite"
                                                                        location:CLLocationCoordinate2DMake([eventbriteDic[@"venue"][@"latitude"] doubleValue], [eventbriteDic[@"venue"][@"longitude"] doubleValue])]];
-//
-//                        } @catch (NSException *exception) {
-//                            [arrayCategory addObject:[[EventAPI alloc] initWithInfo:eventbriteDic[@"name"][@"text"]
-//                                                                            summary:eventbriteDic[@"summary"]
-//                                                                            idEvent:eventbriteDic[@"id"]
-//                                                                               date:eventbriteDic[@"start"][@"local"]
-//                                                                                url:@"https://www.daviespaints.com.ph/wp-content/uploads/img/color-ideas/1008-colors/2036P.png"
-//                                                                           category:category[@"name"]
-//                                                                           subtitle:category[@"short_name"]
-//                                                                                api:@"Eventbrite"
-//                                                                           location:CLLocationCoordinate2DMake([eventbriteDic[@"venue"][@"latitude"] doubleValue], [eventbriteDic[@"venue"][@"longitude"] doubleValue])]];
-//                        }
+
+                        } @catch (NSException *exception) {
+                            [arrayCategory addObject:[[EventAPI alloc] initWithInfo:eventbriteDic[@"name"][@"text"]
+                                                                            summary:eventbriteDic[@"summary"]
+                                                                            idEvent:eventbriteDic[@"id"]
+                                                                               date:eventbriteDic[@"start"][@"local"]
+                                                                                url:@"https://www.daviespaints.com.ph/wp-content/uploads/img/color-ideas/1008-colors/2036P.png"
+                                                                           category:category[@"name"]
+                                                                           subtitle:category[@"short_name"]
+                                                                                api:@"Eventbrite"
+                                                                           location:CLLocationCoordinate2DMake([eventbriteDic[@"venue"][@"latitude"] doubleValue], [eventbriteDic[@"venue"][@"longitude"] doubleValue])]];
+                        }
                     }
                 [self.events addObject:arrayCategory];
                 dispatch_async(dispatch_get_main_queue(), ^{
