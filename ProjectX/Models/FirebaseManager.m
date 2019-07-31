@@ -164,7 +164,7 @@
             FIRGeoPoint *geoPoint = [[FIRGeoPoint alloc] initWithLatitude:event.location.latitude longitude:event.location.longitude];
             FIRDocumentReference *docReference = [[self->database collectionWithPath:@"Event"] addDocumentWithData:@{}];
             
-            [docReference updateData:@{@"name": event.name, @"description": event.summary, @"location": geoPoint, @"eventDate": event.date, @"numAttendees": [NSNumber numberWithInt:1], @"categoryIndex": [NSNumber numberWithInt:5], @"userFriendlyLocation": placemark.name, @"images" : @[event.logo]}];
+            [docReference updateData:@{@"name": event.name, @"description": event.summary, @"location": geoPoint, @"eventDate": event.date, @"numAttendees": [NSNumber numberWithInt:1], @"categoryIndex": [NSNumber numberWithInt:5], @"userFriendlyLocation": placemark.name, @"pictures" : @[event.logo]}];
             [[[self->database collectionWithPath:@"Users"] documentWithPath:FIRAuth.auth.currentUser.uid] updateData:@{ @"events": [FIRFieldValue fieldValueForArrayUnion:@[docReference]] }];
             completion(nil);
         }else

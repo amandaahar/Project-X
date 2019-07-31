@@ -21,6 +21,7 @@
 @property (nonatomic, strong) User *currentUser;
 @property (nonatomic, strong) Event *eventToPass;
 @property (nonatomic, readwrite) FIRFirestore *db;
+@property (strong, nonatomic) NSString *eventImageURL;
 
 @end
 
@@ -48,9 +49,10 @@
                 [eventDoc addSnapshotListener:^(FIRDocumentSnapshot * _Nullable snapshot, NSError * _Nullable error) {
                     if(error == nil){
                     
-                    Event * myEvent = [[Event alloc] initWithDictionary:snapshot.data eventID:snapshot.documentID];
-                    [self.events addObject: myEvent];
-                    [self.chatsTableView reloadData];
+                        Event * myEvent = [[Event alloc] initWithDictionary:snapshot.data
+                                                                    eventID:snapshot.documentID];
+                        [self.events addObject: myEvent];
+                        [self.chatsTableView reloadData];
                     }
                 }];
                 
@@ -94,6 +96,19 @@
     }
     Event *event = self.events[indexPath.row];
     [cell setNameOfChatText:event.name];
+    
+    /*
+    if (event.pictures[0] == nil) {
+        //self.eventImageURL = [UIImage imageNamed:@"https://profiles.utdallas.edu/img/default.png"];
+        NSData * imageData = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString: @"https://profiles.utdallas.edu/img/default.png"]];
+        //cell.image = [UIImage imageWithData: imageData];
+        [cell setImage:imageData];
+    }
+    */
+    
+    //else {
+        [cell setImage:event.pictures[0]];
+    //}
     
     return cell;
 }

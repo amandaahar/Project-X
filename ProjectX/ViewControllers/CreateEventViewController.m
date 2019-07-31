@@ -241,7 +241,7 @@ UIDatePicker *datePicker;
 - (void) addEventImage {
     
     FIRDocumentReference *eventRef = [[self.db collectionWithPath:@"Event"] documentWithPath:self.eventID];
-    [eventRef updateData:@{ @"images": [FIRFieldValue fieldValueForArrayUnion:@[self.EventImageString]]}
+    [eventRef updateData:@{ @"pictures": [FIRFieldValue fieldValueForArrayUnion:@[self.EventImageString]]}
             completion:^(NSError * _Nullable error) {
                 if (error != nil) {
                     NSLog(@"Error updating document: %@", error);

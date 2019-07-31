@@ -33,6 +33,8 @@
 @property (strong, nonatomic) NSString *annotationID;
 @property (strong, nonatomic) FIRDocumentReference *eventIDRef;
 @property (nonatomic, readwrite) FIRFirestore *db;
+@property (strong, nonatomic) NSString *eventImageURL;
+
 - (IBAction)CreateEventAction:(id)sender;
 
 @end
@@ -43,7 +45,7 @@
     
     [super viewDidLoad];
     [self fetchEvents];
-    [self fetchImage];
+    //[self fetchImage];
     
     self.db = [FIRFirestore firestore];
     self.mapView.delegate = self;
@@ -90,7 +92,11 @@
             self.eventID = myEvent.eventID;
             [self eventDateIdentifier];
             [self eventLocationIdentifier];
-            //[self setImage:myEvent.eventImageURL];
+            
+            self.eventImageURL = myEvent.pictures[0];
+            NSURL *url = [NSURL URLWithString:self.eventImageURL];
+            NSData *imageData = [NSData dataWithContentsOfURL:url];
+            self.eventPhoto.image = [UIImage imageWithData:imageData];
             
             self.eventLocation.text = myEvent.userFriendlyLocation;
             
@@ -121,18 +127,12 @@
 }
 
 /*
- -(void) setImage: (NSString *) photoURL {
-    NSURL *imageURL = [NSURL URLWithString:photoURL];
-    [self.eventImageURL setImageWithURL:imageURL];
-}
- */
-
 - (void) fetchImage {
     
     FIRStorage *storage = [FIRStorage storage];
     FIRStorageReference *storageRef = [storage reference];
     FIRStorageReference *eventImageRef = [storageRef child:@"images/02DC7684-D657-4B5B-82FC-8D1DA735E300"];
-
+    
      [eventImageRef dataWithMaxSize:1 * 1024 * 1024 completion:^(NSData *data, NSError *error){
         if (error != nil) {
             NSLog(@"Uh-oh, first error occurred: %@", error);
@@ -143,7 +143,7 @@
     }];
     
 }
-
+*/
 
 - (void) movingPreview {
     
@@ -242,6 +242,12 @@
         self.Eventdescription.text = nextEvent.descriptionEvent;
         [self eventLocationIdentifier];
         [self eventDateIdentifier];
+        
+        self.eventImageURL = nextEvent.pictures[0];
+        NSURL *url = [NSURL URLWithString:self.eventImageURL];
+        NSData *imageData = [NSData dataWithContentsOfURL:url];
+        self.eventPhoto.image = [UIImage imageWithData:imageData];
+        
         [self resetCard];
         self.eventLocation.text = nextEvent.userFriendlyLocation;
         
