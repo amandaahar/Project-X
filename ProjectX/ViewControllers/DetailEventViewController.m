@@ -134,7 +134,7 @@
                 eventView.image = [UIImage imageNamed:@"baseline_event_black_18pt"];
             }
             else{
-                eventView.image = [UIImage imageNamed:@"home"];
+                eventView.image = [UIImage imageNamed:@"baseline_event_black_18pt"];
             }
         }
         

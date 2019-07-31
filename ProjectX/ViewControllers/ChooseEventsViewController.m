@@ -15,6 +15,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import "../Models/MapAnnotation.h"
 @import Firebase;
+//@import CoreLocation;
 
 @interface ChooseEventsViewController () <CLLocationManagerDelegate, CreateEventControllerDelegate, MKMapViewDelegate>
 
@@ -27,6 +28,7 @@
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (weak, nonatomic) IBOutlet UIImageView *eventPhoto;
 @property (weak, nonatomic) IBOutlet UILabel *eventLocation;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *LocationButton;
 @property (strong, nonatomic) NSMutableArray *eventArray;
 @property (strong, nonatomic) NSDate *dateNSEvent;
 @property (strong, nonatomic) NSString *eventID;
@@ -35,11 +37,12 @@
 @property (nonatomic, readwrite) FIRFirestore *db;
 @property (strong, nonatomic) NSString *eventImageURL;
 
-- (IBAction)CreateEventAction:(id)sender;
-
 @end
 
 @implementation ChooseEventsViewController
+
+//CLLocationManager *locationManager;
+//CLLocation *currentLocation;
 
 - (void)viewDidLoad {
     
@@ -52,9 +55,13 @@
     self.annotationID = @"Pin";
     [self.mapView registerClass:[MKAnnotationView class] forAnnotationViewWithReuseIdentifier:self.annotationID];
     self.eventArray = [NSMutableArray new];
-    
     [self movingPreview];
     
+//    currentLocation = [[CLLocation alloc] initWithLatitude:36 longitude:-122];
+//    [self currentLocationIdentifier];
+    
+    self.mapView.showsUserLocation = YES;
+    self.mapView.showsBuildings = YES;
 }
 
 #pragma mark - Fetching Events
@@ -142,6 +149,34 @@
         }
     }];
     
+}
+*/
+
+/*
+#pragma mark - Location methods
+
+- (void)currentLocationIdentifier
+{
+    locationManager = [CLLocationManager new];
+    [locationManager requestWhenInUseAuthorization];
+    locationManager.delegate = self;
+    locationManager.distanceFilter = kCLDistanceFilterNone;
+    locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+//    [self fetchEvents];
+    [locationManager startUpdatingLocation];
+}
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
+{
+    currentLocation = [locations objectAtIndex:0];
+    [locationManager stopUpdatingLocation];
+    CLGeocoder *geocoder = [[CLGeocoder alloc] init] ;
+    [geocoder reverseGeocodeLocation:currentLocation completionHandler:^(NSArray *placemarks, NSError *error)
+     {
+         CLPlacemark *placemark = [placemarks objectAtIndex:0];
+         NSString *Area = [[NSString alloc]initWithString:placemark.locality];
+         [self.navigationItem.rightBarButtonItem setTitle:Area];
+     }];
 }
 */
 

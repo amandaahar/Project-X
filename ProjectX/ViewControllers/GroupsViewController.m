@@ -15,13 +15,15 @@
 #import "MessagesViewController.h"
 #import "DetailEventViewController.h"
 
-@interface GroupsViewController () <UITableViewDelegate, UITableViewDataSource>
+@interface GroupsViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate>
 @property (nonatomic, strong) NSMutableArray *events;
 @property (weak, nonatomic) IBOutlet UITableView *chatsTableView;
 @property (nonatomic, strong) User *currentUser;
 @property (nonatomic, strong) Event *eventToPass;
 @property (nonatomic, readwrite) FIRFirestore *db;
 @property (strong, nonatomic) NSString *eventImageURL;
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
+@property (strong, nonatomic) NSArray *filteredData;
 
 @end
 
@@ -33,9 +35,10 @@
     self.db = [FIRFirestore firestore];
     self.chatsTableView.dataSource = self;
     self.chatsTableView.delegate = self;
+    self.searchBar.delegate = self;
     [self getChats];
     self.events = [[NSMutableArray alloc] init];
-    
+    self.filteredData = self.events;
 }
 
 -(void) getChats {
@@ -94,7 +97,8 @@
     if (cell == nil) {
         cell = [[GroupTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:GroupchatID];
     }
-    Event *event = self.events[indexPath.row];
+    //Event *event = self.events[indexPath.row];
+    Event *event = self.filteredData[indexPath.row];
     [cell setNameOfChatText:event.name];
     
     /*
@@ -121,7 +125,8 @@
 }
 
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.events.count;
+    //return self.events.count;
+    return self.filteredData.count;
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -147,6 +152,36 @@
         }];
     }
     
+}
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+    
+    if (searchText.length != 0) {
+        
+        NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(Event *evaluatedObject, NSDictionary *bindings) {
+            NSString* chatName = evaluatedObject.name;
+           return [chatName containsString:searchText];
+        }];
+        self.filteredData = [self.events filteredArrayUsingPredicate:predicate];
+        
+        NSLog(@"%@", self.filteredData);
+        
+    }
+    else {
+        self.filteredData = self.events;
+    }
+    
+    [self.chatsTableView reloadData];
+}
+
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
+    self.searchBar.showsCancelButton = YES;
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    self.searchBar.showsCancelButton = NO;
+    self.searchBar.text = @"";
+    [self.searchBar resignFirstResponder];
 }
 
 #pragma mark - UITableView Delegate
