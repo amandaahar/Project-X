@@ -13,7 +13,7 @@
 #pragma mark - Init
 -(instancetype) init
 {
-    self = [self initWithInfo:@"" :@"" :@"" : [[NSDate alloc] init] :@"" : @"": @"": @"" : CLLocationCoordinate2DMake(37.77, -122.4)];
+    self = [self initWithInfo:@"" summary:@"" idEvent:@"" date:[[NSDate alloc] init] url:@"" category:@"" subtitle:@"" api:@"" location:CLLocationCoordinate2DMake(37.77, -122.4)];
     return self;
 }
 
