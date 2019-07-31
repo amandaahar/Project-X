@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 // #import "User.h"
+
 #import "../Models/FirebaseManager.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -20,8 +21,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property(strong, nonatomic) NSString *nameOfSender;
 @property(strong, nonatomic) NSString *userID;
 @property(strong, nonatomic) NSString *language;
+@property (strong, nonatomic) NSString *idMessage;
+@property (assign, nonatomic) BOOL liked;
 
--(instancetype) initWithDictionary:(NSDictionary *)dictionary;
+-(instancetype) initWithDictionary:(NSDictionary *)dictionary andID: (NSString *) idMessage;
 + (NSMutableArray *)messagesWithArray:(NSArray *)dictionaries;
 @end
 

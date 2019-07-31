@@ -163,8 +163,12 @@
             CLPlacemark * placemark = placemarks[0];
             FIRGeoPoint *geoPoint = [[FIRGeoPoint alloc] initWithLatitude:event.location.latitude longitude:event.location.longitude];
             FIRDocumentReference *docReference = [[self->database collectionWithPath:@"Event"] addDocumentWithData:@{}];
+            NSDate *dateEvent = [NSDate new];
             
-            [docReference updateData:@{@"name": event.name, @"description": event.summary, @"location": geoPoint, @"eventDate": event.date, @"numAttendees": [NSNumber numberWithInt:1], @"categoryIndex": [NSNumber numberWithInt:5], @"userFriendlyLocation": placemark.name, @"images" : @[event.logo]}];
+            if(event.date != nil){
+                dateEvent = event.date;
+            }
+            [docReference updateData:@{@"name": event.name, @"description": event.summary, @"location": geoPoint, @"eventDate": dateEvent, @"numAttendees": [NSNumber numberWithInt:1], @"categoryIndex": [NSNumber numberWithInt:5], @"userFriendlyLocation": placemark.name, @"images" : @[event.logo]}];
             [[[self->database collectionWithPath:@"Users"] documentWithPath:FIRAuth.auth.currentUser.uid] updateData:@{ @"events": [FIRFieldValue fieldValueForArrayUnion:@[docReference]] }];
             completion(nil);
         }else
@@ -179,6 +183,16 @@
 -(void) addUserToEvent : (FIRDocumentReference *) eventID
 {
    
+}
+
+-(void) addReactionInEvent: (NSString *) idEvent andMessage: (NSString *) idMessage
+{
+    [[[[[database collectionWithPath:@"Event"] documentWithPath:idEvent] collectionWithPath:@"Chat"] documentWithPath: idMessage] updateData:@{@"likes" : [FIRFieldValue fieldValueForArrayUnion:@[FIRAuth.auth.currentUser.uid]]}];
+}
+
+-(void) removeReactionInEvent: (NSString *) idEvent andMessage: (NSString *) idMessage
+{
+    [[[[[database collectionWithPath:@"Event"] documentWithPath:idEvent] collectionWithPath:@"Chat"] documentWithPath: idMessage] updateData:@{@"likes" : [FIRFieldValue fieldValueForArrayRemove:@[FIRAuth.auth.currentUser.uid]]}];
 }
 
 @end

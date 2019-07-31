@@ -39,7 +39,7 @@
                 
                 // NSLog(@"chat path%@", self.path);
                 for (FIRDocumentSnapshot *document in snapshot.documents) {
-                    Message *message = [[Message alloc] initWithDictionary:document.data];
+                    Message *message = [[Message alloc] initWithDictionary:document.data andID:document.documentID];
                     [self.messages addObject:message];
                 }
             }

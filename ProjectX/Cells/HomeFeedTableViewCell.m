@@ -41,7 +41,7 @@
     self.descriptionEvent.text = [event summary];
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString: event.logo]];
     
-    [self.imageEvent setImageWithURLRequest:request placeholderImage:nil
+    [self.imageEvent setImageWithURLRequest:request placeholderImage:[UIImage imageNamed:@"placeholder"]
                                       success:^(NSURLRequest *imageRequest, NSHTTPURLResponse *imageResponse, UIImage *image) {
                                           
                                           [UIView transitionWithView:self.imageEvent duration:0.5 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{

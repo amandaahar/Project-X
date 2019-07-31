@@ -16,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, assign) NSNumber *index;
 @property (nonatomic, strong) NSString *name;
+@property (nonatomic, strong) NSDictionary *preference;
 
 + (NSMutableArray *)bubblesWithArray:(NSArray *)dictionaries;
 

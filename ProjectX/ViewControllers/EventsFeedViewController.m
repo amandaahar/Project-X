@@ -10,6 +10,7 @@
 #import "../Models/APIEventsManager.h"
 #import "../Models/NSMutableArray+Convenience.h"
 #import "../Cells/GroupEventsTableViewCell.h"
+#import "../Models/User.h"
 #import "DetailHomeViewController.h"
 @import CoreLocation;
 @interface EventsFeedViewController () <UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate, UIScrollViewDelegate>
@@ -20,6 +21,7 @@
 @property (strong, nonatomic) NSArray *categories;
 @property (assign, nonatomic) CGFloat currentOffset;
 @property (nonatomic, strong) EventAPI *eventSelected;
+@property (nonatomic, strong) User *currentUser;
 @end
 
 @implementation EventsFeedViewController
@@ -35,9 +37,8 @@ NSDateFormatter *dateFormat;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    
-    
+  
+    //[self fetchArrayCategories];
     // convert to date
     dateFormat = [[NSDateFormatter alloc] init];
     // ignore +11 and use timezone name instead of seconds from gmt
@@ -57,6 +58,10 @@ NSDateFormatter *dateFormat;
     NSString *dateString = [format stringFromDate:now];
     #pragma clang diagnostic pop
     [self currentLocationIdentifier];
+    
+ 
+    
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showDetailView:) name:@"selectedEvent" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showAlert:) name:@"newEvent" object:nil];
 }
@@ -90,7 +95,14 @@ NSDateFormatter *dateFormat;
     locationManager.delegate = self;
     locationManager.distanceFilter = kCLDistanceFilterNone;
     locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-    [self fetchArrayCategories];
+    [[FirebaseManager sharedManager] getCurrentUser:^(User * _Nonnull user, NSError * _Nonnull error) {
+        if(error == nil){
+            self.currentUser = user;
+            //[self getEventsFromCategories];
+            // [self getEventsFromCategories];
+            [self fetchArrayCategories];
+        }
+    }];
     [locationManager startUpdatingLocation];
 }
 
@@ -117,7 +129,21 @@ NSDateFormatter *dateFormat;
     [[APIEventsManager sharedManager] getCategories:^(NSArray * _Nonnull categories, NSError * _Nonnull error) {
         if(error == nil)
         {
-            self.categories = categories;
+            NSMutableArray * categoriesFiltered = [NSMutableArray new];
+            if(self.currentUser.preferences.count == 0){
+                for(NSDictionary *dic in self.currentUser.preferences){
+                    NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(NSDictionary *evaluatedObject, NSDictionary<NSString *,id> * _Nullable bindings) {
+                        return [dic[@"id"] isEqualToString: evaluatedObject[@"id"]];
+                    }];
+                    
+                    [categoriesFiltered addObjectsFromArray:[categories filteredArrayUsingPredicate:predicate]];
+                }
+            }else{
+                categoriesFiltered = [categories copy];
+            }
+          
+           
+            self.categories = categoriesFiltered;
             [self getEventsFromCategories];
         }
     }];
@@ -127,12 +153,15 @@ NSDateFormatter *dateFormat;
 {
     for(NSDictionary * category in self.categories)
     {
-   
+ 
+        NSString *idCategoryString = [category[@"id"] description];
         [[APIEventsManager sharedManager] getEventsByLocation:[NSString stringWithFormat:@"%f", currentLocation.coordinate.latitude]
                                                     longitude:[NSString stringWithFormat:@"%f", currentLocation.coordinate.longitude]
-                                                     category:category[@"id"]
+                                                     category:idCategoryString
                                                     shortName:category[@"short_name"]
                                                    completion:^(NSArray * _Nonnull eventsEventbrite, NSArray * _Nonnull eventsTicketmaster, NSError * _Nonnull error) {
+                                                       
+                    
             if(error == nil)
             {
                 NSMutableArray *arrayCategory = [NSMutableArray new];
@@ -147,7 +176,7 @@ NSDateFormatter *dateFormat;
                                                                     idEvent:ticketmasterDic[@"id"]
                                                                        date:dte
                                                                         url:ticketmasterDic[@"images"][0][@"url"]
-                                                                   category:category[@"name"]
+                                                                   category:category[@"short_name"]
                                                                    subtitle:category[@"short_name"]
                                                                         api:@"Ticketmaster"
                                                                    location:CLLocationCoordinate2DMake([ticketmasterDic[@"_embedded"][@"venues"][0][@"location"][@"latitude"] doubleValue],[ticketmasterDic[@"_embedded"][@"venues"][0][@"location"][@"longitude"] doubleValue])]];
@@ -168,7 +197,7 @@ NSDateFormatter *dateFormat;
                                                                         idEvent:eventbriteDic[@"id"]
                                                                            date:dte
                                                                             url:url
-                                                                       category:category[@"name"]
+                                                                       category:category[@"short_name"]
                                                                        subtitle:category[@"short_name"]
                                                                             api:@"Eventbrite"
                                                                        location:CLLocationCoordinate2DMake([eventbriteDic[@"venue"][@"latitude"] doubleValue], [eventbriteDic[@"venue"][@"longitude"] doubleValue])]];
@@ -179,7 +208,7 @@ NSDateFormatter *dateFormat;
                                                                             idEvent:eventbriteDic[@"id"]
                                                                                date:eventbriteDic[@"start"][@"local"]
                                                                                 url:@"https://www.daviespaints.com.ph/wp-content/uploads/img/color-ideas/1008-colors/2036P.png"
-                                                                           category:category[@"name"]
+                                                                           category:category[@"short_name"]
                                                                            subtitle:category[@"short_name"]
                                                                                 api:@"Eventbrite"
                                                                            location:CLLocationCoordinate2DMake([eventbriteDic[@"venue"][@"latitude"] doubleValue], [eventbriteDic[@"venue"][@"longitude"] doubleValue])]];
@@ -189,6 +218,8 @@ NSDateFormatter *dateFormat;
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [self.tableViewEventCategories reloadData];
                 });
+            }else{
+                NSLog(@"%@", error.localizedRecoveryOptions);
             }
             }
         ];

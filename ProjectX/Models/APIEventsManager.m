@@ -111,7 +111,6 @@ static NSString * const publicTokenTicketMaster = @"OgabuZXqzqkv0GJtbvl5hKlbAFZL
     
     __block NSDictionary *eventbriteDic;
     __block NSDictionary *ticketmasterDic;
-    NSLog(@"%@",[NSString stringWithFormat:@"%@,%@",latitude, longitude]);
     dispatch_group_t group = dispatch_group_create();
     dispatch_group_async(group,dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^ {
         // block1
@@ -200,6 +199,8 @@ static NSString * const publicTokenTicketMaster = @"OgabuZXqzqkv0GJtbvl5hKlbAFZL
              }];
    
 }
+
+
 
 
 

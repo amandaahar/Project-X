@@ -156,6 +156,7 @@ NSLayoutConstraint *bottom;
     MessageBubble *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     Message *message = self.messagesInChat[indexPath.row];
     [cell setUserLanguage:self.user.language];
+    [cell setIdEvent:self.eventID];
     if([self.idCurrentUser isEqualToString:message.userID])
     {
         [cell showOutgoingMessage:message];

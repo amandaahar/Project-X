@@ -19,7 +19,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="594" height="352"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Zyf-tf-6T9">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="Zyf-tf-6T9">
                         <rect key="frame" x="7" y="67" width="580" height="275"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G0l-OO-JIO">
@@ -64,4 +64,7 @@
             <point key="canvasLocation" x="281.15942028985512" y="235.04464285714283"/>
         </collectionViewCell>
     </objects>
+    <resources>
+        <image name="placeholder" width="300" height="225"/>
+    </resources>
 </document>

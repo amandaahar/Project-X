@@ -112,13 +112,9 @@ BOOL lastTime = false;
         if(self.preferences.count < 9)
         {
             Bubble * myBubble = bubble.model;
-            NSNumber *index = myBubble.index;
-            NSString *name = myBubble.name;
-            
+            NSDictionary *dicPreference = myBubble.preference;
             [self.preferences addObject:bubble.model.bubbleText];
-         
-            NSDictionary * dicDB = [[NSDictionary alloc] initWithObjectsAndKeys: index ,@"id",name, @"short_name",  nil];
-            [self.preferencesDB addObject:dicDB];
+            [self.preferencesDB addObject:dicPreference];
 
 
         }else
@@ -130,7 +126,10 @@ BOOL lastTime = false;
         }
     }else if((long)[bubble.model bubbleState] == 0)
     {
-        [self.preferences removeObject:bubble.model.bubbleText];
+        Bubble * myBubble = bubble.model;
+        NSDictionary *dicPreference = myBubble.preference;
+        [self.preferencesDB removeObject:dicPreference];
+         [self.preferences removeObject:bubble.model.bubbleText];
     }
     NSLog(@"%@", self.preferences);
     [self.collectionView reloadData];
