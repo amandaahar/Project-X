@@ -40,7 +40,7 @@
     
     [self.interestsCollectionView reloadData];
     
-    [self setup];
+    //[self setup];
     
 }
 
@@ -131,6 +131,7 @@
 
 - (nonnull __kindof UICollectionViewCell *)collectionView:(nonnull UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
     InterestsCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"InterestsCell" forIndexPath:indexPath];
+    
     NSString *interest = self.currentUser.preferences[indexPath.item][@"short_name"];
     
     [cell setInterestLabelText:interest];
