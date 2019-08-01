@@ -163,11 +163,15 @@
             CLPlacemark * placemark = placemarks[0];
             FIRGeoPoint *geoPoint = [[FIRGeoPoint alloc] initWithLatitude:event.location.latitude longitude:event.location.longitude];
             FIRDocumentReference *docReference = [[self->database collectionWithPath:@"Event"] addDocumentWithData:@{}];
-            
-            [docReference updateData:@{@"name": event.name, @"description": event.summary, @"location": geoPoint, @"eventDate": event.date, @"numAttendees": [NSNumber numberWithInt:1], @"categoryIndex": [NSNumber numberWithInt:5], @"userFriendlyLocation": placemark.name, @"pictures" : @[event.logo]}];
+            NSDate *dateEvent = [NSDate new];
+            if(event.date != nil){
+                dateEvent = event.date;
+            }
+            [docReference updateData:@{@"name": event.name, @"description": event.summary, @"location": geoPoint, @"eventDate": dateEvent, @"numAttendees": [NSNumber numberWithInt:1], @"categoryIndex": [NSNumber numberWithInt:5], @"userFriendlyLocation": placemark.name, @"pictures" : @[event.logo]}];
+
             [[[self->database collectionWithPath:@"Users"] documentWithPath:FIRAuth.auth.currentUser.uid] updateData:@{ @"events": [FIRFieldValue fieldValueForArrayUnion:@[docReference]] }];
             completion(nil);
-        }else
+        } else
         {
             completion(error);
         }
@@ -179,6 +183,22 @@
 -(void) addUserToEvent : (FIRDocumentReference *) eventID
 {
    
+}
+
+-(void) addReactionInEvent: (NSString *) idEvent andMessage: (NSString *) idMessage
+{
+    [[[[[database collectionWithPath:@"Event"] documentWithPath:idEvent] collectionWithPath:@"Chat"] documentWithPath: idMessage] updateData:@{@"likes" : [FIRFieldValue fieldValueForArrayUnion:@[FIRAuth.auth.currentUser.uid]]}];
+}
+
+-(void) removeReactionInEvent: (NSString *) idEvent andMessage: (NSString *) idMessage
+{
+    [[[[[database collectionWithPath:@"Event"] documentWithPath:idEvent] collectionWithPath:@"Chat"] documentWithPath: idMessage] updateData:@{@"likes" : [FIRFieldValue fieldValueForArrayRemove:@[FIRAuth.auth.currentUser.uid]]}];
+}
+
+-(void) removeMessageFromChat: (NSString *) idEvent andMessage:(NSString *)idMessage completion: (void(^)( NSError *error))completion{
+    [[[[[database collectionWithPath:@"Event"] documentWithPath: idEvent] collectionWithPath:@"Chat"] documentWithPath:idMessage] deleteDocumentWithCompletion:^(NSError * _Nullable error) {
+        completion(error);
+    }];
 }
 
 @end

@@ -48,6 +48,7 @@ NSDateFormatter *dateFormat2;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"selectedEvent" object:self.threeEvents[indexPath.row]];
     
     

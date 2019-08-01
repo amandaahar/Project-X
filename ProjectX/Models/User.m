@@ -58,6 +58,7 @@
                                                        @"timeSent": currentTime,
                                                        @"nameOfSender": self.username,
                                                        @"userID": self.userID,
+                                                       @"likes" : @[],
                                                        @"lan" : language
                                                        } completion:^(NSError * _Nullable error) {
                                                            if (error != nil) {

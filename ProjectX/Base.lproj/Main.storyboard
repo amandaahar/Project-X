@@ -175,6 +175,9 @@
                     <navigationItem key="navigationItem" title="Explore" largeTitleDisplayMode="always" id="48O-Vc-oIf">
                         <barButtonItem key="rightBarButtonItem" title="Location" style="done" id="iev-zV-zaq">
                             <color key="tintColor" red="0.45098039220000002" green="0.69411764710000001" blue="0.92156862750000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <action selector="changeLocation:" destination="b5a-C1-RtS" id="86a-6r-xmw"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
@@ -244,7 +247,10 @@
                                             <constraint firstAttribute="width" constant="105" id="ikF-wc-ZVC"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
-                                        <state key="normal" title="Buy tickets"/>
+                                        <state key="normal" title="Create group"/>
+                                        <connections>
+                                            <action selector="createGroup:" destination="UOT-AV-1DE" eventType="touchUpInside" id="Tsg-yb-Im4"/>
+                                        </connections>
                                     </button>
                                     <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="EVX-yW-cKf">
                                         <rect key="frame" x="20" y="278" width="339" height="137"/>
@@ -299,9 +305,9 @@
                         <viewLayoutGuide key="safeArea" id="mLi-9J-qZm"/>
                     </view>
                     <navigationItem key="navigationItem" largeTitleDisplayMode="always" id="3tz-GA-ode">
-                        <barButtonItem key="rightBarButtonItem" title="Create group" id="agO-5b-4iw">
+                        <barButtonItem key="rightBarButtonItem" title="Share" id="agO-5b-4iw">
                             <connections>
-                                <action selector="createGroup:" destination="UOT-AV-1DE" id="jIz-P4-mky"/>
+                                <action selector="shareEvent:" destination="UOT-AV-1DE" id="ZlO-aw-e8k"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -1019,7 +1025,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="exe-QF-HZL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2405.5999999999999" y="2598.3508245877065"/>
+            <point key="canvasLocation" x="2433" y="2479"/>
         </scene>
         <!--Detail Event View Controller-->
         <scene sceneID="u3m-HI-W4U">
