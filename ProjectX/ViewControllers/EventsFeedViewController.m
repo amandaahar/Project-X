@@ -23,12 +23,12 @@
 @property (nonatomic, strong) EventAPI *eventSelected;
 @property (nonatomic, strong) User *currentUser;
 @property (strong, nonatomic) UINotificationFeedbackGenerator *feedbackGenerator;
+@property (strong, nonatomic) CLLocation *currentLocation;
 @end
 
 @implementation EventsFeedViewController
 
 CLLocationManager *locationManager;
-CLLocation *currentLocation;
 NSDateFormatter *dateFormat;
 
 - (void)viewDidAppear:(BOOL)animated
@@ -45,11 +45,10 @@ NSDateFormatter *dateFormat;
     dateFormat = [[NSDateFormatter alloc] init];
     // ignore +11 and use timezone name instead of seconds from gmt
     [dateFormat setDateFormat:@"YYYY-MM-dd'T'HH:mm:ss'+11:00'"];
-    [self.activityView setHidden:NO];
-    [self.activityView startAnimating];
+    
     self.tableViewEventCategories.delegate = self;
     self.tableViewEventCategories.dataSource = self;
-    currentLocation = [[CLLocation alloc] initWithLatitude:36 longitude:-122];
+    self.currentLocation = [[CLLocation alloc] initWithLatitude:36 longitude:-122];
     self.events = [NSMutableArray new];
     self.categories = [NSArray new];
     NSDateFormatter *format = [[NSDateFormatter alloc] init];
@@ -120,10 +119,10 @@ NSDateFormatter *dateFormat;
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
-    currentLocation = [locations objectAtIndex:0];
+    self.currentLocation = [locations objectAtIndex:0];
     [locationManager stopUpdatingLocation];
     CLGeocoder *geocoder = [[CLGeocoder alloc] init] ;
-    [geocoder reverseGeocodeLocation:currentLocation completionHandler:^(NSArray *placemarks, NSError *error)
+    [geocoder reverseGeocodeLocation:self.currentLocation completionHandler:^(NSArray *placemarks, NSError *error)
      {
          CLPlacemark *placemark = [placemarks objectAtIndex:0];
          NSString *Area = [[NSString alloc]initWithString:placemark.locality];
@@ -138,6 +137,8 @@ NSDateFormatter *dateFormat;
 
 - (void)fetchArrayCategories
 {
+    [self.activityView setHidden:NO];
+    [self.activityView startAnimating];
     [[APIEventsManager sharedManager] getCategories:^(NSArray * _Nonnull categories, NSError * _Nonnull error) {
         if(error == nil)
         {
@@ -167,8 +168,8 @@ NSDateFormatter *dateFormat;
     {
  
         NSString *idCategoryString = [category[@"id"] description];
-        [[APIEventsManager sharedManager] getEventsByLocation:[NSString stringWithFormat:@"%f", currentLocation.coordinate.latitude]
-                                                    longitude:[NSString stringWithFormat:@"%f", currentLocation.coordinate.longitude]
+        [[APIEventsManager sharedManager] getEventsByLocation:[NSString stringWithFormat:@"%f", self.currentLocation.coordinate.latitude]
+                                                    longitude:[NSString stringWithFormat:@"%f", self.currentLocation.coordinate.longitude]
                                                      category:idCategoryString
                                                     shortName:category[@"short_name"]
                                                    completion:^(NSArray * _Nonnull eventsEventbrite, NSArray * _Nonnull eventsTicketmaster, NSError * _Nonnull error) {
@@ -386,7 +387,56 @@ NSDateFormatter *dateFormat;
 }
 
 
+- (IBAction)changeLocation:(id)sender {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Change Location" message:@"Insert the new location" preferredStyle:(UIAlertControllerStyleAlert)];
+    UIAlertAction *accept = [UIAlertAction actionWithTitle:@"Accept" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+        UITextField *textField = alert.textFields[0];
+        [self getCoordinates:textField.text completionHandler:^(CLLocation *coordinates, NSError *error) {
+            if(error == nil){
+                 [self.navigationItem.rightBarButtonItem setTitle:textField.text];
+                 [locationManager stopUpdatingLocation];
+                [self.events removeAllObjects];
+                self.currentLocation = coordinates;
+                [self fetchArrayCategories];
+            }
+        }];
+    }];
+    UIAlertAction* cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+        [alert dismissViewControllerAnimated:YES completion:nil];
+    }];
+    
+    [alert addAction:accept];
+    [alert addAction:cancel];
+    
+    [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+        textField.placeholder = @"Place";
+        textField.keyboardType = UIKeyboardTypeDefault;
+    }];
+    [self presentViewController:alert animated:YES completion:nil];
+    
+    
+}
 
+
+
+- (void)getCoordinates : (NSString *) addressString completionHandler:(void(^)(CLLocation* coordinates, NSError *error))completion
+{
+    CLGeocoder *geoCoder = [[CLGeocoder alloc] init];
+    [geoCoder geocodeAddressString:addressString completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
+        if(error != nil){
+            completion(nil, error);
+        }
+        CLPlacemark *placemark = placemarks[0];
+        if(placemark == nil){
+            NSError *error = [[NSError alloc] init];
+            
+            completion(nil,error);
+        }
+        CLLocation *location = placemark.location;
+        completion(location, nil);
+    }];
+    
+}
 
 
 @end
