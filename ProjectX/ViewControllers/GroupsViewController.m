@@ -83,12 +83,9 @@
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     MessagesViewController *messagesViewController = [segue destinationViewController];
-    //DetailEventViewController *detailsViewController = [segue destinationViewController];
-    
     messagesViewController.eventID = self.eventToPass.eventID;
     [[messagesViewController navigationItem] setTitle:self.eventToPass.name];
 }
-
 
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
 
@@ -125,7 +122,6 @@
 }
 
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    //return self.events.count;
     return self.filteredData.count;
 }
 

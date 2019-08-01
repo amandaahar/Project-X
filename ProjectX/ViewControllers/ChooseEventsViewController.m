@@ -10,6 +10,7 @@
 #import "AppDelegate.h"
 #import "../Models/FirebaseManager.h"
 #import "CreateEventViewController.h"
+#import "LocationTableViewController.h"
 #import "Event.h"
 #import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
@@ -345,11 +346,16 @@
     }
     
     return eventView;
-    
 }
 
 - (nullable MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation {
-   return [self eventHomeView:annotation];
+    if (annotation == self.mapView.userLocation) {
+        return nil;
+    }
+    
+    else {
+        return [self eventHomeView:annotation];
+    }
 }
 
 #pragma mark - Creating Event
@@ -400,9 +406,17 @@
 #pragma mark - Navigation
      
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    UINavigationController *navigationController = [segue destinationViewController];
-    CreateEventViewController *createEventController = (CreateEventViewController *)navigationController.topViewController;
-    createEventController.delegate = self;
+    if ([segue.identifier isEqualToString: @"CreateEventSegue"]) {
+        UINavigationController *navigationController = [segue destinationViewController];
+        CreateEventViewController *createEventController = (CreateEventViewController *)navigationController.topViewController;
+        createEventController.delegate = self;
+    }
+    
+    else if ([segue.identifier isEqualToString: @"ChooseLocationSegue"]) {
+        UINavigationController *navigationController = [segue destinationViewController];
+        //LocationTableViewController *ChooseLocationController = (LocationTableViewController *)navigationController.topViewController;
+        //ChooseLocationController.delegate = self;
+    }
 }
 
 @end
