@@ -465,9 +465,10 @@
                         <viewLayoutGuide key="safeArea" id="qfP-aZ-v0Y"/>
                     </view>
                     <navigationItem key="navigationItem" title="Events" largeTitleDisplayMode="always" id="vBp-h5-k84">
-                        <barButtonItem key="leftBarButtonItem" title="Location" id="Mnp-w4-lvo">
+                        <barButtonItem key="leftBarButtonItem" title="Location" style="done" id="Mnp-w4-lvo">
+                            <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
-                                <segue destination="R2F-eF-vpV" kind="show" identifier="ChooseLocationSegue" id="mIl-fL-GDF"/>
+                                <action selector="changeLocation:" destination="r4X-bz-L6V" id="rbe-11-TUD"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="V9L-x8-EjQ">
@@ -479,7 +480,6 @@
                     </navigationItem>
                     <connections>
                         <outlet property="Eventdescription" destination="axT-9o-AKG" id="rxr-EA-prQ"/>
-                        <outlet property="LocationButton" destination="Mnp-w4-lvo" id="Qo2-kH-0Wf"/>
                         <outlet property="card" destination="VDE-fv-mOb" id="uss-6h-7CF"/>
                         <outlet property="categoryIndex" destination="lne-C8-ChM" id="u7J-Sz-iID"/>
                         <outlet property="eventDate" destination="mGd-jQ-Ui8" id="ZmX-YW-ExV"/>

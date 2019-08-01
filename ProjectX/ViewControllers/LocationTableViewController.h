@@ -19,7 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 //@property (nonatomic, weak) id <ChooseLocationController> delegate;
-@property(nonatomic, weak) id<UITableViewDataSource> searchResultsDataSource;
+//@property(nonatomic, weak) id<UITableViewDataSource> searchResultsDataSource;
 
 @end
 

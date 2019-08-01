@@ -60,9 +60,6 @@ NSDateFormatter *dateFormat;
     #pragma clang diagnostic pop
     [self currentLocationIdentifier];
     
- 
-    
-    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showDetailView:) name:@"selectedEvent" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showAlert:) name:@"newEvent" object:nil];
 }
@@ -129,9 +126,6 @@ NSDateFormatter *dateFormat;
          [self.navigationItem.rightBarButtonItem setTitle:Area];
      }];
 }
-
-
-
 
 #pragma mark - get Information by the API Manager
 
@@ -405,8 +399,8 @@ NSDateFormatter *dateFormat;
         [alert dismissViewControllerAnimated:YES completion:nil];
     }];
     
-    [alert addAction:accept];
     [alert addAction:cancel];
+    [alert addAction:accept];
     
     [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
         textField.placeholder = @"Place";

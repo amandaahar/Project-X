@@ -10,13 +10,14 @@
 #import "AppDelegate.h"
 #import "../Models/FirebaseManager.h"
 #import "CreateEventViewController.h"
-#import "LocationTableViewController.h"
+//#import "LocationTableViewController.h"
 #import "Event.h"
 #import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
 #import "../Models/MapAnnotation.h"
+#import "../Models/User.h"
 @import Firebase;
-//@import CoreLocation;
+@import CoreLocation;
 
 @interface ChooseEventsViewController () <CLLocationManagerDelegate, CreateEventControllerDelegate, MKMapViewDelegate>
 
@@ -29,7 +30,6 @@
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (weak, nonatomic) IBOutlet UIImageView *eventPhoto;
 @property (weak, nonatomic) IBOutlet UILabel *eventLocation;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *LocationButton;
 @property (strong, nonatomic) NSMutableArray *eventArray;
 @property (strong, nonatomic) NSDate *dateNSEvent;
 @property (strong, nonatomic) NSString *eventID;
@@ -37,18 +37,19 @@
 @property (strong, nonatomic) FIRDocumentReference *eventIDRef;
 @property (nonatomic, readwrite) FIRFirestore *db;
 @property (strong, nonatomic) NSString *eventImageURL;
+@property (strong, nonatomic) CLLocation *UserCurrentLocation;
+@property (nonatomic, strong) User *currentUser;
 
 @end
 
 @implementation ChooseEventsViewController
 
-//CLLocationManager *locationManager;
-//CLLocation *currentLocation;
+CLLocationManager *UserLocationManager;
 
 - (void)viewDidLoad {
     
     [super viewDidLoad];
-    [self fetchEvents];
+    //[self fetchEvents];
     //[self fetchImage];
     
     self.db = [FIRFirestore firestore];
@@ -58,8 +59,8 @@
     self.eventArray = [NSMutableArray new];
     [self movingPreview];
     
-//    currentLocation = [[CLLocation alloc] initWithLatitude:36 longitude:-122];
-//    [self currentLocationIdentifier];
+    self.UserCurrentLocation = [[CLLocation alloc] initWithLatitude:36 longitude:-122];
+    [self currentLocationIdentifier];
     
     self.mapView.showsUserLocation = YES;
     self.mapView.showsBuildings = YES;
@@ -153,33 +154,37 @@
 }
 */
 
-/*
 #pragma mark - Location methods
 
 - (void)currentLocationIdentifier
 {
-    locationManager = [CLLocationManager new];
-    [locationManager requestWhenInUseAuthorization];
-    locationManager.delegate = self;
-    locationManager.distanceFilter = kCLDistanceFilterNone;
-    locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-//    [self fetchEvents];
-    [locationManager startUpdatingLocation];
+    UserLocationManager = [CLLocationManager new];
+    [UserLocationManager requestWhenInUseAuthorization];
+    UserLocationManager.delegate = self;
+    UserLocationManager.distanceFilter = kCLDistanceFilterNone;
+    UserLocationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    [[FirebaseManager sharedManager] getCurrentUser:^(User * _Nonnull user, NSError * _Nonnull error) {
+        if(error == nil){
+            self.currentUser = user;
+            [self fetchEvents];
+        }
+    }];
+    [UserLocationManager startUpdatingLocation];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
-    currentLocation = [locations objectAtIndex:0];
-    [locationManager stopUpdatingLocation];
+    self.UserCurrentLocation = [locations objectAtIndex:0];
+    [UserLocationManager stopUpdatingLocation];
     CLGeocoder *geocoder = [[CLGeocoder alloc] init] ;
-    [geocoder reverseGeocodeLocation:currentLocation completionHandler:^(NSArray *placemarks, NSError *error)
+    [geocoder reverseGeocodeLocation:self.UserCurrentLocation completionHandler:^(NSArray *placemarks, NSError *error)
      {
          CLPlacemark *placemark = [placemarks objectAtIndex:0];
          NSString *Area = [[NSString alloc]initWithString:placemark.locality];
-         [self.navigationItem.rightBarButtonItem setTitle:Area];
+         [self.navigationItem.leftBarButtonItem setTitle:Area];
      }];
 }
-*/
+
 
 - (void) movingPreview {
     
@@ -420,11 +425,62 @@
         createEventController.delegate = self;
     }
     
+    /*
     else if ([segue.identifier isEqualToString: @"ChooseLocationSegue"]) {
         UINavigationController *navigationController = [segue destinationViewController];
         //LocationTableViewController *ChooseLocationController = (LocationTableViewController *)navigationController.topViewController;
         //ChooseLocationController.delegate = self;
     }
+     */
+}
+
+#pragma mark - Change Location
+
+- (IBAction)changeLocation:(id)sender {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Change Location" message:@"Insert the new location" preferredStyle:(UIAlertControllerStyleAlert)];
+    UIAlertAction *accept = [UIAlertAction actionWithTitle:@"Accept" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+        UITextField *textField = alert.textFields[0];
+        [self getCoordinates:textField.text completionHandler:^(CLLocation *coordinates, NSError *error) {
+            if(error == nil){
+                [self.navigationItem.leftBarButtonItem setTitle:textField.text];
+                [UserLocationManager stopUpdatingLocation];
+                [self.eventArray removeAllObjects];
+                self.UserCurrentLocation = coordinates;
+                [self fetchEvents];
+            }
+        }];
+    }];
+    UIAlertAction* cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+        [alert dismissViewControllerAnimated:YES completion:nil];
+    }];
+    
+    [alert addAction:cancel];
+    [alert addAction:accept];
+    
+    [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+        textField.placeholder = @"Place";
+        textField.keyboardType = UIKeyboardTypeDefault;
+    }];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+- (void)getCoordinates : (NSString *) addressString completionHandler:(void(^)(CLLocation* coordinates, NSError *error))completion
+{
+    CLGeocoder *geoCoder = [[CLGeocoder alloc] init];
+    [geoCoder geocodeAddressString:addressString completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
+        if(error != nil){
+            completion(nil, error);
+        }
+        CLPlacemark *placemark = placemarks[0];
+        if(placemark == nil){
+            NSError *error = [[NSError alloc] init];
+            
+            completion(nil,error);
+        }
+        CLLocation *location = placemark.location;
+        completion(location, nil);
+    }];
+    
 }
 
 @end
