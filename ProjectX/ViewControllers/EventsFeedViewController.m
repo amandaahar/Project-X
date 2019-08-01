@@ -22,6 +22,7 @@
 @property (assign, nonatomic) CGFloat currentOffset;
 @property (nonatomic, strong) EventAPI *eventSelected;
 @property (nonatomic, strong) User *currentUser;
+@property (strong, nonatomic) UINotificationFeedbackGenerator *feedbackGenerator;
 @end
 
 @implementation EventsFeedViewController
@@ -37,7 +38,8 @@ NSDateFormatter *dateFormat;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-  
+    
+
     //[self fetchArrayCategories];
     // convert to date
     dateFormat = [[NSDateFormatter alloc] init];
@@ -71,11 +73,17 @@ NSDateFormatter *dateFormat;
     self.eventSelected = notification.object;
     [self performSegueWithIdentifier:@"details" sender:self];
     NSLog(@"Notification");
+    UIImpactFeedbackGenerator *myGen = [[UIImpactFeedbackGenerator alloc] initWithStyle:(UIImpactFeedbackStyleMedium)];
+    [myGen impactOccurred];
+    myGen = NULL;
+    
 }
 
 - (void)showAlert:(NSNotification *) notification
 {
     NSString *name = notification.object;
+    
+    
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"New event"
                                                                    message:[name stringByAppendingString: @" has been added to your calendar"]
                                                             preferredStyle:(UIAlertControllerStyleAlert)];
@@ -83,6 +91,10 @@ NSDateFormatter *dateFormat;
     UIAlertAction *action = [UIAlertAction actionWithTitle:@"Accept" style:(UIAlertActionStyleCancel) handler:nil];
     
     [alert addAction:action];
+    UINotificationFeedbackGenerator *myGen = [[UINotificationFeedbackGenerator alloc] init];
+    [myGen prepare];
+    [myGen notificationOccurred:(UINotificationFeedbackTypeSuccess)];
+    myGen = NULL;
     [self presentViewController:alert animated:YES completion:nil];
 }
 
@@ -367,6 +379,7 @@ NSDateFormatter *dateFormat;
     // Pass the selected object to the new view controller.
     if([segue.identifier isEqualToString:@"details"])
     {
+       
         DetailHomeViewController * detailView = [segue destinationViewController];
         [detailView setEvent:self.eventSelected];
     }

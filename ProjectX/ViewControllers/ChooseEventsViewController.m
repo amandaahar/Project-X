@@ -185,6 +185,10 @@
             [UIView animateWithDuration:0.3 animations:^{
                 self.card.center = CGPointMake(self.card.center.x - 200, self.card.center.y + 75);
             }];
+            UINotificationFeedbackGenerator *myGen = [[UINotificationFeedbackGenerator alloc] init];
+            [myGen prepare];
+            [myGen notificationOccurred:(UINotificationFeedbackTypeError)];
+            myGen = NULL;
             [self nextEvent];
             //[self resetCard];
         }
@@ -200,6 +204,10 @@
             FIRDocumentReference *eventRef = [[self.db collectionWithPath:@"Users"] documentWithPath:FIRAuth.auth.currentUser.uid];
             [eventRef updateData:@{ @"events": [FIRFieldValue fieldValueForArrayUnion:@[myEvent.eventIDRef]] }];
             [self nextEvent];
+            UINotificationFeedbackGenerator *myGen = [[UINotificationFeedbackGenerator alloc] init];
+            [myGen prepare];
+            [myGen notificationOccurred:(UINotificationFeedbackTypeSuccess)];
+            myGen = NULL;
             self.tabBarController.selectedIndex = 2;
         }
         

@@ -157,6 +157,10 @@
             userLocation.coordinate = location.center;
             
             MapAnnotation * locationAnnote = self.mapView.annotations.firstObject;
+            UINotificationFeedbackGenerator *myGen = [[UINotificationFeedbackGenerator alloc] init];
+            [myGen prepare];
+            [myGen notificationOccurred:(UINotificationFeedbackTypeSuccess)];
+            myGen = NULL;
             [[locationAnnote mapItem] openInMapsWithLaunchOptions:@{MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving}];
         }
     }];

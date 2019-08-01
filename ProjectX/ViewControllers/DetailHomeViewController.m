@@ -90,6 +90,10 @@
 - (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control
 {
     MapAnnotation * location = view.annotation;
+    UINotificationFeedbackGenerator *myGen = [[UINotificationFeedbackGenerator alloc] init];
+    [myGen prepare];
+    [myGen notificationOccurred:(UINotificationFeedbackTypeSuccess)];
+    myGen = NULL;
     [[location mapItem] openInMapsWithLaunchOptions:@{MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving}];
     
 }
@@ -109,7 +113,7 @@
     MapAnnotation * location = self.mapView.annotations[0];
     [[location mapItem] openInMapsWithLaunchOptions:@{MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving}];
 }
-- (IBAction)createGroup:(UIBarButtonItem *)sender {
+- (IBAction)createGroup:(UIButton *)sender {
     [[FirebaseManager sharedManager] setNewAPIEvent:self.event completion:^(NSError * _Nonnull error) {
         if(error == nil)
         {
@@ -117,7 +121,12 @@
               self.tabBarController.selectedIndex = 2;
         }else{
             UIAlertController *alert =[UIAlertController alertControllerWithTitle:@"Error" message:error.localizedDescription preferredStyle:(UIAlertControllerStyleAlert)];
-            UIAlertAction *action = [UIAlertAction actionWithTitle:@"Accept" style:(UIAlertActionStyleCancel) handler:nil];
+            UIAlertAction *action = [UIAlertAction actionWithTitle:@"Accept" style:(UIAlertActionStyleCancel) handler:^(UIAlertAction * _Nonnull action) {
+                UINotificationFeedbackGenerator *myGen = [[UINotificationFeedbackGenerator alloc] init];
+                [myGen prepare];
+                [myGen notificationOccurred:(UINotificationFeedbackTypeSuccess)];
+                myGen = NULL;
+            }];
             [alert addAction:action];
             [self presentViewController:alert animated:YES completion:nil];
         }
@@ -127,6 +136,19 @@
     
     
 }
+
+- (IBAction)shareEvent:(id)sender {
+    NSArray* sharedObjects=[NSArray arrayWithObjects:[[self.event.name stringByAppendingString: self.event.summary] stringByAppendingString:self.event.date.description],  self.imageEvent.image,nil];
+    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:sharedObjects applicationActivities:nil];
+    activityViewController.popoverPresentationController.sourceView = self.view;
+    [self presentViewController:activityViewController animated:YES completion:^{
+        UINotificationFeedbackGenerator *myGen = [[UINotificationFeedbackGenerator alloc] init];
+        [myGen prepare];
+        [myGen notificationOccurred:(UINotificationFeedbackTypeSuccess)];
+        myGen = NULL;
+    }];
+}
+
 
 
 /*

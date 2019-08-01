@@ -195,4 +195,10 @@
     [[[[[database collectionWithPath:@"Event"] documentWithPath:idEvent] collectionWithPath:@"Chat"] documentWithPath: idMessage] updateData:@{@"likes" : [FIRFieldValue fieldValueForArrayRemove:@[FIRAuth.auth.currentUser.uid]]}];
 }
 
+-(void) removeMessageFromChat: (NSString *) idEvent andMessage:(NSString *)idMessage completion: (void(^)( NSError *error))completion{
+    [[[[[database collectionWithPath:@"Event"] documentWithPath: idEvent] collectionWithPath:@"Chat"] documentWithPath:idMessage] deleteDocumentWithCompletion:^(NSError * _Nullable error) {
+        completion(error);
+    }];
+}
+
 @end

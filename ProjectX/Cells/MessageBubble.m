@@ -44,6 +44,9 @@
    [self.bubbleLabel setTextAlignment:(NSTextAlignmentLeft)];
     [self.rightConstraint setActive:NO];
     [self.leftConstraint setActive:YES];
+    [self layoutIfNeeded];
+    [self.bubbleLabel layoutIfNeeded];
+    
      //[self.reactionView setHidden:NO];
     [self.reactionView setNeedsDisplay];
     [self.reactionView setNeedsLayout];
@@ -87,17 +90,23 @@
     [self.bubbleLabel sizeToFit];
     [self.leftConstraint setActive:NO];
     [self.rightConstraint setActive:YES];
+    [self layoutIfNeeded];
+    [self.bubbleLabel layoutIfNeeded];
      [self changeImageReaction:self.message.liked];
    //  [self.reactionView setHidden:YES];
-    [self.bubbleLabel layoutIfNeeded];
-    [self.bubbleLabel setTextAlignment:(NSTextAlignmentRight)];
+    
     self.bubbleView.isIncoming = NO;
      self.bubbleView.outgoingColor = [UIColor colorWithRed:0.09 green:0.54 blue:1 alpha:1];
     [self.bubbleView setNeedsDisplay];
-    [self.reactionView setNeedsDisplay];
-    [self.reactionView setNeedsLayout];
+   
+    [self.bubbleLabel setTextAlignment:(NSTextAlignmentRight)];
    [self sizeToFit];
 }
+
+- (void)prepareForReuse{
+ 
+}
+
 
 -(void) changeImageReaction : (BOOL) liked
 {

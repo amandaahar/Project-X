@@ -65,6 +65,7 @@
 #pragma mark - Actions in the cell
 
 -(void) addEventToCalendar{
+   
     EKEventStore * store = [EKEventStore new];
     [store requestAccessToEntityType:(EKEntityTypeEvent) completion:^(BOOL granted, NSError * _Nullable error) {
         
@@ -72,6 +73,8 @@
         {
             return;
         }
+        
+    
         EKEvent *event = [EKEvent eventWithEventStore:store];
         [event setTitle:self.event.name];
         [event setStartDate:self.event.date];

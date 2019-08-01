@@ -244,7 +244,10 @@
                                             <constraint firstAttribute="width" constant="105" id="ikF-wc-ZVC"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
-                                        <state key="normal" title="Buy tickets"/>
+                                        <state key="normal" title="Create group"/>
+                                        <connections>
+                                            <action selector="createGroup:" destination="UOT-AV-1DE" eventType="touchUpInside" id="Tsg-yb-Im4"/>
+                                        </connections>
                                     </button>
                                     <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="EVX-yW-cKf">
                                         <rect key="frame" x="20" y="278" width="339" height="137"/>
@@ -299,9 +302,9 @@
                         <viewLayoutGuide key="safeArea" id="mLi-9J-qZm"/>
                     </view>
                     <navigationItem key="navigationItem" largeTitleDisplayMode="always" id="3tz-GA-ode">
-                        <barButtonItem key="rightBarButtonItem" title="Create group" id="agO-5b-4iw">
+                        <barButtonItem key="rightBarButtonItem" title="Share" id="agO-5b-4iw">
                             <connections>
-                                <action selector="createGroup:" destination="UOT-AV-1DE" id="jIz-P4-mky"/>
+                                <action selector="shareEvent:" destination="UOT-AV-1DE" id="ZlO-aw-e8k"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

@@ -115,13 +115,20 @@ BOOL lastTime = false;
             NSDictionary *dicPreference = myBubble.preference;
             [self.preferences addObject:bubble.model.bubbleText];
             [self.preferencesDB addObject:dicPreference];
-
+            UINotificationFeedbackGenerator *myGen = [[UINotificationFeedbackGenerator alloc] init];
+            [myGen prepare];
+            [myGen notificationOccurred:(UINotificationFeedbackTypeSuccess)];
+            myGen = NULL;
 
         }else
         {
             UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"Too many categories" message:@"Remove one to add a new one" preferredStyle:(UIAlertControllerStyleAlert)];
             UIAlertAction *action = [UIAlertAction actionWithTitle:@"Accept" style:(UIAlertActionStyleCancel) handler:nil];
             [alert addAction:action];
+            UINotificationFeedbackGenerator *myGen = [[UINotificationFeedbackGenerator alloc] init];
+            [myGen prepare];
+            [myGen notificationOccurred:(UINotificationFeedbackTypeError)];
+            myGen = NULL;
             [self presentViewController:alert animated:YES completion:nil];
         }
     }else if((long)[bubble.model bubbleState] == 0)
@@ -130,6 +137,10 @@ BOOL lastTime = false;
         NSDictionary *dicPreference = myBubble.preference;
         [self.preferencesDB removeObject:dicPreference];
          [self.preferences removeObject:bubble.model.bubbleText];
+        UINotificationFeedbackGenerator *myGen = [[UINotificationFeedbackGenerator alloc] init];
+        [myGen prepare];
+        [myGen notificationOccurred:(UINotificationFeedbackTypeError)];
+        myGen = NULL;
     }
     NSLog(@"%@", self.preferences);
     [self.collectionView reloadData];
