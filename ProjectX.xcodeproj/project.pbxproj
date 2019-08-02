@@ -16,6 +16,14 @@
 		558AC6CB925C399045621CBD /* Pods_ProjectXUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BE1B1413891FCA15B877BED /* Pods_ProjectXUITests.framework */; };
 		85D5981A85E52C8F80BF99CB /* Pods_ProjectXTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A991AEFE13FFA4A8E1BA78BE /* Pods_ProjectXTests.framework */; };
 		DE3FD48BBBE23AB1FA99601B /* Pods_ProjectX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3733E797CED29363A59F0225 /* Pods_ProjectX.framework */; };
+		E703B94422F248DD00C63563 /* EditProfileTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E703B94222F248DD00C63563 /* EditProfileTableViewCell.m */; };
+		E703B94522F248DD00C63563 /* EditProfileTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E703B94322F248DD00C63563 /* EditProfileTableViewCell.xib */; };
+		E703B94922F2548700C63563 /* ShowInterestsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E703B94722F2548700C63563 /* ShowInterestsTableViewCell.m */; };
+		E703B94A22F2548700C63563 /* ShowInterestsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E703B94822F2548700C63563 /* ShowInterestsTableViewCell.xib */; };
+		E714766B22F349A00036F541 /* InterestCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E714766922F349A00036F541 /* InterestCollectionViewCell.m */; };
+		E714766C22F349A00036F541 /* InterestCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E714766A22F349A00036F541 /* InterestCollectionViewCell.xib */; };
+		E714767022F38DCB0036F541 /* InterestFieldTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E714766E22F38DCB0036F541 /* InterestFieldTableViewCell.m */; };
+		E714767122F38DCB0036F541 /* InterestFieldTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E714766F22F38DCB0036F541 /* InterestFieldTableViewCell.xib */; };
 		E76311B822E23E8E00A1B674 /* MessagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E76311B722E23E8E00A1B674 /* MessagesViewController.m */; };
 		E76311BB22E241BB00A1B674 /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = E76311BA22E241BB00A1B674 /* Message.m */; };
 		E76311BF22E2746400A1B674 /* topCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E76311BD22E2746400A1B674 /* topCollectionViewCell.xib */; };
@@ -101,6 +109,18 @@
 		7A78AAE3F23A2D3A1981E014 /* Pods-ProjectXTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProjectXTests.release.xcconfig"; path = "Target Support Files/Pods-ProjectXTests/Pods-ProjectXTests.release.xcconfig"; sourceTree = "<group>"; };
 		9BE1B1413891FCA15B877BED /* Pods_ProjectXUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ProjectXUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A991AEFE13FFA4A8E1BA78BE /* Pods_ProjectXTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ProjectXTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E703B94122F248DD00C63563 /* EditProfileTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EditProfileTableViewCell.h; sourceTree = "<group>"; };
+		E703B94222F248DD00C63563 /* EditProfileTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EditProfileTableViewCell.m; sourceTree = "<group>"; };
+		E703B94322F248DD00C63563 /* EditProfileTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditProfileTableViewCell.xib; sourceTree = "<group>"; };
+		E703B94622F2548700C63563 /* ShowInterestsTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShowInterestsTableViewCell.h; sourceTree = "<group>"; };
+		E703B94722F2548700C63563 /* ShowInterestsTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShowInterestsTableViewCell.m; sourceTree = "<group>"; };
+		E703B94822F2548700C63563 /* ShowInterestsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ShowInterestsTableViewCell.xib; sourceTree = "<group>"; };
+		E714766822F349A00036F541 /* InterestCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InterestCollectionViewCell.h; sourceTree = "<group>"; };
+		E714766922F349A00036F541 /* InterestCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InterestCollectionViewCell.m; sourceTree = "<group>"; };
+		E714766A22F349A00036F541 /* InterestCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InterestCollectionViewCell.xib; sourceTree = "<group>"; };
+		E714766D22F38DCB0036F541 /* InterestFieldTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InterestFieldTableViewCell.h; sourceTree = "<group>"; };
+		E714766E22F38DCB0036F541 /* InterestFieldTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InterestFieldTableViewCell.m; sourceTree = "<group>"; };
+		E714766F22F38DCB0036F541 /* InterestFieldTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InterestFieldTableViewCell.xib; sourceTree = "<group>"; };
 		E76311B622E23E8E00A1B674 /* MessagesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MessagesViewController.h; sourceTree = "<group>"; };
 		E76311B722E23E8E00A1B674 /* MessagesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MessagesViewController.m; sourceTree = "<group>"; };
 		E76311B922E241BB00A1B674 /* Message.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
@@ -314,15 +334,27 @@
 				EA3A502322E0F2FC004F2FFD /* HomeFeedTableViewCell.xib */,
 				EA73F81022E10AE200385689 /* CategoriesCollectionViewCell.h */,
 				EA73F81122E10AE200385689 /* CategoriesCollectionViewCell.m */,
+				EA73F83B22E6848D00385689 /* MessageBubble.m */,
 				EA73F81A22E11B4700385689 /* GroupEventsTableViewCell.h */,
 				EA73F81B22E11B4700385689 /* GroupEventsTableViewCell.m */,
 				EA73F83A22E6848D00385689 /* MessageBubble.h */,
-				EA73F83B22E6848D00385689 /* MessageBubble.m */,
 				EA73F83C22E6848D00385689 /* MessageBubble.xib */,
 				E7BA0FF822EA5B2A00467978 /* PillLabel.h */,
 				E7BA0FF922EA5B2A00467978 /* PillLabel.m */,
 				EA70790A22EF8F5C00D41CD1 /* PreferencesCollectionViewCell.h */,
 				EA70790B22EF8F5C00D41CD1 /* PreferencesCollectionViewCell.m */,
+				E703B94122F248DD00C63563 /* EditProfileTableViewCell.h */,
+				E703B94222F248DD00C63563 /* EditProfileTableViewCell.m */,
+				E703B94322F248DD00C63563 /* EditProfileTableViewCell.xib */,
+				E703B94622F2548700C63563 /* ShowInterestsTableViewCell.h */,
+				E703B94722F2548700C63563 /* ShowInterestsTableViewCell.m */,
+				E703B94822F2548700C63563 /* ShowInterestsTableViewCell.xib */,
+				E714766822F349A00036F541 /* InterestCollectionViewCell.h */,
+				E714766922F349A00036F541 /* InterestCollectionViewCell.m */,
+				E714766A22F349A00036F541 /* InterestCollectionViewCell.xib */,
+				E714766D22F38DCB0036F541 /* InterestFieldTableViewCell.h */,
+				E714766E22F38DCB0036F541 /* InterestFieldTableViewCell.m */,
+				E714766F22F38DCB0036F541 /* InterestFieldTableViewCell.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -546,11 +578,15 @@
 			files = (
 				EA54ECF422DE3F3900D0D7A2 /* LaunchScreen.storyboard in Resources */,
 				EA73F83E22E6848D00385689 /* MessageBubble.xib in Resources */,
+				E714766C22F349A00036F541 /* InterestCollectionViewCell.xib in Resources */,
 				E76311BF22E2746400A1B674 /* topCollectionViewCell.xib in Resources */,
+				E703B94A22F2548700C63563 /* ShowInterestsTableViewCell.xib in Resources */,
 				EA3A502522E0F2FC004F2FFD /* HomeFeedTableViewCell.xib in Resources */,
 				EA54ECF122DE3F3900D0D7A2 /* Assets.xcassets in Resources */,
 				EA54ECEC22DE3F3800D0D7A2 /* Main.storyboard in Resources */,
 				EAEFFD7422F3AAC10079E3D7 /* GoogleService-Info.plist in Resources */,
+				E703B94522F248DD00C63563 /* EditProfileTableViewCell.xib in Resources */,
+				E714767122F38DCB0036F541 /* InterestFieldTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -661,6 +697,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E703B94922F2548700C63563 /* ShowInterestsTableViewCell.m in Sources */,
 				0E496C0F22EE5AE200DEF38C /* DetailEventViewController.m in Sources */,
 				E7AEA0BE22DFD8BC00A77CC2 /* GroupTableViewCell.m in Sources */,
 				EA54ED2822DEE23900D0D7A2 /* FirebaseManager.m in Sources */,
@@ -681,6 +718,8 @@
 				EA70790622ED648B00D41CD1 /* PreferencesViewController.m in Sources */,
 				E76311C022E2746400A1B674 /* topCollectionViewCell.m in Sources */,
 				E76311BB22E241BB00A1B674 /* Message.m in Sources */,
+				E714767022F38DCB0036F541 /* InterestFieldTableViewCell.m in Sources */,
+				E714766B22F349A00036F541 /* InterestCollectionViewCell.m in Sources */,
 				EA3A502422E0F2FC004F2FFD /* HomeFeedTableViewCell.m in Sources */,
 				EA7078F722EBA43100D41CD1 /* TranslatorManager.m in Sources */,
 				EA54ECF722DE3F3900D0D7A2 /* main.m in Sources */,
@@ -701,6 +740,7 @@
 				E7AEA0BA22DFCC3A00A77CC2 /* Chat.m in Sources */,
 				EA73F81322E10AE200385689 /* CategoriesCollectionViewCell.m in Sources */,
 				E76311B822E23E8E00A1B674 /* MessagesViewController.m in Sources */,
+				E703B94422F248DD00C63563 /* EditProfileTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

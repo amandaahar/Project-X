@@ -154,9 +154,12 @@ static NSString * const publicTokenTicketMaster = @"OgabuZXqzqkv0GJtbvl5hKlbAFZL
     
     dispatch_group_notify(group,dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^ {
         // block3
-        completion(eventbriteDic[@"events"],ticketmasterDic[@"_embedded"][@"events"], nil);
-        NSLog(@"Block3");
+        if (eventbriteDic && ticketmasterDic) {
+            completion(eventbriteDic[@"events"],ticketmasterDic[@"_embedded"][@"events"], nil);
+            NSLog(@"Block3");
+        }
     });
+        
     
     
 }

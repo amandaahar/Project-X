@@ -62,9 +62,6 @@ NSDateFormatter *dateFormat;
     #pragma clang diagnostic pop
     [self currentLocationIdentifier];
     
- 
-    
-    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showDetailView:) name:@"selectedEvent" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showAlert:) name:@"newEvent" object:nil];
 }
@@ -135,6 +132,7 @@ NSDateFormatter *dateFormat;
 }
 
 
+
 /// This method shows the cancel button
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
     self.searchBar.showsCancelButton = YES;
@@ -197,7 +195,6 @@ NSDateFormatter *dateFormat;
                 categoriesFiltered = [categories copy];
             }
           
-           
             self.categories = categoriesFiltered;
             [self getEventsFromCategories];
         }
@@ -448,8 +445,8 @@ NSDateFormatter *dateFormat;
         [alert dismissViewControllerAnimated:YES completion:nil];
     }];
     
-    [alert addAction:accept];
     [alert addAction:cancel];
+    [alert addAction:accept];
     
     [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
         textField.placeholder = @"Place";

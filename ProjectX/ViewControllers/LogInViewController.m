@@ -40,16 +40,7 @@ struct KeychainConfiguration {
     [self.context canEvaluatePolicy:kLAPolicyDeviceOwnerAuthentication error:&error];
     
     
-     NSString *savedValue = [[NSUserDefaults standardUserDefaults]
-                                    stringForKey:@"mail"];
-       if(savedValue != nil){
-         [self.context evaluatePolicy:kLAPolicyDeviceOwnerAuthentication localizedReason:@"Log into your account" reply:^(BOOL success, NSError * _Nullable error) {
-                if(success){
-                NSString * password = [SAMKeychain passwordForService:@"password" account:savedValue];
-                [self logInWithUser:savedValue andPassword:password];
-            }  }];
-        }
-          
+    
     
   
     //[[APIEventsManager sharedManager] getCategories];
@@ -142,6 +133,17 @@ enum AuthenticationState {
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         LogInViewController *loginViewController = [storyboard instantiateViewControllerWithIdentifier:@"TabBarVC"];
         appDelegate.window.rootViewController = loginViewController;
+    }else{
+        NSString *savedValue = [[NSUserDefaults standardUserDefaults]
+                                stringForKey:@"mail"];
+        if(savedValue != nil){
+            [self.context evaluatePolicy:kLAPolicyDeviceOwnerAuthentication localizedReason:@"Log into your account" reply:^(BOOL success, NSError * _Nullable error) {
+                if(success){
+                    NSString * password = [SAMKeychain passwordForService:@"password" account:savedValue];
+                    [self logInWithUser:savedValue andPassword:password];
+                }  }];
+        }
+        
     }
 }
 - (BOOL)textFieldShouldReturn:(UITextField *)textField

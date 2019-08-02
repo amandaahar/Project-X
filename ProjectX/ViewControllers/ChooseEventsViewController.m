@@ -10,13 +10,14 @@
 #import "AppDelegate.h"
 #import "../Models/FirebaseManager.h"
 #import "CreateEventViewController.h"
-#import "LocationTableViewController.h"
+//#import "LocationTableViewController.h"
 #import "Event.h"
 #import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
 #import "../Models/MapAnnotation.h"
+#import "../Models/User.h"
 @import Firebase;
-//@import CoreLocation;
+@import CoreLocation;
 
 @interface ChooseEventsViewController () <CLLocationManagerDelegate, CreateEventControllerDelegate, MKMapViewDelegate>
 
@@ -29,7 +30,6 @@
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (weak, nonatomic) IBOutlet UIImageView *eventPhoto;
 @property (weak, nonatomic) IBOutlet UILabel *eventLocation;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *LocationButton;
 @property (strong, nonatomic) NSMutableArray *eventArray;
 @property (strong, nonatomic) NSDate *dateNSEvent;
 @property (strong, nonatomic) NSString *eventID;
@@ -37,18 +37,21 @@
 @property (strong, nonatomic) FIRDocumentReference *eventIDRef;
 @property (nonatomic, readwrite) FIRFirestore *db;
 @property (strong, nonatomic) NSString *eventImageURL;
+@property (strong, nonatomic) CLLocation *UserCurrentLocation;
+@property (nonatomic, strong) User *currentUser;
+@property (strong, nonatomic) UIView *emptyCard;
+@property (strong, nonatomic) UILabel *noEventsLabel;
 
 @end
 
 @implementation ChooseEventsViewController
 
-//CLLocationManager *locationManager;
-//CLLocation *currentLocation;
+CLLocationManager *UserLocationManager;
 
 - (void)viewDidLoad {
     
     [super viewDidLoad];
-    [self fetchEvents];
+    //[self fetchEvents];
     //[self fetchImage];
     
     self.db = [FIRFirestore firestore];
@@ -56,13 +59,42 @@
     self.annotationID = @"Pin";
     [self.mapView registerClass:[MKAnnotationView class] forAnnotationViewWithReuseIdentifier:self.annotationID];
     self.eventArray = [NSMutableArray new];
-    [self movingPreview];
+    //[self movingPreview];
     
-//    currentLocation = [[CLLocation alloc] initWithLatitude:36 longitude:-122];
-//    [self currentLocationIdentifier];
-    
+    self.UserCurrentLocation = [[CLLocation alloc] initWithLatitude:36 longitude:-122];
+    [self currentLocationIdentifier];
     self.mapView.showsUserLocation = YES;
     self.mapView.showsBuildings = YES;
+    
+    /*
+    FIRDatabaseReference *geofireRef = [[FIRDatabase database] reference];
+    GeoFire *geoFire = [[GeoFire alloc] initWithFirebaseRef:geofireRef];
+    
+    [geoFire setLocation:[[CLLocation alloc] initWithLatitude:37.7853889 longitude:-122.4056973]
+                  forKey:@"firebase-hq"
+     withCompletionBlock:^(NSError *error) {
+         if (error != nil) {
+             NSLog(@"whoops: An error occurred: %@", error.localizedDescription);
+         } else {
+             NSLog(@"Saved location successfully!");
+         }
+     }];
+    
+    CLLocation *center = [[CLLocation alloc] initWithLatitude:37.7832889 longitude:-122.4056973];
+    // Query locations at [37.7832889, -122.4056973] with a radius of 600 meters
+    GFCircleQuery *circleQuery = [geoFire queryAtLocation:self.UserCurrentLocation withRadius:5.6];
+    
+    // Query location by region
+    MKCoordinateSpan span = MKCoordinateSpanMake(0.001, 0.001);
+    MKCoordinateRegion region = MKCoordinateRegionMake(center.coordinate, span);
+    GFRegionQuery *regionQuery = [geoFire queryWithRegion:region];
+    
+//    FIRDatabaseHandle queryHandle = [query observeEventType:GFEventTypeKeyEntered withBlock:^(NSString *key, CLLocation *location) {
+//        NSLog(@"Key '%@' entered the search area and is at location '%@'", key, location);
+//    }];
+    
+    */
+    
 }
 
 #pragma mark - Fetching Events
@@ -82,13 +114,11 @@
             UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"I am ready!"
                                                                    style:UIAlertActionStyleCancel
                                                                  handler:^(UIAlertAction * _Nonnull action) {
-                                                                     //[self movingPreview];
+                                                                     [self movingPreview];
                                                                  }];
             [alert addAction:cancelAction];
             
-            [self presentViewController:alert animated:YES completion:^{
-                // optional code for what happens after the alert controller has finished presenting
-            }];
+            [self presentViewController:alert animated:YES completion: nil];
             
             //NSLog(@"%@", event);
             Event * myEvent = event.firstObject;
@@ -172,36 +202,41 @@
 }
 */
 
-/*
 #pragma mark - Location methods
 
 - (void)currentLocationIdentifier
 {
-    locationManager = [CLLocationManager new];
-    [locationManager requestWhenInUseAuthorization];
-    locationManager.delegate = self;
-    locationManager.distanceFilter = kCLDistanceFilterNone;
-    locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-//    [self fetchEvents];
-    [locationManager startUpdatingLocation];
+    UserLocationManager = [CLLocationManager new];
+    [UserLocationManager requestWhenInUseAuthorization];
+    UserLocationManager.delegate = self;
+    UserLocationManager.distanceFilter = kCLDistanceFilterNone;
+    UserLocationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    [[FirebaseManager sharedManager] getCurrentUser:^(User * _Nonnull user, NSError * _Nonnull error) {
+        if(error == nil){
+            self.currentUser = user;
+            [self fetchEvents];
+        }
+    }];
+    [UserLocationManager startUpdatingLocation];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
-    currentLocation = [locations objectAtIndex:0];
-    [locationManager stopUpdatingLocation];
+    self.UserCurrentLocation = [locations objectAtIndex:0];
+    [UserLocationManager stopUpdatingLocation];
     CLGeocoder *geocoder = [[CLGeocoder alloc] init] ;
-    [geocoder reverseGeocodeLocation:currentLocation completionHandler:^(NSArray *placemarks, NSError *error)
+    [geocoder reverseGeocodeLocation:self.UserCurrentLocation completionHandler:^(NSArray *placemarks, NSError *error)
      {
          CLPlacemark *placemark = [placemarks objectAtIndex:0];
          NSString *Area = [[NSString alloc]initWithString:placemark.locality];
-         [self.navigationItem.rightBarButtonItem setTitle:Area];
+         [self.navigationItem.leftBarButtonItem setTitle:Area];
      }];
 }
-*/
+
 
 - (void) movingPreview {
     
+    /*
     [UIView animateKeyframesWithDuration:1.0 delay:1.5 options:nil animations:^{self.card.frame = CGRectMake(self.card.frame.origin.x + 200, self.card.frame.origin.y - 75, self.card.frame.size.width, self.card.frame.size.height);
         
     } completion:^(BOOL finished) {
@@ -210,11 +245,11 @@
                                       //self.animationInProgress = YES;
                                     }];
                                 }];
+    */
     
-    /*
     CABasicAnimation *animation =
     [CABasicAnimation animationWithKeyPath:@"position"];
-    [animation setDuration:0.2];
+    [animation setDuration:0.15];
     [animation setRepeatCount:2];
     [animation setAutoreverses:YES];
     [animation setFromValue:[NSValue valueWithCGPoint:
@@ -222,8 +257,7 @@
     [animation setToValue:[NSValue valueWithCGPoint:
                            CGPointMake([self.card center].x + 20.0f, [self.card center].y)]];
     [[self.card layer] addAnimation:animation forKey:@"position"];
-    */
-
+    
 }
 
 #pragma mark - Choosing Events
@@ -281,21 +315,21 @@
     
     if (self.eventArray.firstObject == nil) {
         self.card.alpha = 0;
-        [self.mapView removeFromSuperview];
-       
-        UIView *emptyCard = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 100)];
-        emptyCard.center = self.view.center;
-        emptyCard.backgroundColor = [UIColor blackColor];
-        emptyCard.layer.cornerRadius = 15;
-        emptyCard.layer.masksToBounds = true;
-        [self.view addSubview:emptyCard];
+        self.mapView.alpha = 0;
         
-        UILabel *noEventsLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 270, 200)];
-        noEventsLabel.center = self.view.center;
-        [noEventsLabel setText:@"No events found, create your own now!"];
-        [noEventsLabel setNumberOfLines:0];
-        [noEventsLabel setTextColor:[UIColor whiteColor]];
-        [self.view addSubview:noEventsLabel];
+        self.emptyCard = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 100)];
+        self.emptyCard.center = self.view.center;
+        self.emptyCard.backgroundColor = [UIColor blackColor];
+        self.emptyCard.layer.cornerRadius = 15;
+        self.emptyCard.layer.masksToBounds = true;
+        [self.view addSubview:self.emptyCard];
+        
+        self.noEventsLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 270, 200)];
+        self.noEventsLabel.center = self.view.center;
+        [self.noEventsLabel setText:@"No events found, create your own now!"];
+        [self.noEventsLabel setNumberOfLines:0];
+        [self.noEventsLabel setTextColor:[UIColor whiteColor]];
+        [self.view addSubview:self.noEventsLabel];
     }
     
     else {
@@ -430,6 +464,17 @@
     [self performSegueWithIdentifier:@"CreateEventSegue" sender:nil];
 //  [self resetCard]; Should I create a card for the created event or directly make a group
 }
+
+- (IBAction)resetAllCards:(UIBarButtonItem *)sender {
+    [self fetchEvents];
+    [self resetCard];
+    
+    self.emptyCard.alpha = 0;
+    self.noEventsLabel.alpha = 0;
+    self.card.alpha = 1;
+    self.mapView.alpha = 1;
+}
+
      
 #pragma mark - Navigation
      
@@ -440,11 +485,73 @@
         createEventController.delegate = self;
     }
     
+    /*
     else if ([segue.identifier isEqualToString: @"ChooseLocationSegue"]) {
         UINavigationController *navigationController = [segue destinationViewController];
         //LocationTableViewController *ChooseLocationController = (LocationTableViewController *)navigationController.topViewController;
         //ChooseLocationController.delegate = self;
     }
+     */
+}
+
+#pragma mark - Change Location
+
+- (IBAction)changeLocation:(id)sender {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Change Location" message:@"Insert the new location" preferredStyle:(UIAlertControllerStyleAlert)];
+    UIAlertAction *accept = [UIAlertAction actionWithTitle:@"Accept" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+        UITextField *textField = alert.textFields[0];
+        [self getCoordinates:textField.text completionHandler:^(CLLocation *coordinates, NSError *error) {
+            if(error == nil){
+                [self.navigationItem.leftBarButtonItem setTitle:textField.text];
+                [UserLocationManager stopUpdatingLocation];
+                [self.eventArray removeAllObjects];
+                self.UserCurrentLocation = coordinates;
+                [self fetchEvents];
+            }
+        }];
+        
+        MKCircle *circle = [MKCircle circleWithCenterCoordinate:self.UserCurrentLocation.coordinate radius:1000];
+        [self.mapView addOverlay:circle];
+    }];
+    UIAlertAction* cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+        [alert dismissViewControllerAnimated:YES completion:nil];
+    }];
+    
+    [alert addAction:cancel];
+    [alert addAction:accept];
+    
+    [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+        textField.placeholder = @"Place";
+        textField.keyboardType = UIKeyboardTypeDefault;
+    }];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+- (MKOverlayRenderer *)mapView:(MKMapView *)map viewForOverlay:(id <MKOverlay>)overlay
+{
+    MKCircleRenderer *circleView = [[MKCircleRenderer alloc] initWithOverlay:overlay];
+    circleView.strokeColor = [UIColor redColor];
+    circleView.fillColor = [[UIColor yellowColor] colorWithAlphaComponent:0.4];
+    return circleView;
+}
+
+- (void)getCoordinates : (NSString *) addressString completionHandler:(void(^)(CLLocation* coordinates, NSError *error))completion
+{
+    CLGeocoder *geoCoder = [[CLGeocoder alloc] init];
+    [geoCoder geocodeAddressString:addressString completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
+        if(error != nil){
+            completion(nil, error);
+        }
+        CLPlacemark *placemark = placemarks[0];
+        if(placemark == nil){
+            NSError *error = [[NSError alloc] init];
+            
+            completion(nil,error);
+        }
+        CLLocation *location = placemark.location;
+        completion(location, nil);
+    }];
+    
 }
 
 @end

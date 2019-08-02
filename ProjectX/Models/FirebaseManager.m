@@ -8,6 +8,7 @@
 
 #import "FirebaseManager.h"
 #import "User.h"
+CLLocation *greaterGeopoint;
 
 @implementation FirebaseManager
 
@@ -54,10 +55,18 @@
     }];
 }
 
-- (void)getEvents:(void(^)(NSArray *events, NSError *error))completion {
-     
-     
-    [[[database collectionWithPath:@"Event"] queryWhereField:@"eventDate" isGreaterThanOrEqualTo:[FIRTimestamp timestampWithDate:[[NSDate alloc] initWithTimeIntervalSinceNow:60*60*24*6]]]
+- (void)getEvents:(void(^)(NSArray *events, NSError *error))completion
+{
+    //self.UserCurrentLocation = [[CLLocation alloc] initWithLatitude:36 longitude:-122];
+//    greaterGeopoint = GeoPoint(latitude: 38, longitude: -125);
+//    GeoPoint(38,-125);
+    
+//    int lat = 0.01449;
+//    int lon = 0.01818;
+//    int lowerLat = latitude - (lat*distance);
+     [[[[database collectionWithPath:@"Event"] queryWhereField:@"eventDate" isGreaterThanOrEqualTo:[FIRTimestamp timestampWithDate:[[NSDate alloc] initWithTimeIntervalSinceNow:60*60*24*6]]]
+                //queryWhereField:@"location" isLessThanOrEqualTo:[FIRGeoPoint GeoPoint(38)]]
+                queryOrderedByField:@"location"]
      getDocumentsWithCompletion:^(FIRQuerySnapshot *snapshot, NSError *error) {
          if (error != nil) {
              NSLog(@"Error getting documents: %@", error);
@@ -163,10 +172,6 @@
 ////        }
 ////
 ////    }];
-//
-//}
-
-
 
 
 #pragma mark - Set methods
