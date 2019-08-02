@@ -10,6 +10,7 @@
 #import "../Models/APIEventsManager.h"
 #import "../Models/NSMutableArray+Convenience.h"
 #import "../Cells/GroupEventsTableViewCell.h"
+#import "../Models/User.h"
 #import "DetailHomeViewController.h"
 @import CoreLocation;
 @interface EventsFeedViewController () <UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate, UIScrollViewDelegate>
@@ -20,12 +21,14 @@
 @property (strong, nonatomic) NSArray *categories;
 @property (assign, nonatomic) CGFloat currentOffset;
 @property (nonatomic, strong) EventAPI *eventSelected;
+@property (nonatomic, strong) User *currentUser;
+@property (strong, nonatomic) UINotificationFeedbackGenerator *feedbackGenerator;
+@property (strong, nonatomic) CLLocation *currentLocation;
 @end
 
 @implementation EventsFeedViewController
 
 CLLocationManager *locationManager;
-CLLocation *currentLocation;
 NSDateFormatter *dateFormat;
 
 - (void)viewDidAppear:(BOOL)animated
@@ -36,17 +39,16 @@ NSDateFormatter *dateFormat;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
-    
+
+    //[self fetchArrayCategories];
     // convert to date
     dateFormat = [[NSDateFormatter alloc] init];
     // ignore +11 and use timezone name instead of seconds from gmt
     [dateFormat setDateFormat:@"YYYY-MM-dd'T'HH:mm:ss'+11:00'"];
-    [self.activityView setHidden:NO];
-    [self.activityView startAnimating];
+    
     self.tableViewEventCategories.delegate = self;
     self.tableViewEventCategories.dataSource = self;
-    currentLocation = [[CLLocation alloc] initWithLatitude:36 longitude:-122];
+    self.currentLocation = [[CLLocation alloc] initWithLatitude:36 longitude:-122];
     self.events = [NSMutableArray new];
     self.categories = [NSArray new];
     NSDateFormatter *format = [[NSDateFormatter alloc] init];
@@ -57,6 +59,10 @@ NSDateFormatter *dateFormat;
     NSString *dateString = [format stringFromDate:now];
     #pragma clang diagnostic pop
     [self currentLocationIdentifier];
+    
+ 
+    
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showDetailView:) name:@"selectedEvent" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showAlert:) name:@"newEvent" object:nil];
 }
@@ -66,11 +72,17 @@ NSDateFormatter *dateFormat;
     self.eventSelected = notification.object;
     [self performSegueWithIdentifier:@"details" sender:self];
     NSLog(@"Notification");
+    UIImpactFeedbackGenerator *myGen = [[UIImpactFeedbackGenerator alloc] initWithStyle:(UIImpactFeedbackStyleMedium)];
+    [myGen impactOccurred];
+    myGen = NULL;
+    
 }
 
 - (void)showAlert:(NSNotification *) notification
 {
     NSString *name = notification.object;
+    
+    
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"New event"
                                                                    message:[name stringByAppendingString: @" has been added to your calendar"]
                                                             preferredStyle:(UIAlertControllerStyleAlert)];
@@ -78,6 +90,10 @@ NSDateFormatter *dateFormat;
     UIAlertAction *action = [UIAlertAction actionWithTitle:@"Accept" style:(UIAlertActionStyleCancel) handler:nil];
     
     [alert addAction:action];
+    UINotificationFeedbackGenerator *myGen = [[UINotificationFeedbackGenerator alloc] init];
+    [myGen prepare];
+    [myGen notificationOccurred:(UINotificationFeedbackTypeSuccess)];
+    myGen = NULL;
     [self presentViewController:alert animated:YES completion:nil];
 }
 
@@ -90,16 +106,23 @@ NSDateFormatter *dateFormat;
     locationManager.delegate = self;
     locationManager.distanceFilter = kCLDistanceFilterNone;
     locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-    [self fetchArrayCategories];
+    [[FirebaseManager sharedManager] getCurrentUser:^(User * _Nonnull user, NSError * _Nonnull error) {
+        if(error == nil){
+            self.currentUser = user;
+            //[self getEventsFromCategories];
+            // [self getEventsFromCategories];
+            [self fetchArrayCategories];
+        }
+    }];
     [locationManager startUpdatingLocation];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
-    currentLocation = [locations objectAtIndex:0];
+    self.currentLocation = [locations objectAtIndex:0];
     [locationManager stopUpdatingLocation];
     CLGeocoder *geocoder = [[CLGeocoder alloc] init] ;
-    [geocoder reverseGeocodeLocation:currentLocation completionHandler:^(NSArray *placemarks, NSError *error)
+    [geocoder reverseGeocodeLocation:self.currentLocation completionHandler:^(NSArray *placemarks, NSError *error)
      {
          CLPlacemark *placemark = [placemarks objectAtIndex:0];
          NSString *Area = [[NSString alloc]initWithString:placemark.locality];
@@ -114,10 +137,26 @@ NSDateFormatter *dateFormat;
 
 - (void)fetchArrayCategories
 {
+    [self.activityView setHidden:NO];
+    [self.activityView startAnimating];
     [[APIEventsManager sharedManager] getCategories:^(NSArray * _Nonnull categories, NSError * _Nonnull error) {
         if(error == nil)
         {
-            self.categories = categories;
+            NSMutableArray * categoriesFiltered = [NSMutableArray new];
+            if(self.currentUser.preferences.count == 0){
+                for(NSDictionary *dic in self.currentUser.preferences){
+                    NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(NSDictionary *evaluatedObject, NSDictionary<NSString *,id> * _Nullable bindings) {
+                        return [dic[@"id"] isEqualToString: evaluatedObject[@"id"]];
+                    }];
+                    
+                    [categoriesFiltered addObjectsFromArray:[categories filteredArrayUsingPredicate:predicate]];
+                }
+            }else{
+                categoriesFiltered = [categories copy];
+            }
+          
+           
+            self.categories = categoriesFiltered;
             [self getEventsFromCategories];
         }
     }];
@@ -127,12 +166,15 @@ NSDateFormatter *dateFormat;
 {
     for(NSDictionary * category in self.categories)
     {
-   
-        [[APIEventsManager sharedManager] getEventsByLocation:[NSString stringWithFormat:@"%f", currentLocation.coordinate.latitude]
-                                                    longitude:[NSString stringWithFormat:@"%f", currentLocation.coordinate.longitude]
-                                                     category:category[@"id"]
+ 
+        NSString *idCategoryString = [category[@"id"] description];
+        [[APIEventsManager sharedManager] getEventsByLocation:[NSString stringWithFormat:@"%f", self.currentLocation.coordinate.latitude]
+                                                    longitude:[NSString stringWithFormat:@"%f", self.currentLocation.coordinate.longitude]
+                                                     category:idCategoryString
                                                     shortName:category[@"short_name"]
                                                    completion:^(NSArray * _Nonnull eventsEventbrite, NSArray * _Nonnull eventsTicketmaster, NSError * _Nonnull error) {
+                                                       
+                    
             if(error == nil)
             {
                 NSMutableArray *arrayCategory = [NSMutableArray new];
@@ -147,7 +189,7 @@ NSDateFormatter *dateFormat;
                                                                     idEvent:ticketmasterDic[@"id"]
                                                                        date:dte
                                                                         url:ticketmasterDic[@"images"][0][@"url"]
-                                                                   category:category[@"name"]
+                                                                   category:category[@"short_name"]
                                                                    subtitle:category[@"short_name"]
                                                                         api:@"Ticketmaster"
                                                                    location:CLLocationCoordinate2DMake([ticketmasterDic[@"_embedded"][@"venues"][0][@"location"][@"latitude"] doubleValue],[ticketmasterDic[@"_embedded"][@"venues"][0][@"location"][@"longitude"] doubleValue])]];
@@ -168,7 +210,7 @@ NSDateFormatter *dateFormat;
                                                                         idEvent:eventbriteDic[@"id"]
                                                                            date:dte
                                                                             url:url
-                                                                       category:category[@"name"]
+                                                                       category:category[@"short_name"]
                                                                        subtitle:category[@"short_name"]
                                                                             api:@"Eventbrite"
                                                                        location:CLLocationCoordinate2DMake([eventbriteDic[@"venue"][@"latitude"] doubleValue], [eventbriteDic[@"venue"][@"longitude"] doubleValue])]];
@@ -179,7 +221,7 @@ NSDateFormatter *dateFormat;
                                                                             idEvent:eventbriteDic[@"id"]
                                                                                date:eventbriteDic[@"start"][@"local"]
                                                                                 url:@"https://www.daviespaints.com.ph/wp-content/uploads/img/color-ideas/1008-colors/2036P.png"
-                                                                           category:category[@"name"]
+                                                                           category:category[@"short_name"]
                                                                            subtitle:category[@"short_name"]
                                                                                 api:@"Eventbrite"
                                                                            location:CLLocationCoordinate2DMake([eventbriteDic[@"venue"][@"latitude"] doubleValue], [eventbriteDic[@"venue"][@"longitude"] doubleValue])]];
@@ -189,6 +231,8 @@ NSDateFormatter *dateFormat;
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [self.tableViewEventCategories reloadData];
                 });
+            }else{
+                NSLog(@"%@", error.localizedRecoveryOptions);
             }
             }
         ];
@@ -336,13 +380,63 @@ NSDateFormatter *dateFormat;
     // Pass the selected object to the new view controller.
     if([segue.identifier isEqualToString:@"details"])
     {
+       
         DetailHomeViewController * detailView = [segue destinationViewController];
         [detailView setEvent:self.eventSelected];
     }
 }
 
 
+- (IBAction)changeLocation:(id)sender {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Change Location" message:@"Insert the new location" preferredStyle:(UIAlertControllerStyleAlert)];
+    UIAlertAction *accept = [UIAlertAction actionWithTitle:@"Accept" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+        UITextField *textField = alert.textFields[0];
+        [self getCoordinates:textField.text completionHandler:^(CLLocation *coordinates, NSError *error) {
+            if(error == nil){
+                 [self.navigationItem.rightBarButtonItem setTitle:textField.text];
+                 [locationManager stopUpdatingLocation];
+                [self.events removeAllObjects];
+                self.currentLocation = coordinates;
+                [self fetchArrayCategories];
+            }
+        }];
+    }];
+    UIAlertAction* cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+        [alert dismissViewControllerAnimated:YES completion:nil];
+    }];
+    
+    [alert addAction:accept];
+    [alert addAction:cancel];
+    
+    [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+        textField.placeholder = @"Place";
+        textField.keyboardType = UIKeyboardTypeDefault;
+    }];
+    [self presentViewController:alert animated:YES completion:nil];
+    
+    
+}
 
+
+
+- (void)getCoordinates : (NSString *) addressString completionHandler:(void(^)(CLLocation* coordinates, NSError *error))completion
+{
+    CLGeocoder *geoCoder = [[CLGeocoder alloc] init];
+    [geoCoder geocodeAddressString:addressString completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
+        if(error != nil){
+            completion(nil, error);
+        }
+        CLPlacemark *placemark = placemarks[0];
+        if(placemark == nil){
+            NSError *error = [[NSError alloc] init];
+            
+            completion(nil,error);
+        }
+        CLLocation *location = placemark.location;
+        completion(location, nil);
+    }];
+    
+}
 
 
 @end

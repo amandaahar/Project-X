@@ -77,7 +77,10 @@ NSLayoutConstraint *bottom;
 }
 
 -(void) chooseLanguage:(NSString *) text {
-    
+    UINotificationFeedbackGenerator *myGen = [[UINotificationFeedbackGenerator alloc] init];
+    [myGen prepare];
+    [myGen notificationOccurred:(UINotificationFeedbackTypeSuccess)];
+    myGen = NULL;
     [self performSegueWithIdentifier:@"languages" sender:self];
     
 }
@@ -104,8 +107,16 @@ NSLayoutConstraint *bottom;
         [[FirebaseManager sharedManager] getCurrentUser:^(User *user, NSError *error) {
             if (error != nil) {
                 NSLog(@"Error getting user");
+                UINotificationFeedbackGenerator *myGen = [[UINotificationFeedbackGenerator alloc] init];
+                [myGen prepare];
+                [myGen notificationOccurred:(UINotificationFeedbackTypeError)];
+                myGen = NULL;
             } else {
                 [user composeMessage:self.messageText.text chat:self.eventID];
+                UINotificationFeedbackGenerator *myGen = [[UINotificationFeedbackGenerator alloc] init];
+                [myGen prepare];
+                [myGen notificationOccurred:(UINotificationFeedbackTypeSuccess)];
+                myGen = NULL;
                 self.messageText.text = @"";
             }
             
@@ -152,10 +163,12 @@ NSLayoutConstraint *bottom;
     
 }
 
+
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
     MessageBubble *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     Message *message = self.messagesInChat[indexPath.row];
     [cell setUserLanguage:self.user.language];
+    [cell setIdEvent:self.eventID];
     if([self.idCurrentUser isEqualToString:message.userID])
     {
         [cell showOutgoingMessage:message];
@@ -167,7 +180,12 @@ NSLayoutConstraint *bottom;
     
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
     [cell autoresizesSubviews];
+    [cell layoutSubviews];
+    
+    [cell layoutIfNeeded];
+
     return cell;
 }
 
@@ -189,6 +207,38 @@ NSLayoutConstraint *bottom;
 
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.messagesInChat.count;
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
+    return YES;
+}
+
+- (NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath{
+    Message *message = self.messagesInChat[indexPath.row];
+    if([self.idCurrentUser isEqualToString:message.userID])
+    {
+        UITableViewRowAction *delete = [UITableViewRowAction rowActionWithStyle:(UITableViewRowActionStyleDestructive) title:@"Delete message" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Do you want to delete this message?" message:message.text preferredStyle:(UIAlertControllerStyleAlert)];
+            UIAlertAction *delete = [UIAlertAction actionWithTitle:@"Delete" style:(UIAlertActionStyleDestructive) handler:^(UIAlertAction * _Nonnull action) {
+                [[FirebaseManager sharedManager] removeMessageFromChat:self.eventID andMessage:message.idMessage completion:^(NSError * _Nonnull error) {
+                    if(error != nil){
+                        NSLog(@"%@",error.localizedDescription);
+                    }
+                }];
+            }];
+            
+            UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Cancel" style:(UIAlertActionStyleCancel) handler:nil];
+            [alert addAction:delete];
+            [alert addAction:cancel];
+            [self presentViewController:alert animated:YES completion:nil];
+            
+        }];
+        return @[delete];
+    }else{
+        return @[];
+    }
+   
+    
 }
 
 @end

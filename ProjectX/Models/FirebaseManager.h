@@ -11,6 +11,7 @@
 #import "EventAPI.h"
 NS_ASSUME_NONNULL_BEGIN
 @import Firebase;
+
 @class User;
 
 @interface FirebaseManager : NSObject {
@@ -27,6 +28,9 @@ NS_ASSUME_NONNULL_BEGIN
 -(void) setNewAPIEvent : (EventAPI *) event completion: (void(^)( NSError *error))completion;
 -(void) addUserToEvent : (FIRDocumentReference *) eventID;
 -(void)getCurrentEvent: (NSString *) detailEventID completion: (void(^)(Event * myEvent, NSError *error))completion;
+-(void) addReactionInEvent: (NSString *) idEvent andMessage: (NSString *) idMessage;
+-(void) removeReactionInEvent: (NSString *) idEvent andMessage: (NSString *) idMessage;
+-(void) removeMessageFromChat: (NSString *) idEvent andMessage:(NSString *)idMessage completion: (void(^)( NSError *error))completion;
 @end
 
 NS_ASSUME_NONNULL_END

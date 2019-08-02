@@ -15,11 +15,8 @@
     if (self) {
         self.index = dic[@"id"];
         NSString *firstWord = [[dic[@"short_name"] componentsSeparatedByString:@" "] objectAtIndex:0];
-
         self.name = firstWord;
-
-        
-        
+        self.preference = dic;  
     }
     return self;
 }

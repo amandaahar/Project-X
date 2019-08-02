@@ -10,14 +10,15 @@
 
 @implementation Message
 
+
 #pragma mark - Message Initializer
 -(instancetype) init {
     NSDictionary *defaultDictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"",@"text",[NSDate new],@"timeSent",@"",@"userID", @"en", @"lan",nil];
-    self = [self initWithDictionary:defaultDictionary];
+    self = [self initWithDictionary:defaultDictionary andID:@"0KMBU6zvN5cWHiVsVq7F"];
     return self;
 }
 
--(instancetype) initWithDictionary:(NSDictionary *)dictionary {
+-(instancetype) initWithDictionary:(NSDictionary *)dictionary andID: (NSString *) idMessage{
     self = [super init];
     if(self) {
         FIRTimestamp *timeSent = dictionary[@"timeSent"];
@@ -32,15 +33,21 @@
         {
             [self setLanguage:@"en"];
         }
+        
+        [self setIdMessage:idMessage];
+        NSArray *peopleLiked = dictionary[@"likes"];
+        [self setLiked: [peopleLiked containsObject:FIRAuth.auth.currentUser.uid] ? YES : NO ];
+      
     }
     return self;
 }
 
 + (NSMutableArray *)messagesWithArray:(NSArray *)dictionaries{
     NSMutableArray *messages = [NSMutableArray array];
-    for (NSDictionary *dictionary in dictionaries) {
-        Message *message = [[Message alloc] initWithDictionary:dictionary];
+    for (FIRDocumentSnapshot *dictionary in dictionaries) {
+        Message *message = [[Message alloc] initWithDictionary:dictionary.data andID:dictionary.documentID];
         [messages addObject:message];
+        
     }
     return messages;
 }

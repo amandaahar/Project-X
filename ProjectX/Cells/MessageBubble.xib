@@ -30,18 +30,58 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X0S-hK-d1w" customClass="BubbleView">
-                        <rect key="frame" x="15" y="22" width="65.5" height="43"/>
+                        <rect key="frame" x="15" y="22" width="69.5" height="43"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xLO-2A-ZMg">
+                                <rect key="frame" x="38.5" y="32" width="46" height="31"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="emojiPlaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="c8b-aV-EhE">
+                                        <rect key="frame" x="0.0" y="2" width="25" height="24"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="25" id="JcB-Hj-mge"/>
+                                            <constraint firstAttribute="height" constant="24" id="Jyx-DS-8Rz"/>
+                                        </constraints>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GNH-Mr-fd4">
+                                        <rect key="frame" x="0.0" y="2" width="39" height="28"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="39" id="RE2-Yg-nhk"/>
+                                        </constraints>
+                                        <state key="normal" title="+">
+                                            <color key="titleColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="reacts:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="bY2-o0-wSX"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="GNH-Mr-fd4" secondAttribute="trailing" constant="7" id="LSV-G1-P3T"/>
+                                    <constraint firstAttribute="height" constant="31" id="WeS-1H-CPp"/>
+                                    <constraint firstItem="c8b-aV-EhE" firstAttribute="top" secondItem="GNH-Mr-fd4" secondAttribute="top" id="eMg-eV-Wht"/>
+                                    <constraint firstItem="GNH-Mr-fd4" firstAttribute="top" secondItem="xLO-2A-ZMg" secondAttribute="top" constant="2" id="iXs-hs-yfo"/>
+                                    <constraint firstItem="GNH-Mr-fd4" firstAttribute="centerY" secondItem="xLO-2A-ZMg" secondAttribute="centerY" constant="0.5" id="jd7-Si-ds0"/>
+                                    <constraint firstItem="GNH-Mr-fd4" firstAttribute="leading" secondItem="xLO-2A-ZMg" secondAttribute="leading" id="nf9-kb-spy"/>
+                                    <constraint firstItem="GNH-Mr-fd4" firstAttribute="leading" secondItem="c8b-aV-EhE" secondAttribute="leading" id="yhd-X2-1Vs"/>
+                                </constraints>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="xLO-2A-ZMg" secondAttribute="bottom" constant="-20" id="cUs-PE-LW2"/>
+                            <constraint firstAttribute="trailing" secondItem="xLO-2A-ZMg" secondAttribute="trailing" constant="-15" id="kRf-LC-Abt"/>
+                        </constraints>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KNl-vt-ErM">
-                        <rect key="frame" x="30" y="30" width="35.5" height="25"/>
+                        <rect key="frame" x="30" y="30" width="39.5" height="25"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="30" id="IG8-6c-oNw"/>
                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="25" id="Z5i-73-4ZE"/>
                             <constraint firstAttribute="width" relation="lessThanOrEqual" constant="200" id="wpX-NL-cvp"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -67,9 +107,14 @@
                 <outlet property="bubbleView" destination="X0S-hK-d1w" id="D7W-ch-VmS"/>
                 <outlet property="leftConstraint" destination="R4u-5k-0uD" id="OEm-DV-WU0"/>
                 <outlet property="nameLabel" destination="kv7-kO-f9M" id="2hx-KW-g18"/>
+                <outlet property="reactionImage" destination="c8b-aV-EhE" id="5CC-pM-2lm"/>
+                <outlet property="reactionView" destination="xLO-2A-ZMg" id="JmK-sx-8E1"/>
                 <outlet property="rightConstraint" destination="YsD-jv-XJP" id="XLt-1i-PbY"/>
             </connections>
             <point key="canvasLocation" x="217.39130434782609" y="171.76339285714286"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="emojiPlaceholder" width="512" height="512"/>
+    </resources>
 </document>

@@ -176,7 +176,7 @@
     }
    
      
-     //[@"@" stringByAppendingString: self.currentUser.usernam   e]];
+     //[@"@" stringByAppendingString: self.currentUser.username]];
      
      //[self.username.text stringByAppendingString:self.currentUser.username]];
     [reusableView setBioText:self.currentUser.bio];

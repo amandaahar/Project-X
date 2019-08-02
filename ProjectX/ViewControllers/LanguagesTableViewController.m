@@ -9,8 +9,10 @@
 #import "LanguagesTableViewController.h"
 #import "../Helpers/TranslatorManager.h"
 #import "../Models/FirebaseManager.h"
-@interface LanguagesTableViewController ()
+@interface LanguagesTableViewController () <UISearchBarDelegate>
 @property (nonatomic, strong) NSArray *languages;
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
+@property (strong, nonatomic) NSArray *filteredData;
 
 @end
 
@@ -18,6 +20,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.searchBar.delegate = self;
+    
     __weak __typeof(self)weakSelf = self;
     [[TranslatorManager sharedManager] getLanguages:self.previousLanguage completion:^(NSArray * _Nonnull language, NSError * _Nonnull error) {
         if(error == nil)
@@ -27,12 +31,12 @@
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 //When json is loaded stop the indicator
-                
+                self.filteredData = self.languages;
                 [self.tableView reloadData];
+                
             });
         }
     }];
-    
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -50,14 +54,15 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 #warning Incomplete implementation, return the number of rows
-    return self.languages.count;
+    //return self.languages.count;
+    return self.filteredData.count;
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
-    [cell.detailTextLabel setText:self.languages[indexPath.row][@"language"]];
-    [cell.textLabel setText:self.languages[indexPath.row][@"name"]];
+    [cell.detailTextLabel setText:self.filteredData[indexPath.row][@"language"]];
+    [cell.textLabel setText:self.filteredData[indexPath.row][@"name"]];
     // Configure the cell...
     
     return cell;
@@ -65,12 +70,40 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [[FirebaseManager sharedManager] setNewLanguage:self.languages[indexPath.row][@"language"]];
+    [[FirebaseManager sharedManager] setNewLanguage:self.filteredData[indexPath.row][@"language"]];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     [self.navigationController popViewControllerAnimated:YES];
-     
 }
 
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+    
+    if (searchText.length != 0) {
+        
+        NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(NSDictionary *evaluatedObject, NSDictionary *bindings) {
+            NSString* language = evaluatedObject[@"name"];
+            return [language containsString:searchText]; //Make it so that case insensitive
+        }];
+        self.filteredData = [self.languages filteredArrayUsingPredicate:predicate];
+        
+        NSLog(@"%@", self.filteredData);
+        
+    }
+    else {
+        self.filteredData = self.languages;
+    }
+    
+    [self.tableView reloadData];
+}
+
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
+    self.searchBar.showsCancelButton = YES;
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    self.searchBar.showsCancelButton = NO;
+    self.searchBar.text = @"";
+    [self.searchBar resignFirstResponder];
+}
 
 /*
 // Override to support conditional editing of the table view.

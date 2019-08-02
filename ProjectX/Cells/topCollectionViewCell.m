@@ -34,7 +34,7 @@
 
     self.imageEvent.layer.cornerRadius = 20;
     self.imageEvent.clipsToBounds = YES;
-    [self.imageEvent setImageWithURLRequest:request placeholderImage:nil
+    [self.imageEvent setImageWithURLRequest:request placeholderImage:[UIImage imageNamed:@"placeholder"]
                                     success:^(NSURLRequest *imageRequest, NSHTTPURLResponse *imageResponse, UIImage *image) {
                                         
                                         [UIView transitionWithView:self.imageEvent duration:0.5 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
