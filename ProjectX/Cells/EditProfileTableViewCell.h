@@ -18,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet MFTextField *firstName;
 @property (weak, nonatomic) IBOutlet MFTextField *lastName;
 @property (weak, nonatomic) IBOutlet MFTextField *bio;
+@property (weak, nonatomic) IBOutlet UIButton *changePhotoButton;
 
 @end
 

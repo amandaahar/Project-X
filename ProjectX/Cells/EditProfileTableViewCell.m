@@ -22,9 +22,12 @@
 
     // Configure the view for the selected state
 }
+- (IBAction)didTapChangeProfileButton:(id)sender {
+    
+}
 
 + (NSNumber *)recommendedHeight {
-    return [NSNumber numberWithInt:265];
+    return [NSNumber numberWithInt:280];
 }
 
 @end

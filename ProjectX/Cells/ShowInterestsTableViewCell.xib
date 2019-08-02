@@ -20,10 +20,10 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="5J0-Ca-8Ck">
-                        <rect key="frame" x="0.0" y="0.0" width="703" height="287.5"/>
+                        <rect key="frame" x="0.0" y="8" width="703" height="279.5"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstAttribute="height" priority="900" constant="287.5" id="wGO-yr-pvm"/>
+                            <constraint firstAttribute="height" priority="100" constant="100" id="wGO-yr-pvm"/>
                         </constraints>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="gDf-ZI-vlg">
                             <size key="itemSize" width="50" height="50"/>
@@ -41,7 +41,7 @@
                     <constraint firstItem="5J0-Ca-8Ck" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="OFo-Tu-UA4"/>
                     <constraint firstAttribute="bottom" secondItem="5J0-Ca-8Ck" secondAttribute="bottom" id="Oqa-oH-8Da"/>
                     <constraint firstAttribute="trailing" secondItem="5J0-Ca-8Ck" secondAttribute="trailing" id="VIi-IW-CuG"/>
-                    <constraint firstItem="5J0-Ca-8Ck" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="h1s-EF-TlK"/>
+                    <constraint firstItem="5J0-Ca-8Ck" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="h1s-EF-TlK"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>

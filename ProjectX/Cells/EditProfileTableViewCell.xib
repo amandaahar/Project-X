@@ -12,11 +12,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="339" id="KGk-i7-Jjw" customClass="EditProfileTableViewCell">
-            <rect key="frame" x="0.0" y="0.0" width="430" height="339"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="379" id="KGk-i7-Jjw" customClass="EditProfileTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="430" height="379"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="430" height="338.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="430" height="378.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="aGZ-rS-fFj">
@@ -27,46 +27,57 @@
                         </constraints>
                     </imageView>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="EHq-rZ-wV6">
-                        <rect key="frame" x="28" y="111" width="374" height="209"/>
+                        <rect key="frame" x="28" y="138" width="374" height="222"/>
                         <subviews>
                             <textField opaque="NO" contentMode="center" contentHorizontalAlignment="fill" contentVerticalAlignment="bottom" text="Sheyl" borderStyle="roundedRect" placeholder="First Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Af5-eB-SBv" customClass="MFTextField">
-                                <rect key="frame" x="0.0" y="0.0" width="374" height="59"/>
+                                <rect key="frame" x="0.0" y="0.0" width="374" height="63.5"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" textContentType="name"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Last Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="L4n-YG-mTZ" customClass="MFTextField">
-                                <rect key="frame" x="0.0" y="75" width="374" height="59"/>
+                                <rect key="frame" x="0.0" y="79.5" width="374" height="63"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Bio" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="waM-nv-nhT" customClass="MFTextField">
-                                <rect key="frame" x="0.0" y="150" width="374" height="59"/>
+                                <rect key="frame" x="0.0" y="158.5" width="374" height="63.5"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                         </subviews>
                     </stackView>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZdW-Kg-Rep">
+                        <rect key="frame" x="142" y="106" width="146" height="24"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="24" id="Eqq-mT-auI"/>
+                            <constraint firstAttribute="width" constant="146" id="zfZ-Zr-ECC"/>
+                        </constraints>
+                        <state key="normal" title="Change Profile Photo"/>
+                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailingMargin" secondItem="EHq-rZ-wV6" secondAttribute="trailing" constant="8" id="1n4-SC-chd"/>
+                    <constraint firstItem="ZdW-Kg-Rep" firstAttribute="top" secondItem="aGZ-rS-fFj" secondAttribute="bottom" constant="3" id="EY8-6F-Dah"/>
+                    <constraint firstItem="ZdW-Kg-Rep" firstAttribute="centerX" secondItem="aGZ-rS-fFj" secondAttribute="centerX" id="d7f-4o-XiX"/>
+                    <constraint firstItem="EHq-rZ-wV6" firstAttribute="top" secondItem="ZdW-Kg-Rep" secondAttribute="bottom" constant="8" id="eFR-3B-TMs"/>
                     <constraint firstAttribute="bottomMargin" secondItem="EHq-rZ-wV6" secondAttribute="bottom" constant="8" id="g0r-EW-ekq"/>
                     <constraint firstItem="aGZ-rS-fFj" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="i1G-c1-Bc8"/>
                     <constraint firstItem="EHq-rZ-wV6" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="8" id="q8V-E8-T0J"/>
                     <constraint firstItem="aGZ-rS-fFj" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="uiC-1q-cmJ"/>
-                    <constraint firstItem="EHq-rZ-wV6" firstAttribute="top" secondItem="aGZ-rS-fFj" secondAttribute="bottom" constant="8" id="xxI-W2-f9O"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>
             <connections>
                 <outlet property="bio" destination="waM-nv-nhT" id="BnG-J5-d2n"/>
+                <outlet property="changePhotoButton" destination="ZdW-Kg-Rep" id="1rH-Iy-7RP"/>
                 <outlet property="firstName" destination="Af5-eB-SBv" id="tKj-Rg-dkv"/>
                 <outlet property="lastName" destination="L4n-YG-mTZ" id="anB-n3-d3P"/>
                 <outlet property="profileView" destination="aGZ-rS-fFj" id="DBM-6b-i9k"/>
             </connections>
-            <point key="canvasLocation" x="236.23188405797103" y="225.33482142857142"/>
+            <point key="canvasLocation" x="146" y="205"/>
         </tableViewCell>
     </objects>
 </document>
