@@ -50,9 +50,8 @@
             self.currentUser = user;
             [self.events removeAllObjects];
             for(FIRDocumentReference *eventDoc in self.currentUser.events) {
-                [eventDoc addSnapshotListener:^(FIRDocumentSnapshot * _Nullable snapshot, NSError * _Nullable error) {
+                [eventDoc getDocumentWithCompletion:^(FIRDocumentSnapshot * _Nullable snapshot, NSError * _Nullable error) {
                     if(error == nil){
-                    [self.events removeAllObjects];
                     Event * myEvent = [[Event alloc] initWithDictionary:snapshot.data eventID:snapshot.documentID];
                     [self.events addObject: myEvent];
                     [self.chatsTableView reloadData];
