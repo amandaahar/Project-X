@@ -26,6 +26,7 @@
 @property (strong, nonatomic) NSDate *dateNSEvent;
 @property (strong, nonatomic) NSString *annotationID;
 @property (nonatomic, strong) Event *myEvent;
+@property (strong, nonatomic) NSString *eventImageURL;
 
 @end
 
@@ -35,7 +36,7 @@
     [super viewDidLoad];
     
     [self fetchEvents];
-    [self fetchImage];
+    //[self fetchImage];
     
     self.mapView.delegate = self;
     self.annotationID = @"Pin";
@@ -57,6 +58,11 @@
             self.eventDescription.text = myEvent.descriptionEvent;
             self.userFriendlyLocation.text = myEvent.userFriendlyLocation;
             self.eventCategory.text = myEvent.categories;
+            
+            self.eventImageURL = myEvent.pictures[0];
+            NSURL *url = [NSURL URLWithString:self.eventImageURL];
+            NSData *imageData = [NSData dataWithContentsOfURL:url];
+            self.eventImage.image = [UIImage imageWithData:imageData];
             
             MKCoordinateRegion location = MKCoordinateRegionMake(CLLocationCoordinate2DMake(myEvent.location.latitude, myEvent.location.longitude), MKCoordinateSpanMake(0.05, 0.05));
             [self.mapView setRegion:location animated:YES];
@@ -128,7 +134,7 @@
                 eventView.image = [UIImage imageNamed:@"baseline_event_black_18pt"];
             }
             else{
-                eventView.image = [UIImage imageNamed:@"home"];
+                eventView.image = [UIImage imageNamed:@"baseline_event_black_18pt"];
             }
         }
         

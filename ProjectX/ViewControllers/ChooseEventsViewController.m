@@ -10,11 +10,13 @@
 #import "AppDelegate.h"
 #import "../Models/FirebaseManager.h"
 #import "CreateEventViewController.h"
+#import "LocationTableViewController.h"
 #import "Event.h"
 #import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
 #import "../Models/MapAnnotation.h"
 @import Firebase;
+//@import CoreLocation;
 
 @interface ChooseEventsViewController () <CLLocationManagerDelegate, CreateEventControllerDelegate, MKMapViewDelegate>
 
@@ -27,32 +29,40 @@
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (weak, nonatomic) IBOutlet UIImageView *eventPhoto;
 @property (weak, nonatomic) IBOutlet UILabel *eventLocation;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *LocationButton;
 @property (strong, nonatomic) NSMutableArray *eventArray;
 @property (strong, nonatomic) NSDate *dateNSEvent;
 @property (strong, nonatomic) NSString *eventID;
 @property (strong, nonatomic) NSString *annotationID;
 @property (strong, nonatomic) FIRDocumentReference *eventIDRef;
 @property (nonatomic, readwrite) FIRFirestore *db;
-- (IBAction)CreateEventAction:(id)sender;
+@property (strong, nonatomic) NSString *eventImageURL;
 
 @end
 
 @implementation ChooseEventsViewController
 
+//CLLocationManager *locationManager;
+//CLLocation *currentLocation;
+
 - (void)viewDidLoad {
     
     [super viewDidLoad];
     [self fetchEvents];
-    [self fetchImage];
+    //[self fetchImage];
     
     self.db = [FIRFirestore firestore];
     self.mapView.delegate = self;
     self.annotationID = @"Pin";
     [self.mapView registerClass:[MKAnnotationView class] forAnnotationViewWithReuseIdentifier:self.annotationID];
     self.eventArray = [NSMutableArray new];
-    
     [self movingPreview];
     
+//    currentLocation = [[CLLocation alloc] initWithLatitude:36 longitude:-122];
+//    [self currentLocationIdentifier];
+    
+    self.mapView.showsUserLocation = YES;
+    self.mapView.showsBuildings = YES;
 }
 
 #pragma mark - Fetching Events
@@ -107,7 +117,11 @@
             self.eventID = myEvent.eventID;
             [self eventDateIdentifier];
             [self eventLocationIdentifier];
-            //[self setImage:myEvent.eventImageURL];
+            
+            self.eventImageURL = myEvent.pictures[0];
+            NSURL *url = [NSURL URLWithString:self.eventImageURL];
+            NSData *imageData = [NSData dataWithContentsOfURL:url];
+            self.eventPhoto.image = [UIImage imageWithData:imageData];
             
             self.eventLocation.text = myEvent.userFriendlyLocation;
             
@@ -140,18 +154,12 @@
 }
 
 /*
- -(void) setImage: (NSString *) photoURL {
-    NSURL *imageURL = [NSURL URLWithString:photoURL];
-    [self.eventImageURL setImageWithURL:imageURL];
-}
- */
-
 - (void) fetchImage {
     
     FIRStorage *storage = [FIRStorage storage];
     FIRStorageReference *storageRef = [storage reference];
     FIRStorageReference *eventImageRef = [storageRef child:@"images/02DC7684-D657-4B5B-82FC-8D1DA735E300"];
-
+    
      [eventImageRef dataWithMaxSize:1 * 1024 * 1024 completion:^(NSData *data, NSError *error){
         if (error != nil) {
             NSLog(@"Uh-oh, first error occurred: %@", error);
@@ -162,7 +170,35 @@
     }];
     
 }
+*/
 
+/*
+#pragma mark - Location methods
+
+- (void)currentLocationIdentifier
+{
+    locationManager = [CLLocationManager new];
+    [locationManager requestWhenInUseAuthorization];
+    locationManager.delegate = self;
+    locationManager.distanceFilter = kCLDistanceFilterNone;
+    locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+//    [self fetchEvents];
+    [locationManager startUpdatingLocation];
+}
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
+{
+    currentLocation = [locations objectAtIndex:0];
+    [locationManager stopUpdatingLocation];
+    CLGeocoder *geocoder = [[CLGeocoder alloc] init] ;
+    [geocoder reverseGeocodeLocation:currentLocation completionHandler:^(NSArray *placemarks, NSError *error)
+     {
+         CLPlacemark *placemark = [placemarks objectAtIndex:0];
+         NSString *Area = [[NSString alloc]initWithString:placemark.locality];
+         [self.navigationItem.rightBarButtonItem setTitle:Area];
+     }];
+}
+*/
 
 - (void) movingPreview {
     
@@ -270,6 +306,12 @@
         self.Eventdescription.text = nextEvent.descriptionEvent;
         [self eventLocationIdentifier];
         [self eventDateIdentifier];
+        
+        self.eventImageURL = nextEvent.pictures[0];
+        NSURL *url = [NSURL URLWithString:self.eventImageURL];
+        NSData *imageData = [NSData dataWithContentsOfURL:url];
+        self.eventPhoto.image = [UIImage imageWithData:imageData];
+        
         [self resetCard];
         self.eventLocation.text = nextEvent.userFriendlyLocation;
         
@@ -332,11 +374,16 @@
     }
     
     return eventView;
-    
 }
 
 - (nullable MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation {
-   return [self eventHomeView:annotation];
+    if (annotation == self.mapView.userLocation) {
+        return nil;
+    }
+    
+    else {
+        return [self eventHomeView:annotation];
+    }
 }
 
 #pragma mark - Creating Event
@@ -387,9 +434,17 @@
 #pragma mark - Navigation
      
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    UINavigationController *navigationController = [segue destinationViewController];
-    CreateEventViewController *createEventController = (CreateEventViewController *)navigationController.topViewController;
-    createEventController.delegate = self;
+    if ([segue.identifier isEqualToString: @"CreateEventSegue"]) {
+        UINavigationController *navigationController = [segue destinationViewController];
+        CreateEventViewController *createEventController = (CreateEventViewController *)navigationController.topViewController;
+        createEventController.delegate = self;
+    }
+    
+    else if ([segue.identifier isEqualToString: @"ChooseLocationSegue"]) {
+        UINavigationController *navigationController = [segue destinationViewController];
+        //LocationTableViewController *ChooseLocationController = (LocationTableViewController *)navigationController.topViewController;
+        //ChooseLocationController.delegate = self;
+    }
 }
 
 @end

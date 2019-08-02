@@ -41,8 +41,24 @@
 }
 
 - (void) setImage: (NSString *) photoURL {
-    NSURL *imageURL = [NSURL URLWithString:photoURL];
-    [self.groupImage setImageWithURL:imageURL];
     
+    NSURL *imageURL = [NSURL URLWithString:photoURL];
+    NSURLRequest *request = [NSURLRequest requestWithURL:imageURL];
+    
+    [self.groupImage setImageWithURLRequest:request placeholderImage:nil
+                                    success:^(NSURLRequest *imageRequest, NSHTTPURLResponse *imageResponse, UIImage *image) {
+                                        
+                                        [UIView transitionWithView:self.groupImage duration:0.5 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+                                            [self.groupImage setImage:image];
+                                        } completion:nil];
+                                        
+                                    }
+                                    failure:^(NSURLRequest *request, NSHTTPURLResponse * response, NSError *error) {
+                                        // do something for the failure condition
+                                    }];
+    
+    self.groupImage.layer.cornerRadius = 15;
+    [self.groupImage setClipsToBounds:YES];
 }
+
 @end
