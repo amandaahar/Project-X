@@ -81,12 +81,10 @@
         
         NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(NSDictionary *evaluatedObject, NSDictionary *bindings) {
             NSString* language = evaluatedObject[@"name"];
-            return [language containsString:searchText]; //Make it so that case insensitive
+            return [language localizedCaseInsensitiveContainsString:searchText];
         }];
         self.filteredData = [self.languages filteredArrayUsingPredicate:predicate];
-        
-        NSLog(@"%@", self.filteredData);
-        
+        //NSLog(@"%@", self.filteredData);
     }
     else {
         self.filteredData = self.languages;

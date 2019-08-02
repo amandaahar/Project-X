@@ -59,7 +59,7 @@ CLLocationManager *UserLocationManager;
     self.annotationID = @"Pin";
     [self.mapView registerClass:[MKAnnotationView class] forAnnotationViewWithReuseIdentifier:self.annotationID];
     self.eventArray = [NSMutableArray new];
-    [self movingPreview];
+    //[self movingPreview];
     
     self.UserCurrentLocation = [[CLLocation alloc] initWithLatitude:36 longitude:-122];
     [self currentLocationIdentifier];
@@ -114,13 +114,11 @@ CLLocationManager *UserLocationManager;
             UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"I am ready!"
                                                                    style:UIAlertActionStyleCancel
                                                                  handler:^(UIAlertAction * _Nonnull action) {
-                                                                     //[self movingPreview];
+                                                                     [self movingPreview];
                                                                  }];
             [alert addAction:cancelAction];
             
-            [self presentViewController:alert animated:YES completion:^{
-                // optional code for what happens after the alert controller has finished presenting
-            }];
+            [self presentViewController:alert animated:YES completion: nil];
             
             //NSLog(@"%@", event);
             Event * myEvent = event.firstObject;
@@ -219,6 +217,7 @@ CLLocationManager *UserLocationManager;
 
 - (void) movingPreview {
     
+    /*
     [UIView animateKeyframesWithDuration:1.0 delay:1.5 options:nil animations:^{self.card.frame = CGRectMake(self.card.frame.origin.x + 200, self.card.frame.origin.y - 75, self.card.frame.size.width, self.card.frame.size.height);
         
     } completion:^(BOOL finished) {
@@ -227,11 +226,11 @@ CLLocationManager *UserLocationManager;
                                       //self.animationInProgress = YES;
                                     }];
                                 }];
+    */
     
-    /*
     CABasicAnimation *animation =
     [CABasicAnimation animationWithKeyPath:@"position"];
-    [animation setDuration:0.2];
+    [animation setDuration:0.15];
     [animation setRepeatCount:2];
     [animation setAutoreverses:YES];
     [animation setFromValue:[NSValue valueWithCGPoint:
@@ -239,8 +238,7 @@ CLLocationManager *UserLocationManager;
     [animation setToValue:[NSValue valueWithCGPoint:
                            CGPointMake([self.card center].x + 20.0f, [self.card center].y)]];
     [[self.card layer] addAnimation:animation forKey:@"position"];
-    */
-
+    
 }
 
 #pragma mark - Choosing Events
@@ -491,6 +489,9 @@ CLLocationManager *UserLocationManager;
                 [self fetchEvents];
             }
         }];
+        
+        MKCircle *circle = [MKCircle circleWithCenterCoordinate:self.UserCurrentLocation.coordinate radius:1000];
+        [self.mapView addOverlay:circle];
     }];
     UIAlertAction* cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
         [alert dismissViewControllerAnimated:YES completion:nil];
@@ -504,6 +505,14 @@ CLLocationManager *UserLocationManager;
         textField.keyboardType = UIKeyboardTypeDefault;
     }];
     [self presentViewController:alert animated:YES completion:nil];
+}
+
+- (MKOverlayRenderer *)mapView:(MKMapView *)map viewForOverlay:(id <MKOverlay>)overlay
+{
+    MKCircleRenderer *circleView = [[MKCircleRenderer alloc] initWithOverlay:overlay];
+    circleView.strokeColor = [UIColor redColor];
+    circleView.fillColor = [[UIColor yellowColor] colorWithAlphaComponent:0.4];
+    return circleView;
 }
 
 - (void)getCoordinates : (NSString *) addressString completionHandler:(void(^)(CLLocation* coordinates, NSError *error))completion

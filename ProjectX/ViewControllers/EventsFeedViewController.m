@@ -148,7 +148,6 @@ NSDateFormatter *dateFormat;
                 categoriesFiltered = [categories copy];
             }
           
-           
             self.categories = categoriesFiltered;
             [self getEventsFromCategories];
         }
