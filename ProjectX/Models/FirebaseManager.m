@@ -134,10 +134,6 @@
 ////        }
 ////
 ////    }];
-//
-//}
-
-
 
 
 #pragma mark - Set methods
@@ -199,6 +195,14 @@
     [[[[[database collectionWithPath:@"Event"] documentWithPath: idEvent] collectionWithPath:@"Chat"] documentWithPath:idMessage] deleteDocumentWithCompletion:^(NSError * _Nullable error) {
         completion(error);
     }];
+}
+
+- (void)swipeEventsByLocation:(NSString *) latitude
+                    longitude:(NSString *) longitude
+                     category:(NSString *) category
+                    shortName:(NSString *) shortname
+                   completion:(void(^)(NSArray *eventsEventbrite,NSArray * eventsTicketmaster, NSError *error))completion{
+    
 }
 
 @end

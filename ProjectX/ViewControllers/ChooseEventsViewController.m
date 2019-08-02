@@ -39,6 +39,8 @@
 @property (strong, nonatomic) NSString *eventImageURL;
 @property (strong, nonatomic) CLLocation *UserCurrentLocation;
 @property (nonatomic, strong) User *currentUser;
+@property (strong, nonatomic) UIView *emptyCard;
+@property (strong, nonatomic) UILabel *noEventsLabel;
 
 @end
 
@@ -61,9 +63,38 @@ CLLocationManager *UserLocationManager;
     
     self.UserCurrentLocation = [[CLLocation alloc] initWithLatitude:36 longitude:-122];
     [self currentLocationIdentifier];
-    
     self.mapView.showsUserLocation = YES;
     self.mapView.showsBuildings = YES;
+    
+    /*
+    FIRDatabaseReference *geofireRef = [[FIRDatabase database] reference];
+    GeoFire *geoFire = [[GeoFire alloc] initWithFirebaseRef:geofireRef];
+    
+    [geoFire setLocation:[[CLLocation alloc] initWithLatitude:37.7853889 longitude:-122.4056973]
+                  forKey:@"firebase-hq"
+     withCompletionBlock:^(NSError *error) {
+         if (error != nil) {
+             NSLog(@"whoops: An error occurred: %@", error.localizedDescription);
+         } else {
+             NSLog(@"Saved location successfully!");
+         }
+     }];
+    
+    CLLocation *center = [[CLLocation alloc] initWithLatitude:37.7832889 longitude:-122.4056973];
+    // Query locations at [37.7832889, -122.4056973] with a radius of 600 meters
+    GFCircleQuery *circleQuery = [geoFire queryAtLocation:self.UserCurrentLocation withRadius:5.6];
+    
+    // Query location by region
+    MKCoordinateSpan span = MKCoordinateSpanMake(0.001, 0.001);
+    MKCoordinateRegion region = MKCoordinateRegionMake(center.coordinate, span);
+    GFRegionQuery *regionQuery = [geoFire queryWithRegion:region];
+    
+//    FIRDatabaseHandle queryHandle = [query observeEventType:GFEventTypeKeyEntered withBlock:^(NSString *key, CLLocation *location) {
+//        NSLog(@"Key '%@' entered the search area and is at location '%@'", key, location);
+//    }];
+    
+    */
+    
 }
 
 #pragma mark - Fetching Events
@@ -266,21 +297,21 @@ CLLocationManager *UserLocationManager;
     
     if (self.eventArray.firstObject == nil) {
         self.card.alpha = 0;
-        [self.mapView removeFromSuperview];
-       
-        UIView *emptyCard = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 100)];
-        emptyCard.center = self.view.center;
-        emptyCard.backgroundColor = [UIColor blackColor];
-        emptyCard.layer.cornerRadius = 15;
-        emptyCard.layer.masksToBounds = true;
-        [self.view addSubview:emptyCard];
+        self.mapView.alpha = 0;
         
-        UILabel *noEventsLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 270, 200)];
-        noEventsLabel.center = self.view.center;
-        [noEventsLabel setText:@"No events found, create your own now!"];
-        [noEventsLabel setNumberOfLines:0];
-        [noEventsLabel setTextColor:[UIColor whiteColor]];
-        [self.view addSubview:noEventsLabel];
+        self.emptyCard = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 100)];
+        self.emptyCard.center = self.view.center;
+        self.emptyCard.backgroundColor = [UIColor blackColor];
+        self.emptyCard.layer.cornerRadius = 15;
+        self.emptyCard.layer.masksToBounds = true;
+        [self.view addSubview:self.emptyCard];
+        
+        self.noEventsLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 270, 200)];
+        self.noEventsLabel.center = self.view.center;
+        [self.noEventsLabel setText:@"No events found, create your own now!"];
+        [self.noEventsLabel setNumberOfLines:0];
+        [self.noEventsLabel setTextColor:[UIColor whiteColor]];
+        [self.view addSubview:self.noEventsLabel];
     }
     
     else {
@@ -415,6 +446,17 @@ CLLocationManager *UserLocationManager;
     [self performSegueWithIdentifier:@"CreateEventSegue" sender:nil];
 //  [self resetCard]; Should I create a card for the created event or directly make a group
 }
+
+- (IBAction)resetAllCards:(UIBarButtonItem *)sender {
+    [self fetchEvents];
+    [self resetCard];
+    
+    self.emptyCard.alpha = 0;
+    self.noEventsLabel.alpha = 0;
+    self.card.alpha = 1;
+    self.mapView.alpha = 1;
+}
+
      
 #pragma mark - Navigation
      

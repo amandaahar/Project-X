@@ -471,12 +471,19 @@
                                 <action selector="changeLocation:" destination="r4X-bz-L6V" id="rbe-11-TUD"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="V9L-x8-EjQ">
-                            <connections>
-                                <action selector="CreateEventAction:" destination="r4X-bz-L6V" id="NzU-w1-eDM"/>
-                                <segue destination="8OV-dk-pYB" kind="presentation" identifier="CreateEventSegue" id="x5O-Dt-ynZ"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="add" id="V9L-x8-EjQ">
+                                <connections>
+                                    <action selector="CreateEventAction:" destination="r4X-bz-L6V" id="NzU-w1-eDM"/>
+                                    <segue destination="8OV-dk-pYB" kind="presentation" identifier="CreateEventSegue" id="x5O-Dt-ynZ"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Reset" id="704-Tw-9J0">
+                                <connections>
+                                    <action selector="resetAllCards:" destination="r4X-bz-L6V" id="GZM-hX-gTa"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="Eventdescription" destination="axT-9o-AKG" id="rxr-EA-prQ"/>

@@ -39,7 +39,6 @@ NSDateFormatter *dateFormat;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-
     //[self fetchArrayCategories];
     // convert to date
     dateFormat = [[NSDateFormatter alloc] init];
