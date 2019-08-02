@@ -35,7 +35,7 @@
         [self setUserID:FIRAuth.auth.currentUser.uid];
         [self setBio:dictionary[@"bio"]];
         [self setLanguage:dictionary[@"lan"]];
-        
+        [self setFcm:dictionary[@"fcm"]];
     }
     return self;
 }
@@ -65,6 +65,7 @@
                                                                NSLog(@"Error adding document: %@", error);
                                                            } else {
                                                                NSLog(@"Document added with ID: %@", ref.documentID);
+                                                               [[FirebaseManager sharedManager] sendNotificationUsers:event withText:text nameUser:self.username];
                                                            }
                                                        }];
             }

@@ -29,7 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSString *userID;
 @property (strong, nonatomic) NSString *bio;
 @property (strong, nonatomic) NSString *language;
-
+@property (strong, nonatomic) NSString *fcm;
 #pragma mark - User Initializer
 - (instancetype) initWithDictionary : (NSDictionary *) dictionary;
 - (void) composeMessage:(NSString *)text chat: (NSString *)event;

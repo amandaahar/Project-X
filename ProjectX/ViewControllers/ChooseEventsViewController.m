@@ -203,6 +203,7 @@
             
             FIRDocumentReference *eventRef = [[self.db collectionWithPath:@"Users"] documentWithPath:FIRAuth.auth.currentUser.uid];
             [eventRef updateData:@{ @"events": [FIRFieldValue fieldValueForArrayUnion:@[myEvent.eventIDRef]] }];
+            [[[self.db collectionWithPath:@"Event"] documentWithPath:myEvent.eventID] updateData:@{@"swipeUsers": [FIRFieldValue fieldValueForArrayUnion:@[FIRAuth.auth.currentUser.uid]]}];
             [self nextEvent];
             UINotificationFeedbackGenerator *myGen = [[UINotificationFeedbackGenerator alloc] init];
             [myGen prepare];

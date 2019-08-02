@@ -121,24 +121,53 @@
                     language = newString;
                 }
                 NSLog(@"User registered successfully");
-                [[[self.db collectionWithPath:@"Users"] documentWithPath:FIRAuth.auth.currentUser.uid] setData:@{
-                  @"firstName": self.usernameField.text,
-                  @"email": self.emailField.text,
-                  @"lastName" : self.lastName.text,
-                  @"username" : self.username.text,
-                  @"lan": language,
-                  @"bio" : @"",
-                  @"profileImage" : @"https://profiles.utdallas.edu/img/default.png"
-                  } completion:^(NSError * _Nullable error) {
-                     if (error != nil)
-                     {
-                          NSLog(@"Error writing document: %@", error);
-                     } else
-                     {
-                         NSLog(@"Document successfully written!");
-                         [self performSegueWithIdentifier:@"preferences" sender:self];
-                     }
+            
+                [[FIRInstanceID instanceID] instanceIDWithHandler:^(FIRInstanceIDResult * _Nullable result,
+                                                                    NSError * _Nullable error) {
+                    if (error != nil) {
+                        [[[self.db collectionWithPath:@"Users"] documentWithPath:FIRAuth.auth.currentUser.uid] setData:@{ @"firstName": self.usernameField.text,
+                                                                                                   @"email": self.emailField.text,
+                                                                                                @"lastName" : self.lastName.text,
+                                                                                                @"username" : self.username.text,
+                                                                                                     @"lan": language,
+                                                                                                    @"bio" : @"",
+                                                                                                    @"fcm" : @"",
+                                                                                              @"profileImage" : @"https://profiles.utdallas.edu/img/default.png"
+                                                                                                 } completion:^(NSError * _Nullable error) {
+                                                                                                                             if (error != nil)
+                                                                                                                             {
+                                                                                                                                 NSLog(@"Error writing document: %@", error);
+                                                                                                                             } else
+                                                                                                                             {
+                                                                                                                                 NSLog(@"Document successfully written!");
+                                                                                                                                 [self performSegueWithIdentifier:@"preferences" sender:self];
+                                                                                                                             }
+                                                                                                 }];
+                    } else {
+                        NSLog(@"Remote instance ID token: %@", result.token);
+                        [[[self.db collectionWithPath:@"Users"] documentWithPath:FIRAuth.auth.currentUser.uid] setData:@{ @"firstName": self.usernameField.text,
+                                                                                                                          @"email": self.emailField.text,
+                                                                                                                          @"lastName" : self.lastName.text,
+                                                                                                                          @"username" : self.username.text,
+                                                                                                                          @"lan": language,
+                                                                                                                          @"bio" : @"",
+                                                                                                                          @"fcm" : result.token,
+                                                                                                                          @"profileImage" : @"https://profiles.utdallas.edu/img/default.png"
+                                                                                                                          } completion:^(NSError * _Nullable error) {
+                                                                                                                              if (error != nil)
+                                                                                                                              {
+                                                                                                                                  NSLog(@"Error writing document: %@", error);
+                                                                                                                              } else
+                                                                                                                              {
+                                                                                                                                  NSLog(@"Document successfully written!");
+                                                                                                                                  [self performSegueWithIdentifier:@"preferences" sender:self];
+                                                                                                                              }
+                                                                                                                          }];
+                       
+                    }
+                   
                 }];
+                
         }
     }];
     } else

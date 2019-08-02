@@ -14,9 +14,11 @@
 #import "DetailHomeViewController.h"
 @import CoreLocation;
 @interface EventsFeedViewController () <UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate, UIScrollViewDelegate>
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityView;
 @property (weak, nonatomic) IBOutlet UITableView *tableViewEventCategories;
 @property (strong, nonatomic) NSMutableArray *events;
+@property (strong, nonatomic) NSMutableArray *eventsFiltered;
 @property (strong, nonatomic) NSMutableArray *topEvents;
 @property (strong, nonatomic) NSArray *categories;
 @property (assign, nonatomic) CGFloat currentOffset;
@@ -39,15 +41,15 @@ NSDateFormatter *dateFormat;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-
     //[self fetchArrayCategories];
     // convert to date
     dateFormat = [[NSDateFormatter alloc] init];
     // ignore +11 and use timezone name instead of seconds from gmt
     [dateFormat setDateFormat:@"YYYY-MM-dd'T'HH:mm:ss'+11:00'"];
-    
+    self.searchBar.delegate = self;
     self.tableViewEventCategories.delegate = self;
     self.tableViewEventCategories.dataSource = self;
+    self.eventsFiltered = [NSMutableArray new];
     self.currentLocation = [[CLLocation alloc] initWithLatitude:36 longitude:-122];
     self.events = [NSMutableArray new];
     self.categories = [NSArray new];
@@ -77,6 +79,8 @@ NSDateFormatter *dateFormat;
     myGen = NULL;
     
 }
+
+
 
 - (void)showAlert:(NSNotification *) notification
 {
@@ -131,6 +135,44 @@ NSDateFormatter *dateFormat;
 }
 
 
+/// This method shows the cancel button
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
+    self.searchBar.showsCancelButton = YES;
+}
+
+/// This method makes the search bar first responder
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    self.searchBar.showsCancelButton = NO;
+    self.searchBar.text = @"";
+    [self.searchBar resignFirstResponder];
+}
+
+///This method filters all the trends using my array and creating a new one that is used to populate the cells
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+    
+    if (searchText.length != 0) {
+        NSMutableArray* filteredArray = [NSMutableArray new];
+        
+        for(NSArray * arrayEvents in self.events)
+        {
+            NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(EventAPI *evaluatedObject, NSDictionary *bindings) {
+                return [evaluatedObject.name containsString:searchText];
+            }];
+            NSArray *filtered = [arrayEvents filteredArrayUsingPredicate:predicate];
+            if(filtered.count > 0){
+            [filteredArray addObject: filtered];
+            }
+        }
+        self.eventsFiltered = filteredArray;
+    }
+    else {
+        self.eventsFiltered = self.events;
+    }
+    
+    [self.tableViewEventCategories reloadData];
+    
+}
 
 
 #pragma mark - get Information by the API Manager
@@ -143,7 +185,7 @@ NSDateFormatter *dateFormat;
         if(error == nil)
         {
             NSMutableArray * categoriesFiltered = [NSMutableArray new];
-            if(self.currentUser.preferences.count == 0){
+            if(self.currentUser.preferences != nil && self.currentUser.preferences.count > 2){
                 for(NSDictionary *dic in self.currentUser.preferences){
                     NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(NSDictionary *evaluatedObject, NSDictionary<NSString *,id> * _Nullable bindings) {
                         return [dic[@"id"] isEqualToString: evaluatedObject[@"id"]];
@@ -229,6 +271,7 @@ NSDateFormatter *dateFormat;
                     }
                 [self.events addObject:arrayCategory];
                 dispatch_async(dispatch_get_main_queue(), ^{
+                    self.eventsFiltered = self.events;
                     [self.tableViewEventCategories reloadData];
                 });
             }else{
@@ -331,7 +374,7 @@ NSDateFormatter *dateFormat;
     }else{
         cell.fullView = NO;
     }
-    cell.groupedEvents = self.events[indexPath.section];
+    cell.groupedEvents = self.eventsFiltered[indexPath.section];
     [cell.collectionViewGroupsEvents reloadData];
     
     return cell;
@@ -342,11 +385,11 @@ NSDateFormatter *dateFormat;
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return self.events.count;
+    return self.eventsFiltered.count;
 }
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    return self.events[section][@"name"];
+    return self.eventsFiltered[section][@"name"];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -355,7 +398,7 @@ NSDateFormatter *dateFormat;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    EventAPI * event = self.events[section][0];
+    EventAPI * event = self.eventsFiltered[section][0];
     return  [self setTitle:event.category subtitle:event.subtitle];
 }
 

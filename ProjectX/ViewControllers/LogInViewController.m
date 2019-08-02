@@ -10,6 +10,7 @@
 #import "AppDelegate.h"
 #import "../Models/APIEventsManager.h"
 #import "MainTabBarController.h"
+#import "../Models/FirebaseManager.h"
 @import Firebase;
 
 @interface LogInViewController ()
@@ -38,10 +39,23 @@
             NSLog(@"User log in failed: %@", error.localizedDescription);
         } else {
             NSLog(@"User logged in successfully");
-            AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
-            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-            MainTabBarController *loginViewController = [storyboard instantiateViewControllerWithIdentifier:@"TabBarVC"];
-            appDelegate.window.rootViewController = loginViewController;
+            [[FIRInstanceID instanceID] instanceIDWithHandler:^(FIRInstanceIDResult * _Nullable result,
+                                                                NSError * _Nullable error) {
+                if (error != nil) {
+                    NSLog(@"Error fetching remote instance ID: %@", error);
+                } else {
+                    NSLog(@"Remote instance ID token: %@", result.token);
+                    NSString* message =
+                    [NSString stringWithFormat:@"Remote InstanceID token: %@", result.token];
+                    NSLog(@"%@",message);
+                    [[FirebaseManager sharedManager] addFCMDeviceToUSer:result.token];
+                }
+                AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+                UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+                MainTabBarController *loginViewController = [storyboard instantiateViewControllerWithIdentifier:@"TabBarVC"];
+                appDelegate.window.rootViewController = loginViewController;
+            }];
+           
         }
     }];
 }

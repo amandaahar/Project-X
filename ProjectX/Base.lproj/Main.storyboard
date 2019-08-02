@@ -96,7 +96,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="279" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="TYc-FE-sM2">
-                                <rect key="frame" x="0.0" y="116" width="375" height="502"/>
+                                <rect key="frame" x="0.0" y="172" width="375" height="446"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cellGrouped" rowHeight="279" id="cCl-IH-dHg" customClass="GroupEventsTableViewCell">
@@ -159,16 +159,23 @@
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Q1Z-C1-Jyz">
                                 <rect key="frame" x="177" y="122" width="20" height="20"/>
                             </activityIndicatorView>
+                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="qBE-0T-fSS">
+                                <rect key="frame" x="0.0" y="116" width="375" height="56"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="TYc-FE-sM2" firstAttribute="centerX" secondItem="Q1Z-C1-Jyz" secondAttribute="centerX" id="5Tz-Ib-bVL"/>
                             <constraint firstItem="Q1Z-C1-Jyz" firstAttribute="top" secondItem="Dz6-yb-0uT" secondAttribute="top" constant="6" id="AQ8-qN-KDx"/>
                             <constraint firstItem="TYc-FE-sM2" firstAttribute="bottom" secondItem="Dz6-yb-0uT" secondAttribute="bottom" id="Dx8-wT-5SW"/>
+                            <constraint firstItem="qBE-0T-fSS" firstAttribute="top" secondItem="Dz6-yb-0uT" secondAttribute="top" id="ELO-Le-dPI"/>
                             <constraint firstAttribute="trailing" secondItem="TYc-FE-sM2" secondAttribute="trailing" id="HAV-fI-bh8"/>
+                            <constraint firstItem="qBE-0T-fSS" firstAttribute="leading" secondItem="Dz6-yb-0uT" secondAttribute="leading" id="K6s-8f-tUM"/>
                             <constraint firstItem="TYc-FE-sM2" firstAttribute="leading" secondItem="UiJ-sR-2WF" secondAttribute="leading" id="Nhb-np-Jt7"/>
-                            <constraint firstItem="TYc-FE-sM2" firstAttribute="top" secondItem="Dz6-yb-0uT" secondAttribute="top" id="hSM-vE-lPE"/>
+                            <constraint firstItem="TYc-FE-sM2" firstAttribute="top" secondItem="qBE-0T-fSS" secondAttribute="bottom" id="hSM-vE-lPE"/>
                             <constraint firstItem="Q1Z-C1-Jyz" firstAttribute="leading" secondItem="Dz6-yb-0uT" secondAttribute="leading" constant="177" id="kn8-Ba-UUB"/>
+                            <constraint firstItem="Dz6-yb-0uT" firstAttribute="trailing" secondItem="qBE-0T-fSS" secondAttribute="trailing" id="pSA-tg-75a"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Dz6-yb-0uT"/>
                     </view>
@@ -182,6 +189,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="activityView" destination="Q1Z-C1-Jyz" id="voy-vS-tOb"/>
+                        <outlet property="searchBar" destination="qBE-0T-fSS" id="aJc-uK-n19"/>
                         <outlet property="tableViewEventCategories" destination="TYc-FE-sM2" id="Xgm-l5-ARW"/>
                         <segue destination="UOT-AV-1DE" kind="show" identifier="details" id="WfF-q2-7aZ"/>
                     </connections>
