@@ -31,6 +31,7 @@ NS_ASSUME_NONNULL_BEGIN
 -(void) addReactionInEvent: (NSString *) idEvent andMessage: (NSString *) idMessage;
 -(void) removeReactionInEvent: (NSString *) idEvent andMessage: (NSString *) idMessage;
 -(void) removeMessageFromChat: (NSString *) idEvent andMessage:(NSString *)idMessage completion: (void(^)( NSError *error))completion;
+
 @end
 
 NS_ASSUME_NONNULL_END

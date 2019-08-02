@@ -39,7 +39,6 @@ NSDateFormatter *dateFormat;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-
     //[self fetchArrayCategories];
     // convert to date
     dateFormat = [[NSDateFormatter alloc] init];
@@ -59,9 +58,6 @@ NSDateFormatter *dateFormat;
     NSString *dateString = [format stringFromDate:now];
     #pragma clang diagnostic pop
     [self currentLocationIdentifier];
-    
- 
-    
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showDetailView:) name:@"selectedEvent" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showAlert:) name:@"newEvent" object:nil];
@@ -130,9 +126,6 @@ NSDateFormatter *dateFormat;
      }];
 }
 
-
-
-
 #pragma mark - get Information by the API Manager
 
 - (void)fetchArrayCategories
@@ -155,7 +148,6 @@ NSDateFormatter *dateFormat;
                 categoriesFiltered = [categories copy];
             }
           
-           
             self.categories = categoriesFiltered;
             [self getEventsFromCategories];
         }
@@ -405,8 +397,8 @@ NSDateFormatter *dateFormat;
         [alert dismissViewControllerAnimated:YES completion:nil];
     }];
     
-    [alert addAction:accept];
     [alert addAction:cancel];
+    [alert addAction:accept];
     
     [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
         textField.placeholder = @"Place";

@@ -180,6 +180,7 @@ UIDatePicker *datePicker;
 
 - (IBAction)didTapCreate:(id)sender {
     
+    // This could be a block, that returns the string, then the rest of the work has to wait for this
     [self imageStorage];
     
     NSString *address = [NSString stringWithFormat:@"%@", self.createEventLocation.text];
