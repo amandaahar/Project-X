@@ -12,6 +12,9 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
+    
+    self.profileView.layer.cornerRadius = self.profileView.frame.size.height / 2;
+    self.profileView.layer.masksToBounds = YES;
     // Initialization code
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

@@ -9,6 +9,9 @@
 #import "EditProfileViewController.h"
 #import "EditProfileTableViewCell.h"
 #import "../Models/FirebaseManager.h"
+#import "ShowInterestsTableViewCell.h"
+#import "InterestFieldTableViewCell.h"
+#import "InterestFieldTableViewCell.h"
 @import MaterialTextField;
 
 
@@ -21,7 +24,7 @@
 @property (weak, nonatomic) IBOutlet MFTextField *interests;
 @property (weak, nonatomic) IBOutlet UICollectionView *interestsCollectionView;
 @property (strong, nonatomic) NSArray *interestsCategories;
-@property (strong, nonatomic) NSMutableArray *usersInterests;
+
 @property (strong, nonatomic) NSMutableArray *pickerViewRowTitles;
 @property (weak, nonatomic) NSString *selectedRowText;
 @property (weak, nonatomic) NSDictionary *selectedRowDictRef;
@@ -29,8 +32,11 @@
 @property (nonatomic, strong) User *currentUser;
 @property (nonatomic, readwrite) FIRFirestore *db;
 @property (weak, nonatomic) NSString *profileImageString;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *collectionVieHeightConstraint;
+//@property (weak, nonatomic) IBOutlet NSLayoutConstraint *collectionVieHeightConstraint;
 @property (weak, nonatomic) IBOutlet UITableView *editProfileTableView;
+@property (weak, nonatomic) EditProfileTableViewCell *profileCell;
+@property (weak, nonatomic) InterestFieldTableViewCell *chooseInterestsCell;
+@property (weak, nonatomic) ShowInterestsTableViewCell *interestsCell;
 
 @end
 
@@ -53,15 +59,14 @@ NSString *cell2 = @"cell2";
     
     self.editProfileTableView.dataSource = self;
     self.editProfileTableView.delegate = self;
+    //self.editProfileTableView.separatorColor = [UIColor clearColor];
+    //[self.editProfileTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     
     [self.editProfileTableView registerNib:[UINib nibWithNibName:@"EditProfileTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:cell0];
     
-    [self.editProfileTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:cell1];
+    [self.editProfileTableView registerNib:[UINib nibWithNibName:@"InterestFieldTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:cell1];
     
-//    UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout*)self.interestsCollectionView.collectionViewLayout;
-//    layout.minimumInteritemSpacing = 5;
-//    layout.minimumLineSpacing = 5;
-    //[self.interestsCollectionView reloadData];
+    [self.editProfileTableView registerNib:[UINib nibWithNibName:@"ShowInterestsTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:cell2];
     
     
     
@@ -107,29 +112,43 @@ NSString *cell2 = @"cell2";
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return 3: the text field section, the add interest button and the interested
     // collection view in a cell.
-    return 2;
+    return 3;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
 
     if (indexPath.row == 0) {
-    EditProfileTableViewCell *profileCell = [self.editProfileTableView dequeueReusableCellWithIdentifier:cell0];
+    self.profileCell = [tableView dequeueReusableCellWithIdentifier:cell0];
     
     NSURL *imageURL = [NSURL URLWithString:self.currentUser.profileImageURL];
-    profileCell.profileView.layer.cornerRadius = self.editedProfileImage.frame.size.height / 2;
-    profileCell.profileView.layer.masksToBounds = YES;
-    [profileCell.profileView setImageWithURL:imageURL];
+    //profileCell.profileView.layer.cornerRadius = self.editedProfileImage.frame.size.height / 2;
+    //profileCell.profileView.layer.masksToBounds = YES;
+    [self.profileCell.profileView setImageWithURL:imageURL];
     
-    profileCell.firstName.text = self.currentUser.firstName;
-    profileCell.lastName.text = self.currentUser.lastName;
-    //    self.bioText.text = self.currentUser.bio;
-    return profileCell;
-    }
-    else {
-        UITableViewCell *chooseInterestsCell = [self.editProfileTableView dequeueReusableCellWithIdentifier:cell1];
-        chooseInterestsCell.backgroundColor = [UIColor blueColor];
-        return chooseInterestsCell;
+    self.profileCell.firstName.text = self.currentUser.firstName;
+    self.profileCell.lastName.text = self.currentUser.lastName;
+    self.profileCell.bio.text = self.currentUser.bio;
+    
+    return self.profileCell;
+        
+    } else if (indexPath.row == 1) {
+        self.chooseInterestsCell = [tableView dequeueReusableCellWithIdentifier:cell1];
+        self.chooseInterestsCell.addInterestsField.inputView = self.interestsPicker;
+        self.chooseInterestsCell.addInterestsField.inputAccessoryView = interestsToolBar;
+        
+        
+        // chooseInterestsCell.backgroundColor = [UIColor blueColor];
+        return self.chooseInterestsCell;
+    } else {
+         self.interestsCell = [tableView dequeueReusableCellWithIdentifier:cell2];
+        
+        
+        
+        
+        return self.interestsCell;
+        //interestsCell.in
+        
     }
 //    if (indexPath.row == 1) {
 //    }
@@ -142,9 +161,17 @@ NSString *cell2 = @"cell2";
         return [EditProfileTableViewCell recommendedHeight].floatValue;
     }
     if (indexPath.row == 1) {
-        return 50;
+        return 75;
     }
-    return 100;
+    ShowInterestsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cell2];
+    cell.frame = tableView.bounds;
+    [cell layoutIfNeeded];
+    [cell.interestsCollectionView reloadData];
+    cell.collectionViewHeight.constant = cell.interestsCollectionView.collectionViewLayout.collectionViewContentSize.height;
+    return cell.frame.size.height;
+    
+    //long rows = (self.usersInterests.count + 3 - 1) / 3;
+    //return rows * 120;
 }
 
 - (void)setUpCurrentProperties {
@@ -166,6 +193,7 @@ NSString *cell2 = @"cell2";
             self.bioText.text = self.currentUser.bio;
             //for (NSDictionary *category in )
             self.usersInterests = self.currentUser.preferences;
+            [self.editedProfileImage setImageWithURL:imageURL];
             [self.interestsCollectionView reloadData];
             [self.editProfileTableView reloadData];
         }
@@ -179,7 +207,16 @@ NSString *cell2 = @"cell2";
         [self.usersInterests addObject:self.selectedRowDictRef];
     }
     // Update our collection view, and then update content size of the scroll view.
-    [self.interestsCollectionView reloadData];
+    //[self.interestsCollectionView reloadData];
+    //[self updateDocument];
+    
+    self.interestsCell.interestsArray = self.usersInterests;
+    //CGFloat collectionViewHeight = self.interestsCell.interestsCollectionView.collectionViewLayout.collectionViewContentSize.height;
+    //long rows = (self.usersInterests.count + 3 - 1) / 3;
+    //collectionViewHeight = rows * 120;
+    //self.interestsCell.collectionViewHeight.constant = (rows) * 120;
+    [self.interestsCell.interestsCollectionView reloadData];
+    [self.editProfileTableView reloadData];
 
 //    for (NSDictionary *category in self.usersInterests) {
 //        //self.interests.text = [self.usersInterests componentsJoinedByString:@"\n,"];
@@ -345,9 +382,9 @@ NSString *cell2 = @"cell2";
     [cell setInterestLabelText:interest];
     
     //if (self.usersInterests.count % 3 == 1) {
-    long rows = (self.usersInterests.count + 3 - 1)/3;
+    //long rows = (self.usersInterests.count + 3 - 1)/3;
         //self.collectionVieHeightConstraint.constant = self.interestsCollectionView.contentSize.height + cell.frame.size.height;
-    self.collectionVieHeightConstraint.constant = (double)(rows * cell.frame.size.height);
+    //self.collectionVieHeightConstraint.constant = (double)(rows * cell.frame.size.height);
         //[self.interestsCollectionView reloadData];
     //}
     
@@ -361,6 +398,8 @@ NSString *cell2 = @"cell2";
 //    }
     return numOfInterests;
 }
+
+//- (NSArray *) user
 
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MFTextField.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -14,9 +15,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (NSNumber *)recommendedHeight;
 @property (weak, nonatomic) IBOutlet UIImageView *profileView;
-@property (weak, nonatomic) IBOutlet UITextField *firstName;
-@property (weak, nonatomic) IBOutlet UITextField *lastName;
-@property (weak, nonatomic) IBOutlet UITextField *bio;
+@property (weak, nonatomic) IBOutlet MFTextField *firstName;
+@property (weak, nonatomic) IBOutlet MFTextField *lastName;
+@property (weak, nonatomic) IBOutlet MFTextField *bio;
 
 @end
 

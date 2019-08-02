@@ -43,6 +43,11 @@
     layout.minimumInteritemSpacing = 2;
     layout.minimumLineSpacing = 5;
     
+//    UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout*)self.interestsCollectionView.collectionViewLayout;
+//    layout.itemSize = CGSizeMake(120, 25);
+//    layout.minimumInteritemSpacing = 2;
+//    layout.minimumLineSpacing = 10;
+    
     //[self.interestsCollectionView br]
      [self setup];
     

@@ -11,6 +11,9 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ShowInterestsTableViewCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UICollectionView *interestsCollectionView;
+@property (strong, nonatomic) NSMutableArray *interestsArray;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *collectionViewHeight;
 
 @end
 

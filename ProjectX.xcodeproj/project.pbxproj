@@ -19,6 +19,10 @@
 		E703B94522F248DD00C63563 /* EditProfileTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E703B94322F248DD00C63563 /* EditProfileTableViewCell.xib */; };
 		E703B94922F2548700C63563 /* ShowInterestsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E703B94722F2548700C63563 /* ShowInterestsTableViewCell.m */; };
 		E703B94A22F2548700C63563 /* ShowInterestsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E703B94822F2548700C63563 /* ShowInterestsTableViewCell.xib */; };
+		E714766B22F349A00036F541 /* InterestCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E714766922F349A00036F541 /* InterestCollectionViewCell.m */; };
+		E714766C22F349A00036F541 /* InterestCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E714766A22F349A00036F541 /* InterestCollectionViewCell.xib */; };
+		E714767022F38DCB0036F541 /* InterestFieldTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E714766E22F38DCB0036F541 /* InterestFieldTableViewCell.m */; };
+		E714767122F38DCB0036F541 /* InterestFieldTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E714766F22F38DCB0036F541 /* InterestFieldTableViewCell.xib */; };
 		E76311B822E23E8E00A1B674 /* MessagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E76311B722E23E8E00A1B674 /* MessagesViewController.m */; };
 		E76311BB22E241BB00A1B674 /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = E76311BA22E241BB00A1B674 /* Message.m */; };
 		E76311BF22E2746400A1B674 /* topCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E76311BD22E2746400A1B674 /* topCollectionViewCell.xib */; };
@@ -108,6 +112,12 @@
 		E703B94622F2548700C63563 /* ShowInterestsTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShowInterestsTableViewCell.h; sourceTree = "<group>"; };
 		E703B94722F2548700C63563 /* ShowInterestsTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShowInterestsTableViewCell.m; sourceTree = "<group>"; };
 		E703B94822F2548700C63563 /* ShowInterestsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ShowInterestsTableViewCell.xib; sourceTree = "<group>"; };
+		E714766822F349A00036F541 /* InterestCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InterestCollectionViewCell.h; sourceTree = "<group>"; };
+		E714766922F349A00036F541 /* InterestCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InterestCollectionViewCell.m; sourceTree = "<group>"; };
+		E714766A22F349A00036F541 /* InterestCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InterestCollectionViewCell.xib; sourceTree = "<group>"; };
+		E714766D22F38DCB0036F541 /* InterestFieldTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InterestFieldTableViewCell.h; sourceTree = "<group>"; };
+		E714766E22F38DCB0036F541 /* InterestFieldTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InterestFieldTableViewCell.m; sourceTree = "<group>"; };
+		E714766F22F38DCB0036F541 /* InterestFieldTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InterestFieldTableViewCell.xib; sourceTree = "<group>"; };
 		E76311B622E23E8E00A1B674 /* MessagesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MessagesViewController.h; sourceTree = "<group>"; };
 		E76311B722E23E8E00A1B674 /* MessagesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MessagesViewController.m; sourceTree = "<group>"; };
 		E76311B922E241BB00A1B674 /* Message.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
@@ -326,6 +336,12 @@
 				E703B94622F2548700C63563 /* ShowInterestsTableViewCell.h */,
 				E703B94722F2548700C63563 /* ShowInterestsTableViewCell.m */,
 				E703B94822F2548700C63563 /* ShowInterestsTableViewCell.xib */,
+				E714766822F349A00036F541 /* InterestCollectionViewCell.h */,
+				E714766922F349A00036F541 /* InterestCollectionViewCell.m */,
+				E714766A22F349A00036F541 /* InterestCollectionViewCell.xib */,
+				E714766D22F38DCB0036F541 /* InterestFieldTableViewCell.h */,
+				E714766E22F38DCB0036F541 /* InterestFieldTableViewCell.m */,
+				E714766F22F38DCB0036F541 /* InterestFieldTableViewCell.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -542,6 +558,7 @@
 			files = (
 				EA54ECF422DE3F3900D0D7A2 /* LaunchScreen.storyboard in Resources */,
 				EA73F83E22E6848D00385689 /* MessageBubble.xib in Resources */,
+				E714766C22F349A00036F541 /* InterestCollectionViewCell.xib in Resources */,
 				EA54ED1E22DE674000D0D7A2 /* GoogleService-Info.plist in Resources */,
 				E76311BF22E2746400A1B674 /* topCollectionViewCell.xib in Resources */,
 				E703B94A22F2548700C63563 /* ShowInterestsTableViewCell.xib in Resources */,
@@ -549,6 +566,7 @@
 				EA54ECF122DE3F3900D0D7A2 /* Assets.xcassets in Resources */,
 				EA54ECEC22DE3F3800D0D7A2 /* Main.storyboard in Resources */,
 				E703B94522F248DD00C63563 /* EditProfileTableViewCell.xib in Resources */,
+				E714767122F38DCB0036F541 /* InterestFieldTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -679,6 +697,8 @@
 				EA70790622ED648B00D41CD1 /* PreferencesViewController.m in Sources */,
 				E76311C022E2746400A1B674 /* topCollectionViewCell.m in Sources */,
 				E76311BB22E241BB00A1B674 /* Message.m in Sources */,
+				E714767022F38DCB0036F541 /* InterestFieldTableViewCell.m in Sources */,
+				E714766B22F349A00036F541 /* InterestCollectionViewCell.m in Sources */,
 				EA3A502422E0F2FC004F2FFD /* HomeFeedTableViewCell.m in Sources */,
 				EA7078F722EBA43100D41CD1 /* TranslatorManager.m in Sources */,
 				EA54ECF722DE3F3900D0D7A2 /* main.m in Sources */,
