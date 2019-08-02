@@ -17,7 +17,12 @@
 
 @interface EditProfileViewController() <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UITableViewDelegate, UITableViewDataSource>
 
+@property (strong, nonatomic) NSString *firstName;
+@property (strong, nonatomic) NSString *lastName;
+@property (strong, nonatomic) NSString *bio;
+@property (strong, nonatomic) UIImage *profilePhoto;
 @property (strong, nonatomic) NSArray *interestsCategories;
+@property (strong, nonatomic) NSMutableArray *usersInterests;
 @property (strong, nonatomic) NSMutableArray *pickerViewRowTitles;
 @property (weak, nonatomic) NSString *selectedRowText;
 @property (weak, nonatomic) NSDictionary *selectedRowDictRef;
@@ -26,9 +31,6 @@
 @property (nonatomic, readwrite) FIRFirestore *db;
 @property (weak, nonatomic) NSString *profileImageString;
 @property (weak, nonatomic) IBOutlet UITableView *editProfileTableView;
-@property (weak, nonatomic) EditProfileTableViewCell *profileCell;
-@property (weak, nonatomic) InterestFieldTableViewCell *chooseInterestsCell;
-@property (weak, nonatomic) ShowInterestsTableViewCell *interestsCell;
 @end
 
 @implementation EditProfileViewController
@@ -48,8 +50,13 @@ NSString *cell2 = @"cell2";
     
     self.editProfileTableView.dataSource = self;
     self.editProfileTableView.delegate = self;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(firstNameDidChange:) name:@"firstNameNotification" object:nil];
     
-    // make the tablevie lines go away
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(lastNameDidChange:) name:@"lastNameNotification" object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(bioDidChange:) name:@"bioNotification" object:nil];
+    
+    // make the tableview lines go away
     self.editProfileTableView.separatorColor = [UIColor clearColor];
     //[self.editProfileTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     
@@ -76,6 +83,36 @@ NSString *cell2 = @"cell2";
     [interestsToolBar setItems:[NSArray arrayWithObjects:space,doneButton, nil]];
 }
 
+
+#pragma mark - Set up view
+
+- (void)setUpCurrentProperties {
+    [[FirebaseManager sharedManager] getCurrentUser:^(User * _Nonnull user, NSError * _Nonnull error) {
+        if (error != nil) {
+            NSLog(@"Error getting current user for profile");
+        } else {
+            self.currentUser = user;
+            
+            
+            NSURL *imageURL = [NSURL URLWithString:self.currentUser.profileImageURL];
+            
+            
+            self.firstName = self.currentUser.firstName;
+            self.lastName = self.currentUser.lastName;
+            self.bio = self.currentUser.bio;
+            //for (NSDictionary *category in )
+            self.usersInterests = self.currentUser.preferences;
+            self.profileImageString = self.currentUser.profileImageURL;
+            
+            
+            //[self.profileCell.imageView setImageWithURL:imageURL];
+            //[self.interestsCollectionView reloadData];
+            
+            [self.editProfileTableView reloadData];
+        }
+    }];
+}
+
 - (void)fetchCategories {
     [[APIEventsManager sharedManager] getCategories:^(NSArray * _Nonnull categories, NSError * _Nonnull error) {
         if(error == nil)
@@ -87,11 +124,6 @@ NSString *cell2 = @"cell2";
     }];
 }
 
-- (IBAction)didTapSave:(id)sender {
-    
-    [self updateDocument];
-    [self.navigationController popToRootViewControllerAnimated:YES];
-}
 
 # pragma mark UITableView Data Source initializations
 
@@ -105,139 +137,67 @@ NSString *cell2 = @"cell2";
     
     if (indexPath.row == 0) {
         
-        self.profileCell = [tableView dequeueReusableCellWithIdentifier:cell0];
+        EditProfileTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cell0];
         
-        NSURL *imageURL = [NSURL URLWithString:self.currentUser.profileImageURL];
-        [self.profileCell.profileView setImageWithURL:imageURL];
-        self.profileCell.firstName.text = self.currentUser.firstName;
-        self.profileCell.lastName.text = self.currentUser.lastName;
-        self.profileCell.bio.text = self.currentUser.bio;
+        NSURL *imageURL = [NSURL URLWithString:self.profileImageString];
+        //cell.profileView = self.profilePhoto;
+        [cell.profileView setImageWithURL:imageURL];
+        self.profilePhoto = cell.profileView.image;
+        cell.firstName.text = self.firstName;
+        cell.lastName.text = self.lastName;
+        cell.bio.text = self.bio;
         //add action to change profile button in cell
-        [self.profileCell.changePhotoButton addTarget:self action:@selector(changeProfileImageButton:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.changePhotoButton addTarget:self action:@selector(changeProfileImageButton:) forControlEvents:UIControlEventTouchUpInside];
         
-        return self.profileCell;
+        return cell;
         
     } else if (indexPath.row == 1) {
+        InterestFieldTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cell1];
         
-        self.chooseInterestsCell = [tableView dequeueReusableCellWithIdentifier:cell1];
-        self.chooseInterestsCell.addInterestsField.inputView = self.interestsPicker;
-        self.chooseInterestsCell.addInterestsField.inputAccessoryView = interestsToolBar;
         
-        return self.chooseInterestsCell;
+        //self.chooseInterestsCell =
+        cell.addInterestsField.inputView = self.interestsPicker;
+        cell.addInterestsField.inputAccessoryView = interestsToolBar;
+        
+        return cell;
     } else {
-         self.interestsCell = [tableView dequeueReusableCellWithIdentifier:cell2];
+        ShowInterestsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cell2];
         
-        return self.interestsCell;
+        // makes collection view grow as content grows
+        cell.frame = tableView.bounds;
+        [cell layoutIfNeeded];
+        [cell.interestsCollectionView layoutIfNeeded];
+        [cell.interestsCollectionView reloadData];
+        cell.collectionViewHeight.constant = cell.interestsCollectionView.collectionViewLayout.collectionViewContentSize.height;
+        
+        return cell;
         
     }
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row == 0) {
-        return [EditProfileTableViewCell recommendedHeight].floatValue;
-    }
-    if (indexPath.row == 1) {
-        //shoule I add recommended height for this?
-        return 60;
-    }
-    
-    ShowInterestsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cell2];
-    // trying to get cell to grow as collection view content increases
-    //cell.frame = tableView.bounds;
-    // just trying anything
-    //tableView.rowHeight = UITableViewAutomaticDimension;
-    [cell layoutIfNeeded];
-    //[cell.interestsCollectionView layoutIfNeeded];
-    [cell.interestsCollectionView reloadData];
-    cell.collectionViewHeight.constant = cell.interestsCollectionView.collectionViewLayout.collectionViewContentSize.height;
-    return cell.frame.size.height;
-    
-    //long rows = (self.usersInterests.count + 3 - 1) / 3;
-    //return rows * 120;
-}
-
-// I think i only need this method to get the current user ?
-- (void)setUpCurrentProperties {
-    [[FirebaseManager sharedManager] getCurrentUser:^(User * _Nonnull user, NSError * _Nonnull error) {
-        if (error != nil) {
-            NSLog(@"Error getting current user for profile");
-        } else {
-            self.currentUser = user;
-            
-            
-            NSURL *imageURL = [NSURL URLWithString:self.currentUser.profileImageURL];
-            
-            self.profileCell.firstName.text = self.currentUser.firstName;
-            self.profileCell.lastName.text = self.currentUser.lastName;
-            self.profileCell.bio.text = self.currentUser.bio;
-            //for (NSDictionary *category in )
-            self.usersInterests = self.currentUser.preferences;
-            
-            //[self.profileCell.imageView setImageWithURL:imageURL];
-            //[self.interestsCollectionView reloadData];
-            
-            [self.editProfileTableView reloadData];
-        }
-    }];
-}
 
 - (void)doneCategoryPicker:(UIButton *) button {
     if (! [self.usersInterests containsObject:self.selectedRowDictRef]) {
         [self.usersInterests addObject:self.selectedRowDictRef];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"interestsChanged" object:nil userInfo:@{@"newInterest": self.selectedRowDictRef}];
     }
-    // Update our collection view, and then update content size of the scroll view.
-    //[self.interestsCollectionView reloadData];
-    //[self updateDocument];
     
-    self.interestsCell.interestsArray = self.usersInterests;
-    //CGFloat collectionViewHeight = self.interestsCell.interestsCollectionView.collectionViewLayout.collectionViewContentSize.height;
-    //long rows = (self.usersInterests.count + 3 - 1) / 3;
-    //collectionViewHeight = rows * 120;
-    //self.interestsCell.collectionViewHeight.constant = (rows) * 120;
-    [self.interestsCell.interestsCollectionView reloadData];
     [self.editProfileTableView reloadData];
     [self.interestsPicker removeFromSuperview];
     
-    //[self.interests endEditing:YES];
-    
 }
 
--(UIBarButtonItem *) setUpDoneButton {
-    UIBarButtonItem *barButtonDone = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(doneCategoryPicker:)];
-    
-    barButtonDone.style = UIBarButtonItemStyleDone;
-    barButtonDone.tintColor = [UIColor blueColor];
-    
-    return barButtonDone;
-    
-}
 
-// action for when change profile button is pressed on first cell of editProfile table view
-- (void)changeProfileImageButton:(UIButton *)button {
-    UIImagePickerController *imagePickerVC = [UIImagePickerController new];
-    imagePickerVC.delegate = self;
-    imagePickerVC.allowsEditing = YES;
-    
-    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-        imagePickerVC.sourceType = UIImagePickerControllerSourceTypeCamera;
-    }
-    
-    else {
-        NSLog(@"Camera unavailable so we will use photo library instead");
-        imagePickerVC.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-    }
-    
-    [self presentViewController:imagePickerVC animated:YES completion:nil];
-}
 
+#pragma mark - Update info
 
 - (void) updateUserProperties {
     FIRDocumentReference *userRef = [[self.db collectionWithPath:@"Users"] documentWithPath:self.currentUser.userID];
     [userRef updateData:
      @{
-       @"firstName": self.profileCell.firstName.text,
-       @"lastName": self.profileCell.lastName.text,
-       @"bio": self.profileCell.bio.text,
+       @"firstName": self.firstName,
+       @"lastName": self.lastName,
+       @"bio": self.bio,
        @"preferences": self.usersInterests,
        @"profileImage": self.profileImageString,
        } completion:^(NSError * _Nullable error) {
@@ -249,37 +209,12 @@ NSString *cell2 = @"cell2";
        }];
 }
 
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
-    
-    UIImage *originalImage = info[UIImagePickerControllerOriginalImage];
-    //UIImage *editedImage = info[UIImagePickerControllerEditedImage];//Do I really need this
-    
-    self.profileCell.profileView.image = [self resizeImage:originalImage withSize:CGSizeMake(400, 400)];
-    //    [self imageStorage];
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (UIImage *)resizeImage:(UIImage *)image withSize:(CGSize)size {
-    UIImageView *resizeImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, size.width, size.height)];
-    
-    resizeImageView.contentMode = UIViewContentModeScaleAspectFill;
-    resizeImageView.image = image;
-    
-    UIGraphicsBeginImageContext(size);
-    [resizeImageView.layer renderInContext:UIGraphicsGetCurrentContext()];
-    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
-    return newImage;
-}
-
 - (NSString *) updateDocument {
-    
     FIRStorage *storage = [FIRStorage storage];
     NSUUID *randomID = [[NSUUID alloc] init];
     FIRStorageReference *storageRef = [storage referenceWithPath:[@"profileImages/" stringByAppendingString:[NSString stringWithFormat: @"%@", randomID.description, @".jpg"]]];
     //NSURL *localFile = [NSURL URLWithString:[NSString stringWithFormat:@"%@", storageRef]];
-    NSData *data = UIImageJPEGRepresentation(self.profileCell.profileView.image, 0.75);
+    NSData *data = UIImageJPEGRepresentation(self.profilePhoto, 0.75);
     //FIRStorageReference *eventImagesRef = [storageRef child:@"images/mountains.jpg"];
     FIRStorageMetadata *uploadMetaData = [[FIRStorageMetadata alloc] init];
     uploadMetaData.contentType = @"image/jpeg";
@@ -316,6 +251,93 @@ NSString *cell2 = @"cell2";
     return downloadURL.absoluteString;
 }
 
+- (IBAction)didTapSave:(id)sender {
+    
+    [self updateDocument];
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
+#pragma mark - Handle When User changes profile image
+
+// action for when change profile button is pressed on first cell of editProfile table view
+- (void)changeProfileImageButton:(UIButton *)button {
+    UIImagePickerController *imagePickerVC = [UIImagePickerController new];
+    imagePickerVC.delegate = self;
+    imagePickerVC.allowsEditing = YES;
+    
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        imagePickerVC.sourceType = UIImagePickerControllerSourceTypeCamera;
+    }
+    
+    else {
+        NSLog(@"Camera unavailable so we will use photo library instead");
+        imagePickerVC.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    }
+    
+    [self presentViewController:imagePickerVC animated:YES completion:nil];
+}
+
+
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
+    
+    UIImage *originalImage = info[UIImagePickerControllerOriginalImage];
+    //UIImage *editedImage = info[UIImagePickerControllerEditedImage];//Do I really need this
+    
+    //****
+    self.profilePhoto = [self resizeImage:originalImage withSize:CGSizeMake(400, 400)];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"photoChangeNotification"
+                                                        object:nil
+                                                      userInfo:@{@"newPhoto": self.profilePhoto}];
+    //[self.editProfileTableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
+    //    [self imageStorage];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (UIImage *)resizeImage:(UIImage *)image withSize:(CGSize)size {
+    UIImageView *resizeImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, size.width, size.height)];
+    
+    resizeImageView.contentMode = UIViewContentModeScaleAspectFill;
+    resizeImageView.image = image;
+    
+    UIGraphicsBeginImageContext(size);
+    [resizeImageView.layer renderInContext:UIGraphicsGetCurrentContext()];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return newImage;
+}
+
+#pragma mark - Notification methods
+
+- (void)firstNameDidChange: (NSNotification *)notification {
+    self.firstName = notification.userInfo[@"firstName"];
+    [self.editProfileTableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
+}
+
+- (void)lastNameDidChange: (NSNotification *)notification {
+    self.lastName = notification.userInfo[@"lastName"];
+    [self.editProfileTableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
+    
+}
+
+- (void)bioDidChange: (NSNotification *)notification {
+    self.bio = notification.userInfo[@"bio"];
+    [self.editProfileTableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
+    
+}
+
+#pragma mark - Helpers
+
+-(UIBarButtonItem *) setUpDoneButton {
+    UIBarButtonItem *barButtonDone = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(doneCategoryPicker:)];
+    
+    barButtonDone.style = UIBarButtonItemStyleDone;
+    barButtonDone.tintColor = [UIColor blueColor];
+    
+    return barButtonDone;
+    
+}
 
 
 /*
@@ -328,6 +350,7 @@ NSString *cell2 = @"cell2";
 }
 */
 
+#pragma mark - PickerView delegate methods
 - (NSInteger)numberOfComponentsInPickerView:(nonnull UIPickerView *)pickerView {
     NSInteger numComponents = 1;
     return numComponents;
@@ -344,7 +367,6 @@ NSString *cell2 = @"cell2";
 -(void) pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
     [interestsToolBar setHidden:NO];
     
-    //self.interests.text = self.interestsCategories[row];
     self.selectedRowDictRef = self.interestsCategories[row];
     self.selectedRowText = self.interestsCategories[row][@"short_name"];
     

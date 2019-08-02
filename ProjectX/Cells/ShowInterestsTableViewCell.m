@@ -25,6 +25,8 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(interestsDidChange:) name:@"interestsChanged" object:nil];
+    
     
     
     self.interestsCollectionView.dataSource = self;
@@ -36,16 +38,11 @@
     [self getInterests];
     
     UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout*)self.interestsCollectionView.collectionViewLayout;
+    
     layout.itemSize = CGSizeMake(120, 25);
     layout.minimumInteritemSpacing = 2;
     layout.minimumLineSpacing = 10;
     
-    //CGFloat height = self.interestsCollectionView.col
-    //layout.collectionViewContentSize.height = (self.interestsArray.count + 3 - 1) / 3;
-    
-//    [self.interestsCollectionView reloadData];
-    
-    //self.interestsArray = [[EditProfileViewController alloc] init].usersInterests;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -68,10 +65,13 @@
     }];
     
 }
+
+- (void)interestsDidChange: (NSNotification *)notification {
+    [self.interestsArray addObject: notification.userInfo[@"newInterest"]];
+    [self.interestsCollectionView reloadData];
     
-
-
-
+}
+    
 
 
 - (nonnull __kindof UICollectionViewCell *)collectionView:(nonnull UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {

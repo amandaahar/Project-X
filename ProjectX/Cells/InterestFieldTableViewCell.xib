@@ -15,12 +15,12 @@
         <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="53" id="KGk-i7-Jjw" customClass="InterestFieldTableViewCell">
             <rect key="frame" x="0.0" y="0.0" width="416" height="53"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
                 <rect key="frame" x="0.0" y="0.0" width="416" height="52.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Add Interests" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Pi8-6t-YO0" customClass="MFTextField">
-                        <rect key="frame" x="20" y="8" width="374" height="48"/>
+                        <rect key="frame" x="20" y="2.5" width="374" height="48"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="374" id="Act-QI-GRw"/>
                         </constraints>
@@ -30,7 +30,8 @@
                     </textField>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="Pi8-6t-YO0" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="24z-yc-1Ht"/>
+                    <constraint firstItem="Pi8-6t-YO0" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="Ffm-P3-vc9"/>
+                    <constraint firstItem="Pi8-6t-YO0" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="a3w-0u-PEL"/>
                     <constraint firstAttribute="trailing" secondItem="Pi8-6t-YO0" secondAttribute="trailing" constant="20" id="iXC-wn-RC9"/>
                     <constraint firstItem="Pi8-6t-YO0" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="xYE-02-fcD"/>
                 </constraints>

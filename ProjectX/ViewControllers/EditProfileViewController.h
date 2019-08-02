@@ -15,7 +15,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface EditProfileViewController : UIViewController
-@property (strong, nonatomic) NSMutableArray *usersInterests;
+
 - (void)doneCategoryPicker: (UIButton *) button;
 - (void)setUpCurrentProperties;
 
