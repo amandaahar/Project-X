@@ -4,6 +4,7 @@ framework module FirebaseMLNaturalLanguage {
   module * { export * }
   link "sqlite3"
   link "z"
+  link framework "CoreFoundation"
   link framework "CoreGraphics"
   link framework "Foundation"
   link framework "LocalAuthentication"

@@ -26,7 +26,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    [self.mapView.layer setCornerRadius:self.mapView.frame.size.height/2];
+    [self.mapView setClipsToBounds:YES];
     [self.createGroupButton.layer setCornerRadius:10];
     [self.createGroupButton setClipsToBounds:YES];
     [self.descriptionEvent setText:self.event.summary];

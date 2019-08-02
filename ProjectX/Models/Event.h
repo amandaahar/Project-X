@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 NS_ASSUME_NONNULL_BEGIN
 @import Firebase;
-@import GeoFire;
 @import AFNetworking;
 @interface Event : NSObject
 @property (strong, nonatomic) NSString *name;

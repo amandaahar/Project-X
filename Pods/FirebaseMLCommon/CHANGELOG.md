@@ -1,3 +1,11 @@
+# 2019-07-09 -- v0.17.0
+- Bug fixes.
+
+# 2019-05-07 -- v0.16.0
+- Adds `download(_:)` API to `ModelManager` class for downloading a remote
+  model. Caller can monitor the returned `NSProgress` and receive notifications
+  defined in `FIRModelDownloadNotifications.h`.
+
 # 2019-03-19 -- v0.15.0
 -  **Breaking change:** Renamed model downloading APIs in FirebaseMLCommon
   (no change to functionality):

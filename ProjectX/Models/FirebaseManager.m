@@ -55,7 +55,9 @@
 }
 
 - (void)getEvents:(void(^)(NSArray *events, NSError *error))completion {
-    [[database collectionWithPath:@"Event"]
+     
+     
+    [[[database collectionWithPath:@"Event"] queryWhereField:@"eventDate" isGreaterThanOrEqualTo:[FIRTimestamp timestampWithDate:[[NSDate alloc] initWithTimeIntervalSinceNow:60*60*24*6]]]
      getDocumentsWithCompletion:^(FIRQuerySnapshot *snapshot, NSError *error) {
          if (error != nil) {
              NSLog(@"Error getting documents: %@", error);
@@ -66,13 +68,40 @@
                  NSLog(@"%@ => %@", document.documentID, document.data);
                  Event * myEvent = [[Event alloc] initWithDictionary:document.data eventID:document.documentID];
                  myEvent.eventIDRef = document.reference;
+                 
                  [events addObject:myEvent];
              }
+            
              completion(events, nil);
          }
      }];
 }
 
+- (void)getEventsNotSwiped:(void(^)(NSArray *events, NSError *error))completion {
+    
+    
+    [[[database collectionWithPath:@"Event"] queryWhereField:@"eventDate" isGreaterThanOrEqualTo:[FIRTimestamp timestampWithDate:[[NSDate alloc] initWithTimeIntervalSinceNow:60*60*24*6]]]
+     getDocumentsWithCompletion:^(FIRQuerySnapshot *snapshot, NSError *error) {
+         if (error != nil) {
+             NSLog(@"Error getting documents: %@", error);
+             completion(nil,error);
+         } else {
+             NSMutableArray *events = [NSMutableArray new];
+             for (FIRDocumentSnapshot *document in snapshot.documents) {
+                 NSLog(@"%@ => %@", document.documentID, document.data);
+                 Event * myEvent = [[Event alloc] initWithDictionary:document.data eventID:document.documentID];
+                 myEvent.eventIDRef = document.reference;
+                 if(![myEvent.usersInEvent containsObject:FIRAuth.auth.currentUser.uid])
+                 {
+                     [events addObject:myEvent];
+                 }
+                 
+             }
+             
+             completion(events, nil);
+         }
+     }];
+}
 - (void)getMessagesFromEvent:(NSString *) eventID completion: (void(^)(NSArray *messages, NSError *error))completion {
     [[[[[database collectionWithPath:@"Event"] documentWithPath:eventID] collectionWithPath:@"Chat"] queryOrderedByField:@"timeSent" descending:NO] addSnapshotListener:^(FIRQuerySnapshot * _Nullable snapshot, NSError * _Nullable error) {
         if (error != nil) {

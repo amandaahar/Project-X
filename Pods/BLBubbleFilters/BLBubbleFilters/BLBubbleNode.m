@@ -58,6 +58,7 @@ double BLBubbleFiltersIconPercentualInset = 0.4;
     self = [BLBubbleNode shapeNodeWithCircleOfRadius:radius];
     if (self) {
         _state = BLBubbleNodeStateNormal;
+        
         [self configure];
     }
     
@@ -96,7 +97,6 @@ double BLBubbleFiltersIconPercentualInset = 0.4;
     _backgroundNode.userInteractionEnabled = NO;
     _backgroundNode.position = CGPointZero;
     _backgroundNode.zPosition = 0;
-
     [self addChild:_backgroundNode];
     
     _label = [SKLabelNode labelNodeWithFontNamed:@""];
@@ -108,8 +108,6 @@ double BLBubbleFiltersIconPercentualInset = 0.4;
     _label.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeCenter;
     _label.zPosition = 2;
     [self addChild:_label];
-    
-  
 }
 
 #pragma mark Data Model

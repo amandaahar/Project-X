@@ -15,6 +15,7 @@
 #import "ProfileHeaderCollectionReusableView.h"
 
 @import Firebase;
+@import SAMKeychain;
 @interface ProfileViewController () < UICollectionViewDelegate, UICollectionViewDataSource>
 @property (weak, nonatomic) IBOutlet UILabel *nameText;
 @property (weak, nonatomic) IBOutlet UIImageView *profilePictureImage;
@@ -105,6 +106,7 @@
                                                                NSLog(@"Error signing out: %@", signOutError);
                                                                return;
                                                            }else{
+                                                               
                                                                [[FirebaseManager sharedManager] removeFCMDeviceToUser:idUser];
                                                                AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
                                                                UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];

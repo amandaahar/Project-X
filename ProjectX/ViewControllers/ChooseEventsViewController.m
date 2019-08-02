@@ -59,7 +59,7 @@
 
 - (void) fetchEvents {
     
-    [[FirebaseManager sharedManager] getEvents:^(NSArray * _Nonnull event, NSError * _Nonnull error) {
+    [[FirebaseManager sharedManager] getEventsNotSwiped:^(NSArray * _Nonnull event, NSError * _Nonnull error) {
         if(error != nil)
         {
             NSLog(@"Error showing documents: %@", error);
@@ -82,7 +82,24 @@
             
             //NSLog(@"%@", event);
             Event * myEvent = event.firstObject;
-            
+            if (myEvent == nil) {
+                self.card.alpha = 0;
+                [self.mapView removeFromSuperview];
+                
+                UIView *emptyCard = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 100)];
+                emptyCard.center = self.view.center;
+                emptyCard.backgroundColor = [UIColor blackColor];
+                emptyCard.layer.cornerRadius = 15;
+                emptyCard.layer.masksToBounds = true;
+                [self.view addSubview:emptyCard];
+                
+                UILabel *noEventsLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 270, 200)];
+                noEventsLabel.center = self.view.center;
+                [noEventsLabel setText:@"No events found, create your own now!"];
+                [noEventsLabel setNumberOfLines:0];
+                [noEventsLabel setTextColor:[UIColor whiteColor]];
+                [self.view addSubview:noEventsLabel];
+            }else{
             self.numAttendees.text = [NSString stringWithFormat:@"%@", myEvent.attendees];
             self.eventName.text = myEvent.name;
             self.Eventdescription.text = myEvent.descriptionEvent;
@@ -115,6 +132,8 @@
             
             self.card.layer.cornerRadius = 15;
             self.card.layer.masksToBounds = true;
+                
+        }
         }
     }];
 

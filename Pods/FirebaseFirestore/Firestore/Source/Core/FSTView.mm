@@ -22,8 +22,8 @@
 
 #import "Firestore/Source/Core/FSTQuery.h"
 #import "Firestore/Source/Model/FSTDocument.h"
-#import "Firestore/Source/Model/FSTFieldValue.h"
 
+#include "Firestore/core/src/firebase/firestore/core/query.h"
 #include "Firestore/core/src/firebase/firestore/core/view_snapshot.h"
 #include "Firestore/core/src/firebase/firestore/model/document_key.h"
 #include "Firestore/core/src/firebase/firestore/model/document_key_set.h"
@@ -32,8 +32,10 @@
 #include "Firestore/core/src/firebase/firestore/util/delayed_constructor.h"
 #include "Firestore/core/src/firebase/firestore/util/hard_assert.h"
 
+namespace util = firebase::firestore::util;
 using firebase::firestore::core::DocumentViewChange;
 using firebase::firestore::core::DocumentViewChangeSet;
+using firebase::firestore::core::Query;
 using firebase::firestore::core::SyncState;
 using firebase::firestore::core::ViewSnapshot;
 using firebase::firestore::model::DocumentKey;
@@ -42,6 +44,7 @@ using firebase::firestore::model::DocumentSet;
 using firebase::firestore::model::MaybeDocumentMap;
 using firebase::firestore::model::OnlineState;
 using firebase::firestore::remote::TargetChange;
+using firebase::firestore::util::ComparisonResult;
 using firebase::firestore::util::DelayedConstructor;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -242,6 +245,10 @@ int GetDocumentViewChangeTypePosition(DocumentViewChange::Type changeType) {
   return self;
 }
 
+- (ComparisonResult)compare:(FSTDocument *)document with:(FSTDocument *)otherDocument {
+  return self.query.comparator.Compare(document, otherDocument);
+}
+
 - (const DocumentKeySet &)syncedDocuments {
   return _syncedDocuments;
 }
@@ -273,7 +280,7 @@ int GetDocumentViewChangeTypePosition(DocumentViewChange::Type changeType) {
   // Note that this should never get used in a refill (when previousChanges is set), because there
   // will only be adds -- no deletes or updates.
   FSTDocument *_Nullable lastDocInLimit =
-      (self.query.limit != NSNotFound && oldDocumentSet.size() == self.query.limit)
+      (self.query.limit != Query::kNoLimit && oldDocumentSet.size() == self.query.limit)
           ? oldDocumentSet.GetLastDocument()
           : nil;
 
@@ -305,13 +312,13 @@ int GetDocumentViewChangeTypePosition(DocumentViewChange::Type changeType) {
     BOOL changeApplied = NO;
     // Calculate change
     if (oldDoc && newDoc) {
-      BOOL docsEqual = [oldDoc.data isEqual:newDoc.data];
+      BOOL docsEqual = oldDoc.data == newDoc.data;
       if (!docsEqual) {
         if (![self shouldWaitForSyncedDocument:newDoc oldDocument:oldDoc]) {
           changeSet.AddChange(DocumentViewChange{newDoc, DocumentViewChange::Type::kModified});
           changeApplied = YES;
 
-          if (lastDocInLimit && self.query.comparator(newDoc, lastDocInLimit) > 0) {
+          if (lastDocInLimit && util::Descending([self compare:newDoc with:lastDocInLimit])) {
             // This doc moved from inside the limit to after the limit. That means there may be
             // some doc in the local cache that's actually less than this one.
             needsRefill = YES;
@@ -351,7 +358,7 @@ int GetDocumentViewChangeTypePosition(DocumentViewChange::Type changeType) {
     }
   }
 
-  if (self.query.limit != NSNotFound && newDocumentSet.size() > self.query.limit) {
+  if (self.query.limit != Query::kNoLimit && newDocumentSet.size() > self.query.limit) {
     for (size_t i = newDocumentSet.size() - self.query.limit; i > 0; --i) {
       FSTDocument *oldDoc = newDocumentSet.GetLastDocument();
       newDocumentSet = newDocumentSet.erase(oldDoc.key);
@@ -400,7 +407,7 @@ int GetDocumentViewChangeTypePosition(DocumentViewChange::Type changeType) {
               if (pos1 != pos2) {
                 return pos1 < pos2;
               }
-              return self.query.comparator(lhs.document(), rhs.document()) == NSOrderedAscending;
+              return util::Ascending([self compare:lhs.document() with:rhs.document()]);
             });
 
   [self applyTargetChange:targetChange];

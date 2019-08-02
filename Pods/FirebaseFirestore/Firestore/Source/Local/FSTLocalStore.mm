@@ -33,6 +33,7 @@
 #import "Firestore/Source/Model/FSTMutation.h"
 #import "Firestore/Source/Model/FSTMutationBatch.h"
 
+#include "Firestore/core/include/firebase/firestore/timestamp.h"
 #include "Firestore/core/src/firebase/firestore/auth/user.h"
 #include "Firestore/core/src/firebase/firestore/core/target_id_generator.h"
 #include "Firestore/core/src/firebase/firestore/immutable/sorted_set.h"
@@ -48,7 +49,9 @@
 #include "Firestore/core/src/firebase/firestore/util/hard_assert.h"
 #include "Firestore/core/src/firebase/firestore/util/log.h"
 #include "absl/memory/memory.h"
+#include "absl/types/optional.h"
 
+using firebase::Timestamp;
 using firebase::firestore::auth::User;
 using firebase::firestore::core::TargetIdGenerator;
 using firebase::firestore::local::LocalDocumentsView;
@@ -64,8 +67,9 @@ using firebase::firestore::model::DocumentMap;
 using firebase::firestore::model::DocumentVersionMap;
 using firebase::firestore::model::FieldMask;
 using firebase::firestore::model::FieldPath;
-using firebase::firestore::model::MaybeDocumentMap;
 using firebase::firestore::model::ListenSequenceNumber;
+using firebase::firestore::model::MaybeDocumentMap;
+using firebase::firestore::model::ObjectValue;
 using firebase::firestore::model::Precondition;
 using firebase::firestore::model::SnapshotVersion;
 using firebase::firestore::model::TargetId;
@@ -172,7 +176,7 @@ static const int64_t kResumeTokenMaxAgeSeconds = 5 * 60;  // 5 minutes
 }
 
 - (FSTLocalWriteResult *)locallyWriteMutations:(std::vector<FSTMutation *> &&)mutations {
-  FIRTimestamp *localWriteTime = [FIRTimestamp timestamp];
+  Timestamp localWriteTime = Timestamp::Now();
   DocumentKeySet keys;
   for (FSTMutation *mutation : mutations) {
     keys = keys.insert(mutation.key);
@@ -189,30 +193,17 @@ static const int64_t kResumeTokenMaxAgeSeconds = 5 * 60;  // 5 minutes
     // transform.
     std::vector<FSTMutation *> baseMutations;
     for (FSTMutation *mutation : mutations) {
-      if (mutation.idempotent) {
-        continue;
-      }
+      auto base_document_it = existingDocuments.find(mutation.key);
+      FSTMaybeDocument *base_document =
+          base_document_it != existingDocuments.end() ? base_document_it->second : nil;
 
-      // Theoretically, we should only include non-idempotent fields in this field mask as this mask
-      // is used to prevent flicker for non-idempotent transforms by providing consistent base
-      // values. By including the fields for all DocumentTransforms, we incorrectly prevent rebasing
-      // of idempotent transforms (such as `arrayUnion()`) when any non-idempotent transforms are
-      // present.
-      // TODO(mrschmidt): Expose a method that only returns the a field mask for non-idempotent
-      // transforms
-      const FieldMask *fieldMask = [mutation fieldMask];
-      if (fieldMask) {
-        // `documentsForKeys` is guaranteed to return a (nullable) entry for every document key.
-        FSTMaybeDocument *maybeDocument = existingDocuments.find(mutation.key)->second;
-        FSTObjectValue *baseValues =
-            [maybeDocument isKindOfClass:[FSTDocument class]]
-                ? [((FSTDocument *)maybeDocument).data objectByApplyingFieldMask:*fieldMask]
-                : [FSTObjectValue objectValue];
+      absl::optional<ObjectValue> base_value = [mutation extractBaseValue:base_document];
+      if (base_value) {
         // NOTE: The base state should only be applied if there's some existing document to
         // override, so use a Precondition of exists=true
         baseMutations.push_back([[FSTPatchMutation alloc] initWithKey:mutation.key
-                                                            fieldMask:*fieldMask
-                                                                value:baseValues
+                                                            fieldMask:base_value->ToFieldMask()
+                                                                value:*base_value
                                                          precondition:Precondition::Exists(true)]);
       }
     }
@@ -460,13 +451,16 @@ static const int64_t kResumeTokenMaxAgeSeconds = 5 * 60;  // 5 minutes
     TargetId targetID = queryData.targetID;
 
     auto found = _targetIDs.find(targetID);
-    FSTQueryData *cachedQueryData = found != _targetIDs.end() ? found->second : nil;
-    if (cachedQueryData.snapshotVersion > queryData.snapshotVersion) {
-      // If we've been avoiding persisting the resumeToken (see shouldPersistQueryData for
-      // conditions and rationale) we need to persist the token now because there will no
-      // longer be an in-memory version to fall back on.
-      queryData = cachedQueryData;
-      _queryCache->UpdateTarget(queryData);
+    if (found != _targetIDs.end()) {
+      FSTQueryData *cachedQueryData = found->second;
+
+      if (cachedQueryData.snapshotVersion > queryData.snapshotVersion) {
+        // If we've been avoiding persisting the resumeToken (see shouldPersistQueryData for
+        // conditions and rationale) we need to persist the token now because there will no
+        // longer be an in-memory version to fall back on.
+        queryData = cachedQueryData;
+        _queryCache->UpdateTarget(queryData);
+      }
     }
 
     // References for documents sent via Watch are automatically removed when we delete a

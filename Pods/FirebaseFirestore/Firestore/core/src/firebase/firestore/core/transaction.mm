@@ -24,6 +24,8 @@
 #import "Firestore/Source/Model/FSTMutation.h"
 
 #include "Firestore/core/include/firebase/firestore/firestore_errors.h"
+#include "Firestore/core/src/firebase/firestore/core/user_data.h"
+#include "Firestore/core/src/firebase/firestore/remote/datastore.h"
 #include "Firestore/core/src/firebase/firestore/util/hard_assert.h"
 
 using firebase::firestore::FirestoreErrorCode;
@@ -77,8 +79,13 @@ void Transaction::Lookup(const std::vector<DocumentKey>& keys,
                          LookupCallback&& callback) {
   EnsureCommitNotCalled();
 
-  HARD_ASSERT(mutations_.empty(),
-              "Transactions lookups are invalid after writes.");
+  if (!mutations_.empty()) {
+    Status lookup_error = Status{FirestoreErrorCode::InvalidArgument,
+                                 "Firestore transactions require all reads to "
+                                 "be executed before all writes"};
+    callback({}, lookup_error);
+    return;
+  }
 
   datastore_->LookupDocuments(
       keys, [this, callback](const std::vector<FSTMaybeDocument*>& documents,
@@ -122,7 +129,7 @@ StatusOr<Precondition> Transaction::CreateUpdatePrecondition(
 
   if (version.has_value() && version.value() == SnapshotVersion::None()) {
     // The document to update doesn't exist, so fail the transaction.
-    return Status{FirestoreErrorCode::Aborted,
+    return Status{FirestoreErrorCode::InvalidArgument,
                   "Can't update a document that doesn't exist."};
   } else if (version.has_value()) {
     // Document exists, just base precondition on document update time.
@@ -159,7 +166,7 @@ void Transaction::Delete(const DocumentKey& key) {
   read_versions_[key] = SnapshotVersion::None();
 }
 
-void Transaction::Commit(CommitCallback&& callback) {
+void Transaction::Commit(util::StatusCallback&& callback) {
   EnsureCommitNotCalled();
 
   // If there was an error writing, raise that error now
@@ -182,7 +189,7 @@ void Transaction::Commit(CommitCallback&& callback) {
     // TODO(klimt): This is a temporary restriction, until "verify" is supported
     // on the backend.
     callback(
-        Status{FirestoreErrorCode::FailedPrecondition,
+        Status{FirestoreErrorCode::InvalidArgument,
                "Every document read in a transaction must also be written in "
                "that transaction."});
   } else {

@@ -29,7 +29,6 @@
         [self setLastName:dictionary[@"lastName"]];
         [self setUsername:dictionary[@"username"]];
         [self setPreferences:dictionary[@"preferences"]];
-        [self setLocation:dictionary[@"location"]];
         [self setProfileImageURL:dictionary[@"profileImage"]];
         [self setEvents:dictionary[@"events"]];
         [self setUserID:FIRAuth.auth.currentUser.uid];

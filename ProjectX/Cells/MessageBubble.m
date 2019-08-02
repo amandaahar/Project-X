@@ -49,7 +49,7 @@
     
      //[self.reactionView setHidden:NO];
     [self.reactionView setNeedsDisplay];
-    [self.reactionView setNeedsLayout];
+    [self.reactionView layoutIfNeeded];
     [self changeImageReaction:self.message.liked];
 
 
