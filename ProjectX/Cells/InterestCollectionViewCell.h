@@ -13,6 +13,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface InterestCollectionViewCell : UICollectionViewCell
 @property (weak, nonatomic) IBOutlet PillLabel *interestsLabel;
+@property (weak, nonatomic) IBOutlet UIButton *deleteButton;
+@property (weak, nonatomic) IBOutlet UIView *deleteView;
+
+- (void)shake;
+- (void)stopShaking;
 
 @end
 

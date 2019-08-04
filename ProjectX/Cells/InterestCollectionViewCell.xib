@@ -29,6 +29,14 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iTP-WS-yd1">
+                                <rect key="frame" x="8" y="5" width="21" height="16"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button" image="deleteButtonX"/>
+                                <connections>
+                                    <action selector="deleteButtonPressed:" destination="gTV-IL-0wX" eventType="touchUpInside" id="T0P-sH-GJx"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -50,9 +58,13 @@
             <viewLayoutGuide key="safeArea" id="SEy-5g-ep8"/>
             <size key="customSize" width="267" height="63"/>
             <connections>
+                <outlet property="deleteButton" destination="iTP-WS-yd1" id="E9F-y4-6b7"/>
                 <outlet property="interestsLabel" destination="T0M-xv-pKO" id="7C6-2G-FL0"/>
             </connections>
-            <point key="canvasLocation" x="-75" y="118"/>
+            <point key="canvasLocation" x="-67.391304347826093" y="112.83482142857142"/>
         </collectionViewCell>
     </objects>
+    <resources>
+        <image name="deleteButtonX" width="512" height="512"/>
+    </resources>
 </document>
