@@ -147,7 +147,6 @@
     return [self eventHomeView:annotation];
 }
 
-
 - (IBAction)directionsToPlace:(UIButton *)sender {
     [[FirebaseManager sharedManager] getCurrentEvent:self.detailEventID completion:^(Event * _Nonnull myEvent, NSError * _Nonnull error) {
         if (error != nil) {

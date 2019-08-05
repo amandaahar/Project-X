@@ -11,6 +11,7 @@
 		0E496C0922E285AA00DEF38C /* CreateEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E496C0822E285AA00DEF38C /* CreateEventViewController.m */; };
 		0E496C0F22EE5AE200DEF38C /* DetailEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E496C0E22EE5AE200DEF38C /* DetailEventViewController.m */; };
 		0E83767522F24BB3009B9007 /* LocationTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E83767422F24BB3009B9007 /* LocationTableViewController.m */; };
+		0E83767822F896C3009B9007 /* LocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E83767722F896C3009B9007 /* LocationViewController.m */; };
 		0ECF088922DE791300F5A8AA /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ECF088822DE791300F5A8AA /* SignUpViewController.m */; };
 		0ECF088D22DE792900F5A8AA /* LogInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ECF088C22DE792900F5A8AA /* LogInViewController.m */; };
 		558AC6CB925C399045621CBD /* Pods_ProjectXUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BE1B1413891FCA15B877BED /* Pods_ProjectXUITests.framework */; };
@@ -98,6 +99,8 @@
 		0E496C0E22EE5AE200DEF38C /* DetailEventViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailEventViewController.m; sourceTree = "<group>"; };
 		0E83767322F24BB3009B9007 /* LocationTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocationTableViewController.h; sourceTree = "<group>"; };
 		0E83767422F24BB3009B9007 /* LocationTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocationTableViewController.m; sourceTree = "<group>"; };
+		0E83767622F896C2009B9007 /* LocationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocationViewController.h; sourceTree = "<group>"; };
+		0E83767722F896C3009B9007 /* LocationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocationViewController.m; sourceTree = "<group>"; };
 		0ECF088722DE791300F5A8AA /* SignUpViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SignUpViewController.h; sourceTree = "<group>"; };
 		0ECF088822DE791300F5A8AA /* SignUpViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SignUpViewController.m; sourceTree = "<group>"; };
 		0ECF088B22DE792900F5A8AA /* LogInViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LogInViewController.h; sourceTree = "<group>"; };
@@ -277,6 +280,8 @@
 				0E496C0E22EE5AE200DEF38C /* DetailEventViewController.m */,
 				0E83767322F24BB3009B9007 /* LocationTableViewController.h */,
 				0E83767422F24BB3009B9007 /* LocationTableViewController.m */,
+				0E83767622F896C2009B9007 /* LocationViewController.h */,
+				0E83767722F896C3009B9007 /* LocationViewController.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -716,6 +721,7 @@
 				EA54ECE622DE3F3800D0D7A2 /* AppDelegate.m in Sources */,
 				E7AEA0A922DE8C4400A77CC2 /* EventsFeedViewController.m in Sources */,
 				EA70790622ED648B00D41CD1 /* PreferencesViewController.m in Sources */,
+				0E83767822F896C3009B9007 /* LocationViewController.m in Sources */,
 				E76311C022E2746400A1B674 /* topCollectionViewCell.m in Sources */,
 				E76311BB22E241BB00A1B674 /* Message.m in Sources */,
 				E714767022F38DCB0036F541 /* InterestFieldTableViewCell.m in Sources */,

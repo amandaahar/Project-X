@@ -10,7 +10,7 @@
 #import "AppDelegate.h"
 #import "../Models/FirebaseManager.h"
 #import "CreateEventViewController.h"
-//#import "LocationTableViewController.h"
+#import "LocationViewController.h"
 #import "Event.h"
 #import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
@@ -66,6 +66,20 @@ CLLocationManager *UserLocationManager;
     self.mapView.showsUserLocation = YES;
     self.mapView.showsBuildings = YES;
     
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"How to choose events:"
+                                                                   message:@"Swipe the event card right if you would like to attend, swipe left to see next event"
+                                                            preferredStyle:(UIAlertControllerStyleAlert)];
+    
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"I am ready!"
+                                                           style:UIAlertActionStyleCancel
+                                                         handler:^(UIAlertAction * _Nonnull action) {
+                                                             [self movingPreview];
+                                                         }];
+    
+    [alert addAction:cancelAction];
+    
+    [self presentViewController:alert animated:YES completion: nil];
+    
     /*
     FIRDatabaseReference *geofireRef = [[FIRDatabase database] reference];
     GeoFire *geoFire = [[GeoFire alloc] initWithFirebaseRef:geofireRef];
@@ -107,19 +121,6 @@ CLLocationManager *UserLocationManager;
             NSLog(@"Error showing documents: %@", error);
         }else
         {
-            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"How to choose events:"
-                                                                           message:@"Swipe the event card right if you would like to attend, swipe left to see next event"
-                                                                    preferredStyle:(UIAlertControllerStyleAlert)];
-            
-            UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"I am ready!"
-                                                                   style:UIAlertActionStyleCancel
-                                                                 handler:^(UIAlertAction * _Nonnull action) {
-                                                                     [self movingPreview];
-                                                                 }];
-            [alert addAction:cancelAction];
-            
-            [self presentViewController:alert animated:YES completion: nil];
-            
             //NSLog(@"%@", event);
             Event * myEvent = event.firstObject;
             if (myEvent == nil) {
@@ -461,7 +462,7 @@ CLLocationManager *UserLocationManager;
 }
 
 - (IBAction)CreateEventAction:(id)sender {
-    [self performSegueWithIdentifier:@"CreateEventSegue" sender:nil];
+    [self performSegueWithIdentifier:@"ChooseLocationSegue" sender:nil];
 //  [self resetCard]; Should I create a card for the created event or directly make a group
 }
 
@@ -485,18 +486,20 @@ CLLocationManager *UserLocationManager;
         createEventController.delegate = self;
     }
     
-    /*
     else if ([segue.identifier isEqualToString: @"ChooseLocationSegue"]) {
         UINavigationController *navigationController = [segue destinationViewController];
-        //LocationTableViewController *ChooseLocationController = (LocationTableViewController *)navigationController.topViewController;
+        //LocationViewController *ChooseLocationController = (LocationViewController *)navigationController.topViewController;
         //ChooseLocationController.delegate = self;
     }
-     */
+    
 }
 
 #pragma mark - Change Location
 
 - (IBAction)changeLocation:(id)sender {
+    [self performSegueWithIdentifier:@"CreateEventSegue" sender:self];
+    
+    /*
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Change Location" message:@"Insert the new location" preferredStyle:(UIAlertControllerStyleAlert)];
     UIAlertAction *accept = [UIAlertAction actionWithTitle:@"Accept" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
         UITextField *textField = alert.textFields[0];
@@ -525,6 +528,7 @@ CLLocationManager *UserLocationManager;
         textField.keyboardType = UIKeyboardTypeDefault;
     }];
     [self presentViewController:alert animated:YES completion:nil];
+     */
 }
 
 - (MKOverlayRenderer *)mapView:(MKMapView *)map viewForOverlay:(id <MKOverlay>)overlay
