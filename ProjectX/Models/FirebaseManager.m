@@ -64,8 +64,7 @@ CLLocation *greaterGeopoint;
 //    int lat = 0.01449;
 //    int lon = 0.01818;
 //    int lowerLat = latitude - (lat*distance);
-    
-    [[[database collectionWithPath:@"Event"]
+     [[[[database collectionWithPath:@"Event"] queryWhereField:@"eventDate" isGreaterThanOrEqualTo:[FIRTimestamp timestampWithDate:[[NSDate alloc] initWithTimeIntervalSinceNow:-60*60*24*6]]]
                 //queryWhereField:@"location" isLessThanOrEqualTo:[FIRGeoPoint GeoPoint(38)]]
                 queryOrderedByField:@"location"]
      getDocumentsWithCompletion:^(FIRQuerySnapshot *snapshot, NSError *error) {
@@ -78,13 +77,40 @@ CLLocation *greaterGeopoint;
                  NSLog(@"%@ => %@", document.documentID, document.data);
                  Event * myEvent = [[Event alloc] initWithDictionary:document.data eventID:document.documentID];
                  myEvent.eventIDRef = document.reference;
+                 
                  [events addObject:myEvent];
              }
+            
              completion(events, nil);
          }
      }];
 }
 
+- (void)getEventsNotSwiped:(void(^)(NSArray *events, NSError *error))completion {
+    
+    
+    [[[database collectionWithPath:@"Event"] queryWhereField:@"eventDate" isGreaterThanOrEqualTo:[FIRTimestamp timestampWithDate:[[NSDate alloc] initWithTimeIntervalSinceNow: -60*60*24*6]]]
+     getDocumentsWithCompletion:^(FIRQuerySnapshot *snapshot, NSError *error) {
+         if (error != nil) {
+             NSLog(@"Error getting documents: %@", error);
+             completion(nil,error);
+         } else {
+             NSMutableArray *events = [NSMutableArray new];
+             for (FIRDocumentSnapshot *document in snapshot.documents) {
+                 NSLog(@"%@ => %@", document.documentID, document.data);
+                 Event * myEvent = [[Event alloc] initWithDictionary:document.data eventID:document.documentID];
+                 myEvent.eventIDRef = document.reference;
+                 if(![myEvent.usersInEvent containsObject:FIRAuth.auth.currentUser.uid])
+                 {
+                     [events addObject:myEvent];
+                 }
+                 
+             }
+             
+             completion(events, nil);
+         }
+     }];
+}
 - (void)getMessagesFromEvent:(NSString *) eventID completion: (void(^)(NSArray *messages, NSError *error))completion {
     [[[[[database collectionWithPath:@"Event"] documentWithPath:eventID] collectionWithPath:@"Chat"] queryOrderedByField:@"timeSent" descending:NO] addSnapshotListener:^(FIRQuerySnapshot * _Nullable snapshot, NSError * _Nullable error) {
         if (error != nil) {
@@ -172,11 +198,11 @@ CLLocation *greaterGeopoint;
             FIRGeoPoint *geoPoint = [[FIRGeoPoint alloc] initWithLatitude:event.location.latitude longitude:event.location.longitude];
             FIRDocumentReference *docReference = [[self->database collectionWithPath:@"Event"] addDocumentWithData:@{}];
             NSDate *dateEvent = [NSDate new];
+            
             if(event.date != nil){
                 dateEvent = event.date;
             }
-            [docReference updateData:@{@"name": event.name, @"description": event.summary, @"location": geoPoint, @"eventDate": dateEvent, @"numAttendees": [NSNumber numberWithInt:1], @"categoryIndex": [NSNumber numberWithInt:5], @"userFriendlyLocation": placemark.name, @"pictures" : @[event.logo]}];
-
+            [docReference updateData:@{@"name": event.name, @"description": event.summary, @"location": geoPoint, @"eventDate": dateEvent, @"numAttendees": [NSNumber numberWithInt:1], @"categoryIndex": [NSNumber numberWithInt:5], @"userFriendlyLocation": placemark.name, @"pictures" : @[event.logo], @"swipeUsers" :@[FIRAuth.auth.currentUser.uid]}];
             [[[self->database collectionWithPath:@"Users"] documentWithPath:FIRAuth.auth.currentUser.uid] updateData:@{ @"events": [FIRFieldValue fieldValueForArrayUnion:@[docReference]] }];
             completion(nil);
         } else
@@ -209,12 +235,78 @@ CLLocation *greaterGeopoint;
     }];
 }
 
-- (void)swipeEventsByLocation:(NSString *) latitude
-                    longitude:(NSString *) longitude
-                     category:(NSString *) category
-                    shortName:(NSString *) shortname
-                   completion:(void(^)(NSArray *eventsEventbrite,NSArray * eventsTicketmaster, NSError *error))completion{
-    
+-(void) addFCMDeviceToUSer: (NSString *) token{
+    [[[database collectionWithPath:@"Users"] documentWithPath:FIRAuth.auth.currentUser.uid] updateData:@{@"fcm": token}];
+}
+-(void) removeFCMDeviceToUser:(NSString *) idUser{
+    [[[database collectionWithPath:@"Users"] documentWithPath:idUser] updateData:@{@"fcm": @""}];
+}
+
+-(void) sendNotificationUsers : (NSString *) idEvent withText:(NSString *) text nameUser:(NSString *) nameUser
+{
+    __weak FirebaseManager *weakSelf = self;
+    [[[database collectionWithPath:@"Event"] documentWithPath:idEvent] getDocumentWithCompletion:^(FIRDocumentSnapshot * _Nullable snapshot, NSError * _Nullable error) {
+        if(error == nil){
+            FirebaseManager *strongSelf = weakSelf;
+            for (NSString *idUser in snapshot.data[@"swipeUsers"]){
+                if(![idUser isEqualToString: FIRAuth.auth.currentUser.uid]){
+                    [[[strongSelf->database collectionWithPath:@"Users"] documentWithPath:idUser] getDocumentWithCompletion:^(FIRDocumentSnapshot * _Nullable snapshot, NSError * _Nullable error) {
+                        if(error == nil && snapshot[@"fcm"]){
+                            NSString *urlString = @"https://fcm.googleapis.com/fcm/send";
+                            NSURL *url = [NSURL URLWithString:urlString];
+                            
+                            NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+                            NSDictionary *parameters = @{ @"notification": @{ @"title": nameUser, @"text": text },
+                                                          @"priority": @"high",
+                                                          @"to": snapshot[@"fcm"]};
+                            
+                            NSData *postData = [NSJSONSerialization dataWithJSONObject:parameters options:0 error:nil];
+                            [request setHTTPBody:postData];
+                            
+                            
+                            
+                            [request setHTTPMethod:@"POST"];
+                            
+                            [request setURL:url];
+                            
+                            [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+                            [request addValue:@"key=AAAA7kl8B54:APA91bF9EBHatpiUabNJEy6MSD7eUhuPnEzmcKn1WwwbAEbZP9vM3syVmtCTsoWverO5yZF5o_dRWFGWqeHIQxnyvAst2CyJkElKdn-PGPlPXNEmCnY9f9vg2fSi7aVqZw9YLmu_ac9T" forHTTPHeaderField:@"Authorization"];
+                            
+                            
+                            [request setHTTPBody:postData];
+                            
+                            NSURLSession *session = [NSURLSession sharedSession];
+                            NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+                                NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+                                if(httpResponse.statusCode == 200)
+                                {
+                                    NSError *parseError = nil;
+                                    NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseError];
+                                    NSLog(@"The response is - %@",responseDictionary);
+                                    NSInteger success = [[responseDictionary objectForKey:@"success"] integerValue];
+                                    if(success == 1)
+                                    {
+                                        NSLog(@"Login SUCCESS");
+                                    }
+                                    else
+                                    {
+                                        NSLog(@"Login FAILURE");
+                                    }
+                                }
+                                else
+                                {
+                                    NSLog(@"Error");
+                                }
+                            }];
+                            [dataTask resume];
+                        }
+                    }];
+                }
+                
+                
+            }
+        }
+    }];
 }
 
 @end

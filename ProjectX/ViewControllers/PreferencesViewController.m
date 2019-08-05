@@ -65,19 +65,26 @@ BOOL lastTime = false;
         lastTime = YES;
     }else
     {
-        for (SKNode *node in [scene children]) {
-            if([node isKindOfClass:[BLBubbleNode class]])
-            {
-                [node removeFromParent];
+        if(self.preferencesDB.count > 2){
+            for (SKNode *node in [scene children]) {
+                if([node isKindOfClass:[BLBubbleNode class]])
+                {
+                    [node removeFromParent];
+                }
+                
             }
-            
+            [scene reload];
+            [[FirebaseManager sharedManager] setNewPreferences:[self.preferencesDB copy]];
+            AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            MainTabBarController *tabBarViewController = [storyboard instantiateViewControllerWithIdentifier:@"TabBarVC"];
+            appDelegate.window.rootViewController = tabBarViewController;
+        }else{
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"You need to choose more" message:@"Add at least 3 of your preference" preferredStyle:(UIAlertControllerStyleAlert)];
+            UIAlertAction *action = [UIAlertAction actionWithTitle:@"Accept" style:(UIAlertActionStyleDefault) handler:nil];
+            [alert addAction:action];
+            [self presentViewController:alert animated:YES completion:nil];
         }
-        [scene reload];
-        [[FirebaseManager sharedManager] setNewPreferences:[self.preferencesDB copy]];
-        AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
-        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        MainTabBarController *tabBarViewController = [storyboard instantiateViewControllerWithIdentifier:@"TabBarVC"];
-        appDelegate.window.rootViewController = tabBarViewController;
         
     }
     

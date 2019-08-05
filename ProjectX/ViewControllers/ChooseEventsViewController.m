@@ -10,6 +10,7 @@
 #import "AppDelegate.h"
 #import "../Models/FirebaseManager.h"
 #import "CreateEventViewController.h"
+#import "../Helpers/Reachability.h"
 //#import "LocationTableViewController.h"
 #import "Event.h"
 #import <MapKit/MapKit.h>
@@ -62,7 +63,9 @@ CLLocationManager *UserLocationManager;
     //[self movingPreview];
     
     self.UserCurrentLocation = [[CLLocation alloc] initWithLatitude:36 longitude:-122];
+    if([self isConnectionAvailable]){
     [self currentLocationIdentifier];
+    }
     self.mapView.showsUserLocation = YES;
     self.mapView.showsBuildings = YES;
     
@@ -101,7 +104,7 @@ CLLocationManager *UserLocationManager;
 
 - (void) fetchEvents {
     
-    [[FirebaseManager sharedManager] getEvents:^(NSArray * _Nonnull event, NSError * _Nonnull error) {
+    [[FirebaseManager sharedManager] getEventsNotSwiped:^(NSArray * _Nonnull event, NSError * _Nonnull error) {
         if(error != nil)
         {
             NSLog(@"Error showing documents: %@", error);
@@ -122,7 +125,24 @@ CLLocationManager *UserLocationManager;
             
             //NSLog(@"%@", event);
             Event * myEvent = event.firstObject;
-            
+            if (myEvent == nil) {
+                self.card.alpha = 0;
+                [self.mapView removeFromSuperview];
+                
+                UIView *emptyCard = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 100)];
+                emptyCard.center = self.view.center;
+                emptyCard.backgroundColor = [UIColor blackColor];
+                emptyCard.layer.cornerRadius = 15;
+                emptyCard.layer.masksToBounds = true;
+                [self.view addSubview:emptyCard];
+                
+                UILabel *noEventsLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 270, 200)];
+                noEventsLabel.center = self.view.center;
+                [noEventsLabel setText:@"No events found, create your own now!"];
+                [noEventsLabel setNumberOfLines:0];
+                [noEventsLabel setTextColor:[UIColor whiteColor]];
+                [self.view addSubview:noEventsLabel];
+            }else{
             self.numAttendees.text = [NSString stringWithFormat:@"%@", myEvent.attendees];
             self.eventName.text = myEvent.name;
             self.Eventdescription.text = myEvent.descriptionEvent;
@@ -159,6 +179,8 @@ CLLocationManager *UserLocationManager;
             
             self.card.layer.cornerRadius = 15;
             self.card.layer.masksToBounds = true;
+                
+        }
         }
     }];
 
@@ -182,6 +204,15 @@ CLLocationManager *UserLocationManager;
     
 }
 */
+
+-(BOOL)isConnectionAvailable
+{
+    Reachability *reachability = [Reachability reachabilityForInternetConnection];
+    
+    NetworkStatus networkStatus = [reachability currentReachabilityStatus];
+    
+    return !(networkStatus == NotReachable);
+}
 
 #pragma mark - Location methods
 
@@ -273,6 +304,7 @@ CLLocationManager *UserLocationManager;
             
             FIRDocumentReference *eventRef = [[self.db collectionWithPath:@"Users"] documentWithPath:FIRAuth.auth.currentUser.uid];
             [eventRef updateData:@{ @"events": [FIRFieldValue fieldValueForArrayUnion:@[myEvent.eventIDRef]] }];
+            [[[self.db collectionWithPath:@"Event"] documentWithPath:myEvent.eventID] updateData:@{@"swipeUsers": [FIRFieldValue fieldValueForArrayUnion:@[FIRAuth.auth.currentUser.uid]]}];
             [self nextEvent];
             UINotificationFeedbackGenerator *myGen = [[UINotificationFeedbackGenerator alloc] init];
             [myGen prepare];

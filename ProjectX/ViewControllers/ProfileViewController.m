@@ -15,6 +15,7 @@
 #import "ProfileHeaderCollectionReusableView.h"
 
 @import Firebase;
+@import SAMKeychain;
 @interface ProfileViewController () < UICollectionViewDelegate, UICollectionViewDataSource>
 @property (weak, nonatomic) IBOutlet UILabel *nameText;
 @property (weak, nonatomic) IBOutlet UIImageView *profilePictureImage;
@@ -113,11 +114,14 @@
                                                        style:UIAlertActionStyleDefault
                                                        handler:^(UIAlertAction * _Nonnull action) {
                                                            NSError *signOutError;
+                                                           NSString *idUser = FIRAuth.auth.currentUser.uid;
                                                            BOOL status = [[FIRAuth auth] signOut:&signOutError];
                                                            if (!status) {
                                                                NSLog(@"Error signing out: %@", signOutError);
                                                                return;
                                                            }else{
+                                                               
+                                                               [[FirebaseManager sharedManager] removeFCMDeviceToUser:idUser];
                                                                AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
                                                                UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
                                                                LogInViewController *loginViewController = [storyboard instantiateViewControllerWithIdentifier:@"LogIn"];

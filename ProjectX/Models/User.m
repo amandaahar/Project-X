@@ -29,13 +29,12 @@
         [self setLastName:dictionary[@"lastName"]];
         [self setUsername:dictionary[@"username"]];
         [self setPreferences:dictionary[@"preferences"]];
-        [self setLocation:dictionary[@"location"]];
         [self setProfileImageURL:dictionary[@"profileImage"]];
         [self setEvents:dictionary[@"events"]];
         [self setUserID:FIRAuth.auth.currentUser.uid];
         [self setBio:dictionary[@"bio"]];
         [self setLanguage:dictionary[@"lan"]];
-        
+        [self setFcm:dictionary[@"fcm"]];
     }
     return self;
 }
@@ -65,6 +64,7 @@
                                                                NSLog(@"Error adding document: %@", error);
                                                            } else {
                                                                NSLog(@"Document added with ID: %@", ref.documentID);
+                                                               [[FirebaseManager sharedManager] sendNotificationUsers:event withText:text nameUser:self.username];
                                                            }
                                                        }];
             }

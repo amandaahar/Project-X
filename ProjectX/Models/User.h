@@ -10,8 +10,6 @@
 #import "Chat.h"
 @import FirebaseAuth;
 @import UIKit;
-
-@import GeoFire;
 @import AFNetworking;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -21,7 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSString *firstName;
 @property (strong, nonatomic) NSString *lastName;
 @property (strong, nonatomic) NSString *username;
-@property (strong, nonatomic) GeoFire *location;
+@property (strong, nonatomic) CLLocation *location;
 @property (strong, nonatomic) NSString *profileImageURL;
 @property (strong, nonatomic) NSString *profileImage;
 @property (strong, nonatomic) NSArray *preferences;
@@ -29,7 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSString *userID;
 @property (strong, nonatomic) NSString *bio;
 @property (strong, nonatomic) NSString *language;
-
+@property (strong, nonatomic) NSString *fcm;
 #pragma mark - User Initializer
 - (instancetype) initWithDictionary : (NSDictionary *) dictionary;
 - (void) composeMessage:(NSString *)text chat: (NSString *)event;

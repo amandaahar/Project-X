@@ -46,16 +46,15 @@
         if(error != nil) {
             NSLog(@"Error getting user");
         } else {
+            
             self.currentUser = user;
             [self.events removeAllObjects];
             for(FIRDocumentReference *eventDoc in self.currentUser.events) {
-                [eventDoc addSnapshotListener:^(FIRDocumentSnapshot * _Nullable snapshot, NSError * _Nullable error) {
+                [eventDoc getDocumentWithCompletion:^(FIRDocumentSnapshot * _Nullable snapshot, NSError * _Nullable error) {
                     if(error == nil){
-                    
-                        Event * myEvent = [[Event alloc] initWithDictionary:snapshot.data
-                                                                    eventID:snapshot.documentID];
-                        [self.events addObject: myEvent];
-                        [self.chatsTableView reloadData];
+                    Event * myEvent = [[Event alloc] initWithDictionary:snapshot.data eventID:snapshot.documentID];
+                    [self.events addObject: myEvent];
+                    [self.chatsTableView reloadData];
                     }
                 }];
                 
@@ -133,19 +132,25 @@
         [copyEvents removeObjectAtIndex:indexPath.row];
         
         NSMutableArray *references = [NSMutableArray new];
+        Event *eventToDelete = self.events[indexPath.row];
+        [[[self.db collectionWithPath:@"Event"] documentWithPath: eventToDelete.eventID] updateData:@{@"swipeUsers":[FIRFieldValue fieldValueForArrayRemove: @[FIRAuth.auth.currentUser.uid]] }];
+        
         for (Event *event in copyEvents) {
             FIRDocumentReference *eventRef = [[self.db collectionWithPath:@"Event"] documentWithPath: event.eventID];
             [references addObject:eventRef];
         }
-        
+      
         FIRDocumentReference *deleteRef = [[self.db collectionWithPath:@"Users"] documentWithPath:FIRAuth.auth.currentUser.uid];
         [deleteRef updateData:@{ @"events":references} completion:^(NSError * _Nullable error) {
             if (error != nil) {
                 NSLog(@"Error deleting document: %@", error);
             } else {
                 NSLog(@"Document successfully deleted");
+                [self.chatsTableView reloadData];
+                
             }
         }];
+        
     }
     
 }

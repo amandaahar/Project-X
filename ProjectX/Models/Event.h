@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 NS_ASSUME_NONNULL_BEGIN
 @import Firebase;
-@import GeoFire;
 @import AFNetworking;
 @interface Event : NSObject
 @property (strong, nonatomic) NSString *name;
@@ -22,6 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSArray *users;
 @property (strong, nonatomic) NSString *eventID;
 @property (strong, nonatomic) FIRDocumentReference *eventIDRef;
+@property (strong, nonatomic) NSArray *usersInEvent;
 @property (strong, nonatomic) NSNumber *categories;
 @property (strong, nonatomic) NSString *userFriendlyLocation;
 

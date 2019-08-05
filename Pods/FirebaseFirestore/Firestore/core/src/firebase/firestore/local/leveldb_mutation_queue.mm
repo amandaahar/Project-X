@@ -82,8 +82,8 @@ BatchId LoadNextBatchIdFromDb(DB* db) {
 
     // At this point there are three possible cases to handle differently. Each
     // case must prepare the next iteration (by assigning to next_user_id or
-    // setting more_user_ids = NO) and seek the iterator to the last row in the
-    // current user's mutation sequence.
+    // setting more_user_ids = false) and seek the iterator to the last row in
+    // the current user's mutation sequence.
     if (!it->Valid()) {
       // The iterator is past the last row altogether (there are no additional
       // userIDs and now rows in any table after mutations). The last row will
@@ -156,7 +156,7 @@ void LevelDbMutationQueue::AcknowledgeBatch(FSTMutationBatch* batch,
 }
 
 FSTMutationBatch* LevelDbMutationQueue::AddMutationBatch(
-    FIRTimestamp* local_write_time,
+    const Timestamp& local_write_time,
     std::vector<FSTMutation*>&& base_mutations,
     std::vector<FSTMutation*>&& mutations) {
   BatchId batch_id = next_batch_id_;
