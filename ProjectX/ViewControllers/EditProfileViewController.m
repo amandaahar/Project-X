@@ -324,18 +324,18 @@ NSString *cell2 = @"cell2";
 
 - (void)firstNameDidChange: (NSNotification *)notification {
     self.firstName = notification.userInfo[@"firstName"];
-    [self.editProfileTableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
+    [self.editProfileTableView reloadData];
 }
 
 - (void)lastNameDidChange: (NSNotification *)notification {
     self.lastName = notification.userInfo[@"lastName"];
-    [self.editProfileTableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
+    [self.editProfileTableView reloadData];
     
 }
 
 - (void)bioDidChange: (NSNotification *)notification {
     self.bio = notification.userInfo[@"bio"];
-    [self.editProfileTableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
+    [self.editProfileTableView reloadData];
 }
 
 - (void)interestRemoved: (NSNotification *)notification {

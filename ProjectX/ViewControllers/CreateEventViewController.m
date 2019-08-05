@@ -10,15 +10,16 @@
 #import "ChooseEventsViewController.h"
 #import "AppDelegate.h"
 #import "../Models/FirebaseManager.h"
+#import "MFTextField.h"
 @import Firebase;
 
 @interface CreateEventViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
-@property (weak, nonatomic) IBOutlet UITextField *createEventName;
-@property (weak, nonatomic) IBOutlet UITextField *createEventDescription;
-@property (weak, nonatomic) IBOutlet UITextField *createEventLocation;
-@property (weak, nonatomic) IBOutlet UITextField *createEventDate;
-@property (weak, nonatomic) IBOutlet UITextField *createAttendees;//slider
+@property (weak, nonatomic) IBOutlet MFTextField *createEventName;
+@property (weak, nonatomic) IBOutlet MFTextField *createEventDescription;
+@property (weak, nonatomic) IBOutlet MFTextField *createEventLocation;
+@property (weak, nonatomic) IBOutlet MFTextField *createEventDate;
+@property (weak, nonatomic) IBOutlet MFTextField *createAttendees;//slider
 @property (weak, nonatomic) IBOutlet UIImageView *createPicture;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *createButton;//Make sure doesnt crash if not complete
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelButton;
@@ -178,8 +179,47 @@ UIDatePicker *datePicker;
     
 }
 
+- (BOOL)validateFields {
+    NSError *error = [self errorWithLocalizedDescription:@"Required field"];
+    BOOL areFieldsValid = YES;
+    
+    if (self.createEventName.text.length == 0) {
+        [self.createEventName setError:error animated:YES];
+        areFieldsValid = NO;
+        //[self.createEventName s]
+        //return;
+    }
+    if (self.createEventDescription.text.length == 0) {
+        [self.createEventDescription setError:error animated:YES];
+        areFieldsValid = NO;
+        
+    }
+    if (self.createEventLocation.text.length == 0) {
+        [self.createEventLocation setError:error animated:YES];
+        areFieldsValid = NO;
+        
+    }
+    if (self.createAttendees.text.length == 0) {
+        [self.createAttendees setError:error animated:YES];
+        areFieldsValid = NO;
+        
+    }
+    if (self.createEventDate.text.length == 0) {
+        [self.createEventDate setError:error animated:YES];
+        areFieldsValid = NO;
+        //return;
+    }
+    return areFieldsValid;
+    
+}
+
+
+
 - (IBAction)didTapCreate:(id)sender {
     
+    if (![self validateFields]) {
+        return;
+    }
     // This could be a block, that returns the string, then the rest of the work has to wait for this
     [self imageStorage];
     
@@ -265,6 +305,16 @@ UIDatePicker *datePicker;
     
     [self.view endEditing:YES];
     
+}
+
+#pragma mark - Helpers
+- (NSError *)errorWithLocalizedDescription:(NSString *)localizedDescription
+{
+    NSString *domain = @"Project-XDomain";
+    NSInteger code = -1;
+    
+    NSDictionary *userInfo = @{NSLocalizedDescriptionKey: localizedDescription};
+    return [NSError errorWithDomain:domain code:code userInfo:userInfo];
 }
 
 @end

@@ -33,6 +33,10 @@
     return [NSNumber numberWithInt:280];
 }
 
+- (BOOL) textFieldShouldEndEditing:(UITextField *)textField {
+    return YES;
+}
+
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     if ([textField isEqual:self.firstName]) {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"firstNameNotification"
