@@ -384,7 +384,6 @@
 		EA54ECE322DE3F3800D0D7A2 /* ProjectX */ = {
 			isa = PBXGroup;
 			children = (
-				EA73F83122E676B200385689 /* ProjectX.entitlements */,
 				EA73F82D22E6417B00385689 /* Helpers */,
 				EA3A502622E1006B004F2FFD /* Cells */,
 				E7AEA0BB22DFD88C00A77CC2 /* Views */,
@@ -451,6 +450,7 @@
 		EA73F82D22E6417B00385689 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				EA73F83122E676B200385689 /* ProjectX.entitlements */,
 				EA7078F522EBA43100D41CD1 /* TranslatorManager.h */,
 				EA7078F622EBA43100D41CD1 /* TranslatorManager.m */,
 			);

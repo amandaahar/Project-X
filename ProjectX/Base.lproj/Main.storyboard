@@ -55,11 +55,11 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="edt-k0-tik">
-                                <rect key="frame" x="55" y="265" width="273" height="73.5"/>
+                                <rect key="frame" x="55" y="265" width="273" height="68"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Naj-PW-TJd" customClass="MFTextField">
-                                        <rect key="frame" x="0.0" y="0.0" width="273" height="32.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="273" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="273" id="QfB-ca-niZ"/>
                                         </constraints>
@@ -68,7 +68,7 @@
                                         <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8BG-Lq-SGX" customClass="MFTextField">
-                                        <rect key="frame" x="0.0" y="40.5" width="273" height="33"/>
+                                        <rect key="frame" x="0.0" y="38" width="273" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="273" id="Tb3-p6-hsI"/>
                                         </constraints>
@@ -356,7 +356,7 @@
             </objects>
             <point key="canvasLocation" x="-2127" y="1415"/>
         </scene>
-        <!--Choose Events-->
+        <!--Events-->
         <scene sceneID="X2W-hS-A6o">
             <objects>
                 <viewController id="r4X-bz-L6V" customClass="ChooseEventsViewController" sceneMemberID="viewController">
@@ -437,7 +437,6 @@
                             <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="changeLocation:" destination="r4X-bz-L6V" id="rbe-11-TUD"/>
-
                             </connections>
                         </barButtonItem>
                         <rightBarButtonItems>
@@ -624,7 +623,7 @@
                                 <rect key="frame" x="0.0" y="20" width="375" height="30"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8kZ-11-85b">
-                                        <rect key="frame" x="8" y="3" width="65" height="24"/>
+                                        <rect key="frame" x="8" y="4" width="65" height="22"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="65" id="gSL-Tm-obQ"/>
                                         </constraints>

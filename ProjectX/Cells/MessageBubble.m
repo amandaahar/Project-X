@@ -26,11 +26,27 @@
     self.reactionView.layer.masksToBounds = NO;
     self.reactionView.layer.shadowPath = [UIBezierPath bezierPathWithRect:self.reactionView.bounds].CGPath;
 
+
     
     // Initialization code
 }
 
-
+-(UIView *) hitTest:(CGPoint)point withEvent:(UIEvent *)event {
+    CGPoint myPoint = [self convertPoint:point toView:self.bubbleView];
+    CGFloat pointOriginXReactioView = self.bubbleView.frame.size.width - 26;
+    CGFloat pointOriginYReactioView = self.bubbleView.frame.size.height - 15;
+    
+    if(myPoint.x > pointOriginXReactioView && myPoint.x < pointOriginXReactioView + 46 && myPoint.y > pointOriginYReactioView && myPoint.y < pointOriginYReactioView + 31){
+     
+        
+        return [self.bubbleView  hitTest:myPoint withEvent:event];
+    }
+    return [super hitTest:point withEvent:event];
+    
+}
+- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event{
+    return NO;
+}
 
 -(void) showIncomingMessage : (Message *) message
 {
