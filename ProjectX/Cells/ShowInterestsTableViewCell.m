@@ -17,7 +17,7 @@
 @property (nonatomic, strong) User *currentUser;
 @property (strong, nonatomic) EditProfileViewController *editProfileController;
 @property (strong, nonatomic) NSIndexPath *indexPathForCellToDelete;
-@property (weak, nonatomic) UIColor *initialInterestLabelBackgroundColor;
+@property (strong, nonatomic) UIColor *initialInterestLabelBackgroundColor;
 @property (strong, nonatomic) UIButton *deleteButton;
 
 
@@ -37,10 +37,13 @@
     self.interestsCollectionView.delegate = self;
     [self.interestsCollectionView registerNib:[UINib nibWithNibName:@"InterestCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"interestCollectionViewCell"];
     
-    double interestLabelRed = 78.0/255.0;
-    double interestLabelGreen = 144.0/255.0;
-    double interestLabelBlue = 242.0/255.0;
-    self.initialInterestLabelBackgroundColor = [UIColor colorWithRed:78.0/255.0 green:144.0/255.0 blue:242.0/255.0 alpha:1.0];
+    //double interestLabelRed = 78.0/255.0;
+    //float *red = (float) 0.62;
+    //double interestLabelGreen = 144.0/255.0;
+    //double interestLabelBlue = 242.0/255.0;colorWithRed:0.62 green:0.83 blue:.99 alpha:1.0];
+    //self.initialInterestLabelBackgroundColor = [[UIColor alloc] initWithRed:0.31 green:0.56 blue:.95 alpha:1];
+    
+    
     
 //    //self.deleteButton = [[UIButton alloc] init];
 //    self.deleteButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -79,7 +82,7 @@
     oldCell.interestsLabel.backgroundColor = self.initialInterestLabelBackgroundColor;// .backgroundColor = [UIColor purpleColor];
     [oldCell stopShaking];
     [oldCell.deleteButton setHidden:YES];
-    oldCell.interestsLabel.backgroundColor = [UIColor purpleColor];
+    //oldCell.interestsLabel.backgroundColor = [UIColor purpleColor];
         
     //}
     
@@ -91,6 +94,7 @@
         
     
         InterestCollectionViewCell *selectedCell = [self.interestsCollectionView cellForItemAtIndexPath:indexPath];
+        self.initialInterestLabelBackgroundColor = [[UIColor alloc] initWithCGColor:selectedCell.interestsLabel.backgroundColor.CGColor];
     
         //[selectedCell addSubview:self.deleteButton];
         [selectedCell.deleteButton setHidden:NO];
