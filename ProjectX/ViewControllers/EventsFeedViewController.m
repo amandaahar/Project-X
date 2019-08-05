@@ -11,6 +11,7 @@
 #import "../Models/NSMutableArray+Convenience.h"
 #import "../Cells/GroupEventsTableViewCell.h"
 #import "../Models/User.h"
+#import "../Helpers/Reachability.h"
 #import "DetailHomeViewController.h"
 @import CoreLocation;
 @interface EventsFeedViewController () <UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate, UIScrollViewDelegate>
@@ -60,7 +61,10 @@ NSDateFormatter *dateFormat;
     #pragma clang diagnostic ignored "-Wunused-variable"
     NSString *dateString = [format stringFromDate:now];
     #pragma clang diagnostic pop
+    
+    if([self isConnectionAvailable]){
     [self currentLocationIdentifier];
+    }
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showDetailView:) name:@"selectedEvent" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showAlert:) name:@"newEvent" object:nil];
@@ -286,6 +290,15 @@ NSDateFormatter *dateFormat;
         });
 }
 
+
+-(BOOL)isConnectionAvailable
+{
+    Reachability *reachability = [Reachability reachabilityForInternetConnection];
+    
+    NetworkStatus networkStatus = [reachability currentReachabilityStatus];
+    
+    return !(networkStatus == NotReachable);
+}
 #pragma mark - Design Methods
 /**
     setTitle

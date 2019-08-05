@@ -42,6 +42,7 @@
 		E7BA0FFD22EB67B900467978 /* InterestsCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E7BA0FFC22EB67B900467978 /* InterestsCollectionViewCell.m */; };
 		E7DC006A22F0E4E2007DD911 /* ProfileHeaderCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = E7DC006922F0E4E2007DD911 /* ProfileHeaderCollectionReusableView.m */; };
 		EA06399222EA1E0B0070AF46 /* DetailHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA06399122EA1E0B0070AF46 /* DetailHomeViewController.m */; };
+		EA07F9B022F894AC0095A6A6 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = EA07F9AF22F894AC0095A6A6 /* Reachability.m */; };
 		EA3A502422E0F2FC004F2FFD /* HomeFeedTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3A502222E0F2FC004F2FFD /* HomeFeedTableViewCell.m */; };
 		EA3A502522E0F2FC004F2FFD /* HomeFeedTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA3A502322E0F2FC004F2FFD /* HomeFeedTableViewCell.xib */; };
 		EA54ECE622DE3F3800D0D7A2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EA54ECE522DE3F3800D0D7A2 /* AppDelegate.m */; };
@@ -204,6 +205,8 @@
 		E9E77B79CC960752092467B2 /* Pods-ProjectX.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProjectX.release.xcconfig"; path = "Target Support Files/Pods-ProjectX/Pods-ProjectX.release.xcconfig"; sourceTree = "<group>"; };
 		EA06399022EA1E0B0070AF46 /* DetailHomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailHomeViewController.h; sourceTree = "<group>"; };
 		EA06399122EA1E0B0070AF46 /* DetailHomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailHomeViewController.m; sourceTree = "<group>"; };
+		EA07F9AE22F8948E0095A6A6 /* Reachability.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		EA07F9AF22F894AC0095A6A6 /* Reachability.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		EA3A502122E0F2FC004F2FFD /* HomeFeedTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HomeFeedTableViewCell.h; path = ProjectX/Cells/HomeFeedTableViewCell.h; sourceTree = SOURCE_ROOT; };
 		EA3A502222E0F2FC004F2FFD /* HomeFeedTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = HomeFeedTableViewCell.m; path = ProjectX/Cells/HomeFeedTableViewCell.m; sourceTree = SOURCE_ROOT; };
 		EA3A502322E0F2FC004F2FFD /* HomeFeedTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = HomeFeedTableViewCell.xib; path = ProjectX/Cells/HomeFeedTableViewCell.xib; sourceTree = SOURCE_ROOT; };
@@ -528,6 +531,8 @@
 				EA73F83122E676B200385689 /* ProjectX.entitlements */,
 				EA7078F522EBA43100D41CD1 /* TranslatorManager.h */,
 				EA7078F622EBA43100D41CD1 /* TranslatorManager.m */,
+				EA07F9AE22F8948E0095A6A6 /* Reachability.h */,
+				EA07F9AF22F894AC0095A6A6 /* Reachability.m */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -881,6 +886,7 @@
 				0ECF088922DE791300F5A8AA /* SignUpViewController.m in Sources */,
 				E7BA0FFA22EA5B2A00467978 /* PillLabel.m in Sources */,
 				E76311C322E2768800A1B674 /* MessageTableViewCell.m in Sources */,
+				EA07F9B022F894AC0095A6A6 /* Reachability.m in Sources */,
 				E7AEA0A622DE8A8E00A77CC2 /* ProfileViewController.m in Sources */,
 				EA54ECEF22DE3F3800D0D7A2 /* ProjectX.xcdatamodeld in Sources */,
 				E7BA0FFD22EB67B900467978 /* InterestsCollectionViewCell.m in Sources */,

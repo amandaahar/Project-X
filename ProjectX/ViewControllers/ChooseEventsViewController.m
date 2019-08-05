@@ -10,6 +10,7 @@
 #import "AppDelegate.h"
 #import "../Models/FirebaseManager.h"
 #import "CreateEventViewController.h"
+#import "../Helpers/Reachability.h"
 //#import "LocationTableViewController.h"
 #import "Event.h"
 #import <MapKit/MapKit.h>
@@ -62,7 +63,9 @@ CLLocationManager *UserLocationManager;
     //[self movingPreview];
     
     self.UserCurrentLocation = [[CLLocation alloc] initWithLatitude:36 longitude:-122];
+    if([self isConnectionAvailable]){
     [self currentLocationIdentifier];
+    }
     self.mapView.showsUserLocation = YES;
     self.mapView.showsBuildings = YES;
     
@@ -201,6 +204,15 @@ CLLocationManager *UserLocationManager;
     
 }
 */
+
+-(BOOL)isConnectionAvailable
+{
+    Reachability *reachability = [Reachability reachabilityForInternetConnection];
+    
+    NetworkStatus networkStatus = [reachability currentReachabilityStatus];
+    
+    return !(networkStatus == NotReachable);
+}
 
 #pragma mark - Location methods
 
