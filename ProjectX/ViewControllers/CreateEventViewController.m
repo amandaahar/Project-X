@@ -42,6 +42,7 @@ UIDatePicker *datePicker;
     
     [super viewDidLoad];
     self.db = [FIRFirestore firestore];
+    self.createEventLocation.delegate = self;
     
     datePicker = [[UIDatePicker alloc] init];
     datePicker.datePickerMode = UIDatePickerModeDateAndTime;
