@@ -31,6 +31,7 @@
 @property (nonatomic, readwrite) FIRFirestore *db;
 @property (weak, nonatomic) NSString *profileImageString;
 @property (weak, nonatomic) IBOutlet UITableView *editProfileTableView;
+
 @end
 
 @implementation EditProfileViewController
@@ -55,6 +56,10 @@ NSString *cell2 = @"cell2";
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(lastNameDidChange:) name:@"lastNameNotification" object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(bioDidChange:) name:@"bioNotification" object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(interestRemoved:) name:@"interestRemovedNotification" object:nil];
+    
+    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(interestCellSelected:) name:@"interestCellPressed" object:nil];
     
     // make the tableview lines go away
     self.editProfileTableView.separatorColor = [UIColor clearColor];
@@ -104,6 +109,10 @@ NSString *cell2 = @"cell2";
             self.usersInterests = self.currentUser.preferences;
             self.profileImageString = self.currentUser.profileImageURL;
             
+            UIImageView *profilePhotoPlaceholder = [[UIImageView alloc]init];
+            [profilePhotoPlaceholder setImageWithURL:imageURL];
+            self.profilePhoto = profilePhotoPlaceholder.image;
+            
             
             //[self.profileCell.imageView setImageWithURL:imageURL];
             //[self.interestsCollectionView reloadData];
@@ -138,11 +147,13 @@ NSString *cell2 = @"cell2";
     if (indexPath.row == 0) {
         
         EditProfileTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cell0];
+        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
         
         NSURL *imageURL = [NSURL URLWithString:self.profileImageString];
         //cell.profileView = self.profilePhoto;
-        [cell.profileView setImageWithURL:imageURL];
-        self.profilePhoto = cell.profileView.image;
+        //[cell.profileView setImageWithURL:imageURL];
+        cell.profileView.image = self.profilePhoto;
+        //self.profilePhoto = cell.profileView.image;
         cell.firstName.text = self.firstName;
         cell.lastName.text = self.lastName;
         cell.bio.text = self.bio;
@@ -154,7 +165,7 @@ NSString *cell2 = @"cell2";
     } else if (indexPath.row == 1) {
         InterestFieldTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cell1];
         
-        
+        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
         //self.chooseInterestsCell =
         cell.addInterestsField.inputView = self.interestsPicker;
         cell.addInterestsField.inputAccessoryView = interestsToolBar;
@@ -163,6 +174,7 @@ NSString *cell2 = @"cell2";
     } else {
         ShowInterestsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cell2];
         
+        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
         // makes collection view grow as content grows
         cell.frame = tableView.bounds;
         [cell layoutIfNeeded];
@@ -179,7 +191,7 @@ NSString *cell2 = @"cell2";
 - (void)doneCategoryPicker:(UIButton *) button {
     if (! [self.usersInterests containsObject:self.selectedRowDictRef]) {
         [self.usersInterests addObject:self.selectedRowDictRef];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"interestsChanged" object:nil userInfo:@{@"newInterest": self.selectedRowDictRef}];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"interestsAdded" object:nil userInfo:@{@"newInterest": self.selectedRowDictRef}];
     }
     
     [self.editProfileTableView reloadData];
@@ -324,7 +336,10 @@ NSString *cell2 = @"cell2";
 - (void)bioDidChange: (NSNotification *)notification {
     self.bio = notification.userInfo[@"bio"];
     [self.editProfileTableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
-    
+}
+
+- (void)interestRemoved: (NSNotification *)notification {
+    [self.usersInterests removeObject:notification.userInfo[@"removedInterest"]];
 }
 
 #pragma mark - Helpers

@@ -38,7 +38,7 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:@"firstNameNotification"
                                                             object:nil
                                                           userInfo:@{@"firstName": self.firstName.text}];
-        
+
     } else if ([textField isEqual:self.lastName]) {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"lastNameNotification"
                                                             object:nil
