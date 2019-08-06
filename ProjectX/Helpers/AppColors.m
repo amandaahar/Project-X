@@ -57,7 +57,7 @@
     return [UIColor colorWithRed: 0.458824  green: 0.631373 blue: 0.835294 alpha:1];
 }
 
--(UIColor *) getBleBackground{
+-(UIColor *) getBlueBackground{
     return [UIColor colorWithRed: 0.45098039  green: 0.694117647 blue: 0.9215686 alpha:1];
 }
 @end
