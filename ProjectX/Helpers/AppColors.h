@@ -12,6 +12,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface AppColors : NSObject
 @property (nonatomic, strong) UIColor *lightBlue;
++ (id)sharedManager;
+- (id)init;
+-(UIColor *) getLightBlue;
+-(UIColor *)getMediumBlue;
+-(UIColor *) getDarkBlue;
+-(UIColor *) getWhite;
+-(UIColor *) getAlpha15;
+-(UIColor *) getAlpha30;
+-(UIColor *) getDarkPurple;
 @end
 
 NS_ASSUME_NONNULL_END
