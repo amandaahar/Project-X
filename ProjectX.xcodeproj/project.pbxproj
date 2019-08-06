@@ -66,6 +66,7 @@
 		EA07F9E922F9404D0095A6A6 /* HomeFeedTableViewCell.h in Sources */ = {isa = PBXBuildFile; fileRef = EA3A502122E0F2FC004F2FFD /* HomeFeedTableViewCell.h */; };
 		EA07F9EA22F9404D0095A6A6 /* HomeFeedTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3A502222E0F2FC004F2FFD /* HomeFeedTableViewCell.m */; };
 		EA07F9EB22F9404D0095A6A6 /* HomeFeedTableViewCell.xib in Sources */ = {isa = PBXBuildFile; fileRef = EA3A502322E0F2FC004F2FFD /* HomeFeedTableViewCell.xib */; };
+		EA07F9EE22F9F2230095A6A6 /* AppColors.m in Sources */ = {isa = PBXBuildFile; fileRef = EA07F9ED22F9F2230095A6A6 /* AppColors.m */; };
 		EA3A502422E0F2FC004F2FFD /* HomeFeedTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3A502222E0F2FC004F2FFD /* HomeFeedTableViewCell.m */; };
 		EA3A502522E0F2FC004F2FFD /* HomeFeedTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA3A502322E0F2FC004F2FFD /* HomeFeedTableViewCell.xib */; };
 		EA54ECE622DE3F3800D0D7A2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EA54ECE522DE3F3800D0D7A2 /* AppDelegate.m */; };
@@ -265,6 +266,8 @@
 		EA07F9D822F8BF1C0095A6A6 /* Intents.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = Intents.intentdefinition; sourceTree = "<group>"; };
 		EA07F9DC22F8C30B0095A6A6 /* EventsAroundIntentHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EventsAroundIntentHandler.h; sourceTree = "<group>"; };
 		EA07F9DD22F8C30B0095A6A6 /* EventsAroundIntentHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EventsAroundIntentHandler.m; sourceTree = "<group>"; };
+		EA07F9EC22F9F2230095A6A6 /* AppColors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppColors.h; sourceTree = "<group>"; };
+		EA07F9ED22F9F2230095A6A6 /* AppColors.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppColors.m; sourceTree = "<group>"; };
 		EA3A502122E0F2FC004F2FFD /* HomeFeedTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HomeFeedTableViewCell.h; path = ProjectX/Cells/HomeFeedTableViewCell.h; sourceTree = SOURCE_ROOT; };
 		EA3A502222E0F2FC004F2FFD /* HomeFeedTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = HomeFeedTableViewCell.m; path = ProjectX/Cells/HomeFeedTableViewCell.m; sourceTree = SOURCE_ROOT; };
 		EA3A502322E0F2FC004F2FFD /* HomeFeedTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = HomeFeedTableViewCell.xib; path = ProjectX/Cells/HomeFeedTableViewCell.xib; sourceTree = SOURCE_ROOT; };
@@ -412,10 +415,10 @@
 				E76311B722E23E8E00A1B674 /* MessagesViewController.m */,
 				0E496C0722E285AA00DEF38C /* CreateEventViewController.h */,
 				0E496C0822E285AA00DEF38C /* CreateEventViewController.m */,
-				EA73F82B22E6412A00385689 /* MainTabBarController.m */,
 				EA06399022EA1E0B0070AF46 /* DetailHomeViewController.h */,
 				EA06399122EA1E0B0070AF46 /* DetailHomeViewController.m */,
 				EA73F82A22E6412A00385689 /* MainTabBarController.h */,
+				EA73F82B22E6412A00385689 /* MainTabBarController.m */,
 				EA7078FB22ED388200D41CD1 /* LanguagesTableViewController.h */,
 				EA7078FC22ED388200D41CD1 /* LanguagesTableViewController.m */,
 				EA70790422ED648B00D41CD1 /* PreferencesViewController.h */,
@@ -643,6 +646,8 @@
 				EA7078F622EBA43100D41CD1 /* TranslatorManager.m */,
 				EA07F9AE22F8948E0095A6A6 /* Reachability.h */,
 				EA07F9AF22F894AC0095A6A6 /* Reachability.m */,
+				EA07F9EC22F9F2230095A6A6 /* AppColors.h */,
+				EA07F9ED22F9F2230095A6A6 /* AppColors.m */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -1137,6 +1142,7 @@
 				EA54ECEF22DE3F3800D0D7A2 /* ProjectX.xcdatamodeld in Sources */,
 				E7BA0FFD22EB67B900467978 /* InterestsCollectionViewCell.m in Sources */,
 				EA73F84122E6B96500385689 /* BubbleView.m in Sources */,
+				EA07F9EE22F9F2230095A6A6 /* AppColors.m in Sources */,
 				0E496C0922E285AA00DEF38C /* CreateEventViewController.m in Sources */,
 				EA54ED2522DE9E3600D0D7A2 /* Event.m in Sources */,
 				E7AEA0BA22DFCC3A00A77CC2 /* Chat.m in Sources */,
