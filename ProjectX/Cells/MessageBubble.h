@@ -23,9 +23,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UIView *reactionView;
 @property (strong, nonatomic) NSString *idEvent;
 @property (weak, nonatomic) IBOutlet UIImageView *reactionImage;
+
+@property (weak, nonatomic) IBOutlet UIButton *reactionButton;
 -(void) showIncomingMessage : (Message *) message;
 - (void)showOutgoingMessage:(Message *)message;
-
 @end
 
 NS_ASSUME_NONNULL_END

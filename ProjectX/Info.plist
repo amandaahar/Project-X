@@ -30,6 +30,10 @@
 	<string>Asking for your location</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Asking for your location</string>
+	<key>NSUserActivityTypes</key>
+	<array>
+		<string>EventsAroundIntent</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

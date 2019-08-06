@@ -67,13 +67,17 @@ NSLayoutConstraint *bottom;
             [self.messagesTableView reloadData];
             if(self.messagesInChat.count > 0)
             {
-            NSIndexPath * indexPath = [NSIndexPath indexPathForItem:self.messagesInChat.count - 1 inSection:0];
-            [self.messagesTableView scrollToRowAtIndexPath:indexPath atScrollPosition:(UITableViewScrollPositionBottom) animated:YES];
+//            NSIndexPath * indexPath = [NSIndexPath indexPathForItem:self.messagesInChat.count - 1 inSection:0];
+//            [self.messagesTableView scrollToRowAtIndexPath:indexPath atScrollPosition:(UITableViewScrollPositionBottom) animated:YES];
             }
             
         }
     }];
 
+}
+- (IBAction)removeKeyword:(UITapGestureRecognizer *)sender {
+    [self.messageText resignFirstResponder];
+    bottom.constant = 0;
 }
 
 -(void) chooseLanguage:(NSString *) text {

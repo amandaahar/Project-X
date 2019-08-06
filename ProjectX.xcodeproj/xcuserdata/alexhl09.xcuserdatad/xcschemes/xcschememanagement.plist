@@ -9,14 +9,34 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
-		<key>Widget.xcscheme_^#shared#^_</key>
+		<key>Siri.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>34</integer>
 		</dict>
+		<key>SiriUI.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>36</integer>
+		</dict>
+		<key>Widget.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>35</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>EA07F9B422F8B3970095A6A6</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EA07F9BE22F8B3970095A6A6</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>EA54ECE022DE3F3800D0D7A2</key>
 		<dict>
 			<key>primary</key>
@@ -28,6 +48,11 @@
 			<true/>
 		</dict>
 		<key>EA54ED0622DE3F3900D0D7A2</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EAEFFD7D22F806CB0079E3D7</key>
 		<dict>
 			<key>primary</key>
 			<true/>
