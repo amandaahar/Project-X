@@ -43,6 +43,9 @@
     self.secondPasswordField.textContentType = UITextContentTypeNewPassword;
     self.lastName.delegate = self;
     
+    self.signUpButton.layer.cornerRadius = 15;
+    [self.signUpButton setClipsToBounds:YES];
+    
 }
 
 #pragma mark - Design

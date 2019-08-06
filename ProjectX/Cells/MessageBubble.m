@@ -33,13 +33,11 @@
 
 -(UIView *) hitTest:(CGPoint)point withEvent:(UIEvent *)event {
     CGPoint myPoint = [self convertPoint:point toView:self.bubbleView];
-    CGFloat pointOriginXReactioView = self.bubbleView.frame.size.width - 26;
-    CGFloat pointOriginYReactioView = self.bubbleView.frame.size.height - 15;
+    CGFloat pointOriginXReactionView = self.bubbleView.frame.size.width - 26;
+    CGFloat pointOriginYReactionView = self.bubbleView.frame.size.height - 15;
     
-    if(myPoint.x > pointOriginXReactioView && myPoint.x < pointOriginXReactioView + 46 && myPoint.y > pointOriginYReactioView && myPoint.y < pointOriginYReactioView + 31){
-     
-        
-        return [self.bubbleView  hitTest:myPoint withEvent:event];
+    if(myPoint.x > pointOriginXReactionView && myPoint.x < pointOriginXReactionView + 46 && myPoint.y > pointOriginYReactionView && myPoint.y < pointOriginYReactionView + 31){
+        return self.reactionButton;
     }
     return [super hitTest:point withEvent:event];
     
@@ -50,7 +48,7 @@
 
 -(void) showIncomingMessage : (Message *) message
 {
-   
+
     self.message = message;
     self.nameLabel.text = message.nameOfSender;
     //[self.bubbleLabel setText:message.text];
@@ -114,7 +112,6 @@
     self.bubbleView.isIncoming = NO;
      self.bubbleView.outgoingColor = [UIColor colorWithRed:0.09 green:0.54 blue:1 alpha:1];
     [self.bubbleView setNeedsDisplay];
-   
     [self.bubbleLabel setTextAlignment:(NSTextAlignmentRight)];
    [self sizeToFit];
 }

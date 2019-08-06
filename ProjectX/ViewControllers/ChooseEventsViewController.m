@@ -65,10 +65,15 @@ CLLocationManager *UserLocationManager;
     self.UserCurrentLocation = [[CLLocation alloc] initWithLatitude:36 longitude:-122];
     if([self isConnectionAvailable]){
     [self currentLocationIdentifier];
+    }else{
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error" message:@"Check your internet connection" preferredStyle:(UIAlertControllerStyleAlert)];
+        UIAlertAction *accept = [UIAlertAction actionWithTitle:@"Accept" style:(UIAlertActionStyleDefault) handler:nil];
+        [alert addAction:accept];
+        [self presentViewController:alert animated:YES completion:nil];
     }
     self.mapView.showsUserLocation = YES;
     self.mapView.showsBuildings = YES;
-    
+ 
     /*
     FIRDatabaseReference *geofireRef = [[FIRDatabase database] reference];
     GeoFire *geoFire = [[GeoFire alloc] initWithFirebaseRef:geofireRef];
@@ -437,8 +442,10 @@ CLLocationManager *UserLocationManager;
 - (void) eventLocationIdentifier {
     
     Event *event = self.eventArray.firstObject;
-    
-    MKCoordinateRegion location = MKCoordinateRegionMake(CLLocationCoordinate2DMake(event.location.latitude, event.location.longitude), MKCoordinateSpanMake(0.05, 0.05));
+    CLLocationDistance regionRadius = 11000;
+
+    MKCoordinateRegion location = MKCoordinateRegionMakeWithDistance(CLLocationCoordinate2DMake(event.location.latitude, event.location.longitude), regionRadius, regionRadius);
+  
     [self.mapView setRegion:location animated:YES];
     
     MapAnnotation *eventAnnotation = [[MapAnnotation alloc] init];

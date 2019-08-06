@@ -108,6 +108,7 @@
                 <outlet property="bubbleView" destination="X0S-hK-d1w" id="D7W-ch-VmS"/>
                 <outlet property="leftConstraint" destination="R4u-5k-0uD" id="OEm-DV-WU0"/>
                 <outlet property="nameLabel" destination="kv7-kO-f9M" id="2hx-KW-g18"/>
+                <outlet property="reactionButton" destination="GNH-Mr-fd4" id="0VT-YX-fqy"/>
                 <outlet property="reactionImage" destination="c8b-aV-EhE" id="5CC-pM-2lm"/>
                 <outlet property="reactionView" destination="xLO-2A-ZMg" id="JmK-sx-8E1"/>
                 <outlet property="rightConstraint" destination="YsD-jv-XJP" id="XLt-1i-PbY"/>
