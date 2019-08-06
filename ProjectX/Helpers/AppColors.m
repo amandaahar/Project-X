@@ -46,10 +46,18 @@
 }
 
 -(UIColor *) getAlpha30{
-    return [UIColor colorWithRed: 0 green:0 blue:0 alpha:0.15];
+    return [UIColor colorWithRed: 0 green:0 blue:0 alpha:0.3];
 }
 
 -(UIColor *) getDarkPurple{
     return [UIColor colorWithRed: 0.482352 green: 0.3921568 blue:0.7529411 alpha:1];
+}
+
+-(UIColor *) getDarkBuble2{
+    return [UIColor colorWithRed: 0.458824  green: 0.631373 blue: 0.835294 alpha:1];
+}
+
+-(UIColor *) getBleBackground{
+    return [UIColor colorWithRed: 0.45098039  green: 0.694117647 blue: 0.9215686 alpha:1];
 }
 @end

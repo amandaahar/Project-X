@@ -19,7 +19,7 @@
     self.delegate = self;
     // Do any additional setup after loading the view.
     
-    self.tabBar.barTintColor = [[AppColors sharedManager] getDarkPurple];
+    self.tabBar.barTintColor = [[AppColors sharedManager] getAlpha15];
     [self.tabBar setTintColor:[UIColor whiteColor]];
     [self.tabBar setTranslucent: YES];
    

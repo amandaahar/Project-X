@@ -21,6 +21,8 @@ NS_ASSUME_NONNULL_BEGIN
 -(UIColor *) getAlpha15;
 -(UIColor *) getAlpha30;
 -(UIColor *) getDarkPurple;
+
+-(UIColor *) getDarkBuble2;
 @end
 
 NS_ASSUME_NONNULL_END
