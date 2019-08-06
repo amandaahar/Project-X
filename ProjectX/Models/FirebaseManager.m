@@ -67,7 +67,7 @@ CLLocation *greaterGeopoint;
      [[[[database collectionWithPath:@"Event"] queryWhereField:@"eventDate" isGreaterThanOrEqualTo:[FIRTimestamp timestampWithDate:[[NSDate alloc] initWithTimeIntervalSinceNow:-60*60*24*6]]]
                 //queryWhereField:@"location" isLessThanOrEqualTo:[FIRGeoPoint GeoPoint(38)]]
                 queryOrderedByField:@"location"]
-     getDocumentsWithCompletion:^(FIRQuerySnapshot *snapshot, NSError *error) {
+     addSnapshotListener:^(FIRQuerySnapshot *snapshot, NSError *error) {
          if (error != nil) {
              NSLog(@"Error getting documents: %@", error);
              completion(nil,error);

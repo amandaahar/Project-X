@@ -322,7 +322,7 @@ UIDatePicker *datePicker;
 }
 
 - (void)addEventToCurrentUser: (NSString *)eventID {
-    FIRDocumentReference *eventRef = [[self.db collectionWithPath:@"Events"] documentWithPath:self.eventID];
+    FIRDocumentReference *eventRef = [[self.db collectionWithPath:@"Event"] documentWithPath:self.eventID];
     FIRDocumentReference *userRef = [[self.db collectionWithPath:@"Users"] documentWithPath:FIRAuth.auth.currentUser.uid];
     
     NSString *address = [NSString stringWithFormat:@"%@", self.createEventLocation.text];
