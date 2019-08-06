@@ -12,6 +12,12 @@
 		0E496C0F22EE5AE200DEF38C /* DetailEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E496C0E22EE5AE200DEF38C /* DetailEventViewController.m */; };
 		0E83767522F24BB3009B9007 /* LocationTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E83767422F24BB3009B9007 /* LocationTableViewController.m */; };
 		0E83767822F896C3009B9007 /* LocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E83767722F896C3009B9007 /* LocationViewController.m */; };
+		0E83767E22F9B9FE009B9007 /* pop_drip.aif in Resources */ = {isa = PBXBuildFile; fileRef = 0E83767D22F9B9FE009B9007 /* pop_drip.aif */; };
+		0E83767F22F9B9FE009B9007 /* pop_drip.aif in Resources */ = {isa = PBXBuildFile; fileRef = 0E83767D22F9B9FE009B9007 /* pop_drip.aif */; };
+		0E83768022F9B9FE009B9007 /* pop_drip.aif in Resources */ = {isa = PBXBuildFile; fileRef = 0E83767D22F9B9FE009B9007 /* pop_drip.aif */; };
+		0E83768222F9BA6C009B9007 /* pop_drip.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0E83768122F9BA6C009B9007 /* pop_drip.wav */; };
+		0E83768322F9BA6C009B9007 /* pop_drip.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0E83768122F9BA6C009B9007 /* pop_drip.wav */; };
+		0E83768422F9BA6C009B9007 /* pop_drip.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0E83768122F9BA6C009B9007 /* pop_drip.wav */; };
 		0ECF088922DE791300F5A8AA /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ECF088822DE791300F5A8AA /* SignUpViewController.m */; };
 		0ECF088D22DE792900F5A8AA /* LogInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ECF088C22DE792900F5A8AA /* LogInViewController.m */; };
 		558AC6CB925C399045621CBD /* Pods_ProjectXUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BE1B1413891FCA15B877BED /* Pods_ProjectXUITests.framework */; };
@@ -101,6 +107,10 @@
 		0E83767422F24BB3009B9007 /* LocationTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocationTableViewController.m; sourceTree = "<group>"; };
 		0E83767622F896C2009B9007 /* LocationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocationViewController.h; sourceTree = "<group>"; };
 		0E83767722F896C3009B9007 /* LocationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocationViewController.m; sourceTree = "<group>"; };
+		0E83767B22F8E4D6009B9007 /* ProjectX.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; name = ProjectX.entitlements; path = ../../../.Trash/ProjectX.entitlements; sourceTree = "<group>"; };
+		0E83767C22F8E5F8009B9007 /* ProjectX.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ProjectX.entitlements; sourceTree = "<group>"; };
+		0E83767D22F9B9FE009B9007 /* pop_drip.aif */ = {isa = PBXFileReference; lastKnownFileType = file; name = pop_drip.aif; path = "../../../../Downloads/dev_tones free/tones-aif/pop_drip.aif"; sourceTree = "<group>"; };
+		0E83768122F9BA6C009B9007 /* pop_drip.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = pop_drip.wav; path = "../../../../Downloads/dev_tones free/tones-wav/pop_drip.wav"; sourceTree = "<group>"; };
 		0ECF088722DE791300F5A8AA /* SignUpViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SignUpViewController.h; sourceTree = "<group>"; };
 		0ECF088822DE791300F5A8AA /* SignUpViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SignUpViewController.m; sourceTree = "<group>"; };
 		0ECF088B22DE792900F5A8AA /* LogInViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LogInViewController.h; sourceTree = "<group>"; };
@@ -201,7 +211,6 @@
 		EA73F81B22E11B4700385689 /* GroupEventsTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GroupEventsTableViewCell.m; sourceTree = "<group>"; };
 		EA73F82A22E6412A00385689 /* MainTabBarController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainTabBarController.h; sourceTree = "<group>"; };
 		EA73F82B22E6412A00385689 /* MainTabBarController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainTabBarController.m; sourceTree = "<group>"; };
-		EA73F83122E676B200385689 /* ProjectX.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ProjectX.entitlements; sourceTree = "<group>"; };
 		EA73F83A22E6848D00385689 /* MessageBubble.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MessageBubble.h; sourceTree = "<group>"; };
 		EA73F83B22E6848D00385689 /* MessageBubble.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MessageBubble.m; sourceTree = "<group>"; };
 		EA73F83C22E6848D00385689 /* MessageBubble.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageBubble.xib; sourceTree = "<group>"; };
@@ -247,6 +256,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0E83767A22F8C0BB009B9007 /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				0E83767D22F9B9FE009B9007 /* pop_drip.aif */,
+				0E83768122F9BA6C009B9007 /* pop_drip.wav */,
+			);
+			path = Sounds;
+			sourceTree = "<group>";
+		};
 		0ECF088622DE78CB00F5A8AA /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -389,7 +407,9 @@
 		EA54ECE322DE3F3800D0D7A2 /* ProjectX */ = {
 			isa = PBXGroup;
 			children = (
-				EA73F83122E676B200385689 /* ProjectX.entitlements */,
+				0E83767C22F8E5F8009B9007 /* ProjectX.entitlements */,
+				0E83767B22F8E4D6009B9007 /* ProjectX.entitlements */,
+				0E83767A22F8C0BB009B9007 /* Sounds */,
 				EA73F82D22E6417B00385689 /* Helpers */,
 				EA3A502622E1006B004F2FFD /* Cells */,
 				E7AEA0BB22DFD88C00A77CC2 /* Views */,
@@ -588,6 +608,8 @@
 				E703B94A22F2548700C63563 /* ShowInterestsTableViewCell.xib in Resources */,
 				EA3A502522E0F2FC004F2FFD /* HomeFeedTableViewCell.xib in Resources */,
 				EA54ECF122DE3F3900D0D7A2 /* Assets.xcassets in Resources */,
+				0E83768222F9BA6C009B9007 /* pop_drip.wav in Resources */,
+				0E83767E22F9B9FE009B9007 /* pop_drip.aif in Resources */,
 				EA54ECEC22DE3F3800D0D7A2 /* Main.storyboard in Resources */,
 				EAEFFD7422F3AAC10079E3D7 /* GoogleService-Info.plist in Resources */,
 				E703B94522F248DD00C63563 /* EditProfileTableViewCell.xib in Resources */,
@@ -599,6 +621,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0E83767F22F9B9FE009B9007 /* pop_drip.aif in Resources */,
+				0E83768322F9BA6C009B9007 /* pop_drip.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -606,6 +630,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0E83768022F9B9FE009B9007 /* pop_drip.aif in Resources */,
+				0E83768422F9BA6C009B9007 /* pop_drip.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
