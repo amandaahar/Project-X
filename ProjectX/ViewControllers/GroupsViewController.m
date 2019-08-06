@@ -37,11 +37,13 @@
     self.chatsTableView.delegate = self;
     self.searchBar.delegate = self;
     [self getChats];
+    [self.chatsTableView reloadData];
     self.events = [[NSMutableArray alloc] init];
     self.filteredData = self.events;
 }
 
 -(void) getChats {
+    
     [[FirebaseManager sharedManager] getCurrentUser:^(User * _Nonnull user, NSError * _Nonnull error) {
         if(error != nil) {
             NSLog(@"Error getting user");
@@ -50,7 +52,7 @@
             self.currentUser = user;
             [self.events removeAllObjects];
             for(FIRDocumentReference *eventDoc in self.currentUser.events) {
-                [eventDoc getDocumentWithCompletion:^(FIRDocumentSnapshot * _Nullable snapshot, NSError * _Nullable error) {
+                [eventDoc addSnapshotListener:^(FIRDocumentSnapshot * _Nullable snapshot, NSError * _Nullable error) {
                     if(error == nil){
                     Event * myEvent = [[Event alloc] initWithDictionary:snapshot.data eventID:snapshot.documentID];
                     [self.events addObject: myEvent];

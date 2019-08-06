@@ -31,6 +31,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - User Initializer
 - (instancetype) initWithDictionary : (NSDictionary *) dictionary;
 - (void) composeMessage:(NSString *)text chat: (NSString *)event;
+- (void) joinEvent: (NSString *)eventID;
 
 @end
 

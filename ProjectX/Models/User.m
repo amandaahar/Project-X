@@ -41,7 +41,7 @@
 
 
 
--(void) composeMessage:(NSString *)text chat
+- (void)composeMessage:(NSString *)text chat
                       : (NSString *)event
 {
     if(![text isEqualToString:@""])
@@ -70,9 +70,22 @@
             }
         }];
     }
+}
+
+- (void) joinEvent: (NSString *)eventID {
+    FIRFirestore *db = [FIRFirestore firestore];
+    FIRDocumentReference *event = [[db collectionWithPath:@"Event"] documentWithPath:eventID];
+    FIRDocumentReference *user = [[db collectionWithPath:@"Users"] documentWithPath:self.userID];
+    [self.events addObject:event];
     
+    [user updateData:@{@"events": self.events} completion:^(NSError * _Nullable error) {
+        if (error != nil) {
+            NSLog(@"error adding user to event");
+        } else {
+            NSLog(@"user added to event");
+        }
+    }];
     
- 
 }
 
 @end
