@@ -55,15 +55,6 @@ NSDateFormatter *formatter;
 - (void)viewDidLoad {
     
     [super viewDidLoad];
-    [self fetchEvents];
-    //[self fetchImage];
-    formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"MMM d, h:mm a"];
-    self.db = [FIRFirestore firestore];
-    self.mapView.delegate = self;
-    self.annotationID = @"Pin";
-    [self.mapView registerClass:[MKAnnotationView class] forAnnotationViewWithReuseIdentifier:self.annotationID];
-    self.eventArray = [NSMutableArray new];
     
     self.emptyCard = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 100)];
     self.emptyCard.center = self.view.center;
@@ -78,6 +69,16 @@ NSDateFormatter *formatter;
     [self.noEventsLabel setNumberOfLines:0];
     [self.noEventsLabel setTextColor:[UIColor whiteColor]];
     [self.view addSubview:self.noEventsLabel];
+    
+    //[self fetchEvents];
+    //[self fetchImage];
+    formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"MMM d, h:mm a"];
+    self.db = [FIRFirestore firestore];
+    self.mapView.delegate = self;
+    self.annotationID = @"Pin";
+    [self.mapView registerClass:[MKAnnotationView class] forAnnotationViewWithReuseIdentifier:self.annotationID];
+    self.eventArray = [NSMutableArray new];
     
     self.UserCurrentLocation = [[CLLocation alloc] initWithLatitude:36 longitude:-122];
     if([self isConnectionAvailable]){
@@ -122,6 +123,7 @@ NSDateFormatter *formatter;
                     self.noEventsLabel.alpha = 1;
                     self.card.alpha = 0;
                     self.mapView.alpha = 0;
+                    
                 } else {
                     self.emptyCard.alpha = 0;
                     self.noEventsLabel.alpha = 0;
@@ -208,7 +210,10 @@ NSDateFormatter *formatter;
     [[FirebaseManager sharedManager] getCurrentUser:^(User * _Nonnull user, NSError * _Nonnull error) {
         if(error == nil){
             self.currentUser = user;
-            [self fetchEvents];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self fetchEvents];
+            });
+            
         }
     }];
     [UserLocationManager startUpdatingLocation];
