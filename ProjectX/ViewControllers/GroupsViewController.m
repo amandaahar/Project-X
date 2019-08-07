@@ -14,6 +14,7 @@
 #import "User.h"
 #import "MessagesViewController.h"
 #import "DetailEventViewController.h"
+#import <AVFoundation/AVAudioPlayer.h>
 
 @interface GroupsViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate>
 @property (nonatomic, strong) NSMutableArray *events;
@@ -24,6 +25,7 @@
 @property (strong, nonatomic) NSString *eventImageURL;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (strong, nonatomic) NSArray *filteredData;
+@property (strong,nonatomic) AVAudioPlayer *audioPlayer;
 
 @end
 
@@ -83,6 +85,16 @@
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    UINotificationFeedbackGenerator *myGen = [[UINotificationFeedbackGenerator alloc] init];
+    [myGen prepare];
+    [myGen notificationOccurred:(UINotificationFeedbackTypeSuccess)];
+    myGen = NULL;
+    
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"pop_drip" ofType:@"wav"];
+    NSURL *soundUrl = [NSURL fileURLWithPath:path];
+    self.audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundUrl error:nil];
+    self.audioPlayer.play;
+    
     MessagesViewController *messagesViewController = [segue destinationViewController];
     messagesViewController.eventID = self.eventToPass.eventID;
     [[messagesViewController navigationItem] setTitle:self.eventToPass.name];

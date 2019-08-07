@@ -600,7 +600,7 @@
                             <barButtonItem systemItem="add" id="V9L-x8-EjQ">
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
-                                    <action selector="CreateEventAction:" destination="r4X-bz-L6V" id="NzU-w1-eDM"/>
+                                    <action selector="CreateEventAction:" destination="r4X-bz-L6V" id="MMR-V6-mrU"/>
                                     <segue destination="8OV-dk-pYB" kind="presentation" identifier="CreateEventSegue" id="x5O-Dt-ynZ"/>
                                 </connections>
                             </barButtonItem>
