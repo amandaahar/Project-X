@@ -16,7 +16,6 @@
 }
 - (IBAction)deleteButtonPressed:(id)sender {
     [[NSNotificationCenter defaultCenter] postNotificationName:@"interestDeleted" object:nil];
-    NSLog(@"DELETE BUTTON");
 }
 
 - (void)shake {

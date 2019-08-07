@@ -12,6 +12,7 @@
 #import "CreateEventViewController.h"
 #import "LocationViewController.h"
 #import "../Helpers/Reachability.h"
+#import "../Helpers/AppColors.h"
 #import "Event.h"
 #import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
@@ -44,6 +45,7 @@
 @property (strong, nonatomic) UIView *emptyCard;
 @property (strong, nonatomic) UILabel *noEventsLabel;
 @property (strong,nonatomic) AVAudioPlayer *audioPlayer;
+@property (strong, nonatomic) CAGradientLayer *gradient;
 
 @end
 
@@ -55,6 +57,17 @@ NSDateFormatter *formatter;
 - (void)viewDidLoad {
     
     [super viewDidLoad];
+    self.gradient = [[AppColors sharedManager] getGradientPurple:self.navigationController.navigationBar];
+    [self.navigationController.navigationBar.layer insertSublayer:self.gradient atIndex:1];
+    [self fetchEvents];
+    //[self fetchImage];
+    formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"MMM d, h:mm a"];
+    self.db = [FIRFirestore firestore];
+    self.mapView.delegate = self;
+    self.annotationID = @"Pin";
+    [self.mapView registerClass:[MKAnnotationView class] forAnnotationViewWithReuseIdentifier:self.annotationID];
+    self.eventArray = [NSMutableArray new];
     
     self.emptyCard = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 100)];
     self.emptyCard.center = self.view.center;

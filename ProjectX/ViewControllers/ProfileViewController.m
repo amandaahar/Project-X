@@ -28,7 +28,7 @@
 @property (nonatomic, strong) User *currentUser;
 @property (weak, nonatomic) IBOutlet UICollectionView *interestsCollectionView;
 @property (strong, nonatomic) AVAudioPlayer *audioPlayer;
-
+@property (strong, nonatomic) CAGradientLayer *gradient;
 @end
 
 @implementation ProfileViewController
@@ -39,6 +39,9 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.gradient = [[AppColors sharedManager] getGradientPurple:self.navigationController.navigationBar];
+    [self.navigationController.navigationBar.layer insertSublayer:self.gradient atIndex:1];
     
     self.interestsCollectionView.delegate = self;
     self.interestsCollectionView.dataSource = self;

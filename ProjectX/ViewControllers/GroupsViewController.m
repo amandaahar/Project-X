@@ -14,6 +14,8 @@
 #import "User.h"
 #import "MessagesViewController.h"
 #import "DetailEventViewController.h"
+#import "../Helpers/AppColors.h"
+
 #import <AVFoundation/AVAudioPlayer.h>
 
 @interface GroupsViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate>
@@ -26,14 +28,15 @@
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (strong, nonatomic) NSArray *filteredData;
 @property (strong,nonatomic) AVAudioPlayer *audioPlayer;
-
+@property (strong, nonatomic) CAGradientLayer *gradient;
 @end
 
 @implementation GroupsViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    self.gradient = [[AppColors sharedManager] getGradientPurple:self.navigationController.navigationBar];
+    [self.navigationController.navigationBar.layer insertSublayer:self.gradient atIndex:1];
     self.db = [FIRFirestore firestore];
     self.chatsTableView.dataSource = self;
     self.chatsTableView.delegate = self;
@@ -54,15 +57,18 @@
             self.currentUser = user;
             [self.events removeAllObjects];
             for(FIRDocumentReference *eventDoc in self.currentUser.events) {
-                [eventDoc addSnapshotListener:^(FIRDocumentSnapshot * _Nullable snapshot, NSError * _Nullable error) {
+                [eventDoc getDocumentWithCompletion:^(FIRDocumentSnapshot * _Nullable snapshot, NSError * _Nullable error) {
                     if(error == nil){
                     Event * myEvent = [[Event alloc] initWithDictionary:snapshot.data eventID:snapshot.documentID];
                     [self.events addObject: myEvent];
-                    [self.chatsTableView reloadData];
+                    
                     }
                 }];
                 
             }
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self.chatsTableView reloadData];
+            });
             
         }
         
@@ -160,7 +166,10 @@
                 NSLog(@"Error deleting document: %@", error);
             } else {
                 NSLog(@"Document successfully deleted");
-                [self.chatsTableView reloadData];
+           
+                    [self.chatsTableView reloadData];
+       
+                
                 
             }
         }];

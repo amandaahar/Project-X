@@ -388,8 +388,9 @@ UIDatePicker *datePicker;
             storeCategory = [NSNumber numberWithInt:4];
         }
         
-    [userRef updateData:@{@"name": self.createEventName.text, @"description": self.createEventDescription.text, @"location": geoPoint, @"eventDate": [FIRTimestamp timestampWithDate: datePicker.date], @"numAttendees": formattedNumOfAttendees, @"categoryIndex": storeCategory, @"userFriendlyLocation": address, @"events": [FIRFieldValue fieldValueForArrayUnion:@[eventRef]] }];
-    
+//    [userRef updateData:@{@"name": self.createEventName.text, @"description": self.createEventDescription.text, @"location": geoPoint, @"eventDate": [FIRTimestamp timestampWithDate: datePicker.date], @"numAttendees": formattedNumOfAttendees, @"categoryIndex": storeCategory, @"userFriendlyLocation": address, @"events": [FIRFieldValue fieldValueForArrayUnion:@[eventRef]] }];
+//
+        [userRef updateData:@{@"events" : [FIRFieldValue fieldValueForArrayUnion:@[eventRef]]}];
     /*
     [[FirebaseManager sharedManager] getCurrentUser:^(User * _Nonnull user, NSError * _Nonnull error) {
         if (error != nil) {
