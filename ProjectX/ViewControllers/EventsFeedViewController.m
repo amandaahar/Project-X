@@ -383,7 +383,7 @@ NSDateFormatter *dateFormat;
 
 -(void) desiredInteraction{
     EventsAroundIntent *intent = [EventsAroundIntent new];
-    [intent setSuggestedInvocationPhrase:@"Look for events around me"];
+    [intent setSuggestedInvocationPhrase:@"Look for events around me with Plan It"];
     INInteraction *interaction = [[INInteraction alloc] initWithIntent:intent response:nil];
     
     [interaction donateInteractionWithCompletion:^(NSError * _Nullable error) {
