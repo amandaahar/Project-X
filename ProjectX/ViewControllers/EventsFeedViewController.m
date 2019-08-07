@@ -46,7 +46,7 @@ NSDateFormatter *dateFormat;
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.gradient = [[AppColors sharedManager] getGradientPurple:self.navigationController.navigationBar];
-    [self.navigationController.navigationBar.layer insertSublayer:self.gradient atIndex:0];
+    [self.navigationController.navigationBar.layer insertSublayer:self.gradient atIndex:1];
     //[self fetchArrayCategories];
     // convert to date
     dateFormat = [[NSDateFormatter alloc] init];

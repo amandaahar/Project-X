@@ -14,6 +14,8 @@
 #import "User.h"
 #import "MessagesViewController.h"
 #import "DetailEventViewController.h"
+#import "../Helpers/AppColors.h"
+
 #import <AVFoundation/AVAudioPlayer.h>
 
 @interface GroupsViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate>
@@ -26,14 +28,15 @@
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (strong, nonatomic) NSArray *filteredData;
 @property (strong,nonatomic) AVAudioPlayer *audioPlayer;
-
+@property (strong, nonatomic) CAGradientLayer *gradient;
 @end
 
 @implementation GroupsViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    self.gradient = [[AppColors sharedManager] getGradientPurple:self.navigationController.navigationBar];
+    [self.navigationController.navigationBar.layer insertSublayer:self.gradient atIndex:1];
     self.db = [FIRFirestore firestore];
     self.chatsTableView.dataSource = self;
     self.chatsTableView.delegate = self;

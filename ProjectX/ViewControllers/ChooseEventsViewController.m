@@ -12,6 +12,7 @@
 #import "CreateEventViewController.h"
 #import "LocationViewController.h"
 #import "../Helpers/Reachability.h"
+#import "../Helpers/AppColors.h"
 #import "Event.h"
 #import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
@@ -44,6 +45,7 @@
 @property (strong, nonatomic) UIView *emptyCard;
 @property (strong, nonatomic) UILabel *noEventsLabel;
 @property (strong,nonatomic) AVAudioPlayer *audioPlayer;
+@property (strong, nonatomic) CAGradientLayer *gradient;
 
 @end
 
@@ -55,6 +57,8 @@ NSDateFormatter *formatter;
 - (void)viewDidLoad {
     
     [super viewDidLoad];
+    self.gradient = [[AppColors sharedManager] getGradientPurple:self.navigationController.navigationBar];
+    [self.navigationController.navigationBar.layer insertSublayer:self.gradient atIndex:1];
     [self fetchEvents];
     //[self fetchImage];
     formatter = [[NSDateFormatter alloc] init];
