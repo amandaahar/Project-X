@@ -13,6 +13,8 @@
 #import "../AppDelegate.h"
 #import "../Models/FirebaseManager.h"
 #import "ProfileHeaderCollectionReusableView.h"
+#import "AppColors.h"
+#import <AVFoundation/AVAudioPlayer.h>
 
 @import Firebase;
 @import SAMKeychain;
@@ -25,6 +27,8 @@
 @property (nonatomic, readwrite) FIRFirestore *db;
 @property (nonatomic, strong) User *currentUser;
 @property (weak, nonatomic) IBOutlet UICollectionView *interestsCollectionView;
+@property (strong, nonatomic) AVAudioPlayer *audioPlayer;
+
 @end
 
 @implementation ProfileViewController
@@ -67,23 +71,6 @@
         {
             self.currentUser = user;
             
-//            NSLog(@"current user %@",user.username);
-//
-//            self.nameText.text = [[self.currentUser.firstName stringByAppendingString:@" "] stringByAppendingString:self.currentUser.lastName];
-//            self.username.text = [self.username.text stringByAppendingString:self.currentUser.username];
-//            self.bioText.text = self.currentUser.bio;
-//            //[self setImage:self.currentUser.profileImageURL];
-//
-//            self.profilePictureImage.layer.cornerRadius = self.profilePictureImage.frame.size.height / 2;
-//            self.profilePictureImage.layer.masksToBounds = YES;
-//
-//            for (NSDictionary *category in self.currentUser.preferences) {
-//                // NSString *interestsString = [[NSString alloc] init];
-//                // self.preferences.text = @"";
-//                //self.preferences.text = [[self.preferences.text stringByAppendingString:@" "] stringByAppendingString:category[@"short_name"]];
-//
-//
-//            }
             [self.interestsCollectionView reloadData];
         }
     }];
@@ -100,6 +87,11 @@
 #pragma mark - Log Out
 
 - (IBAction)logOut:(id)sender {
+    
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"pop_drip" ofType:@"wav"];
+    NSURL *soundUrl = [NSURL fileURLWithPath:path];
+    self.audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundUrl error:nil];
+    self.audioPlayer.play;
     
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Log Out"
                                                                    message:@"Are you sure you want to log out?"
@@ -170,6 +162,7 @@
     
     [reusableView setProfileImageWithURL:self.currentUser.profileImageURL];
     [reusableView setNameText:[[self.currentUser.firstName stringByAppendingString:@" "] stringByAppendingString:self.currentUser.lastName]];
+    [reusableView getFollowLabel].backgroundColor = [[AppColors sharedManager] getLightBlue];
     NSString *atSymbol = @"@";
     if(self.currentUser.username != nil){
         NSString *usernameText = [atSymbol stringByAppendingString:self.currentUser.username];

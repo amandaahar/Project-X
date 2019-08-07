@@ -10,13 +10,14 @@
 #import "AppDelegate.h"
 #import "../Models/FirebaseManager.h"
 #import "CreateEventViewController.h"
+#import "LocationViewController.h"
 #import "../Helpers/Reachability.h"
-//#import "LocationTableViewController.h"
 #import "Event.h"
 #import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
 #import "../Models/MapAnnotation.h"
 #import "../Models/User.h"
+#import <AVFoundation/AVAudioPlayer.h>
 @import Firebase;
 @import CoreLocation;
 
@@ -42,19 +43,22 @@
 @property (nonatomic, strong) User *currentUser;
 @property (strong, nonatomic) UIView *emptyCard;
 @property (strong, nonatomic) UILabel *noEventsLabel;
+@property (strong,nonatomic) AVAudioPlayer *audioPlayer;
 
 @end
 
 @implementation ChooseEventsViewController
 
 CLLocationManager *UserLocationManager;
+NSDateFormatter *formatter;
 
 - (void)viewDidLoad {
     
     [super viewDidLoad];
     //[self fetchEvents];
     //[self fetchImage];
-    
+    formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"MMM d, h:mm a"];
     self.db = [FIRFirestore firestore];
     self.mapView.delegate = self;
     self.annotationID = @"Pin";
@@ -73,7 +77,22 @@ CLLocationManager *UserLocationManager;
     }
     self.mapView.showsUserLocation = YES;
     self.mapView.showsBuildings = YES;
- 
+
+    
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"How to choose events:"
+                                                                   message:@"Swipe the event card right if you would like to attend, swipe left to see next event"
+                                                            preferredStyle:(UIAlertControllerStyleAlert)];
+    
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"I am ready!"
+                                                           style:UIAlertActionStyleCancel
+                                                         handler:^(UIAlertAction * _Nonnull action) {
+                                                             [self movingPreview];
+                                                         }];
+    
+    [alert addAction:cancelAction];
+    
+    [self presentViewController:alert animated:YES completion: nil];
+    
     /*
     FIRDatabaseReference *geofireRef = [[FIRDatabase database] reference];
     GeoFire *geoFire = [[GeoFire alloc] initWithFirebaseRef:geofireRef];
@@ -109,86 +128,95 @@ CLLocationManager *UserLocationManager;
 
 - (void) fetchEvents {
     
+//    double latitude = 38.819;
+//    double longitude = -122.47;
+//    double distance = 10;
+//    float lat = 1.0144927536231884;
+//    float lon = 1.0181818181818182;
+//
+//    float lowerLat = latitude - (lat * distance);
+//    float lowerLon = longitude - (lon * distance);
+//    float greaterLat = latitude + (lat * distance);
+//    float greaterLon = longitude + (lon * distance);
+//    FIRGeoPoint *lesserGeopoint = [[FIRGeoPoint alloc] initWithLatitude:lowerLat longitude:lowerLon];
+//    FIRGeoPoint *greaterGeopoint =  [[FIRGeoPoint alloc] initWithLatitude:greaterLat longitude:greaterLon];
+//
+//
     [[FirebaseManager sharedManager] getEventsNotSwiped:^(NSArray * _Nonnull event, NSError * _Nonnull error) {
         if(error != nil)
         {
             NSLog(@"Error showing documents: %@", error);
-        }else
-        {
-            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"How to choose events:"
-                                                                           message:@"Swipe the event card right if you would like to attend, swipe left to see next event"
-                                                                    preferredStyle:(UIAlertControllerStyleAlert)];
-            
-            UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"I am ready!"
-                                                                   style:UIAlertActionStyleCancel
-                                                                 handler:^(UIAlertAction * _Nonnull action) {
-                                                                     [self movingPreview];
-                                                                 }];
-            [alert addAction:cancelAction];
-            
-            [self presentViewController:alert animated:YES completion: nil];
-            
-            //NSLog(@"%@", event);
-            Event * myEvent = event.firstObject;
-            if (myEvent == nil) {
-                self.card.alpha = 0;
-                [self.mapView removeFromSuperview];
-                
-                UIView *emptyCard = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 100)];
-                emptyCard.center = self.view.center;
-                emptyCard.backgroundColor = [UIColor blackColor];
-                emptyCard.layer.cornerRadius = 15;
-                emptyCard.layer.masksToBounds = true;
-                [self.view addSubview:emptyCard];
-                
-                UILabel *noEventsLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 270, 200)];
-                noEventsLabel.center = self.view.center;
-                [noEventsLabel setText:@"No events found, create your own now!"];
-                [noEventsLabel setNumberOfLines:0];
-                [noEventsLabel setTextColor:[UIColor whiteColor]];
-                [self.view addSubview:noEventsLabel];
-            }else{
-            self.numAttendees.text = [NSString stringWithFormat:@"%@", myEvent.attendees];
-            self.eventName.text = myEvent.name;
-            self.Eventdescription.text = myEvent.descriptionEvent;
-            self.eventArray = event;
-            self.eventID = myEvent.eventID;
-            [self eventDateIdentifier];
-            [self eventLocationIdentifier];
-            
-            self.eventImageURL = myEvent.pictures[0];
-            NSURL *url = [NSURL URLWithString:self.eventImageURL];
-            NSData *imageData = [NSData dataWithContentsOfURL:url];
-            self.eventPhoto.image = [UIImage imageWithData:imageData];
-            
-            self.eventLocation.text = myEvent.userFriendlyLocation;
-            
-            if(myEvent.categories.intValue == 0){ //How to fix that everything is food if none available
-                self.categoryIndex.text = @"Food";
-            }
-            else if(myEvent.categories.intValue == 1){
-                self.categoryIndex.text = @"Culture";
-            }
-            else if(myEvent.categories.intValue == 2){
-                self.categoryIndex.text = @"Fitness";
-            }
-            else if(myEvent.categories.intValue == 3){
-                self.categoryIndex.text = @"Education";
-            }
-            else if(myEvent.categories.intValue == 4){
-                self.categoryIndex.text = @"Other";
-            }
-            else{
-                self.categoryIndex.text = @"Not available";
-            }
-            
-            self.card.layer.cornerRadius = 15;
-            self.card.layer.masksToBounds = true;
-                
-        }
-        }
-    }];
-
+        } else {
+//            [[[[self.db collectionWithPath:@"Event"]
+//               queryWhereField:@"location" isLessThan:greaterGeopoint]
+//              queryWhereField:@"location" isGreaterThan:lesserGeopoint]
+//             getDocumentsWithCompletion:^(FIRQuerySnapshot *snapshot, NSError *error) {
+//                 if (error != nil) {
+//                     NSLog(@"Error getting documents: %@", error);
+//                 } else {
+                     //NSLog(@"%@", event);
+                     Event * myEvent = event.firstObject;
+                     if (myEvent == nil) {
+                         self.card.alpha = 0;
+                         [self.mapView removeFromSuperview];
+                         
+                         UIView *emptyCard = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 100)];
+                         emptyCard.center = self.view.center;
+                         emptyCard.backgroundColor = [UIColor blackColor];
+                         emptyCard.layer.cornerRadius = 15;
+                         emptyCard.layer.masksToBounds = true;
+                         [self.view addSubview:emptyCard];
+                         
+                         UILabel *noEventsLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 270, 200)];
+                         noEventsLabel.center = self.view.center;
+                         [noEventsLabel setText:@"No events found, create your own now!"];
+                         [noEventsLabel setNumberOfLines:0];
+                         [noEventsLabel setTextColor:[UIColor whiteColor]];
+                         [self.view addSubview:noEventsLabel];
+                     } else {
+                         //if (myEvent.date >= [FIRTimestamp timestampWithDate:[[NSDate alloc] initWithTimeIntervalSinceNow: -60*60*24*6]]) {
+                         self.numAttendees.text = [NSString stringWithFormat:@"%@", myEvent.attendees];
+                         self.eventName.text = myEvent.name;
+                         self.Eventdescription.text = myEvent.descriptionEvent;
+                         self.eventArray = event;
+                         self.eventID = myEvent.eventID;
+                         [self eventDateIdentifier];
+                         [self eventLocationIdentifier];
+                         
+                         self.eventImageURL = myEvent.pictures[0];
+                         NSURL *url = [NSURL URLWithString:self.eventImageURL];
+                         NSData *imageData = [NSData dataWithContentsOfURL:url];
+                         self.eventPhoto.image = [UIImage imageWithData:imageData];
+                         
+                         self.eventLocation.text = myEvent.userFriendlyLocation;
+                         
+                         if(myEvent.categories.intValue == 0){ //How to fix that everything is food if none available
+                             self.categoryIndex.text = @"Food";
+                         }
+                         else if(myEvent.categories.intValue == 1){
+                             self.categoryIndex.text = @"Culture";
+                         }
+                         else if(myEvent.categories.intValue == 2){
+                             self.categoryIndex.text = @"Fitness";
+                         }
+                         else if(myEvent.categories.intValue == 3){
+                             self.categoryIndex.text = @"Education";
+                         }
+                         else if(myEvent.categories.intValue == 4){
+                             self.categoryIndex.text = @"Other";
+                         }
+                         else{
+                             self.categoryIndex.text = @"Not available";
+                         }
+                         
+                         self.card.layer.cornerRadius = 15;
+                         self.card.layer.masksToBounds = true;
+                         //}
+                     }
+                 }
+             }];
+        //}
+    //}];
 }
 
 /*
@@ -210,12 +238,10 @@ CLLocationManager *UserLocationManager;
 }
 */
 
--(BOOL)isConnectionAvailable
+- (BOOL)isConnectionAvailable
 {
     Reachability *reachability = [Reachability reachabilityForInternetConnection];
-    
     NetworkStatus networkStatus = [reachability currentReachabilityStatus];
-    
     return !(networkStatus == NotReachable);
 }
 
@@ -461,12 +487,9 @@ CLLocationManager *UserLocationManager;
 - (void) eventDateIdentifier {
     
     Event *event = self.eventArray.firstObject;
-     
-    FIRTimestamp *eventTimestamp = event.date;
-    [self setDateNSEvent:eventTimestamp.dateValue];
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"MMM d, h:mm a"];
-    self.eventDate.text = [NSString stringWithFormat:@"%@", [formatter stringFromDate:self.dateNSEvent]];
+//    FIRTimestamp *eventTimestamp = event.date;
+//    [self setDateNSEvent:eventTimestamp.dateValue];
+    self.eventDate.text = [NSString stringWithFormat:@"%@", [formatter stringFromDate:event.date]];
     
 }
 
@@ -480,11 +503,22 @@ CLLocationManager *UserLocationManager;
 }
 
 - (IBAction)CreateEventAction:(id)sender {
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"pop_drip" ofType:@"wav"];
+    NSURL *soundUrl = [NSURL fileURLWithPath:path];
+    self.audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundUrl error:nil];
+    self.audioPlayer.play;
+    
     [self performSegueWithIdentifier:@"CreateEventSegue" sender:nil];
 //  [self resetCard]; Should I create a card for the created event or directly make a group
 }
 
 - (IBAction)resetAllCards:(UIBarButtonItem *)sender {
+    
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"pop_drip" ofType:@"wav"];
+    NSURL *soundUrl = [NSURL fileURLWithPath:path];
+    self.audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundUrl error:nil];
+    self.audioPlayer.play;
+    
     [self fetchEvents];
     [self resetCard];
     
@@ -507,7 +541,7 @@ CLLocationManager *UserLocationManager;
     /*
     else if ([segue.identifier isEqualToString: @"ChooseLocationSegue"]) {
         UINavigationController *navigationController = [segue destinationViewController];
-        //LocationTableViewController *ChooseLocationController = (LocationTableViewController *)navigationController.topViewController;
+        //LocationViewController *ChooseLocationController = (LocationViewController *)navigationController.topViewController;
         //ChooseLocationController.delegate = self;
     }
      */
@@ -516,6 +550,13 @@ CLLocationManager *UserLocationManager;
 #pragma mark - Change Location
 
 - (IBAction)changeLocation:(id)sender {
+    //[self performSegueWithIdentifier:@"CreateEventSegue" sender:self];
+    
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"pop_drip" ofType:@"wav"];
+    NSURL *soundUrl = [NSURL fileURLWithPath:path];
+    self.audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundUrl error:nil];
+    self.audioPlayer.play;
+    
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Change Location" message:@"Insert the new location" preferredStyle:(UIAlertControllerStyleAlert)];
     UIAlertAction *accept = [UIAlertAction actionWithTitle:@"Accept" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
         UITextField *textField = alert.textFields[0];
@@ -529,7 +570,7 @@ CLLocationManager *UserLocationManager;
             }
         }];
         
-        MKCircle *circle = [MKCircle circleWithCenterCoordinate:self.UserCurrentLocation.coordinate radius:1000];
+        MKCircle *circle = [MKCircle circleWithCenterCoordinate:self.UserCurrentLocation.coordinate radius:1500];
         [self.mapView addOverlay:circle];
     }];
     UIAlertAction* cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
@@ -544,6 +585,7 @@ CLLocationManager *UserLocationManager;
         textField.keyboardType = UIKeyboardTypeDefault;
     }];
     [self presentViewController:alert animated:YES completion:nil];
+
 }
 
 - (MKOverlayRenderer *)mapView:(MKMapView *)map viewForOverlay:(id <MKOverlay>)overlay
