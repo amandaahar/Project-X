@@ -223,14 +223,14 @@ NSDateFormatter *dateFormat;
 
 - (void)getEventsFromCategories
 {
-    for(NSDictionary * category in self.categories)
+    for(int i = 0; i < self.categories.count; i++)
     {
  
-        NSString *idCategoryString = [category[@"id"] description];
+        NSString *idCategoryString = [NSString stringWithFormat:@"%@",self.categories[i][@"id"] ];
         [[APIEventsManager sharedManager] getEventsByLocation:[NSString stringWithFormat:@"%f", self.currentLocation.coordinate.latitude]
                                                     longitude:[NSString stringWithFormat:@"%f", self.currentLocation.coordinate.longitude]
                                                      category:idCategoryString
-                                                    shortName:category[@"short_name"]
+                                                    shortName:self.categories[i][@"short_name"]
                                                    completion:^(NSArray * _Nonnull eventsEventbrite, NSArray * _Nonnull eventsTicketmaster, NSError * _Nonnull error) {
                                                        
                     
@@ -248,8 +248,8 @@ NSDateFormatter *dateFormat;
                                                                     idEvent:ticketmasterDic[@"id"]
                                                                        date:dte
                                                                         url:ticketmasterDic[@"images"][0][@"url"]
-                                                                   category:category[@"short_name"]
-                                                                   subtitle:category[@"short_name"]
+                                                                   category:self.categories[i][@"short_name"]
+                                                                   subtitle:self.categories[i][@"short_name"]
                                                                         api:@"Ticketmaster"
                                                                    location:CLLocationCoordinate2DMake([ticketmasterDic[@"_embedded"][@"venues"][0][@"location"][@"latitude"] doubleValue],[ticketmasterDic[@"_embedded"][@"venues"][0][@"location"][@"longitude"] doubleValue])]];
                     
@@ -269,8 +269,8 @@ NSDateFormatter *dateFormat;
                                                                         idEvent:eventbriteDic[@"id"]
                                                                            date:dte
                                                                             url:url
-                                                                       category:category[@"short_name"]
-                                                                       subtitle:category[@"short_name"]
+                                                                       category:self.categories[i][@"short_name"]
+                                                                       subtitle:self.categories[i][@"short_name"]
                                                                             api:@"Eventbrite"
                                                                        location:CLLocationCoordinate2DMake([eventbriteDic[@"venue"][@"latitude"] doubleValue], [eventbriteDic[@"venue"][@"longitude"] doubleValue])]];
 
@@ -280,8 +280,8 @@ NSDateFormatter *dateFormat;
                                                                             idEvent:eventbriteDic[@"id"]
                                                                                date:eventbriteDic[@"start"][@"local"]
                                                                                 url:@"https://www.daviespaints.com.ph/wp-content/uploads/img/color-ideas/1008-colors/2036P.png"
-                                                                           category:category[@"short_name"]
-                                                                           subtitle:category[@"short_name"]
+                                                                           category:self.categories[i][@"short_name"]
+                                                                           subtitle:self.categories[i][@"short_name"]
                                                                                 api:@"Eventbrite"
                                                                            location:CLLocationCoordinate2DMake([eventbriteDic[@"venue"][@"latitude"] doubleValue], [eventbriteDic[@"venue"][@"longitude"] doubleValue])]];
                         }
