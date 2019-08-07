@@ -55,7 +55,7 @@ NSDateFormatter *formatter;
 - (void)viewDidLoad {
     
     [super viewDidLoad];
-    //[self fetchEvents];
+    [self fetchEvents];
     //[self fetchImage];
     formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"MMM d, h:mm a"];
@@ -64,7 +64,20 @@ NSDateFormatter *formatter;
     self.annotationID = @"Pin";
     [self.mapView registerClass:[MKAnnotationView class] forAnnotationViewWithReuseIdentifier:self.annotationID];
     self.eventArray = [NSMutableArray new];
-    //[self movingPreview];
+    
+    self.emptyCard = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 100)];
+    self.emptyCard.center = self.view.center;
+    self.emptyCard.backgroundColor = [UIColor blackColor];
+    self.emptyCard.layer.cornerRadius = 15;
+    self.emptyCard.layer.masksToBounds = true;
+    [self.view addSubview:self.emptyCard];
+    
+    self.noEventsLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 270, 200)];
+    self.noEventsLabel.center = self.view.center;
+    [self.noEventsLabel setText:@"No events found, create your own now!"];
+    [self.noEventsLabel setNumberOfLines:0];
+    [self.noEventsLabel setTextColor:[UIColor whiteColor]];
+    [self.view addSubview:self.noEventsLabel];
     
     self.UserCurrentLocation = [[CLLocation alloc] initWithLatitude:36 longitude:-122];
     if([self isConnectionAvailable]){
@@ -134,22 +147,10 @@ NSDateFormatter *formatter;
             } else {
                 Event * myEvent = event.firstObject;
                 if (myEvent == nil) {
+                    self.emptyCard.alpha = 1;
+                    self.noEventsLabel.alpha = 1;
                     self.card.alpha = 0;
                     self.mapView.alpha = 0;
-                    
-                    UIView *emptyCard = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 100)];
-                    emptyCard.center = self.view.center;
-                    emptyCard.backgroundColor = [UIColor blackColor];
-                    emptyCard.layer.cornerRadius = 15;
-                    emptyCard.layer.masksToBounds = true;
-                    [self.view addSubview:emptyCard];
-                    
-                    UILabel *noEventsLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 270, 200)];
-                    noEventsLabel.center = self.view.center;
-                    [noEventsLabel setText:@"No events found, create your own now!"];
-                    [noEventsLabel setNumberOfLines:0];
-                    [noEventsLabel setTextColor:[UIColor whiteColor]];
-                    [self.view addSubview:noEventsLabel];
                 } else {
                     self.emptyCard.alpha = 0;
                     self.noEventsLabel.alpha = 0;
@@ -338,25 +339,14 @@ NSDateFormatter *formatter;
     if (self.eventArray.firstObject == nil) {
         self.card.alpha = 0;
         self.mapView.alpha = 0;
-        
-        self.emptyCard = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 100)];
-        self.emptyCard.center = self.view.center;
-        self.emptyCard.backgroundColor = [UIColor blackColor];
-        self.emptyCard.layer.cornerRadius = 15;
-        self.emptyCard.layer.masksToBounds = true;
-        [self.view addSubview:self.emptyCard];
-        
-        self.noEventsLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 270, 200)];
-        self.noEventsLabel.center = self.view.center;
-        [self.noEventsLabel setText:@"No events found, create your own now!"];
-        [self.noEventsLabel setNumberOfLines:0];
-        [self.noEventsLabel setTextColor:[UIColor whiteColor]];
-        [self.view addSubview:self.noEventsLabel];
+        self.emptyCard.alpha = 1;
+        self.noEventsLabel.alpha = 1;
     }
-    
     else {
         self.emptyCard.alpha = 0;
         self.noEventsLabel.alpha = 0;
+        self.card.alpha = 1;
+        self.mapView.alpha = 1;
         
         Event *nextEvent = self.eventArray.firstObject;
         self.numAttendees.text = [NSString stringWithFormat:@"%@", nextEvent.attendees];
@@ -503,11 +493,6 @@ NSDateFormatter *formatter;
     
     [self fetchEvents];
     [self resetCard];
-
-    self.emptyCard.alpha = 0;
-    self.noEventsLabel.alpha = 0;
-    self.card.alpha = 1;
-    self.mapView.alpha = 1;
 }
 
      
@@ -552,8 +537,8 @@ NSDateFormatter *formatter;
             }
         }];
         
-        MKCircle *circle = [MKCircle circleWithCenterCoordinate:self.UserCurrentLocation.coordinate radius:1500];
-        [self.mapView addOverlay:circle];
+//        MKCircle *circle = [MKCircle circleWithCenterCoordinate:self.UserCurrentLocation.coordinate radius:1500];
+//        [self.mapView addOverlay:circle];
     }];
     UIAlertAction* cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
         [alert dismissViewControllerAnimated:YES completion:nil];
@@ -570,6 +555,7 @@ NSDateFormatter *formatter;
 
 }
 
+/*
 - (MKOverlayRenderer *)mapView:(MKMapView *)map viewForOverlay:(id <MKOverlay>)overlay
 {
     MKCircleRenderer *circleView = [[MKCircleRenderer alloc] initWithOverlay:overlay];
@@ -577,6 +563,7 @@ NSDateFormatter *formatter;
     circleView.fillColor = [[UIColor yellowColor] colorWithAlphaComponent:0.4];
     return circleView;
 }
+ */
 
 - (void)getCoordinates : (NSString *) addressString completionHandler:(void(^)(CLLocation* coordinates, NSError *error))completion
 {
