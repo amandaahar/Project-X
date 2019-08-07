@@ -23,18 +23,19 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)getEvents:(void(^)(NSArray *event, NSError *error))completion;
 - (void)getMessagesFromEvent:(NSString *) eventID completion: (void(^)(NSArray *messages, NSError *error))completion;
 - (void)getEventsFromUser:(NSString *) userID completion: (void(^)(NSArray *events, NSError *error))completion;
--(void) setNewLanguage : (NSString *) newLanguage;
--(void) setNewPreferences : (NSArray *) preferences;
--(void) setNewAPIEvent : (EventAPI *) event completion: (void(^)( NSError *error))completion;
--(void) addUserToEvent : (FIRDocumentReference *) eventID;
--(void)getCurrentEvent: (NSString *) detailEventID completion: (void(^)(Event * myEvent, NSError *error))completion;
--(void) addReactionInEvent: (NSString *) idEvent andMessage: (NSString *) idMessage;
--(void) removeReactionInEvent: (NSString *) idEvent andMessage: (NSString *) idMessage;
--(void) removeMessageFromChat: (NSString *) idEvent andMessage:(NSString *)idMessage completion: (void(^)( NSError *error))completion;
--(void) addFCMDeviceToUSer: (NSString *) token;
--(void) removeFCMDeviceToUser:(NSString *) idUser;
--(void) sendNotificationUsers : (NSString *) idEvent withText:(NSString *) text nameUser:(NSString *) nameUser;
+- (void)setNewLanguage : (NSString *) newLanguage;
+- (void)setNewPreferences : (NSArray *) preferences;
+- (void)setNewAPIEvent : (EventAPI *) event completion: (void(^)( NSError *error))completion;
+- (void)addUserToEvent : (FIRDocumentReference *) eventID;
+- (void)getCurrentEvent: (NSString *) detailEventID completion: (void(^)(Event * myEvent, NSError *error))completion;
+- (void)addReactionInEvent: (NSString *) idEvent andMessage: (NSString *) idMessage;
+- (void)removeReactionInEvent: (NSString *) idEvent andMessage: (NSString *) idMessage;
+- (void)removeMessageFromChat: (NSString *) idEvent andMessage:(NSString *)idMessage completion: (void(^)( NSError *error))completion;
+- (void)addFCMDeviceToUSer: (NSString *) token;
+- (void)removeFCMDeviceToUser:(NSString *) idUser;
+- (void)sendNotificationUsers : (NSString *) idEvent withText:(NSString *) text nameUser:(NSString *) nameUser;
 - (void)getEventsNotSwiped:(void(^)(NSArray *events, NSError *error))completion;
+
 @end
 
 NS_ASSUME_NONNULL_END

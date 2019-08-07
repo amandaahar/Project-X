@@ -8,7 +8,37 @@
 
 #import "FirebaseManager.h"
 #import "User.h"
-CLLocation *greaterGeopoint;
+
+
+@interface NSDate (Compare)
+
+-(BOOL) isLaterThanOrEqualTo:(NSDate*)date;
+-(BOOL) isEarlierThanOrEqualTo:(NSDate*)date;
+-(BOOL) isLaterThan:(NSDate*)date;
+-(BOOL) isEarlierThan:(NSDate*)date;
+//- (BOOL)isEqualToDate:(NSDate *)date; already part of the NSDate API
+
+@end
+
+
+@implementation NSDate (Compare)
+
+-(BOOL) isLaterThanOrEqualTo:(NSDate*)date {
+    return !([self compare:date] == NSOrderedAscending);
+}
+
+-(BOOL) isEarlierThanOrEqualTo:(NSDate*)date {
+    return !([self compare:date] == NSOrderedDescending);
+}
+-(BOOL) isLaterThan:(NSDate*)date {
+    return ([self compare:date] == NSOrderedDescending);
+    
+}
+-(BOOL) isEarlierThan:(NSDate*)date {
+    return ([self compare:date] == NSOrderedAscending);
+}
+
+@end
 
 @implementation FirebaseManager
 
@@ -57,15 +87,7 @@ CLLocation *greaterGeopoint;
 
 - (void)getEvents:(void(^)(NSArray *events, NSError *error))completion
 {
-    //self.UserCurrentLocation = [[CLLocation alloc] initWithLatitude:36 longitude:-122];
-//    greaterGeopoint = GeoPoint(latitude: 38, longitude: -125);
-//    GeoPoint(38,-125);
-    
-//    int lat = 0.01449;
-//    int lon = 0.01818;
-//    int lowerLat = latitude - (lat*distance);
      [[[[database collectionWithPath:@"Event"] queryWhereField:@"eventDate" isGreaterThanOrEqualTo:[FIRTimestamp timestampWithDate:[[NSDate alloc] initWithTimeIntervalSinceNow:-60*60*24*6]]]
-                //queryWhereField:@"location" isLessThanOrEqualTo:[FIRGeoPoint GeoPoint(38)]]
                 queryOrderedByField:@"location"]
      addSnapshotListener:^(FIRQuerySnapshot *snapshot, NSError *error) {
          if (error != nil) {
@@ -88,8 +110,22 @@ CLLocation *greaterGeopoint;
 
 - (void)getEventsNotSwiped:(void(^)(NSArray *events, NSError *error))completion {
     
+    double latitude = 38.819;
+    double longitude = -122.47;
+    double distance = 10;
+    float lat = 0.2144927536231884;
+    float lon = 0.2181818181818182;
     
-    [[[database collectionWithPath:@"Event"] queryWhereField:@"eventDate" isGreaterThanOrEqualTo:[FIRTimestamp timestampWithDate:[[NSDate alloc] initWithTimeIntervalSinceNow: -60*60*24*6]]]
+    float lowerLat = latitude - (lat * distance);
+    float lowerLon = longitude - (lon * distance);
+    float greaterLat = latitude + (lat * distance);
+    float greaterLon = longitude + (lon * distance);
+    FIRGeoPoint *lesserGeopoint = [[FIRGeoPoint alloc] initWithLatitude:lowerLat longitude:lowerLon];
+    FIRGeoPoint *greaterGeopoint =  [[FIRGeoPoint alloc] initWithLatitude:greaterLat longitude:greaterLon];
+    
+    [[[[database collectionWithPath:@"Event"]
+        queryWhereField:@"location" isLessThan:greaterGeopoint]
+        queryWhereField:@"location" isGreaterThan:lesserGeopoint]
      getDocumentsWithCompletion:^(FIRQuerySnapshot *snapshot, NSError *error) {
          if (error != nil) {
              NSLog(@"Error getting documents: %@", error);
@@ -100,17 +136,18 @@ CLLocation *greaterGeopoint;
                  NSLog(@"%@ => %@", document.documentID, document.data);
                  Event * myEvent = [[Event alloc] initWithDictionary:document.data eventID:document.documentID];
                  myEvent.eventIDRef = document.reference;
-                 if(![myEvent.usersInEvent containsObject:FIRAuth.auth.currentUser.uid])
+               
+                 if(![myEvent.usersInEvent containsObject:FIRAuth.auth.currentUser.uid] && [myEvent.date isLaterThanOrEqualTo: [[NSDate alloc] initWithTimeIntervalSinceNow: (-60*60*24*6)]])
                  {
                      [events addObject:myEvent];
                  }
                  
              }
-             
              completion(events, nil);
          }
      }];
 }
+
 - (void)getMessagesFromEvent:(NSString *) eventID completion: (void(^)(NSArray *messages, NSError *error))completion {
     [[[[[database collectionWithPath:@"Event"] documentWithPath:eventID] collectionWithPath:@"Chat"] queryOrderedByField:@"timeSent" descending:NO] addSnapshotListener:^(FIRQuerySnapshot * _Nullable snapshot, NSError * _Nullable error) {
         if (error != nil) {
@@ -310,3 +347,4 @@ CLLocation *greaterGeopoint;
 }
 
 @end
+

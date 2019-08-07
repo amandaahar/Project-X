@@ -11,6 +11,17 @@
 		0E496C0922E285AA00DEF38C /* CreateEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E496C0822E285AA00DEF38C /* CreateEventViewController.m */; };
 		0E496C0F22EE5AE200DEF38C /* DetailEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E496C0E22EE5AE200DEF38C /* DetailEventViewController.m */; };
 		0E83767522F24BB3009B9007 /* LocationTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E83767422F24BB3009B9007 /* LocationTableViewController.m */; };
+		0E83767822F896C3009B9007 /* LocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E83767722F896C3009B9007 /* LocationViewController.m */; };
+		0E83768222F9BA6C009B9007 /* pop_drip.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0E83768122F9BA6C009B9007 /* pop_drip.wav */; };
+		0E83768322F9BA6C009B9007 /* pop_drip.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0E83768122F9BA6C009B9007 /* pop_drip.wav */; };
+		0E83768422F9BA6C009B9007 /* pop_drip.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0E83768122F9BA6C009B9007 /* pop_drip.wav */; };
+		0E83769322F9ECFC009B9007 /* LocationViewObjC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E83769222F9ECFC009B9007 /* LocationViewObjC.m */; };
+		0E83769422F9ECFC009B9007 /* LocationViewObjC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E83769222F9ECFC009B9007 /* LocationViewObjC.m */; };
+		0E83769522F9ECFC009B9007 /* LocationViewObjC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E83769222F9ECFC009B9007 /* LocationViewObjC.m */; };
+		0E83769922FB1F53009B9007 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E83769822FB1F53009B9007 /* AVFoundation.framework */; };
+		0E83769B22FB22F9009B9007 /* music_marimba_chord.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0E83769A22FB22F9009B9007 /* music_marimba_chord.wav */; };
+		0E83769C22FB22F9009B9007 /* music_marimba_chord.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0E83769A22FB22F9009B9007 /* music_marimba_chord.wav */; };
+		0E83769D22FB22F9009B9007 /* music_marimba_chord.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0E83769A22FB22F9009B9007 /* music_marimba_chord.wav */; };
 		0ECF088922DE791300F5A8AA /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ECF088822DE791300F5A8AA /* SignUpViewController.m */; };
 		0ECF088D22DE792900F5A8AA /* LogInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ECF088C22DE792900F5A8AA /* LogInViewController.m */; };
 		3736B86FE6020E2D1CF38631 /* Pods_Siri.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DEDEFD8E00105C0890C26EE /* Pods_Siri.framework */; };
@@ -187,6 +198,16 @@
 		0E496C0E22EE5AE200DEF38C /* DetailEventViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailEventViewController.m; sourceTree = "<group>"; };
 		0E83767322F24BB3009B9007 /* LocationTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocationTableViewController.h; sourceTree = "<group>"; };
 		0E83767422F24BB3009B9007 /* LocationTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocationTableViewController.m; sourceTree = "<group>"; };
+		0E83767622F896C2009B9007 /* LocationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocationViewController.h; sourceTree = "<group>"; };
+		0E83767722F896C3009B9007 /* LocationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocationViewController.m; sourceTree = "<group>"; };
+		0E83767B22F8E4D6009B9007 /* ProjectX.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; name = ProjectX.entitlements; path = ../../../.Trash/ProjectX.entitlements; sourceTree = "<group>"; };
+		0E83767C22F8E5F8009B9007 /* ProjectX.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ProjectX.entitlements; sourceTree = "<group>"; };
+		0E83768122F9BA6C009B9007 /* pop_drip.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = pop_drip.wav; path = "../../../../Downloads/dev_tones free/tones-wav/pop_drip.wav"; sourceTree = "<group>"; };
+		0E83769122F9ECFC009B9007 /* LocationViewObjC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocationViewObjC.h; sourceTree = "<group>"; };
+		0E83769222F9ECFC009B9007 /* LocationViewObjC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocationViewObjC.m; sourceTree = "<group>"; };
+		0E83769622FA9C65009B9007 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		0E83769822FB1F53009B9007 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		0E83769A22FB22F9009B9007 /* music_marimba_chord.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = music_marimba_chord.wav; sourceTree = "<group>"; };
 		0ECF088722DE791300F5A8AA /* SignUpViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SignUpViewController.h; sourceTree = "<group>"; };
 		0ECF088822DE791300F5A8AA /* SignUpViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SignUpViewController.m; sourceTree = "<group>"; };
 		0ECF088B22DE792900F5A8AA /* LogInViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LogInViewController.h; sourceTree = "<group>"; };
@@ -310,7 +331,6 @@
 		EA73F81B22E11B4700385689 /* GroupEventsTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GroupEventsTableViewCell.m; sourceTree = "<group>"; };
 		EA73F82A22E6412A00385689 /* MainTabBarController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainTabBarController.h; sourceTree = "<group>"; };
 		EA73F82B22E6412A00385689 /* MainTabBarController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainTabBarController.m; sourceTree = "<group>"; };
-		EA73F83122E676B200385689 /* ProjectX.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ProjectX.entitlements; sourceTree = "<group>"; };
 		EA73F83A22E6848D00385689 /* MessageBubble.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MessageBubble.h; sourceTree = "<group>"; };
 		EA73F83B22E6848D00385689 /* MessageBubble.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MessageBubble.m; sourceTree = "<group>"; };
 		EA73F83C22E6848D00385689 /* MessageBubble.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageBubble.xib; sourceTree = "<group>"; };
@@ -367,6 +387,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0E83769922FB1F53009B9007 /* AVFoundation.framework in Frameworks */,
 				85D5981A85E52C8F80BF99CB /* Pods_ProjectXTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -393,6 +414,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0E83767A22F8C0BB009B9007 /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				0E83768122F9BA6C009B9007 /* pop_drip.wav */,
+				0E83769A22FB22F9009B9007 /* music_marimba_chord.wav */,
+			);
+			path = Sounds;
+			sourceTree = "<group>";
+		};
 		0ECF088622DE78CB00F5A8AA /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -427,6 +457,10 @@
 				0E496C0E22EE5AE200DEF38C /* DetailEventViewController.m */,
 				0E83767322F24BB3009B9007 /* LocationTableViewController.h */,
 				0E83767422F24BB3009B9007 /* LocationTableViewController.m */,
+				0E83767622F896C2009B9007 /* LocationViewController.h */,
+				0E83767722F896C3009B9007 /* LocationViewController.m */,
+				0E83769122F9ECFC009B9007 /* LocationViewObjC.h */,
+				0E83769222F9ECFC009B9007 /* LocationViewObjC.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -453,6 +487,8 @@
 		A056C411C871EE33E69370F7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0E83769822FB1F53009B9007 /* AVFoundation.framework */,
+				0E83769622FA9C65009B9007 /* AudioToolbox.framework */,
 				EAEFFD7522F4C6EB0079E3D7 /* LocalAuthentication.framework */,
 				EAEFFD7122F2250D0079E3D7 /* QuartzCore.framework */,
 				0E496C0522E1345200DEF38C /* MapKit.framework */,
@@ -574,6 +610,9 @@
 		EA54ECE322DE3F3800D0D7A2 /* ProjectX */ = {
 			isa = PBXGroup;
 			children = (
+				0E83767C22F8E5F8009B9007 /* ProjectX.entitlements */,
+				0E83767B22F8E4D6009B9007 /* ProjectX.entitlements */,
+				0E83767A22F8C0BB009B9007 /* Sounds */,
 				EAEFFD9022F809120079E3D7 /* ProjectX.entitlements */,
 				EA73F82D22E6417B00385689 /* Helpers */,
 				EA3A502622E1006B004F2FFD /* Cells */,
@@ -641,7 +680,6 @@
 		EA73F82D22E6417B00385689 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				EA73F83122E676B200385689 /* ProjectX.entitlements */,
 				EA7078F522EBA43100D41CD1 /* TranslatorManager.h */,
 				EA7078F622EBA43100D41CD1 /* TranslatorManager.m */,
 				EA07F9AE22F8948E0095A6A6 /* Reachability.h */,
@@ -817,10 +855,12 @@
 					};
 					EA54ECFB22DE3F3900D0D7A2 = {
 						CreatedOnToolsVersion = 10.2.1;
+						LastSwiftMigration = 1030;
 						TestTargetID = EA54ECE022DE3F3800D0D7A2;
 					};
 					EA54ED0622DE3F3900D0D7A2 = {
 						CreatedOnToolsVersion = 10.2.1;
+						LastSwiftMigration = 1030;
 						TestTargetID = EA54ECE022DE3F3800D0D7A2;
 					};
 					EAEFFD7D22F806CB0079E3D7 = {
@@ -883,9 +923,11 @@
 				E703B94A22F2548700C63563 /* ShowInterestsTableViewCell.xib in Resources */,
 				EA3A502522E0F2FC004F2FFD /* HomeFeedTableViewCell.xib in Resources */,
 				EA54ECF122DE3F3900D0D7A2 /* Assets.xcassets in Resources */,
+				0E83768222F9BA6C009B9007 /* pop_drip.wav in Resources */,
 				EA54ECEC22DE3F3800D0D7A2 /* Main.storyboard in Resources */,
 				EAEFFD9522F80CA30079E3D7 /* GoogleService-Info.plist in Resources */,
 				E703B94522F248DD00C63563 /* EditProfileTableViewCell.xib in Resources */,
+				0E83769B22FB22F9009B9007 /* music_marimba_chord.wav in Resources */,
 				E714767122F38DCB0036F541 /* InterestFieldTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -894,6 +936,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0E83768322F9BA6C009B9007 /* pop_drip.wav in Resources */,
+				0E83769C22FB22F9009B9007 /* music_marimba_chord.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -901,6 +945,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0E83768422F9BA6C009B9007 /* pop_drip.wav in Resources */,
+				0E83769D22FB22F9009B9007 /* music_marimba_chord.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1121,6 +1167,8 @@
 				EA54ECE622DE3F3800D0D7A2 /* AppDelegate.m in Sources */,
 				E7AEA0A922DE8C4400A77CC2 /* EventsFeedViewController.m in Sources */,
 				EA70790622ED648B00D41CD1 /* PreferencesViewController.m in Sources */,
+				0E83769322F9ECFC009B9007 /* LocationViewObjC.m in Sources */,
+				0E83767822F896C3009B9007 /* LocationViewController.m in Sources */,
 				E76311C022E2746400A1B674 /* topCollectionViewCell.m in Sources */,
 				E76311BB22E241BB00A1B674 /* Message.m in Sources */,
 				E714767022F38DCB0036F541 /* InterestFieldTableViewCell.m in Sources */,
@@ -1156,6 +1204,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0E83769422F9ECFC009B9007 /* LocationViewObjC.m in Sources */,
 				EA54ED0122DE3F3900D0D7A2 /* ProjectXTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1164,6 +1213,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0E83769522F9ECFC009B9007 /* LocationViewObjC.m in Sources */,
 				EA54ED0C22DE3F3900D0D7A2 /* ProjectXUITests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1511,6 +1561,7 @@
 			baseConfigurationReference = 58C2A4F841B979D31E891283 /* Pods-ProjectXTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = XYQR9G9T5T;
 				INFOPLIST_FILE = ProjectXTests/Info.plist;
@@ -1521,6 +1572,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.fb.Charge.ProjectXTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "ProjectX/ViewControllers/ProjectXTests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ProjectX.app/ProjectX";
 			};
@@ -1531,6 +1585,7 @@
 			baseConfigurationReference = 7A78AAE3F23A2D3A1981E014 /* Pods-ProjectXTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = XYQR9G9T5T;
 				INFOPLIST_FILE = ProjectXTests/Info.plist;
@@ -1541,6 +1596,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.fb.Charge.ProjectXTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "ProjectX/ViewControllers/ProjectXTests-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ProjectX.app/ProjectX";
 			};
@@ -1550,6 +1607,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6CECD9E907EEFEFF904D5343 /* Pods-ProjectXUITests.debug.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = XYQR9G9T5T;
 				INFOPLIST_FILE = ProjectXUITests/Info.plist;
@@ -1560,6 +1618,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.fb.Charge.ProjectXUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "ProjectX/ViewControllers/ProjectXUITests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = ProjectX;
 			};
@@ -1569,6 +1630,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F2287022550AC21351D6997B /* Pods-ProjectXUITests.release.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = XYQR9G9T5T;
 				INFOPLIST_FILE = ProjectXUITests/Info.plist;
@@ -1579,6 +1641,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.fb.Charge.ProjectXUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "ProjectX/ViewControllers/ProjectXUITests-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = ProjectX;
 			};

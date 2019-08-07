@@ -13,7 +13,11 @@
 #import "../AppDelegate.h"
 #import "../Models/FirebaseManager.h"
 #import "ProfileHeaderCollectionReusableView.h"
+<<<<<<< HEAD
 #import "AppColors.h"
+=======
+#import <AVFoundation/AVAudioPlayer.h>
+>>>>>>> 5388bde7fb7765081e0dff397b237eb6d6c0d765
 
 @import Firebase;
 @import SAMKeychain;
@@ -26,6 +30,8 @@
 @property (nonatomic, readwrite) FIRFirestore *db;
 @property (nonatomic, strong) User *currentUser;
 @property (weak, nonatomic) IBOutlet UICollectionView *interestsCollectionView;
+@property (strong,nonatomic) AVAudioPlayer *audioPlayer;
+
 @end
 
 @implementation ProfileViewController
@@ -84,6 +90,11 @@
 #pragma mark - Log Out
 
 - (IBAction)logOut:(id)sender {
+    
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"pop_drip" ofType:@"wav"];
+    NSURL *soundUrl = [NSURL fileURLWithPath:path];
+    self.audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundUrl error:nil];
+    self.audioPlayer.play;
     
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Log Out"
                                                                    message:@"Are you sure you want to log out?"
