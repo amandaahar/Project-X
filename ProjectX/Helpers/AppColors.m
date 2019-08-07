@@ -90,4 +90,25 @@
     return gradient;
 }
 
+
+-(CAGradientLayer *) getGradientPurple :(UIView *)view{
+    CAGradientLayer *gradient = [CAGradientLayer layer];
+    gradient.frame = view.bounds;
+    gradient.colors = @[(id)[[AppColors sharedManager] getBlueBackground].CGColor, (id)[[AppColors sharedManager]   getDarkBlueBackground ].CGColor];
+    [gradient layoutIfNeeded];
+    [gradient setNeedsDisplay];
+    return gradient;
+}
+
+-(CAGradientLayer *) getGradientExp :(UIView *)view{
+    CAGradientLayer *gradient = [CAGradientLayer layer];
+    gradient.frame = view.bounds;
+    gradient.type = kCAGradientLayerAxial;
+    gradient.geometryFlipped = NO;
+    gradient.colors = @[(id)[[AppColors sharedManager] getDarkPurple].CGColor, (id)[[AppColors sharedManager]   getBlueLabels ].CGColor];
+    [gradient layoutIfNeeded];
+    [gradient setNeedsDisplay];
+    return gradient;
+}
+
 @end

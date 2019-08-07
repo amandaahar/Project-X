@@ -33,7 +33,7 @@
 @property (strong, nonatomic) UINotificationFeedbackGenerator *feedbackGenerator;
 @property (strong, nonatomic) CLLocation *currentLocation;
 @property (strong, nonatomic) AVAudioPlayer *audioPlayer;
-
+@property (strong, nonatomic) CAGradientLayer *gradient;
 @end
 
 @implementation EventsFeedViewController
@@ -45,7 +45,8 @@ NSDateFormatter *dateFormat;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-   
+    self.gradient = [[AppColors sharedManager] getGradientPurple:self.navigationController.navigationBar];
+    [self.navigationController.navigationBar.layer insertSublayer:self.gradient atIndex:0];
     //[self fetchArrayCategories];
     // convert to date
     dateFormat = [[NSDateFormatter alloc] init];
@@ -77,6 +78,8 @@ NSDateFormatter *dateFormat;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showDetailView:) name:@"selectedEvent" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showAlert:) name:@"newEvent" object:nil];
+    
+    
     
     [self desiredInteraction];
 }

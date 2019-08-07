@@ -54,15 +54,18 @@
             self.currentUser = user;
             [self.events removeAllObjects];
             for(FIRDocumentReference *eventDoc in self.currentUser.events) {
-                [eventDoc addSnapshotListener:^(FIRDocumentSnapshot * _Nullable snapshot, NSError * _Nullable error) {
+                [eventDoc getDocumentWithCompletion:^(FIRDocumentSnapshot * _Nullable snapshot, NSError * _Nullable error) {
                     if(error == nil){
                     Event * myEvent = [[Event alloc] initWithDictionary:snapshot.data eventID:snapshot.documentID];
                     [self.events addObject: myEvent];
-                    [self.chatsTableView reloadData];
+                    
                     }
                 }];
                 
             }
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self.chatsTableView reloadData];
+            });
             
         }
         
@@ -160,7 +163,10 @@
                 NSLog(@"Error deleting document: %@", error);
             } else {
                 NSLog(@"Document successfully deleted");
-                [self.chatsTableView reloadData];
+           
+                    [self.chatsTableView reloadData];
+       
+                
                 
             }
         }];
