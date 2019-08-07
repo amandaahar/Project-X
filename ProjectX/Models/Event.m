@@ -30,7 +30,8 @@
         self.pictures = dictionary[@"pictures"];
         self.location = dictionary[@"location"];
         self.usersInEvent = dictionary[@"swipeUsers"];
-        self.date = dictionary[@"eventDate"];
+        FIRTimestamp *date = dictionary[@"eventDate"];
+        self.date = date.dateValue;
         self.eventID = eventID;
         self.categories = dictionary[@"categoryIndex"];
         self.userFriendlyLocation = dictionary[@"userFriendlyLocation"];

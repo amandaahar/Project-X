@@ -427,7 +427,6 @@
                             <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="changeLocation:" destination="r4X-bz-L6V" id="rbe-11-TUD"/>
-                                <segue destination="21i-d7-8f8" kind="show" identifier="ChooseLocationSegue" id="eV7-Jb-YZ6"/>
                             </connections>
                         </barButtonItem>
                         <rightBarButtonItems>
@@ -463,7 +462,7 @@
                     </connections>
                 </panGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1417" y="1746"/>
+            <point key="canvasLocation" x="1436" y="1746"/>
         </scene>
         <!--New event-->
         <scene sceneID="6Dd-2v-c9l">
@@ -1410,10 +1409,10 @@
             </objects>
             <point key="canvasLocation" x="631" y="3319"/>
         </scene>
-        <!--Location View Controller-->
+        <!--Location View ObjC-->
         <scene sceneID="9QA-XE-0Rb">
             <objects>
-                <viewController id="21i-d7-8f8" customClass="LocationViewController" sceneMemberID="viewController">
+                <viewController id="21i-d7-8f8" customClass="LocationViewObjC" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="mDz-S4-A3I">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1442,20 +1441,11 @@
                                 <rect key="frame" x="136" y="337" width="84" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="make sound"/>
-                                <connections>
-                                    <action selector="soundAction:" destination="21i-d7-8f8" eventType="touchUpInside" id="rB1-jW-Gze"/>
-                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="5Uz-Dl-A1p"/>
                     </view>
-                    <connections>
-                        <outlet property="distanceSgementedControl" destination="vXw-AF-Yri" id="cix-Iu-bpH"/>
-                        <outlet property="location" destination="gbR-2w-soC" id="duH-b0-KMw"/>
-                        <outlet property="makeSoundButton" destination="U3R-nH-AUh" id="nea-Qx-1QF"/>
-                        <outlet property="mapView" destination="2vp-Hb-S1t" id="JRa-Ch-WGB"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1C1-85-91w" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

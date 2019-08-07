@@ -18,6 +18,9 @@
 		0E83768222F9BA6C009B9007 /* pop_drip.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0E83768122F9BA6C009B9007 /* pop_drip.wav */; };
 		0E83768322F9BA6C009B9007 /* pop_drip.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0E83768122F9BA6C009B9007 /* pop_drip.wav */; };
 		0E83768422F9BA6C009B9007 /* pop_drip.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0E83768122F9BA6C009B9007 /* pop_drip.wav */; };
+		0E83769322F9ECFC009B9007 /* LocationViewObjC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E83769222F9ECFC009B9007 /* LocationViewObjC.m */; };
+		0E83769422F9ECFC009B9007 /* LocationViewObjC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E83769222F9ECFC009B9007 /* LocationViewObjC.m */; };
+		0E83769522F9ECFC009B9007 /* LocationViewObjC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E83769222F9ECFC009B9007 /* LocationViewObjC.m */; };
 		0ECF088922DE791300F5A8AA /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ECF088822DE791300F5A8AA /* SignUpViewController.m */; };
 		0ECF088D22DE792900F5A8AA /* LogInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ECF088C22DE792900F5A8AA /* LogInViewController.m */; };
 		558AC6CB925C399045621CBD /* Pods_ProjectXUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BE1B1413891FCA15B877BED /* Pods_ProjectXUITests.framework */; };
@@ -111,6 +114,8 @@
 		0E83767C22F8E5F8009B9007 /* ProjectX.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ProjectX.entitlements; sourceTree = "<group>"; };
 		0E83767D22F9B9FE009B9007 /* pop_drip.aif */ = {isa = PBXFileReference; lastKnownFileType = file; name = pop_drip.aif; path = "../../../../Downloads/dev_tones free/tones-aif/pop_drip.aif"; sourceTree = "<group>"; };
 		0E83768122F9BA6C009B9007 /* pop_drip.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = pop_drip.wav; path = "../../../../Downloads/dev_tones free/tones-wav/pop_drip.wav"; sourceTree = "<group>"; };
+		0E83769122F9ECFC009B9007 /* LocationViewObjC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocationViewObjC.h; sourceTree = "<group>"; };
+		0E83769222F9ECFC009B9007 /* LocationViewObjC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocationViewObjC.m; sourceTree = "<group>"; };
 		0ECF088722DE791300F5A8AA /* SignUpViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SignUpViewController.h; sourceTree = "<group>"; };
 		0ECF088822DE791300F5A8AA /* SignUpViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SignUpViewController.m; sourceTree = "<group>"; };
 		0ECF088B22DE792900F5A8AA /* LogInViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LogInViewController.h; sourceTree = "<group>"; };
@@ -300,6 +305,8 @@
 				0E83767422F24BB3009B9007 /* LocationTableViewController.m */,
 				0E83767622F896C2009B9007 /* LocationViewController.h */,
 				0E83767722F896C3009B9007 /* LocationViewController.m */,
+				0E83769122F9ECFC009B9007 /* LocationViewObjC.h */,
+				0E83769222F9ECFC009B9007 /* LocationViewObjC.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -568,10 +575,12 @@
 					};
 					EA54ECFB22DE3F3900D0D7A2 = {
 						CreatedOnToolsVersion = 10.2.1;
+						LastSwiftMigration = 1030;
 						TestTargetID = EA54ECE022DE3F3800D0D7A2;
 					};
 					EA54ED0622DE3F3900D0D7A2 = {
 						CreatedOnToolsVersion = 10.2.1;
+						LastSwiftMigration = 1030;
 						TestTargetID = EA54ECE022DE3F3800D0D7A2;
 					};
 				};
@@ -747,6 +756,7 @@
 				EA54ECE622DE3F3800D0D7A2 /* AppDelegate.m in Sources */,
 				E7AEA0A922DE8C4400A77CC2 /* EventsFeedViewController.m in Sources */,
 				EA70790622ED648B00D41CD1 /* PreferencesViewController.m in Sources */,
+				0E83769322F9ECFC009B9007 /* LocationViewObjC.m in Sources */,
 				0E83767822F896C3009B9007 /* LocationViewController.m in Sources */,
 				E76311C022E2746400A1B674 /* topCollectionViewCell.m in Sources */,
 				E76311BB22E241BB00A1B674 /* Message.m in Sources */,
@@ -780,6 +790,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0E83769422F9ECFC009B9007 /* LocationViewObjC.m in Sources */,
 				EA54ED0122DE3F3900D0D7A2 /* ProjectXTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -788,6 +799,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0E83769522F9ECFC009B9007 /* LocationViewObjC.m in Sources */,
 				EA54ED0C22DE3F3900D0D7A2 /* ProjectXUITests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -995,6 +1007,7 @@
 			baseConfigurationReference = 58C2A4F841B979D31E891283 /* Pods-ProjectXTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = XYQR9G9T5T;
 				INFOPLIST_FILE = ProjectXTests/Info.plist;
@@ -1005,6 +1018,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.fb.Charge.ProjectXTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "ProjectX/ViewControllers/ProjectXTests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ProjectX.app/ProjectX";
 			};
@@ -1015,6 +1031,7 @@
 			baseConfigurationReference = 7A78AAE3F23A2D3A1981E014 /* Pods-ProjectXTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = XYQR9G9T5T;
 				INFOPLIST_FILE = ProjectXTests/Info.plist;
@@ -1025,6 +1042,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.fb.Charge.ProjectXTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "ProjectX/ViewControllers/ProjectXTests-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ProjectX.app/ProjectX";
 			};
@@ -1034,6 +1053,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6CECD9E907EEFEFF904D5343 /* Pods-ProjectXUITests.debug.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = XYQR9G9T5T;
 				INFOPLIST_FILE = ProjectXUITests/Info.plist;
@@ -1044,6 +1064,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.fb.Charge.ProjectXUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "ProjectX/ViewControllers/ProjectXUITests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = ProjectX;
 			};
@@ -1053,6 +1076,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F2287022550AC21351D6997B /* Pods-ProjectXUITests.release.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = XYQR9G9T5T;
 				INFOPLIST_FILE = ProjectXUITests/Info.plist;
@@ -1063,6 +1087,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.fb.Charge.ProjectXUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "ProjectX/ViewControllers/ProjectXUITests-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = ProjectX;
 			};
