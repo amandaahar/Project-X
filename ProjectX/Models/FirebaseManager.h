@@ -34,7 +34,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)addFCMDeviceToUSer: (NSString *) token;
 - (void)removeFCMDeviceToUser:(NSString *) idUser;
 - (void)sendNotificationUsers : (NSString *) idEvent withText:(NSString *) text nameUser:(NSString *) nameUser;
-- (void)getEventsNotSwiped:(void(^)(NSArray *events, NSError *error))completion;
+- (void)getEventsNotSwiped: (CLLocation *) location completion:(void(^)(NSArray *events, NSError *error))completion;
 
 @end
 

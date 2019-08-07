@@ -9,14 +9,12 @@
 #import "FirebaseManager.h"
 #import "User.h"
 
-
 @interface NSDate (Compare)
 
 -(BOOL) isLaterThanOrEqualTo:(NSDate*)date;
 -(BOOL) isEarlierThanOrEqualTo:(NSDate*)date;
 -(BOOL) isLaterThan:(NSDate*)date;
 -(BOOL) isEarlierThan:(NSDate*)date;
-//- (BOOL)isEqualToDate:(NSDate *)date; already part of the NSDate API
 
 @end
 
@@ -108,18 +106,20 @@
      }];
 }
 
-- (void)getEventsNotSwiped:(void(^)(NSArray *events, NSError *error))completion {
+- (void)getEventsNotSwiped: (CLLocation *) location completion:(void(^)(NSArray *events, NSError *error))completion {
     
-    double latitude = 38.819;
-    double longitude = -122.47;
+//    double latitude = 38.819;
+//    double longitude = -122.47;
+    double latitude = location.coordinate.latitude;
+    double longitude = location.coordinate.longitude;
     double distance = 10;
-    float lat = 0.2144927536231884;
-    float lon = 0.2181818181818182;
+    double lat = 0.1144927536231884;
+    double lon = 0.1181818181818182;
     
-    float lowerLat = latitude - (lat * distance);
-    float lowerLon = longitude - (lon * distance);
-    float greaterLat = latitude + (lat * distance);
-    float greaterLon = longitude + (lon * distance);
+    double lowerLat = latitude - (lat * distance);
+    double lowerLon = longitude - (lon * distance);
+    double greaterLat = latitude + (lat * distance);
+    double greaterLon = longitude + (lon * distance);
     FIRGeoPoint *lesserGeopoint = [[FIRGeoPoint alloc] initWithLatitude:lowerLat longitude:lowerLon];
     FIRGeoPoint *greaterGeopoint =  [[FIRGeoPoint alloc] initWithLatitude:greaterLat longitude:greaterLon];
     

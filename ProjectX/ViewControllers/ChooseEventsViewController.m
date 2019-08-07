@@ -127,96 +127,75 @@ NSDateFormatter *formatter;
 #pragma mark - Fetching Events
 
 - (void) fetchEvents {
-    
-//    double latitude = 38.819;
-//    double longitude = -122.47;
-//    double distance = 10;
-//    float lat = 1.0144927536231884;
-//    float lon = 1.0181818181818182;
-//
-//    float lowerLat = latitude - (lat * distance);
-//    float lowerLon = longitude - (lon * distance);
-//    float greaterLat = latitude + (lat * distance);
-//    float greaterLon = longitude + (lon * distance);
-//    FIRGeoPoint *lesserGeopoint = [[FIRGeoPoint alloc] initWithLatitude:lowerLat longitude:lowerLon];
-//    FIRGeoPoint *greaterGeopoint =  [[FIRGeoPoint alloc] initWithLatitude:greaterLat longitude:greaterLon];
-//
-//
-    [[FirebaseManager sharedManager] getEventsNotSwiped:^(NSArray * _Nonnull event, NSError * _Nonnull error) {
-        if(error != nil)
-        {
-            NSLog(@"Error showing documents: %@", error);
-        } else {
-//            [[[[self.db collectionWithPath:@"Event"]
-//               queryWhereField:@"location" isLessThan:greaterGeopoint]
-//              queryWhereField:@"location" isGreaterThan:lesserGeopoint]
-//             getDocumentsWithCompletion:^(FIRQuerySnapshot *snapshot, NSError *error) {
-//                 if (error != nil) {
-//                     NSLog(@"Error getting documents: %@", error);
-//                 } else {
-                     //NSLog(@"%@", event);
-                     Event * myEvent = event.firstObject;
-                     if (myEvent == nil) {
-                         self.card.alpha = 0;
-                         [self.mapView removeFromSuperview];
-                         
-                         UIView *emptyCard = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 100)];
-                         emptyCard.center = self.view.center;
-                         emptyCard.backgroundColor = [UIColor blackColor];
-                         emptyCard.layer.cornerRadius = 15;
-                         emptyCard.layer.masksToBounds = true;
-                         [self.view addSubview:emptyCard];
-                         
-                         UILabel *noEventsLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 270, 200)];
-                         noEventsLabel.center = self.view.center;
-                         [noEventsLabel setText:@"No events found, create your own now!"];
-                         [noEventsLabel setNumberOfLines:0];
-                         [noEventsLabel setTextColor:[UIColor whiteColor]];
-                         [self.view addSubview:noEventsLabel];
-                     } else {
-                         //if (myEvent.date >= [FIRTimestamp timestampWithDate:[[NSDate alloc] initWithTimeIntervalSinceNow: -60*60*24*6]]) {
-                         self.numAttendees.text = [NSString stringWithFormat:@"%@", myEvent.attendees];
-                         self.eventName.text = myEvent.name;
-                         self.Eventdescription.text = myEvent.descriptionEvent;
-                         self.eventArray = event;
-                         self.eventID = myEvent.eventID;
-                         [self eventDateIdentifier];
-                         [self eventLocationIdentifier];
-                         
-                         self.eventImageURL = myEvent.pictures[0];
-                         NSURL *url = [NSURL URLWithString:self.eventImageURL];
-                         NSData *imageData = [NSData dataWithContentsOfURL:url];
-                         self.eventPhoto.image = [UIImage imageWithData:imageData];
-                         
-                         self.eventLocation.text = myEvent.userFriendlyLocation;
-                         
-                         if(myEvent.categories.intValue == 0){ //How to fix that everything is food if none available
-                             self.categoryIndex.text = @"Food";
-                         }
-                         else if(myEvent.categories.intValue == 1){
-                             self.categoryIndex.text = @"Culture";
-                         }
-                         else if(myEvent.categories.intValue == 2){
-                             self.categoryIndex.text = @"Fitness";
-                         }
-                         else if(myEvent.categories.intValue == 3){
-                             self.categoryIndex.text = @"Education";
-                         }
-                         else if(myEvent.categories.intValue == 4){
-                             self.categoryIndex.text = @"Other";
-                         }
-                         else{
-                             self.categoryIndex.text = @"Not available";
-                         }
-                         
-                         self.card.layer.cornerRadius = 15;
-                         self.card.layer.masksToBounds = true;
-                         //}
-                     }
-                 }
-             }];
-        //}
-    //}];
+    [[FirebaseManager sharedManager] getEventsNotSwiped:(CLLocation *) self.UserCurrentLocation completion:^(NSArray * _Nonnull event, NSError * _Nonnull error) {
+            if(error != nil)
+            {
+                NSLog(@"Error showing documents: %@", error);
+            } else {
+                Event * myEvent = event.firstObject;
+                if (myEvent == nil) {
+                    self.card.alpha = 0;
+                    self.mapView.alpha = 0;
+                    
+                    UIView *emptyCard = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 100)];
+                    emptyCard.center = self.view.center;
+                    emptyCard.backgroundColor = [UIColor blackColor];
+                    emptyCard.layer.cornerRadius = 15;
+                    emptyCard.layer.masksToBounds = true;
+                    [self.view addSubview:emptyCard];
+                    
+                    UILabel *noEventsLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 270, 200)];
+                    noEventsLabel.center = self.view.center;
+                    [noEventsLabel setText:@"No events found, create your own now!"];
+                    [noEventsLabel setNumberOfLines:0];
+                    [noEventsLabel setTextColor:[UIColor whiteColor]];
+                    [self.view addSubview:noEventsLabel];
+                } else {
+                    self.emptyCard.alpha = 0;
+                    self.noEventsLabel.alpha = 0;
+                    self.card.alpha = 1;
+                    self.mapView.alpha = 1;
+                    
+                    self.numAttendees.text = [NSString stringWithFormat:@"%@", myEvent.attendees];
+                    self.eventName.text = myEvent.name;
+                    self.Eventdescription.text = myEvent.descriptionEvent;
+                    self.eventArray = event;
+                    self.eventID = myEvent.eventID;
+                    [self eventDateIdentifier];
+                    [self eventLocationIdentifier];
+                    
+                    self.eventImageURL = myEvent.pictures[0];
+                    NSURL *url = [NSURL URLWithString:self.eventImageURL];
+                    NSData *imageData = [NSData dataWithContentsOfURL:url];
+                    self.eventPhoto.image = [UIImage imageWithData:imageData];
+                    
+                    self.eventLocation.text = myEvent.userFriendlyLocation;
+                    
+                    if(myEvent.categories.intValue == 0){
+                        //How to fix that everything is food if none available
+                        self.categoryIndex.text = @"Food";
+                    }
+                    else if(myEvent.categories.intValue == 1){
+                        self.categoryIndex.text = @"Culture";
+                    }
+                    else if(myEvent.categories.intValue == 2){
+                        self.categoryIndex.text = @"Fitness";
+                    }
+                    else if(myEvent.categories.intValue == 3){
+                        self.categoryIndex.text = @"Education";
+                    }
+                    else if(myEvent.categories.intValue == 4){
+                        self.categoryIndex.text = @"Other";
+                    }
+                    else{
+                        self.categoryIndex.text = @"Not available";
+                    }
+                    
+                    self.card.layer.cornerRadius = 15;
+                    self.card.layer.masksToBounds = true;
+                }
+            }
+    }];
 }
 
 /*
@@ -376,6 +355,9 @@ NSDateFormatter *formatter;
     }
     
     else {
+        self.emptyCard.alpha = 0;
+        self.noEventsLabel.alpha = 0;
+        
         Event *nextEvent = self.eventArray.firstObject;
         self.numAttendees.text = [NSString stringWithFormat:@"%@", nextEvent.attendees];
         //self.categoryIndex.text = [NSString stringWithFormat:@"%@", nextEvent.categories];
@@ -521,7 +503,7 @@ NSDateFormatter *formatter;
     
     [self fetchEvents];
     [self resetCard];
-    
+
     self.emptyCard.alpha = 0;
     self.noEventsLabel.alpha = 0;
     self.card.alpha = 1;
@@ -550,7 +532,7 @@ NSDateFormatter *formatter;
 #pragma mark - Change Location
 
 - (IBAction)changeLocation:(id)sender {
-    //[self performSegueWithIdentifier:@"CreateEventSegue" sender:self];
+    //[self performSegueWithIdentifier:@"ChooseLocationSegue" sender:self];
     
     NSString *path = [[NSBundle mainBundle] pathForResource:@"pop_drip" ofType:@"wav"];
     NSURL *soundUrl = [NSURL fileURLWithPath:path];

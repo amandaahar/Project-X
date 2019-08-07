@@ -203,7 +203,7 @@ NSDateFormatter *dateFormat;
         if(error == nil)
         {
             NSMutableArray * categoriesFiltered = [NSMutableArray new];
-            if(self.currentUser.preferences != nil && self.currentUser.preferences.count > 2){
+            if(self.currentUser.preferences != nil && self.currentUser.preferences.count >= 2){
                 for(NSDictionary *dic in self.currentUser.preferences){
                     NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(NSDictionary *evaluatedObject, NSDictionary<NSString *,id> * _Nullable bindings) {
                         return [dic[@"id"] isEqualToString: evaluatedObject[@"id"]];

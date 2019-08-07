@@ -39,8 +39,6 @@
     return self;
 }
 
-
-
 - (void)composeMessage:(NSString *)text chat
                       : (NSString *)event
 {
