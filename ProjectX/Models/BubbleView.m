@@ -7,7 +7,7 @@
 //
 
 #import "BubbleView.h"
-
+#import "../Helpers/AppColors.h"
 @implementation BubbleView
 
 - (instancetype)init
@@ -15,7 +15,7 @@
     self = [super init];
     if (self) {
         self.incomingColor = [UIColor colorWithWhite:0.6 alpha:1];
-        self.outgoingColor = [UIColor colorWithRed:0.09 green:0.54 blue:1 alpha:1];
+        self.outgoingColor = [[AppColors sharedManager] getDarkBlueBackground];
         self.isIncoming = NO;
         
     }

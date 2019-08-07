@@ -13,19 +13,19 @@
 @end
 
 @implementation MainTabBarController
-
+CAGradientLayer *layerGradient;
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.delegate = self;
     // Do any additional setup after loading the view.
-    
-    self.tabBar.barTintColor = [[AppColors sharedManager] getAlpha15];
-    [self.tabBar setTintColor:[UIColor whiteColor]];
-    [self.tabBar setTranslucent: YES];
-   
-    
-}
 
+    self.tabBar.barTintColor = [[AppColors sharedManager] getDarkBlueBackground];
+    [self.tabBar setTintColor:[UIColor whiteColor]];
+    [self.tabBar setUnselectedItemTintColor:[UIColor colorWithRed:0.6588235294 green:0.7333333333 blue:0.8196078431 alpha:1]];
+    [self.tabBar setTranslucent: YES];
+     
+     
+}
 - (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item{
     UIImpactFeedbackGenerator *myGen = [[UIImpactFeedbackGenerator alloc] initWithStyle:(UIImpactFeedbackStyleHeavy)];
     [myGen impactOccurred];
