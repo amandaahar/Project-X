@@ -18,6 +18,7 @@
 @property (nonatomic, strong) NSArray<Bubble *> *bubbles;
 @property (nonatomic, strong) NSMutableArray *preferences;
 @property (nonatomic, strong) NSMutableArray *preferencesDB;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityView;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
 
@@ -30,6 +31,8 @@ BOOL lastTime = false;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self.activityView setHidden:YES];
+    
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
     NSLog(@"%@", FIRAuth.auth.currentUser.uid);
@@ -66,6 +69,7 @@ BOOL lastTime = false;
     }else
     {
         if(self.preferencesDB.count > 2){
+            
             for (SKNode *node in [scene children]) {
                 if([node isKindOfClass:[BLBubbleNode class]])
                 {
@@ -73,12 +77,20 @@ BOOL lastTime = false;
                 }
                 
             }
+            
             [scene reload];
+            [self.activityView setHidden:NO];
+            [self.activityView startAnimating];
             [[FirebaseManager sharedManager] setNewPreferences:[self.preferencesDB copy]];
-            AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
-            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-            MainTabBarController *tabBarViewController = [storyboard instantiateViewControllerWithIdentifier:@"TabBarVC"];
-            appDelegate.window.rootViewController = tabBarViewController;
+            
+            __weak PreferencesViewController *weakSelf = self;
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+                UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+                MainTabBarController *tabBarViewController = [storyboard instantiateViewControllerWithIdentifier:@"TabBarVC"];
+                appDelegate.window.rootViewController = tabBarViewController;
+                 [weakSelf.activityView startAnimating];
+            });
         }else{
             UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"You need to choose more" message:@"Add at least 3 of your preference" preferredStyle:(UIAlertControllerStyleAlert)];
             UIAlertAction *action = [UIAlertAction actionWithTitle:@"Accept" style:(UIAlertActionStyleDefault) handler:nil];

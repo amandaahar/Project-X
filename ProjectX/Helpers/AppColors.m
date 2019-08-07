@@ -79,4 +79,16 @@
 -(UIColor *) getPurple{
     return [UIColor colorWithRed: 1 green: 0.6 blue: 0.2274509804 alpha:1];
 }
+
+
+
+-(CAGradientLayer *) getGradientDefault :(UIView *)view{
+    CAGradientLayer *gradient = [CAGradientLayer layer];
+    gradient.frame = view.bounds;
+    gradient.colors = @[(id)[[AppColors sharedManager] getDarkPurple].CGColor, (id)[[AppColors sharedManager]  getDarkBlue].CGColor];
+    [gradient layoutIfNeeded];
+    [gradient setNeedsDisplay];
+    return gradient;
+}
+
 @end

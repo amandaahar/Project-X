@@ -9,8 +9,10 @@
 #import "LogInViewController.h"
 #import "AppDelegate.h"
 #import "../Models/APIEventsManager.h"
+#import "../Helpers/AppColors.h"
 #import "MainTabBarController.h"
 #import "../Models/FirebaseManager.h"
+#import <QuartzCore/QuartzCore.h>
 @import SAMKeychain;
 @import Firebase;
 @import MaterialTextField;
@@ -22,34 +24,66 @@ struct KeychainConfiguration {
 @interface LogInViewController () <UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet MFTextField *usernameField;
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
+@property (weak, nonatomic) IBOutlet UIButton *signUpButton;
 @property (weak, nonatomic) IBOutlet MFTextField *passwordField;
 @property (strong, nonatomic) LAContext *context;
 @end
 
 @implementation LogInViewController
-
+CAGradientLayer *gradient;
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.usernameField.delegate = self;
     self.passwordField.delegate = self;
     self.loginButton.layer.cornerRadius = 15;
     self.loginButton.clipsToBounds = YES;
+    self.loginButton.layer.borderColor = [[UIColor whiteColor] CGColor];
+    self.loginButton.layer.borderWidth = 1;
+    self.signUpButton.layer.cornerRadius = 15;
+    self.signUpButton.layer.borderWidth = 1;
+    self.signUpButton.layer.borderColor = [[UIColor darkGrayColor] CGColor];
+    self.signUpButton.clipsToBounds = YES;
     self.context = [[LAContext alloc] init];
     NSError *error = [[NSError alloc] init];
     [self.context setLocalizedCancelTitle:@"Enter mail and password"];
     [self.context canEvaluatePolicy:kLAPolicyDeviceOwnerAuthentication error:&error];
     
+    gradient = [CAGradientLayer layer];
     
+    gradient.frame = self.view.bounds;
+    gradient.colors = @[(id)[[AppColors sharedManager] getDarkPurple].CGColor, (id)[[AppColors sharedManager]  getDarkBlue].CGColor];
+    [gradient layoutIfNeeded];
+    [gradient setNeedsDisplay];
+
+    [self.view.layer insertSublayer:gradient atIndex:0];
     
     
   
     //[[APIEventsManager sharedManager] getCategories];
     // Do any additional setup after loading the view.
 }
+
+- (void) willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    gradient.frame = self.view.bounds;
+}
+
+
 /// The available states of being logged in or not.
 enum AuthenticationState {
  loggedin, loggedout
 };
+- (IBAction)touchIDLogIn:(id)sender {
+    NSString *savedValue = [[NSUserDefaults standardUserDefaults]
+                            stringForKey:@"mail"];
+    if(savedValue != nil){
+        [self.context evaluatePolicy:kLAPolicyDeviceOwnerAuthentication localizedReason:@"Log into your account" reply:^(BOOL success, NSError * _Nullable error) {
+            if(success){
+                NSString * password = [SAMKeychain passwordForService:@"password" account:savedValue];
+                [self logInWithUser:savedValue andPassword:password];
+            }  }];
+    }
+}
 
 - (IBAction)logInUser:(id)sender {
     
@@ -133,17 +167,6 @@ enum AuthenticationState {
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         LogInViewController *loginViewController = [storyboard instantiateViewControllerWithIdentifier:@"TabBarVC"];
         appDelegate.window.rootViewController = loginViewController;
-    }else{
-        NSString *savedValue = [[NSUserDefaults standardUserDefaults]
-                                stringForKey:@"mail"];
-        if(savedValue != nil){
-            [self.context evaluatePolicy:kLAPolicyDeviceOwnerAuthentication localizedReason:@"Log into your account" reply:^(BOOL success, NSError * _Nullable error) {
-                if(success){
-                    NSString * password = [SAMKeychain passwordForService:@"password" account:savedValue];
-                    [self logInWithUser:savedValue andPassword:password];
-                }  }];
-        }
-        
     }
 }
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
