@@ -10,16 +10,14 @@
 #import "AppDelegate.h"
 #import "../Models/FirebaseManager.h"
 #import "CreateEventViewController.h"
-
 #import "LocationViewController.h"
-
 #import "../Helpers/Reachability.h"
-
 #import "Event.h"
 #import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
 #import "../Models/MapAnnotation.h"
 #import "../Models/User.h"
+#import <AVFoundation/AVAudioPlayer.h>
 @import Firebase;
 @import CoreLocation;
 
@@ -45,6 +43,7 @@
 @property (nonatomic, strong) User *currentUser;
 @property (strong, nonatomic) UIView *emptyCard;
 @property (strong, nonatomic) UILabel *noEventsLabel;
+@property (strong,nonatomic) AVAudioPlayer *audioPlayer;
 
 @end
 
@@ -129,32 +128,32 @@ NSDateFormatter *formatter;
 
 - (void) fetchEvents {
     
-    double latitude = 38.819;
-    double longitude = -122.47;
-    double distance = 10;
-    float lat = 1.0144927536231884;
-    float lon = 1.0181818181818182;
-    
-    float lowerLat = latitude - (lat * distance);
-    float lowerLon = longitude - (lon * distance);
-    float greaterLat = latitude + (lat * distance);
-    float greaterLon = longitude + (lon * distance);
-    FIRGeoPoint *lesserGeopoint = [[FIRGeoPoint alloc] initWithLatitude:lowerLat longitude:lowerLon];
-    FIRGeoPoint *greaterGeopoint =  [[FIRGeoPoint alloc] initWithLatitude:greaterLat longitude:greaterLon];
-    
-    
+//    double latitude = 38.819;
+//    double longitude = -122.47;
+//    double distance = 10;
+//    float lat = 1.0144927536231884;
+//    float lon = 1.0181818181818182;
+//
+//    float lowerLat = latitude - (lat * distance);
+//    float lowerLon = longitude - (lon * distance);
+//    float greaterLat = latitude + (lat * distance);
+//    float greaterLon = longitude + (lon * distance);
+//    FIRGeoPoint *lesserGeopoint = [[FIRGeoPoint alloc] initWithLatitude:lowerLat longitude:lowerLon];
+//    FIRGeoPoint *greaterGeopoint =  [[FIRGeoPoint alloc] initWithLatitude:greaterLat longitude:greaterLon];
+//
+//
     [[FirebaseManager sharedManager] getEventsNotSwiped:^(NSArray * _Nonnull event, NSError * _Nonnull error) {
         if(error != nil)
         {
             NSLog(@"Error showing documents: %@", error);
         } else {
-            [[[[self.db collectionWithPath:@"Event"]
-               queryWhereField:@"location" isLessThan:greaterGeopoint]
-              queryWhereField:@"location" isGreaterThan:lesserGeopoint]
-             getDocumentsWithCompletion:^(FIRQuerySnapshot *snapshot, NSError *error) {
-                 if (error != nil) {
-                     NSLog(@"Error getting documents: %@", error);
-                 } else {
+//            [[[[self.db collectionWithPath:@"Event"]
+//               queryWhereField:@"location" isLessThan:greaterGeopoint]
+//              queryWhereField:@"location" isGreaterThan:lesserGeopoint]
+//             getDocumentsWithCompletion:^(FIRQuerySnapshot *snapshot, NSError *error) {
+//                 if (error != nil) {
+//                     NSLog(@"Error getting documents: %@", error);
+//                 } else {
                      //NSLog(@"%@", event);
                      Event * myEvent = event.firstObject;
                      if (myEvent == nil) {
@@ -216,9 +215,8 @@ NSDateFormatter *formatter;
                      }
                  }
              }];
-        }
-    }];
-
+        //}
+    //}];
 }
 
 /*
@@ -240,12 +238,10 @@ NSDateFormatter *formatter;
 }
 */
 
--(BOOL)isConnectionAvailable
+- (BOOL)isConnectionAvailable
 {
     Reachability *reachability = [Reachability reachabilityForInternetConnection];
-    
     NetworkStatus networkStatus = [reachability currentReachabilityStatus];
-    
     return !(networkStatus == NotReachable);
 }
 
@@ -507,11 +503,22 @@ NSDateFormatter *formatter;
 }
 
 - (IBAction)CreateEventAction:(id)sender {
-    [self performSegueWithIdentifier:@"ChooseLocationSegue" sender:nil];
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"pop_drip" ofType:@"wav"];
+    NSURL *soundUrl = [NSURL fileURLWithPath:path];
+    self.audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundUrl error:nil];
+    self.audioPlayer.play;
+    
+    [self performSegueWithIdentifier:@"CreateEventSegue" sender:nil];
 //  [self resetCard]; Should I create a card for the created event or directly make a group
 }
 
 - (IBAction)resetAllCards:(UIBarButtonItem *)sender {
+    
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"pop_drip" ofType:@"wav"];
+    NSURL *soundUrl = [NSURL fileURLWithPath:path];
+    self.audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundUrl error:nil];
+    self.audioPlayer.play;
+    
     [self fetchEvents];
     [self resetCard];
     
@@ -545,6 +552,11 @@ NSDateFormatter *formatter;
 - (IBAction)changeLocation:(id)sender {
     //[self performSegueWithIdentifier:@"CreateEventSegue" sender:self];
     
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"pop_drip" ofType:@"wav"];
+    NSURL *soundUrl = [NSURL fileURLWithPath:path];
+    self.audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundUrl error:nil];
+    self.audioPlayer.play;
+    
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Change Location" message:@"Insert the new location" preferredStyle:(UIAlertControllerStyleAlert)];
     UIAlertAction *accept = [UIAlertAction actionWithTitle:@"Accept" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
         UITextField *textField = alert.textFields[0];
@@ -558,8 +570,8 @@ NSDateFormatter *formatter;
             }
         }];
         
-//        MKCircle *circle = [MKCircle circleWithCenterCoordinate:self.UserCurrentLocation.coordinate radius:1000];
-//        [self.mapView addOverlay:circle];
+        MKCircle *circle = [MKCircle circleWithCenterCoordinate:self.UserCurrentLocation.coordinate radius:1500];
+        [self.mapView addOverlay:circle];
     }];
     UIAlertAction* cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
         [alert dismissViewControllerAnimated:YES completion:nil];

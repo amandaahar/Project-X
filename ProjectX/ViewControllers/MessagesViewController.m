@@ -13,6 +13,7 @@
 #import "../Helpers/TranslatorManager.h"
 #import "../Models/User.h"
 #import "DetailEventViewController.h"
+#import <AVFoundation/AVAudioPlayer.h>
 @interface MessagesViewController () <UITableViewDelegate, UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITextField *messageText;
 @property (weak, nonatomic) IBOutlet UIButton *sendButton;
@@ -22,6 +23,7 @@
 @property (strong, nonatomic) NSString * idCurrentUser;
 @property (strong, nonatomic) User *user;
 @property (nonatomic, readwrite) FIRFirestore *db;
+@property (strong,nonatomic) AVAudioPlayer *audioPlayer;
 
 @end
 
@@ -85,6 +87,12 @@ NSLayoutConstraint *bottom;
     [myGen prepare];
     [myGen notificationOccurred:(UINotificationFeedbackTypeSuccess)];
     myGen = NULL;
+    
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"pop_drip" ofType:@"wav"];
+    NSURL *soundUrl = [NSURL fileURLWithPath:path];
+    self.audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundUrl error:nil];
+    self.audioPlayer.play;
+    
     [self performSegueWithIdentifier:@"languages" sender:self];
     
 }
@@ -121,6 +129,12 @@ NSLayoutConstraint *bottom;
                 [myGen prepare];
                 [myGen notificationOccurred:(UINotificationFeedbackTypeSuccess)];
                 myGen = NULL;
+                
+                NSString *path = [[NSBundle mainBundle] pathForResource:@"music_marimba_chord" ofType:@"wav"];
+                NSURL *soundUrl = [NSURL fileURLWithPath:path];
+                self.audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundUrl error:nil];
+                self.audioPlayer.play;
+                
                 self.messageText.text = @"";
             }
             
@@ -150,6 +164,16 @@ NSLayoutConstraint *bottom;
 }
 
 - (void) detailsSegue: (NSString *) text {
+    
+    UINotificationFeedbackGenerator *myGen = [[UINotificationFeedbackGenerator alloc] init];
+    [myGen prepare];
+    [myGen notificationOccurred:(UINotificationFeedbackTypeSuccess)];
+    myGen = NULL;
+    
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"pop_drip" ofType:@"wav"];
+    NSURL *soundUrl = [NSURL fileURLWithPath:path];
+    self.audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundUrl error:nil];
+    self.audioPlayer.play;
     
     [self performSegueWithIdentifier:@"eventDetails" sender:self];
     

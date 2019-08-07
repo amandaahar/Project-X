@@ -14,6 +14,7 @@
 #import "../Helpers/Reachability.h"
 #import "DetailHomeViewController.h"
 #import "EventsAroundIntent.h"
+#import <AVFoundation/AVAudioPlayer.h>
 @import CoreLocation;
 @interface EventsFeedViewController () <UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate, UIScrollViewDelegate>
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
@@ -28,6 +29,8 @@
 @property (nonatomic, strong) User *currentUser;
 @property (strong, nonatomic) UINotificationFeedbackGenerator *feedbackGenerator;
 @property (strong, nonatomic) CLLocation *currentLocation;
+@property (strong,nonatomic) AVAudioPlayer *audioPlayer;
+
 @end
 
 @implementation EventsFeedViewController
@@ -86,6 +89,11 @@ NSDateFormatter *dateFormat;
     UIImpactFeedbackGenerator *myGen = [[UIImpactFeedbackGenerator alloc] initWithStyle:(UIImpactFeedbackStyleMedium)];
     [myGen impactOccurred];
     myGen = NULL;
+    
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"pop_drip" ofType:@"wav"];
+    NSURL *soundUrl = [NSURL fileURLWithPath:path];
+    self.audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundUrl error:nil];
+    self.audioPlayer.play;
     
 }
 
@@ -460,6 +468,12 @@ NSDateFormatter *dateFormat;
 
 
 - (IBAction)changeLocation:(id)sender {
+    
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"pop_drip" ofType:@"wav"];
+    NSURL *soundUrl = [NSURL fileURLWithPath:path];
+    self.audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundUrl error:nil];
+    self.audioPlayer.play;
+    
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Change Location" message:@"Insert the new location" preferredStyle:(UIAlertControllerStyleAlert)];
     UIAlertAction *accept = [UIAlertAction actionWithTitle:@"Accept" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
         UITextField *textField = alert.textFields[0];

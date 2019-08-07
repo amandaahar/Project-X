@@ -113,8 +113,8 @@
     double latitude = 38.819;
     double longitude = -122.47;
     double distance = 10;
-    float lat = 1.0144927536231884;
-    float lon = 1.0181818181818182;
+    float lat = 0.2144927536231884;
+    float lon = 0.2181818181818182;
     
     float lowerLat = latitude - (lat * distance);
     float lowerLon = longitude - (lon * distance);
@@ -143,11 +143,11 @@
                  }
                  
              }
-             
              completion(events, nil);
          }
      }];
 }
+
 - (void)getMessagesFromEvent:(NSString *) eventID completion: (void(^)(NSArray *messages, NSError *error))completion {
     [[[[[database collectionWithPath:@"Event"] documentWithPath:eventID] collectionWithPath:@"Chat"] queryOrderedByField:@"timeSent" descending:NO] addSnapshotListener:^(FIRQuerySnapshot * _Nullable snapshot, NSError * _Nullable error) {
         if (error != nil) {
