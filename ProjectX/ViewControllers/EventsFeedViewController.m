@@ -11,7 +11,9 @@
 #import "../Models/NSMutableArray+Convenience.h"
 #import "../Cells/GroupEventsTableViewCell.h"
 #import "../Models/User.h"
+#import "../Helpers/Reachability.h"
 #import "DetailHomeViewController.h"
+#import "EventsAroundIntent.h"
 @import CoreLocation;
 @interface EventsFeedViewController () <UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate, UIScrollViewDelegate>
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
@@ -60,10 +62,20 @@ NSDateFormatter *dateFormat;
     #pragma clang diagnostic ignored "-Wunused-variable"
     NSString *dateString = [format stringFromDate:now];
     #pragma clang diagnostic pop
+    
+    if([self isConnectionAvailable]){
     [self currentLocationIdentifier];
+    }else{
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error" message:@"Check your internet connection" preferredStyle:(UIAlertControllerStyleAlert)];
+        UIAlertAction *accept = [UIAlertAction actionWithTitle:@"Accept" style:(UIAlertActionStyleDefault) handler:nil];
+        [alert addAction:accept];
+        [self presentViewController:alert animated:YES completion:nil];
+    }
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showDetailView:) name:@"selectedEvent" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showAlert:) name:@"newEvent" object:nil];
+    
+    [self desiredInteraction];
 }
 
 - (void)showDetailView:(NSNotification *) notification
@@ -286,6 +298,15 @@ NSDateFormatter *dateFormat;
         });
 }
 
+
+-(BOOL)isConnectionAvailable
+{
+    Reachability *reachability = [Reachability reachabilityForInternetConnection];
+    
+    NetworkStatus networkStatus = [reachability currentReachabilityStatus];
+    
+    return !(networkStatus == NotReachable);
+}
 #pragma mark - Design Methods
 /**
     setTitle
@@ -352,6 +373,17 @@ NSDateFormatter *dateFormat;
 }
 
 
+-(void) desiredInteraction{
+    EventsAroundIntent *intent = [EventsAroundIntent new];
+    [intent setSuggestedInvocationPhrase:@"Look for events around me"];
+    INInteraction *interaction = [[INInteraction alloc] initWithIntent:intent response:nil];
+    
+    [interaction donateInteractionWithCompletion:^(NSError * _Nullable error) {
+        if(error != nil){
+            NSLog(@"%@",error.localizedDescription);
+        }
+    }];
+}
 
 #pragma mark - Protocol functions
 

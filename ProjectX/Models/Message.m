@@ -36,6 +36,7 @@
         
         [self setIdMessage:idMessage];
         NSArray *peopleLiked = dictionary[@"likes"];
+        self.peopleLiked = peopleLiked;
         [self setLiked: [peopleLiked containsObject:FIRAuth.auth.currentUser.uid] ? YES : NO ];
       
     }

@@ -10,7 +10,11 @@
 #import "AppDelegate.h"
 #import "../Models/FirebaseManager.h"
 #import "CreateEventViewController.h"
+
 #import "LocationViewController.h"
+
+#import "../Helpers/Reachability.h"
+
 #import "Event.h"
 #import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
@@ -64,9 +68,17 @@ NSDateFormatter *formatter;
     //[self movingPreview];
     
     self.UserCurrentLocation = [[CLLocation alloc] initWithLatitude:36 longitude:-122];
+    if([self isConnectionAvailable]){
     [self currentLocationIdentifier];
+    }else{
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error" message:@"Check your internet connection" preferredStyle:(UIAlertControllerStyleAlert)];
+        UIAlertAction *accept = [UIAlertAction actionWithTitle:@"Accept" style:(UIAlertActionStyleDefault) handler:nil];
+        [alert addAction:accept];
+        [self presentViewController:alert animated:YES completion:nil];
+    }
     self.mapView.showsUserLocation = YES;
     self.mapView.showsBuildings = YES;
+
     
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"How to choose events:"
                                                                    message:@"Swipe the event card right if you would like to attend, swipe left to see next event"
@@ -227,6 +239,15 @@ NSDateFormatter *formatter;
     
 }
 */
+
+-(BOOL)isConnectionAvailable
+{
+    Reachability *reachability = [Reachability reachabilityForInternetConnection];
+    
+    NetworkStatus networkStatus = [reachability currentReachabilityStatus];
+    
+    return !(networkStatus == NotReachable);
+}
 
 #pragma mark - Location methods
 
@@ -451,8 +472,10 @@ NSDateFormatter *formatter;
 - (void) eventLocationIdentifier {
     
     Event *event = self.eventArray.firstObject;
-    
-    MKCoordinateRegion location = MKCoordinateRegionMake(CLLocationCoordinate2DMake(event.location.latitude, event.location.longitude), MKCoordinateSpanMake(0.05, 0.05));
+    CLLocationDistance regionRadius = 11000;
+
+    MKCoordinateRegion location = MKCoordinateRegionMakeWithDistance(CLLocationCoordinate2DMake(event.location.latitude, event.location.longitude), regionRadius, regionRadius);
+  
     [self.mapView setRegion:location animated:YES];
     
     MapAnnotation *eventAnnotation = [[MapAnnotation alloc] init];
@@ -468,10 +491,8 @@ NSDateFormatter *formatter;
 - (void) eventDateIdentifier {
     
     Event *event = self.eventArray.firstObject;
-     
 //    FIRTimestamp *eventTimestamp = event.date;
 //    [self setDateNSEvent:eventTimestamp.dateValue];
-   
     self.eventDate.text = [NSString stringWithFormat:@"%@", [formatter stringFromDate:event.date]];
     
 }

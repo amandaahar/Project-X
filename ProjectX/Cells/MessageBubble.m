@@ -26,15 +26,29 @@
     self.reactionView.layer.masksToBounds = NO;
     self.reactionView.layer.shadowPath = [UIBezierPath bezierPathWithRect:self.reactionView.bounds].CGPath;
 
+
     
     // Initialization code
 }
 
-
+-(UIView *) hitTest:(CGPoint)point withEvent:(UIEvent *)event {
+    CGPoint myPoint = [self convertPoint:point toView:self.bubbleView];
+    CGFloat pointOriginXReactionView = self.bubbleView.frame.size.width - 26;
+    CGFloat pointOriginYReactionView = self.bubbleView.frame.size.height - 15;
+    
+    if(myPoint.x > pointOriginXReactionView && myPoint.x < pointOriginXReactionView + 46 && myPoint.y > pointOriginYReactionView && myPoint.y < pointOriginYReactionView + 31){
+        return self.reactionButton;
+    }
+    return [super hitTest:point withEvent:event];
+    
+}
+- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event{
+    return NO;
+}
 
 -(void) showIncomingMessage : (Message *) message
 {
-   
+
     self.message = message;
     self.nameLabel.text = message.nameOfSender;
     //[self.bubbleLabel setText:message.text];
@@ -98,7 +112,6 @@
     self.bubbleView.isIncoming = NO;
      self.bubbleView.outgoingColor = [UIColor colorWithRed:0.09 green:0.54 blue:1 alpha:1];
     [self.bubbleView setNeedsDisplay];
-   
     [self.bubbleLabel setTextAlignment:(NSTextAlignmentRight)];
    [self sizeToFit];
 }

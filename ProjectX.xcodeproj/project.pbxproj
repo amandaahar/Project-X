@@ -23,7 +23,10 @@
 		0E83769522F9ECFC009B9007 /* LocationViewObjC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E83769222F9ECFC009B9007 /* LocationViewObjC.m */; };
 		0ECF088922DE791300F5A8AA /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ECF088822DE791300F5A8AA /* SignUpViewController.m */; };
 		0ECF088D22DE792900F5A8AA /* LogInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ECF088C22DE792900F5A8AA /* LogInViewController.m */; };
+		3736B86FE6020E2D1CF38631 /* Pods_Siri.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DEDEFD8E00105C0890C26EE /* Pods_Siri.framework */; };
+		39D8FE143C5457B7FAC3CFE0 /* Pods_Widget.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FFFBFAF48AD4B5199B2AF2C /* Pods_Widget.framework */; };
 		558AC6CB925C399045621CBD /* Pods_ProjectXUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BE1B1413891FCA15B877BED /* Pods_ProjectXUITests.framework */; };
+		5EB3122F3B00EE856116867B /* Pods_SiriUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AF124CC4DDCD9948253DD77 /* Pods_SiriUI.framework */; };
 		85D5981A85E52C8F80BF99CB /* Pods_ProjectXTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A991AEFE13FFA4A8E1BA78BE /* Pods_ProjectXTests.framework */; };
 		DE3FD48BBBE23AB1FA99601B /* Pods_ProjectX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3733E797CED29363A59F0225 /* Pods_ProjectX.framework */; };
 		E703B94422F248DD00C63563 /* EditProfileTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E703B94222F248DD00C63563 /* EditProfileTableViewCell.m */; };
@@ -51,6 +54,29 @@
 		E7BA0FFD22EB67B900467978 /* InterestsCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E7BA0FFC22EB67B900467978 /* InterestsCollectionViewCell.m */; };
 		E7DC006A22F0E4E2007DD911 /* ProfileHeaderCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = E7DC006922F0E4E2007DD911 /* ProfileHeaderCollectionReusableView.m */; };
 		EA06399222EA1E0B0070AF46 /* DetailHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA06399122EA1E0B0070AF46 /* DetailHomeViewController.m */; };
+		EA07F9B022F894AC0095A6A6 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = EA07F9AF22F894AC0095A6A6 /* Reachability.m */; };
+		EA07F9B922F8B3970095A6A6 /* IntentHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EA07F9B822F8B3970095A6A6 /* IntentHandler.m */; };
+		EA07F9C122F8B3970095A6A6 /* IntentsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA07F9C022F8B3970095A6A6 /* IntentsUI.framework */; };
+		EA07F9C522F8B3970095A6A6 /* IntentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA07F9C422F8B3970095A6A6 /* IntentViewController.m */; };
+		EA07F9C822F8B3970095A6A6 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA07F9C622F8B3970095A6A6 /* MainInterface.storyboard */; };
+		EA07F9CC22F8B3970095A6A6 /* SiriUI.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = EA07F9BF22F8B3970095A6A6 /* SiriUI.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		EA07F9CF22F8B3970095A6A6 /* Siri.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = EA07F9B522F8B3970095A6A6 /* Siri.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		EA07F9D922F8BF1C0095A6A6 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = EA07F9D822F8BF1C0095A6A6 /* Intents.intentdefinition */; };
+		EA07F9DE22F8C30B0095A6A6 /* EventsAroundIntentHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EA07F9DD22F8C30B0095A6A6 /* EventsAroundIntentHandler.m */; };
+		EA07F9DF22F8C5C50095A6A6 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = EA07F9D822F8BF1C0095A6A6 /* Intents.intentdefinition */; };
+		EA07F9E022F8C5C50095A6A6 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = EA07F9D822F8BF1C0095A6A6 /* Intents.intentdefinition */; };
+		EA07F9E122F8E3380095A6A6 /* EventAPI.h in Sources */ = {isa = PBXBuildFile; fileRef = E77FCBFD22E0DFF100A4E3AC /* EventAPI.h */; };
+		EA07F9E222F8E3380095A6A6 /* EventAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = E77FCBFC22E0DFF100A4E3AC /* EventAPI.m */; };
+		EA07F9E322F8E6F50095A6A6 /* Reachability.h in Sources */ = {isa = PBXBuildFile; fileRef = EA07F9AE22F8948E0095A6A6 /* Reachability.h */; };
+		EA07F9E422F8E6F50095A6A6 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = EA07F9AF22F894AC0095A6A6 /* Reachability.m */; };
+		EA07F9E522F93F230095A6A6 /* EventAPI.h in Sources */ = {isa = PBXBuildFile; fileRef = E77FCBFD22E0DFF100A4E3AC /* EventAPI.h */; };
+		EA07F9E622F93F230095A6A6 /* EventAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = E77FCBFC22E0DFF100A4E3AC /* EventAPI.m */; };
+		EA07F9E722F93F390095A6A6 /* Reachability.h in Sources */ = {isa = PBXBuildFile; fileRef = EA07F9AE22F8948E0095A6A6 /* Reachability.h */; };
+		EA07F9E822F93F390095A6A6 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = EA07F9AF22F894AC0095A6A6 /* Reachability.m */; };
+		EA07F9E922F9404D0095A6A6 /* HomeFeedTableViewCell.h in Sources */ = {isa = PBXBuildFile; fileRef = EA3A502122E0F2FC004F2FFD /* HomeFeedTableViewCell.h */; };
+		EA07F9EA22F9404D0095A6A6 /* HomeFeedTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3A502222E0F2FC004F2FFD /* HomeFeedTableViewCell.m */; };
+		EA07F9EB22F9404D0095A6A6 /* HomeFeedTableViewCell.xib in Sources */ = {isa = PBXBuildFile; fileRef = EA3A502322E0F2FC004F2FFD /* HomeFeedTableViewCell.xib */; };
+		EA07F9EE22F9F2230095A6A6 /* AppColors.m in Sources */ = {isa = PBXBuildFile; fileRef = EA07F9ED22F9F2230095A6A6 /* AppColors.m */; };
 		EA3A502422E0F2FC004F2FFD /* HomeFeedTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3A502222E0F2FC004F2FFD /* HomeFeedTableViewCell.m */; };
 		EA3A502522E0F2FC004F2FFD /* HomeFeedTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA3A502322E0F2FC004F2FFD /* HomeFeedTableViewCell.xib */; };
 		EA54ECE622DE3F3800D0D7A2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EA54ECE522DE3F3800D0D7A2 /* AppDelegate.m */; };
@@ -79,11 +105,49 @@
 		EA73F84122E6B96500385689 /* BubbleView.m in Sources */ = {isa = PBXBuildFile; fileRef = EA73F84022E6B96500385689 /* BubbleView.m */; };
 		EA949E7A22EA5BF200263E1B /* MapAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = EA949E7922EA5BF200263E1B /* MapAnnotation.m */; };
 		EAEFFD7222F2250D0079E3D7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAEFFD7122F2250D0079E3D7 /* QuartzCore.framework */; };
-		EAEFFD7422F3AAC10079E3D7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EAEFFD7322F3AAC10079E3D7 /* GoogleService-Info.plist */; };
 		EAEFFD7622F4C6EC0079E3D7 /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAEFFD7522F4C6EB0079E3D7 /* LocalAuthentication.framework */; };
+		EAEFFD8022F806CB0079E3D7 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAEFFD7F22F806CB0079E3D7 /* NotificationCenter.framework */; };
+		EAEFFD8422F806CB0079E3D7 /* TodayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAEFFD8322F806CB0079E3D7 /* TodayViewController.m */; };
+		EAEFFD8722F806CB0079E3D7 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAEFFD8522F806CB0079E3D7 /* MainInterface.storyboard */; };
+		EAEFFD8B22F806CB0079E3D7 /* Widget.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = EAEFFD7E22F806CB0079E3D7 /* Widget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		EAEFFD9522F80CA30079E3D7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EAEFFD9422F80CA30079E3D7 /* GoogleService-Info.plist */; };
+		EAEFFD9622F80CA30079E3D7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EAEFFD9422F80CA30079E3D7 /* GoogleService-Info.plist */; };
+		EAEFFD9722F812C70079E3D7 /* EventAPI.h in Frameworks */ = {isa = PBXBuildFile; fileRef = E77FCBFD22E0DFF100A4E3AC /* EventAPI.h */; };
+		EAEFFD9822F812C70079E3D7 /* EventAPI.m in Frameworks */ = {isa = PBXBuildFile; fileRef = E77FCBFC22E0DFF100A4E3AC /* EventAPI.m */; };
+		EAEFFD9922F813AB0079E3D7 /* EventAPI.h in Sources */ = {isa = PBXBuildFile; fileRef = E77FCBFD22E0DFF100A4E3AC /* EventAPI.h */; };
+		EAEFFD9A22F813AB0079E3D7 /* EventAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = E77FCBFC22E0DFF100A4E3AC /* EventAPI.m */; };
+		EAEFFD9B22F8140B0079E3D7 /* HomeFeedTableViewCell.h in Sources */ = {isa = PBXBuildFile; fileRef = EA3A502122E0F2FC004F2FFD /* HomeFeedTableViewCell.h */; };
+		EAEFFD9C22F8140B0079E3D7 /* HomeFeedTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3A502222E0F2FC004F2FFD /* HomeFeedTableViewCell.m */; };
+		EAEFFD9D22F8140B0079E3D7 /* HomeFeedTableViewCell.xib in Sources */ = {isa = PBXBuildFile; fileRef = EA3A502322E0F2FC004F2FFD /* HomeFeedTableViewCell.xib */; };
+		EAEFFD9E22F814600079E3D7 /* FirebaseManager.h in Sources */ = {isa = PBXBuildFile; fileRef = E7A6133222E184EF00030D44 /* FirebaseManager.h */; };
+		EAEFFD9F22F814600079E3D7 /* FirebaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EA54ED2722DEE23900D0D7A2 /* FirebaseManager.m */; };
+		EAEFFDA022F814600079E3D7 /* APIEventsManager.h in Sources */ = {isa = PBXBuildFile; fileRef = EA54ED2C22DFBA2700D0D7A2 /* APIEventsManager.h */; };
+		EAEFFDA122F814600079E3D7 /* APIEventsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EA54ED2D22DFBA2700D0D7A2 /* APIEventsManager.m */; };
+		EAEFFDA222F8158A0079E3D7 /* Message.h in Sources */ = {isa = PBXBuildFile; fileRef = E76311B922E241BB00A1B674 /* Message.h */; };
+		EAEFFDA322F8158A0079E3D7 /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = E76311BA22E241BB00A1B674 /* Message.m */; };
+		EAEFFDA422F815AB0079E3D7 /* User.h in Sources */ = {isa = PBXBuildFile; fileRef = EA54ED1F22DE819900D0D7A2 /* User.h */; };
+		EAEFFDA522F815AB0079E3D7 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = EA54ED2022DE819900D0D7A2 /* User.m */; };
+		EAEFFDA622F815AB0079E3D7 /* Event.h in Sources */ = {isa = PBXBuildFile; fileRef = EA54ED2322DE9E3600D0D7A2 /* Event.h */; };
+		EAEFFDA722F815AB0079E3D7 /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = EA54ED2422DE9E3600D0D7A2 /* Event.m */; };
+		EAEFFDA822F815E80079E3D7 /* TranslatorManager.h in Sources */ = {isa = PBXBuildFile; fileRef = EA7078F522EBA43100D41CD1 /* TranslatorManager.h */; };
+		EAEFFDA922F815E80079E3D7 /* TranslatorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EA7078F622EBA43100D41CD1 /* TranslatorManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		EA07F9CA22F8B3970095A6A6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EA54ECD922DE3F3800D0D7A2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EA07F9BE22F8B3970095A6A6;
+			remoteInfo = SiriUI;
+		};
+		EA07F9CD22F8B3970095A6A6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EA54ECD922DE3F3800D0D7A2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EA07F9B422F8B3970095A6A6;
+			remoteInfo = Siri;
+		};
 		EA54ECFD22DE3F3900D0D7A2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = EA54ECD922DE3F3800D0D7A2 /* Project object */;
@@ -98,9 +162,34 @@
 			remoteGlobalIDString = EA54ECE022DE3F3800D0D7A2;
 			remoteInfo = ProjectX;
 		};
+		EAEFFD8922F806CB0079E3D7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EA54ECD922DE3F3800D0D7A2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EAEFFD7D22F806CB0079E3D7;
+			remoteInfo = Widget;
+		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		EAEFFD8F22F806CB0079E3D7 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				EAEFFD8B22F806CB0079E3D7 /* Widget.appex in Embed App Extensions */,
+				EA07F9CF22F8B3970095A6A6 /* Siri.appex in Embed App Extensions */,
+				EA07F9CC22F8B3970095A6A6 /* SiriUI.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		0AF124CC4DDCD9948253DD77 /* Pods_SiriUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SiriUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0DEDEFD8E00105C0890C26EE /* Pods_Siri.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Siri.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E496C0522E1345200DEF38C /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		0E496C0722E285AA00DEF38C /* CreateEventViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CreateEventViewController.h; sourceTree = "<group>"; };
 		0E496C0822E285AA00DEF38C /* CreateEventViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CreateEventViewController.m; sourceTree = "<group>"; };
@@ -121,8 +210,14 @@
 		0ECF088B22DE792900F5A8AA /* LogInViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LogInViewController.h; sourceTree = "<group>"; };
 		0ECF088C22DE792900F5A8AA /* LogInViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LogInViewController.m; sourceTree = "<group>"; };
 		15E6CCC1814A84FA21FEA121 /* Pods-ProjectX.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProjectX.debug.xcconfig"; path = "Target Support Files/Pods-ProjectX/Pods-ProjectX.debug.xcconfig"; sourceTree = "<group>"; };
+		1E6BD26462B11A62A724E43C /* Pods-SiriUI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SiriUI.debug.xcconfig"; path = "Target Support Files/Pods-SiriUI/Pods-SiriUI.debug.xcconfig"; sourceTree = "<group>"; };
+		2FFFBFAF48AD4B5199B2AF2C /* Pods_Widget.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Widget.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3733E797CED29363A59F0225 /* Pods_ProjectX.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ProjectX.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4C524E5D60228B1F8A727B96 /* Pods-Siri.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Siri.debug.xcconfig"; path = "Target Support Files/Pods-Siri/Pods-Siri.debug.xcconfig"; sourceTree = "<group>"; };
+		55C69D9DB3F72D4F4E703EC3 /* Pods-SiriUI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SiriUI.release.xcconfig"; path = "Target Support Files/Pods-SiriUI/Pods-SiriUI.release.xcconfig"; sourceTree = "<group>"; };
 		58C2A4F841B979D31E891283 /* Pods-ProjectXTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProjectXTests.debug.xcconfig"; path = "Target Support Files/Pods-ProjectXTests/Pods-ProjectXTests.debug.xcconfig"; sourceTree = "<group>"; };
+		5F61A4F1C395344F5FEF5B3C /* Pods-Widget.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Widget.release.xcconfig"; path = "Target Support Files/Pods-Widget/Pods-Widget.release.xcconfig"; sourceTree = "<group>"; };
+		66B3CA328778E3044E47736C /* Pods-Siri.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Siri.release.xcconfig"; path = "Target Support Files/Pods-Siri/Pods-Siri.release.xcconfig"; sourceTree = "<group>"; };
 		6CECD9E907EEFEFF904D5343 /* Pods-ProjectXUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProjectXUITests.debug.xcconfig"; path = "Target Support Files/Pods-ProjectXUITests/Pods-ProjectXUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		7A78AAE3F23A2D3A1981E014 /* Pods-ProjectXTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProjectXTests.release.xcconfig"; path = "Target Support Files/Pods-ProjectXTests/Pods-ProjectXTests.release.xcconfig"; sourceTree = "<group>"; };
 		9BE1B1413891FCA15B877BED /* Pods_ProjectXUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ProjectXUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -174,6 +269,23 @@
 		E9E77B79CC960752092467B2 /* Pods-ProjectX.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProjectX.release.xcconfig"; path = "Target Support Files/Pods-ProjectX/Pods-ProjectX.release.xcconfig"; sourceTree = "<group>"; };
 		EA06399022EA1E0B0070AF46 /* DetailHomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailHomeViewController.h; sourceTree = "<group>"; };
 		EA06399122EA1E0B0070AF46 /* DetailHomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailHomeViewController.m; sourceTree = "<group>"; };
+		EA07F9AE22F8948E0095A6A6 /* Reachability.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		EA07F9AF22F894AC0095A6A6 /* Reachability.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		EA07F9B522F8B3970095A6A6 /* Siri.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = Siri.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		EA07F9B722F8B3970095A6A6 /* IntentHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IntentHandler.h; sourceTree = "<group>"; };
+		EA07F9B822F8B3970095A6A6 /* IntentHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IntentHandler.m; sourceTree = "<group>"; };
+		EA07F9BA22F8B3970095A6A6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EA07F9BF22F8B3970095A6A6 /* SiriUI.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SiriUI.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		EA07F9C022F8B3970095A6A6 /* IntentsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IntentsUI.framework; path = System/Library/Frameworks/IntentsUI.framework; sourceTree = SDKROOT; };
+		EA07F9C322F8B3970095A6A6 /* IntentViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IntentViewController.h; sourceTree = "<group>"; };
+		EA07F9C422F8B3970095A6A6 /* IntentViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IntentViewController.m; sourceTree = "<group>"; };
+		EA07F9C722F8B3970095A6A6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		EA07F9C922F8B3970095A6A6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EA07F9D822F8BF1C0095A6A6 /* Intents.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = Intents.intentdefinition; sourceTree = "<group>"; };
+		EA07F9DC22F8C30B0095A6A6 /* EventsAroundIntentHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EventsAroundIntentHandler.h; sourceTree = "<group>"; };
+		EA07F9DD22F8C30B0095A6A6 /* EventsAroundIntentHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EventsAroundIntentHandler.m; sourceTree = "<group>"; };
+		EA07F9EC22F9F2230095A6A6 /* AppColors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppColors.h; sourceTree = "<group>"; };
+		EA07F9ED22F9F2230095A6A6 /* AppColors.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppColors.m; sourceTree = "<group>"; };
 		EA3A502122E0F2FC004F2FFD /* HomeFeedTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HomeFeedTableViewCell.h; path = ProjectX/Cells/HomeFeedTableViewCell.h; sourceTree = SOURCE_ROOT; };
 		EA3A502222E0F2FC004F2FFD /* HomeFeedTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = HomeFeedTableViewCell.m; path = ProjectX/Cells/HomeFeedTableViewCell.m; sourceTree = SOURCE_ROOT; };
 		EA3A502322E0F2FC004F2FFD /* HomeFeedTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = HomeFeedTableViewCell.xib; path = ProjectX/Cells/HomeFeedTableViewCell.xib; sourceTree = SOURCE_ROOT; };
@@ -224,12 +336,38 @@
 		EA949E7822EA5BF200263E1B /* MapAnnotation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MapAnnotation.h; sourceTree = "<group>"; };
 		EA949E7922EA5BF200263E1B /* MapAnnotation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MapAnnotation.m; sourceTree = "<group>"; };
 		EAEFFD7122F2250D0079E3D7 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		EAEFFD7322F3AAC10079E3D7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		EAEFFD7522F4C6EB0079E3D7 /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
+		EAEFFD7E22F806CB0079E3D7 /* Widget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = Widget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		EAEFFD7F22F806CB0079E3D7 /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
+		EAEFFD8222F806CB0079E3D7 /* TodayViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TodayViewController.h; sourceTree = "<group>"; };
+		EAEFFD8322F806CB0079E3D7 /* TodayViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TodayViewController.m; sourceTree = "<group>"; };
+		EAEFFD8622F806CB0079E3D7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		EAEFFD8822F806CB0079E3D7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EAEFFD9022F809120079E3D7 /* ProjectX.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ProjectX.entitlements; sourceTree = "<group>"; };
+		EAEFFD9122F809A60079E3D7 /* Widget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Widget.entitlements; sourceTree = "<group>"; };
+		EAEFFD9422F80CA30079E3D7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F2287022550AC21351D6997B /* Pods-ProjectXUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProjectXUITests.release.xcconfig"; path = "Target Support Files/Pods-ProjectXUITests/Pods-ProjectXUITests.release.xcconfig"; sourceTree = "<group>"; };
+		FE6AE0EF0C052641D9BB7974 /* Pods-Widget.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Widget.debug.xcconfig"; path = "Target Support Files/Pods-Widget/Pods-Widget.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		EA07F9B222F8B3970095A6A6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3736B86FE6020E2D1CF38631 /* Pods_Siri.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EA07F9BC22F8B3970095A6A6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EA07F9C122F8B3970095A6A6 /* IntentsUI.framework in Frameworks */,
+				5EB3122F3B00EE856116867B /* Pods_SiriUI.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		EA54ECDE22DE3F3800D0D7A2 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -258,6 +396,17 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		EAEFFD7B22F806CB0079E3D7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EAEFFD9722F812C70079E3D7 /* EventAPI.h in Frameworks */,
+				EAEFFD9822F812C70079E3D7 /* EventAPI.m in Frameworks */,
+				EAEFFD8022F806CB0079E3D7 /* NotificationCenter.framework in Frameworks */,
+				39D8FE143C5457B7FAC3CFE0 /* Pods_Widget.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -273,6 +422,7 @@
 		0ECF088622DE78CB00F5A8AA /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				EAEFFD9422F80CA30079E3D7 /* GoogleService-Info.plist */,
 				0ECF088722DE791300F5A8AA /* SignUpViewController.h */,
 				0ECF088822DE791300F5A8AA /* SignUpViewController.m */,
 				0ECF088B22DE792900F5A8AA /* LogInViewController.h */,
@@ -291,10 +441,10 @@
 				E76311B722E23E8E00A1B674 /* MessagesViewController.m */,
 				0E496C0722E285AA00DEF38C /* CreateEventViewController.h */,
 				0E496C0822E285AA00DEF38C /* CreateEventViewController.m */,
-				EA73F82B22E6412A00385689 /* MainTabBarController.m */,
 				EA06399022EA1E0B0070AF46 /* DetailHomeViewController.h */,
 				EA06399122EA1E0B0070AF46 /* DetailHomeViewController.m */,
 				EA73F82A22E6412A00385689 /* MainTabBarController.h */,
+				EA73F82B22E6412A00385689 /* MainTabBarController.m */,
 				EA7078FB22ED388200D41CD1 /* LanguagesTableViewController.h */,
 				EA7078FC22ED388200D41CD1 /* LanguagesTableViewController.m */,
 				EA70790422ED648B00D41CD1 /* PreferencesViewController.h */,
@@ -320,6 +470,12 @@
 				7A78AAE3F23A2D3A1981E014 /* Pods-ProjectXTests.release.xcconfig */,
 				6CECD9E907EEFEFF904D5343 /* Pods-ProjectXUITests.debug.xcconfig */,
 				F2287022550AC21351D6997B /* Pods-ProjectXUITests.release.xcconfig */,
+				FE6AE0EF0C052641D9BB7974 /* Pods-Widget.debug.xcconfig */,
+				5F61A4F1C395344F5FEF5B3C /* Pods-Widget.release.xcconfig */,
+				4C524E5D60228B1F8A727B96 /* Pods-Siri.debug.xcconfig */,
+				66B3CA328778E3044E47736C /* Pods-Siri.release.xcconfig */,
+				1E6BD26462B11A62A724E43C /* Pods-SiriUI.debug.xcconfig */,
+				55C69D9DB3F72D4F4E703EC3 /* Pods-SiriUI.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -334,6 +490,11 @@
 				3733E797CED29363A59F0225 /* Pods_ProjectX.framework */,
 				A991AEFE13FFA4A8E1BA78BE /* Pods_ProjectXTests.framework */,
 				9BE1B1413891FCA15B877BED /* Pods_ProjectXUITests.framework */,
+				EAEFFD7F22F806CB0079E3D7 /* NotificationCenter.framework */,
+				2FFFBFAF48AD4B5199B2AF2C /* Pods_Widget.framework */,
+				EA07F9C022F8B3970095A6A6 /* IntentsUI.framework */,
+				0DEDEFD8E00105C0890C26EE /* Pods_Siri.framework */,
+				0AF124CC4DDCD9948253DD77 /* Pods_SiriUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -353,6 +514,29 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		EA07F9B622F8B3970095A6A6 /* Siri */ = {
+			isa = PBXGroup;
+			children = (
+				EA07F9B722F8B3970095A6A6 /* IntentHandler.h */,
+				EA07F9B822F8B3970095A6A6 /* IntentHandler.m */,
+				EA07F9BA22F8B3970095A6A6 /* Info.plist */,
+				EA07F9DC22F8C30B0095A6A6 /* EventsAroundIntentHandler.h */,
+				EA07F9DD22F8C30B0095A6A6 /* EventsAroundIntentHandler.m */,
+			);
+			path = Siri;
+			sourceTree = "<group>";
+		};
+		EA07F9C222F8B3970095A6A6 /* SiriUI */ = {
+			isa = PBXGroup;
+			children = (
+				EA07F9C322F8B3970095A6A6 /* IntentViewController.h */,
+				EA07F9C422F8B3970095A6A6 /* IntentViewController.m */,
+				EA07F9C622F8B3970095A6A6 /* MainInterface.storyboard */,
+				EA07F9C922F8B3970095A6A6 /* Info.plist */,
+			);
+			path = SiriUI;
+			sourceTree = "<group>";
+		};
 		EA3A502622E1006B004F2FFD /* Cells */ = {
 			isa = PBXGroup;
 			children = (
@@ -364,9 +548,9 @@
 				EA3A502322E0F2FC004F2FFD /* HomeFeedTableViewCell.xib */,
 				EA73F81022E10AE200385689 /* CategoriesCollectionViewCell.h */,
 				EA73F81122E10AE200385689 /* CategoriesCollectionViewCell.m */,
-				EA73F83B22E6848D00385689 /* MessageBubble.m */,
 				EA73F81A22E11B4700385689 /* GroupEventsTableViewCell.h */,
 				EA73F81B22E11B4700385689 /* GroupEventsTableViewCell.m */,
+				EA73F83B22E6848D00385689 /* MessageBubble.m */,
 				EA73F83A22E6848D00385689 /* MessageBubble.h */,
 				EA73F83C22E6848D00385689 /* MessageBubble.xib */,
 				E7BA0FF822EA5B2A00467978 /* PillLabel.h */,
@@ -395,6 +579,9 @@
 				EA54ECE322DE3F3800D0D7A2 /* ProjectX */,
 				EA54ECFF22DE3F3900D0D7A2 /* ProjectXTests */,
 				EA54ED0A22DE3F3900D0D7A2 /* ProjectXUITests */,
+				EAEFFD8122F806CB0079E3D7 /* Widget */,
+				EA07F9B622F8B3970095A6A6 /* Siri */,
+				EA07F9C222F8B3970095A6A6 /* SiriUI */,
 				EA54ECE222DE3F3800D0D7A2 /* Products */,
 				5896DF74C0CD26400EA79DFF /* Pods */,
 				A056C411C871EE33E69370F7 /* Frameworks */,
@@ -407,6 +594,9 @@
 				EA54ECE122DE3F3800D0D7A2 /* ProjectX.app */,
 				EA54ECFC22DE3F3900D0D7A2 /* ProjectXTests.xctest */,
 				EA54ED0722DE3F3900D0D7A2 /* ProjectXUITests.xctest */,
+				EAEFFD7E22F806CB0079E3D7 /* Widget.appex */,
+				EA07F9B522F8B3970095A6A6 /* Siri.appex */,
+				EA07F9BF22F8B3970095A6A6 /* SiriUI.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -417,6 +607,7 @@
 				0E83767C22F8E5F8009B9007 /* ProjectX.entitlements */,
 				0E83767B22F8E4D6009B9007 /* ProjectX.entitlements */,
 				0E83767A22F8C0BB009B9007 /* Sounds */,
+				EAEFFD9022F809120079E3D7 /* ProjectX.entitlements */,
 				EA73F82D22E6417B00385689 /* Helpers */,
 				EA3A502622E1006B004F2FFD /* Cells */,
 				E7AEA0BB22DFD88C00A77CC2 /* Views */,
@@ -424,13 +615,13 @@
 				0ECF088622DE78CB00F5A8AA /* ViewControllers */,
 				EA54ECE422DE3F3800D0D7A2 /* AppDelegate.h */,
 				EA54ECE522DE3F3800D0D7A2 /* AppDelegate.m */,
-				EAEFFD7322F3AAC10079E3D7 /* GoogleService-Info.plist */,
 				EA54ECEA22DE3F3800D0D7A2 /* Main.storyboard */,
 				EA54ECF022DE3F3900D0D7A2 /* Assets.xcassets */,
 				EA54ECF222DE3F3900D0D7A2 /* LaunchScreen.storyboard */,
 				EA54ECF522DE3F3900D0D7A2 /* Info.plist */,
 				EA54ECF622DE3F3900D0D7A2 /* main.m */,
 				EA54ECED22DE3F3800D0D7A2 /* ProjectX.xcdatamodeld */,
+				EA07F9D822F8BF1C0095A6A6 /* Intents.intentdefinition */,
 			);
 			path = ProjectX;
 			sourceTree = "<group>";
@@ -483,15 +674,68 @@
 		EA73F82D22E6417B00385689 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				EA73F83122E676B200385689 /* ProjectX.entitlements */,
 				EA7078F522EBA43100D41CD1 /* TranslatorManager.h */,
 				EA7078F622EBA43100D41CD1 /* TranslatorManager.m */,
+				EA07F9AE22F8948E0095A6A6 /* Reachability.h */,
+				EA07F9AF22F894AC0095A6A6 /* Reachability.m */,
+				EA07F9EC22F9F2230095A6A6 /* AppColors.h */,
+				EA07F9ED22F9F2230095A6A6 /* AppColors.m */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		EAEFFD8122F806CB0079E3D7 /* Widget */ = {
+			isa = PBXGroup;
+			children = (
+				EAEFFD9122F809A60079E3D7 /* Widget.entitlements */,
+				EAEFFD8222F806CB0079E3D7 /* TodayViewController.h */,
+				EAEFFD8322F806CB0079E3D7 /* TodayViewController.m */,
+				EAEFFD8522F806CB0079E3D7 /* MainInterface.storyboard */,
+				EAEFFD8822F806CB0079E3D7 /* Info.plist */,
+			);
+			path = Widget;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		EA07F9B422F8B3970095A6A6 /* Siri */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EA07F9D322F8B3970095A6A6 /* Build configuration list for PBXNativeTarget "Siri" */;
+			buildPhases = (
+				4382C872122B68C49D42E54E /* [CP] Check Pods Manifest.lock */,
+				EA07F9B122F8B3970095A6A6 /* Sources */,
+				EA07F9B222F8B3970095A6A6 /* Frameworks */,
+				EA07F9B322F8B3970095A6A6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Siri;
+			productName = Siri;
+			productReference = EA07F9B522F8B3970095A6A6 /* Siri.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		EA07F9BE22F8B3970095A6A6 /* SiriUI */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EA07F9D022F8B3970095A6A6 /* Build configuration list for PBXNativeTarget "SiriUI" */;
+			buildPhases = (
+				D37A7C9D442057F4C24127D0 /* [CP] Check Pods Manifest.lock */,
+				EA07F9BB22F8B3970095A6A6 /* Sources */,
+				EA07F9BC22F8B3970095A6A6 /* Frameworks */,
+				EA07F9BD22F8B3970095A6A6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SiriUI;
+			productName = SiriUI;
+			productReference = EA07F9BF22F8B3970095A6A6 /* SiriUI.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		EA54ECE022DE3F3800D0D7A2 /* ProjectX */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = EA54ED1022DE3F3900D0D7A2 /* Build configuration list for PBXNativeTarget "ProjectX" */;
@@ -501,10 +745,14 @@
 				EA54ECDE22DE3F3800D0D7A2 /* Frameworks */,
 				EA54ECDF22DE3F3800D0D7A2 /* Resources */,
 				D5CBD89732A29F01495922BC /* [CP] Embed Pods Frameworks */,
+				EAEFFD8F22F806CB0079E3D7 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				EAEFFD8A22F806CB0079E3D7 /* PBXTargetDependency */,
+				EA07F9CB22F8B3970095A6A6 /* PBXTargetDependency */,
+				EA07F9CE22F8B3970095A6A6 /* PBXTargetDependency */,
 			);
 			name = ProjectX;
 			productName = ProjectX;
@@ -549,6 +797,24 @@
 			productReference = EA54ED0722DE3F3900D0D7A2 /* ProjectXUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		EAEFFD7D22F806CB0079E3D7 /* Widget */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EAEFFD8E22F806CB0079E3D7 /* Build configuration list for PBXNativeTarget "Widget" */;
+			buildPhases = (
+				4DF114F64A4137AA1317EE24 /* [CP] Check Pods Manifest.lock */,
+				EAEFFD7A22F806CB0079E3D7 /* Sources */,
+				EAEFFD7B22F806CB0079E3D7 /* Frameworks */,
+				EAEFFD7C22F806CB0079E3D7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Widget;
+			productName = Widget;
+			productReference = EAEFFD7E22F806CB0079E3D7 /* Widget.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -558,10 +824,19 @@
 				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = Charge;
 				TargetAttributes = {
+					EA07F9B422F8B3970095A6A6 = {
+						CreatedOnToolsVersion = 10.3;
+					};
+					EA07F9BE22F8B3970095A6A6 = {
+						CreatedOnToolsVersion = 10.3;
+					};
 					EA54ECE022DE3F3800D0D7A2 = {
 						CreatedOnToolsVersion = 10.2.1;
 						LastSwiftMigration = 1030;
 						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
 							com.apple.BackgroundModes = {
 								enabled = 0;
 							};
@@ -583,6 +858,14 @@
 						LastSwiftMigration = 1030;
 						TestTargetID = EA54ECE022DE3F3800D0D7A2;
 					};
+					EAEFFD7D22F806CB0079E3D7 = {
+						CreatedOnToolsVersion = 10.3;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
+					};
 				};
 			};
 			buildConfigurationList = EA54ECDC22DE3F3800D0D7A2 /* Build configuration list for PBXProject "ProjectX" */;
@@ -601,11 +884,29 @@
 				EA54ECE022DE3F3800D0D7A2 /* ProjectX */,
 				EA54ECFB22DE3F3900D0D7A2 /* ProjectXTests */,
 				EA54ED0622DE3F3900D0D7A2 /* ProjectXUITests */,
+				EAEFFD7D22F806CB0079E3D7 /* Widget */,
+				EA07F9B422F8B3970095A6A6 /* Siri */,
+				EA07F9BE22F8B3970095A6A6 /* SiriUI */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		EA07F9B322F8B3970095A6A6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EA07F9BD22F8B3970095A6A6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EA07F9C822F8B3970095A6A6 /* MainInterface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		EA54ECDF22DE3F3800D0D7A2 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -620,7 +921,7 @@
 				0E83768222F9BA6C009B9007 /* pop_drip.wav in Resources */,
 				0E83767E22F9B9FE009B9007 /* pop_drip.aif in Resources */,
 				EA54ECEC22DE3F3800D0D7A2 /* Main.storyboard in Resources */,
-				EAEFFD7422F3AAC10079E3D7 /* GoogleService-Info.plist in Resources */,
+				EAEFFD9522F80CA30079E3D7 /* GoogleService-Info.plist in Resources */,
 				E703B94522F248DD00C63563 /* EditProfileTableViewCell.xib in Resources */,
 				E714767122F38DCB0036F541 /* InterestFieldTableViewCell.xib in Resources */,
 			);
@@ -641,6 +942,15 @@
 			files = (
 				0E83768022F9B9FE009B9007 /* pop_drip.aif in Resources */,
 				0E83768422F9BA6C009B9007 /* pop_drip.wav in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EAEFFD7C22F806CB0079E3D7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EAEFFD8722F806CB0079E3D7 /* MainInterface.storyboard in Resources */,
+				EAEFFD9622F80CA30079E3D7 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -691,6 +1001,50 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		4382C872122B68C49D42E54E /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Siri-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4DF114F64A4137AA1317EE24 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Widget-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		B752AE74FF8C560716B4C831 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -707,6 +1061,28 @@
 			);
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-ProjectX-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D37A7C9D442057F4C24127D0 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SiriUI-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -733,6 +1109,36 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		EA07F9B122F8B3970095A6A6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EA07F9E322F8E6F50095A6A6 /* Reachability.h in Sources */,
+				EA07F9E422F8E6F50095A6A6 /* Reachability.m in Sources */,
+				EA07F9E122F8E3380095A6A6 /* EventAPI.h in Sources */,
+				EA07F9E222F8E3380095A6A6 /* EventAPI.m in Sources */,
+				EA07F9DF22F8C5C50095A6A6 /* Intents.intentdefinition in Sources */,
+				EA07F9DE22F8C30B0095A6A6 /* EventsAroundIntentHandler.m in Sources */,
+				EA07F9B922F8B3970095A6A6 /* IntentHandler.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EA07F9BB22F8B3970095A6A6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EA07F9E922F9404D0095A6A6 /* HomeFeedTableViewCell.h in Sources */,
+				EA07F9EA22F9404D0095A6A6 /* HomeFeedTableViewCell.m in Sources */,
+				EA07F9EB22F9404D0095A6A6 /* HomeFeedTableViewCell.xib in Sources */,
+				EA07F9E722F93F390095A6A6 /* Reachability.h in Sources */,
+				EA07F9E822F93F390095A6A6 /* Reachability.m in Sources */,
+				EA07F9E522F93F230095A6A6 /* EventAPI.h in Sources */,
+				EA07F9E622F93F230095A6A6 /* EventAPI.m in Sources */,
+				EA07F9E022F8C5C50095A6A6 /* Intents.intentdefinition in Sources */,
+				EA07F9C522F8B3970095A6A6 /* IntentViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		EA54ECDD22DE3F3800D0D7A2 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -761,6 +1167,7 @@
 				E76311C022E2746400A1B674 /* topCollectionViewCell.m in Sources */,
 				E76311BB22E241BB00A1B674 /* Message.m in Sources */,
 				E714767022F38DCB0036F541 /* InterestFieldTableViewCell.m in Sources */,
+				EA07F9D922F8BF1C0095A6A6 /* Intents.intentdefinition in Sources */,
 				E714766B22F349A00036F541 /* InterestCollectionViewCell.m in Sources */,
 				EA3A502422E0F2FC004F2FFD /* HomeFeedTableViewCell.m in Sources */,
 				EA7078F722EBA43100D41CD1 /* TranslatorManager.m in Sources */,
@@ -773,10 +1180,12 @@
 				0ECF088922DE791300F5A8AA /* SignUpViewController.m in Sources */,
 				E7BA0FFA22EA5B2A00467978 /* PillLabel.m in Sources */,
 				E76311C322E2768800A1B674 /* MessageTableViewCell.m in Sources */,
+				EA07F9B022F894AC0095A6A6 /* Reachability.m in Sources */,
 				E7AEA0A622DE8A8E00A77CC2 /* ProfileViewController.m in Sources */,
 				EA54ECEF22DE3F3800D0D7A2 /* ProjectX.xcdatamodeld in Sources */,
 				E7BA0FFD22EB67B900467978 /* InterestsCollectionViewCell.m in Sources */,
 				EA73F84122E6B96500385689 /* BubbleView.m in Sources */,
+				EA07F9EE22F9F2230095A6A6 /* AppColors.m in Sources */,
 				0E496C0922E285AA00DEF38C /* CreateEventViewController.m in Sources */,
 				EA54ED2522DE9E3600D0D7A2 /* Event.m in Sources */,
 				E7AEA0BA22DFCC3A00A77CC2 /* Chat.m in Sources */,
@@ -804,9 +1213,44 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		EAEFFD7A22F806CB0079E3D7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EAEFFDA822F815E80079E3D7 /* TranslatorManager.h in Sources */,
+				EAEFFDA922F815E80079E3D7 /* TranslatorManager.m in Sources */,
+				EAEFFDA422F815AB0079E3D7 /* User.h in Sources */,
+				EAEFFDA522F815AB0079E3D7 /* User.m in Sources */,
+				EAEFFDA622F815AB0079E3D7 /* Event.h in Sources */,
+				EAEFFDA722F815AB0079E3D7 /* Event.m in Sources */,
+				EAEFFDA222F8158A0079E3D7 /* Message.h in Sources */,
+				EAEFFDA322F8158A0079E3D7 /* Message.m in Sources */,
+				EAEFFD9E22F814600079E3D7 /* FirebaseManager.h in Sources */,
+				EAEFFD9F22F814600079E3D7 /* FirebaseManager.m in Sources */,
+				EAEFFDA022F814600079E3D7 /* APIEventsManager.h in Sources */,
+				EAEFFDA122F814600079E3D7 /* APIEventsManager.m in Sources */,
+				EAEFFD9B22F8140B0079E3D7 /* HomeFeedTableViewCell.h in Sources */,
+				EAEFFD9C22F8140B0079E3D7 /* HomeFeedTableViewCell.m in Sources */,
+				EAEFFD9D22F8140B0079E3D7 /* HomeFeedTableViewCell.xib in Sources */,
+				EAEFFD9922F813AB0079E3D7 /* EventAPI.h in Sources */,
+				EAEFFD9A22F813AB0079E3D7 /* EventAPI.m in Sources */,
+				EAEFFD8422F806CB0079E3D7 /* TodayViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		EA07F9CB22F8B3970095A6A6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EA07F9BE22F8B3970095A6A6 /* SiriUI */;
+			targetProxy = EA07F9CA22F8B3970095A6A6 /* PBXContainerItemProxy */;
+		};
+		EA07F9CE22F8B3970095A6A6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EA07F9B422F8B3970095A6A6 /* Siri */;
+			targetProxy = EA07F9CD22F8B3970095A6A6 /* PBXContainerItemProxy */;
+		};
 		EA54ECFE22DE3F3900D0D7A2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = EA54ECE022DE3F3800D0D7A2 /* ProjectX */;
@@ -817,9 +1261,22 @@
 			target = EA54ECE022DE3F3800D0D7A2 /* ProjectX */;
 			targetProxy = EA54ED0822DE3F3900D0D7A2 /* PBXContainerItemProxy */;
 		};
+		EAEFFD8A22F806CB0079E3D7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EAEFFD7D22F806CB0079E3D7 /* Widget */;
+			targetProxy = EAEFFD8922F806CB0079E3D7 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		EA07F9C622F8B3970095A6A6 /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EA07F9C722F8B3970095A6A6 /* Base */,
+			);
+			name = MainInterface.storyboard;
+			sourceTree = "<group>";
+		};
 		EA54ECEA22DE3F3800D0D7A2 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -836,9 +1293,101 @@
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
+		EAEFFD8522F806CB0079E3D7 /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EAEFFD8622F806CB0079E3D7 /* Base */,
+			);
+			name = MainInterface.storyboard;
+			sourceTree = "<group>";
+		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		EA07F9D122F8B3970095A6A6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1E6BD26462B11A62A724E43C /* Pods-SiriUI.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = XYQR9G9T5T;
+				INFOPLIST_FILE = SiriUI/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.fb.ProjectX.SiriUI;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		EA07F9D222F8B3970095A6A6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 55C69D9DB3F72D4F4E703EC3 /* Pods-SiriUI.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = XYQR9G9T5T;
+				INFOPLIST_FILE = SiriUI/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.fb.ProjectX.SiriUI;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		EA07F9D422F8B3970095A6A6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4C524E5D60228B1F8A727B96 /* Pods-Siri.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = XYQR9G9T5T;
+				INFOPLIST_FILE = Siri/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.fb.ProjectX.Siri;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		EA07F9D522F8B3970095A6A6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 66B3CA328778E3044E47736C /* Pods-Siri.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = XYQR9G9T5T;
+				INFOPLIST_FILE = Siri/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.fb.ProjectX.Siri;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		EA54ED0E22DE3F3900D0D7A2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1094,9 +1643,71 @@
 			};
 			name = Release;
 		};
+		EAEFFD8C22F806CB0079E3D7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FE6AE0EF0C052641D9BB7974 /* Pods-Widget.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Widget/Widget.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = XYQR9G9T5T;
+				INFOPLIST_FILE = Widget/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.fb.ProjectX.Widget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		EAEFFD8D22F806CB0079E3D7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5F61A4F1C395344F5FEF5B3C /* Pods-Widget.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Widget/Widget.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = XYQR9G9T5T;
+				INFOPLIST_FILE = Widget/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.fb.ProjectX.Widget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		EA07F9D022F8B3970095A6A6 /* Build configuration list for PBXNativeTarget "SiriUI" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EA07F9D122F8B3970095A6A6 /* Debug */,
+				EA07F9D222F8B3970095A6A6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EA07F9D322F8B3970095A6A6 /* Build configuration list for PBXNativeTarget "Siri" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EA07F9D422F8B3970095A6A6 /* Debug */,
+				EA07F9D522F8B3970095A6A6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		EA54ECDC22DE3F3800D0D7A2 /* Build configuration list for PBXProject "ProjectX" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -1129,6 +1740,15 @@
 			buildConfigurations = (
 				EA54ED1722DE3F3900D0D7A2 /* Debug */,
 				EA54ED1822DE3F3900D0D7A2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EAEFFD8E22F806CB0079E3D7 /* Build configuration list for PBXNativeTarget "Widget" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EAEFFD8C22F806CB0079E3D7 /* Debug */,
+				EAEFFD8D22F806CB0079E3D7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

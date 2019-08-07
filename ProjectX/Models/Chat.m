@@ -88,12 +88,19 @@
 
 
 
-
+//
 //-(BOOL) isExpired {
 //    NSDate *today = [NSDate date];
+//    NSDate *eventDate = [[NSDate alloc] init];
+//    [self getEventForChat:^(Event * _Nonnull event, NSError * _Nonnull error) {
+//        if (error != nil) {
+//            NSLog(@"error getting event for chat%@", error);
+//        } else {
+//        }
+//    }]
 //    if ([today compare:self.] == NSOrderedDescending) {
 //       //  NSLog(@"comparison result %d", [self.createdAt compare:self.endAt] == NSOrderedDescending);
-//        
+//
 //        return YES;
 //    } else {
 //        return NO;

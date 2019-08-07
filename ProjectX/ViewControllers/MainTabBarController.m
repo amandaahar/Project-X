@@ -7,7 +7,7 @@
 //
 
 #import "MainTabBarController.h"
-
+#import "../Helpers/AppColors.h"
 @interface MainTabBarController () <UITabBarControllerDelegate>
 
 @end
@@ -19,6 +19,10 @@
     self.delegate = self;
     // Do any additional setup after loading the view.
     
+    self.tabBar.barTintColor = [[AppColors sharedManager] getAlpha15];
+    [self.tabBar setTintColor:[UIColor whiteColor]];
+    [self.tabBar setTranslucent: YES];
+   
     
 }
 

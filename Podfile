@@ -29,5 +29,13 @@ target 'ProjectX' do
     inherit! :search_paths
     # Pods for testing
   end
-
+  target 'Widget' do
+    inherit! :search_paths
+  end
+  target 'Siri' do
+	inherit! :search_paths
+  end
+  target 'SiriUI' do
+    inherit! :search_paths
+  end
 end

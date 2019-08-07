@@ -76,11 +76,16 @@
             eventAnnotation.coordinate = location.center;
             [self.mapView addAnnotation:eventAnnotation];
             
+            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+            [formatter setDateFormat:@"MMM d, h:mm a"];
+            self.eventDate.text = [NSString stringWithFormat:@"%@", [formatter stringFromDate:myEvent.date]];
+            /*
             FIRTimestamp *eventTimestamp = myEvent.date;
             [self setDateNSEvent:eventTimestamp.dateValue];
             NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
             [formatter setDateFormat:@"MMM d, h:mm a"];
             self.eventDate.text = [NSString stringWithFormat:@"%@", [formatter stringFromDate:self.dateNSEvent]];
+             */
         }
     }];
     

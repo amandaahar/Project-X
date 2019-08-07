@@ -11,6 +11,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+//@protocol changeInfoDelegate <NSObject>
+//
+//- (void)firstNameChanged: (NSString *) firstName;
+//- (void)lastNameChanged: (NSString *) lastName;
+//- (void)bioChanged: (NSString *) bio;
+//
+//@end
 @interface EditProfileTableViewCell : UITableViewCell <UITextFieldDelegate>
 
 + (NSNumber *)recommendedHeight;
@@ -20,6 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet MFTextField *bio;
 @property (weak, nonatomic) IBOutlet UIButton *changePhotoButton;
 @property (weak, nonatomic) NSString *profileViewImageString;
+
 
 @end
 

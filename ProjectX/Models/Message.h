@@ -22,6 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(strong, nonatomic) NSString *userID;
 @property(strong, nonatomic) NSString *language;
 @property (strong, nonatomic) NSString *idMessage;
+@property (strong, nonatomic) NSArray *peopleLiked;
 @property (assign, nonatomic) BOOL liked;
 
 -(instancetype) initWithDictionary:(NSDictionary *)dictionary andID: (NSString *) idMessage;
