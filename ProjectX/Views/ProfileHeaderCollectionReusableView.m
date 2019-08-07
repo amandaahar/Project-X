@@ -8,11 +8,14 @@
 
 #import "ProfileHeaderCollectionReusableView.h"
 
+
 @interface ProfileHeaderCollectionReusableView()
 @property (weak, nonatomic) IBOutlet UIImageView *profileImage;
 @property (weak, nonatomic) IBOutlet UILabel *name;
 @property (weak, nonatomic) IBOutlet UILabel *username;
 @property (weak, nonatomic) IBOutlet UILabel *bio;
+@property (weak, nonatomic) IBOutlet PillLabel *followLabel;
+@property (weak, nonatomic) IBOutlet PillLabel *messageLabel;
 
 
 @end
@@ -37,6 +40,10 @@
 
 - (void) setBioText:(NSString *)bio {
     self.bio.text = bio;
+}
+
+- (PillLabel *)getFollowLabel {
+    return self.followLabel;
 }
 
 @end

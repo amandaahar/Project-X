@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "UIImageView+AFNetworking.h"
+#import "PillLabel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -20,6 +21,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void) setUsernameText:(NSString *)username;
 
 - (void) setBioText:(NSString *)bio;
+
+- (PillLabel *)getFollowLabel;
 
 @end
 

@@ -13,6 +13,7 @@
 #import "../AppDelegate.h"
 #import "../Models/FirebaseManager.h"
 #import "ProfileHeaderCollectionReusableView.h"
+#import "AppColors.h"
 
 @import Firebase;
 @import SAMKeychain;
@@ -67,23 +68,6 @@
         {
             self.currentUser = user;
             
-//            NSLog(@"current user %@",user.username);
-//
-//            self.nameText.text = [[self.currentUser.firstName stringByAppendingString:@" "] stringByAppendingString:self.currentUser.lastName];
-//            self.username.text = [self.username.text stringByAppendingString:self.currentUser.username];
-//            self.bioText.text = self.currentUser.bio;
-//            //[self setImage:self.currentUser.profileImageURL];
-//
-//            self.profilePictureImage.layer.cornerRadius = self.profilePictureImage.frame.size.height / 2;
-//            self.profilePictureImage.layer.masksToBounds = YES;
-//
-//            for (NSDictionary *category in self.currentUser.preferences) {
-//                // NSString *interestsString = [[NSString alloc] init];
-//                // self.preferences.text = @"";
-//                //self.preferences.text = [[self.preferences.text stringByAppendingString:@" "] stringByAppendingString:category[@"short_name"]];
-//
-//
-//            }
             [self.interestsCollectionView reloadData];
         }
     }];
@@ -170,6 +154,7 @@
     
     [reusableView setProfileImageWithURL:self.currentUser.profileImageURL];
     [reusableView setNameText:[[self.currentUser.firstName stringByAppendingString:@" "] stringByAppendingString:self.currentUser.lastName]];
+    [reusableView getFollowLabel].backgroundColor = [[AppColors sharedManager] getLightBlue];
     NSString *atSymbol = @"@";
     if(self.currentUser.username != nil){
         NSString *usernameText = [atSymbol stringByAppendingString:self.currentUser.username];

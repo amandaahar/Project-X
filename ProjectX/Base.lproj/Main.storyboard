@@ -1451,13 +1451,6 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="356"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="blueGradient" translatesAutoresizingMaskIntoConstraints="NO" id="gwy-bI-TZd">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="287"/>
-                                            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="287" id="e3v-ng-dC5"/>
-                                            </constraints>
-                                        </imageView>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="pix-av-Cx4">
                                             <rect key="frame" x="137.5" y="58" width="100" height="100"/>
                                             <constraints>
@@ -1489,6 +1482,20 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Follow" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ci5-Bm-t9v" customClass="PillLabel">
+                                            <rect key="frame" x="96" y="250" width="92" height="33"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AXq-Ho-IBq" customClass="PillLabel">
+                                            <rect key="frame" x="209" y="254" width="74" height="29"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                     <constraints>
                                         <constraint firstAttribute="trailingMargin" secondItem="yMJ-f8-k6j" secondAttribute="trailing" constant="8" id="1fS-cu-mRX"/>
@@ -1504,18 +1511,17 @@
                                         <constraint firstItem="o6L-wR-HZT" firstAttribute="leading" secondItem="LbL-sJ-0qo" secondAttribute="leadingMargin" constant="8" id="QIN-fO-f9Q"/>
                                         <constraint firstItem="MTp-Kr-3Nk" firstAttribute="leading" secondItem="LbL-sJ-0qo" secondAttribute="leading" constant="150" id="SHj-Wv-xQ9"/>
                                         <constraint firstItem="o6L-wR-HZT" firstAttribute="top" secondItem="bC9-UX-zST" secondAttribute="bottom" constant="5" id="XqE-vN-y6v"/>
-                                        <constraint firstItem="gwy-bI-TZd" firstAttribute="leading" secondItem="LbL-sJ-0qo" secondAttribute="leading" id="aSr-UN-ktp"/>
-                                        <constraint firstItem="MTp-Kr-3Nk" firstAttribute="top" secondItem="gwy-bI-TZd" secondAttribute="bottom" constant="20" id="amu-bn-yyT"/>
                                         <constraint firstItem="pix-av-Cx4" firstAttribute="top" secondItem="LbL-sJ-0qo" secondAttribute="topMargin" constant="50" id="avH-pI-7Hr"/>
                                         <constraint firstItem="yMJ-f8-k6j" firstAttribute="top" secondItem="o6L-wR-HZT" secondAttribute="bottom" constant="8" id="lV4-7W-zFw"/>
                                         <constraint firstAttribute="bottom" secondItem="MTp-Kr-3Nk" secondAttribute="bottom" constant="25" id="loi-jQ-4Rt"/>
                                         <constraint firstItem="pix-av-Cx4" firstAttribute="centerX" secondItem="LbL-sJ-0qo" secondAttribute="centerX" id="pKK-h9-2qg"/>
                                         <constraint firstItem="o6L-wR-HZT" firstAttribute="centerX" secondItem="LbL-sJ-0qo" secondAttribute="centerX" id="t42-On-AQW"/>
                                         <constraint firstItem="bC9-UX-zST" firstAttribute="centerX" secondItem="LbL-sJ-0qo" secondAttribute="centerX" id="tkQ-Mk-rKL"/>
-                                        <constraint firstItem="gwy-bI-TZd" firstAttribute="centerX" secondItem="pix-av-Cx4" secondAttribute="centerX" id="wow-7O-BXO"/>
                                     </constraints>
                                     <connections>
                                         <outlet property="bio" destination="yMJ-f8-k6j" id="9O4-e8-Eal"/>
+                                        <outlet property="followLabel" destination="ci5-Bm-t9v" id="Ucg-RV-pmf"/>
+                                        <outlet property="messageLabel" destination="AXq-Ho-IBq" id="toY-sw-g9e"/>
                                         <outlet property="name" destination="bC9-UX-zST" id="LgA-Ce-NBB"/>
                                         <outlet property="profileImage" destination="pix-av-Cx4" id="Pug-d9-Ean"/>
                                         <outlet property="username" destination="o6L-wR-HZT" id="FwS-al-xff"/>
@@ -1652,7 +1658,6 @@
     <resources>
         <image name="account" width="24" height="24"/>
         <image name="back" width="24" height="24"/>
-        <image name="blueGradient" width="424" height="161"/>
         <image name="chat" width="24" height="24"/>
         <image name="explore" width="24" height="24"/>
         <image name="home" width="24" height="24"/>
