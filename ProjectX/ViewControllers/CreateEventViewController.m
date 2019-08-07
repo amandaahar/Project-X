@@ -12,6 +12,7 @@
 #import "../Models/FirebaseManager.h"
 #import "MFTextField.h"
 #import "User.h"
+#import <AVFoundation/AVAudioPlayer.h>
 @import Firebase;
 
 @interface CreateEventViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
@@ -31,6 +32,7 @@
 @property (nonatomic, readwrite) FIRFirestore *db;
 @property (strong, nonatomic) NSString *eventID;
 @property (strong, nonatomic) User *currentUser;
+@property (strong,nonatomic) AVAudioPlayer *audioPlayer;
 
 @end
 
@@ -70,6 +72,11 @@ UIDatePicker *datePicker;
 #pragma mark - Event Image
 
 - (IBAction)OpenCameraButton:(id)sender {
+    
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"pop_drip" ofType:@"wav"];
+    NSURL *soundUrl = [NSURL fileURLWithPath:path];
+    self.audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundUrl error:nil];
+    self.audioPlayer.play;
     
     UIImagePickerController *imagePickerVC = [UIImagePickerController new];
     imagePickerVC.delegate = self;
@@ -153,6 +160,11 @@ UIDatePicker *datePicker;
 
 - (IBAction)chooseCategory:(id)sender {
 
+    UINotificationFeedbackGenerator *myGen = [[UINotificationFeedbackGenerator alloc] init];
+    [myGen prepare];
+    [myGen notificationOccurred:(UINotificationFeedbackTypeError)];
+    myGen = NULL;
+    
     NSNumber *storeCategory = [[NSNumber alloc]init];
     
     if(self.segmentedControl.selectedSegmentIndex == 0){
@@ -185,6 +197,11 @@ UIDatePicker *datePicker;
 
 
 - (IBAction)didTapCreate:(id)sender {
+    
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"pop_drip" ofType:@"wav"];
+    NSURL *soundUrl = [NSURL fileURLWithPath:path];
+    self.audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundUrl error:nil];
+    self.audioPlayer.play;
     
     if (![self validateFields]) {
         return;
@@ -266,6 +283,11 @@ UIDatePicker *datePicker;
 #pragma mark - Done creating
 
 - (IBAction)didTapCancel:(id)sender {
+    
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"pop_drip" ofType:@"wav"];
+    NSURL *soundUrl = [NSURL fileURLWithPath:path];
+    self.audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundUrl error:nil];
+    self.audioPlayer.play;
     
     [self dismissViewControllerAnimated:YES completion:nil];
     

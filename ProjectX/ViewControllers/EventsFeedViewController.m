@@ -14,6 +14,9 @@
 #import "../Helpers/Reachability.h"
 #import "DetailHomeViewController.h"
 #import "EventsAroundIntent.h"
+
+#import "../Helpers/AppColors.h"
+
 #import <AVFoundation/AVAudioPlayer.h>
 @import CoreLocation;
 @interface EventsFeedViewController () <UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate, UIScrollViewDelegate>
@@ -29,7 +32,7 @@
 @property (nonatomic, strong) User *currentUser;
 @property (strong, nonatomic) UINotificationFeedbackGenerator *feedbackGenerator;
 @property (strong, nonatomic) CLLocation *currentLocation;
-@property (strong,nonatomic) AVAudioPlayer *audioPlayer;
+@property (strong, nonatomic) AVAudioPlayer *audioPlayer;
 
 @end
 
@@ -38,14 +41,11 @@
 CLLocationManager *locationManager;
 NSDateFormatter *dateFormat;
 
-- (void)viewDidAppear:(BOOL)animated
-{
-  
-}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+   
     //[self fetchArrayCategories];
     // convert to date
     dateFormat = [[NSDateFormatter alloc] init];
@@ -203,7 +203,7 @@ NSDateFormatter *dateFormat;
         if(error == nil)
         {
             NSMutableArray * categoriesFiltered = [NSMutableArray new];
-            if(self.currentUser.preferences != nil && self.currentUser.preferences.count > 2){
+            if(self.currentUser.preferences != nil && self.currentUser.preferences.count >= 2){
                 for(NSDictionary *dic in self.currentUser.preferences){
                     NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(NSDictionary *evaluatedObject, NSDictionary<NSString *,id> * _Nullable bindings) {
                         return [dic[@"id"] isEqualToString: evaluatedObject[@"id"]];
@@ -223,14 +223,14 @@ NSDateFormatter *dateFormat;
 
 - (void)getEventsFromCategories
 {
-    for(NSDictionary * category in self.categories)
+    for(int i = 0; i < self.categories.count; i++)
     {
  
-        NSString *idCategoryString = [category[@"id"] description];
+        NSString *idCategoryString = [NSString stringWithFormat:@"%@",self.categories[i][@"id"] ];
         [[APIEventsManager sharedManager] getEventsByLocation:[NSString stringWithFormat:@"%f", self.currentLocation.coordinate.latitude]
                                                     longitude:[NSString stringWithFormat:@"%f", self.currentLocation.coordinate.longitude]
                                                      category:idCategoryString
-                                                    shortName:category[@"short_name"]
+                                                    shortName:self.categories[i][@"short_name"]
                                                    completion:^(NSArray * _Nonnull eventsEventbrite, NSArray * _Nonnull eventsTicketmaster, NSError * _Nonnull error) {
                                                        
                     
@@ -248,8 +248,8 @@ NSDateFormatter *dateFormat;
                                                                     idEvent:ticketmasterDic[@"id"]
                                                                        date:dte
                                                                         url:ticketmasterDic[@"images"][0][@"url"]
-                                                                   category:category[@"short_name"]
-                                                                   subtitle:category[@"short_name"]
+                                                                   category:self.categories[i][@"short_name"]
+                                                                   subtitle:self.categories[i][@"short_name"]
                                                                         api:@"Ticketmaster"
                                                                    location:CLLocationCoordinate2DMake([ticketmasterDic[@"_embedded"][@"venues"][0][@"location"][@"latitude"] doubleValue],[ticketmasterDic[@"_embedded"][@"venues"][0][@"location"][@"longitude"] doubleValue])]];
                     
@@ -269,8 +269,8 @@ NSDateFormatter *dateFormat;
                                                                         idEvent:eventbriteDic[@"id"]
                                                                            date:dte
                                                                             url:url
-                                                                       category:category[@"short_name"]
-                                                                       subtitle:category[@"short_name"]
+                                                                       category:self.categories[i][@"short_name"]
+                                                                       subtitle:self.categories[i][@"short_name"]
                                                                             api:@"Eventbrite"
                                                                        location:CLLocationCoordinate2DMake([eventbriteDic[@"venue"][@"latitude"] doubleValue], [eventbriteDic[@"venue"][@"longitude"] doubleValue])]];
 
@@ -280,8 +280,8 @@ NSDateFormatter *dateFormat;
                                                                             idEvent:eventbriteDic[@"id"]
                                                                                date:eventbriteDic[@"start"][@"local"]
                                                                                 url:@"https://www.daviespaints.com.ph/wp-content/uploads/img/color-ideas/1008-colors/2036P.png"
-                                                                           category:category[@"short_name"]
-                                                                           subtitle:category[@"short_name"]
+                                                                           category:self.categories[i][@"short_name"]
+                                                                           subtitle:self.categories[i][@"short_name"]
                                                                                 api:@"Eventbrite"
                                                                            location:CLLocationCoordinate2DMake([eventbriteDic[@"venue"][@"latitude"] doubleValue], [eventbriteDic[@"venue"][@"longitude"] doubleValue])]];
                         }
@@ -360,14 +360,14 @@ NSDateFormatter *dateFormat;
     
     UILabel * titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, y_Title, 0, 0)];
     [titleLabel setBackgroundColor:UIColor.clearColor];
-    [titleLabel setTextColor:UIColor.blackColor];
+    [titleLabel setTextColor:[[AppColors sharedManager] getBlueLabels]];
     [titleLabel setFont:titleFont];
     [titleLabel setText:title];
     [titleLabel sizeToFit];
     
     UILabel * subTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, y_Subtitle, 0, 0)];
     [subTitleLabel setBackgroundColor:UIColor.clearColor];
-    [subTitleLabel setTextColor:UIColor.blackColor];
+    [subTitleLabel setTextColor:[[AppColors sharedManager] getDarkBlue]];
     [subTitleLabel setFont:subTitleFont];
     [subTitleLabel setText:subtitle];
     [subTitleLabel sizeToFit];

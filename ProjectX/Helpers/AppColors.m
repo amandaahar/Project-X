@@ -38,6 +38,11 @@
 -(UIColor *) getDarkBlue{
     return [UIColor colorWithRed: 0.3137235 green:0.70588235 blue:0.70196078 alpha:1];
 }
+-(UIColor *) getDarkBlueBackground{
+    return [UIColor colorWithRed: 0.329411 green:0.45098 blue:0.5960 alpha:1];
+}
+
+
 -(UIColor *) getWhite{
     return [UIColor colorWithRed: 0 green:0 blue:0 alpha:0.05];
 }
@@ -61,5 +66,28 @@
     return [UIColor colorWithRed: 0.45098039  green: 0.694117647 blue: 0.9215686 alpha:1];
 }
 
+-(UIColor *) getBlueLabels{
+    return [UIColor colorWithRed: 0.2078431373  green: 0.5568627451 blue: 0.8823529412 alpha:1];
+}
+
+
+-(UIColor *) getOrange{
+    return [UIColor colorWithRed: 1 green: 0.6 blue: 0.2274509804 alpha:1];
+}
+
+-(UIColor *) getPurple{
+    return [UIColor colorWithRed: 1 green: 0.6 blue: 0.2274509804 alpha:1];
+}
+
+
+
+-(CAGradientLayer *) getGradientDefault :(UIView *)view{
+    CAGradientLayer *gradient = [CAGradientLayer layer];
+    gradient.frame = view.bounds;
+    gradient.colors = @[(id)[[AppColors sharedManager] getDarkPurple].CGColor, (id)[[AppColors sharedManager]  getDarkBlue].CGColor];
+    [gradient layoutIfNeeded];
+    [gradient setNeedsDisplay];
+    return gradient;
+}
 
 @end

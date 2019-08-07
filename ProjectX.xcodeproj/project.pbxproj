@@ -10,11 +10,6 @@
 		0E496C0622E1345200DEF38C /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E496C0522E1345200DEF38C /* MapKit.framework */; };
 		0E496C0922E285AA00DEF38C /* CreateEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E496C0822E285AA00DEF38C /* CreateEventViewController.m */; };
 		0E496C0F22EE5AE200DEF38C /* DetailEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E496C0E22EE5AE200DEF38C /* DetailEventViewController.m */; };
-		0E83767522F24BB3009B9007 /* LocationTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E83767422F24BB3009B9007 /* LocationTableViewController.m */; };
-		0E83767822F896C3009B9007 /* LocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E83767722F896C3009B9007 /* LocationViewController.m */; };
-		0E83769322F9ECFC009B9007 /* LocationViewObjC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E83769222F9ECFC009B9007 /* LocationViewObjC.m */; };
-		0E83769422F9ECFC009B9007 /* LocationViewObjC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E83769222F9ECFC009B9007 /* LocationViewObjC.m */; };
-		0E83769522F9ECFC009B9007 /* LocationViewObjC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E83769222F9ECFC009B9007 /* LocationViewObjC.m */; };
 		0E83769922FB1F53009B9007 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E83769822FB1F53009B9007 /* AVFoundation.framework */; };
 		0E83769B22FB22F9009B9007 /* music_marimba_chord.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0E83769A22FB22F9009B9007 /* music_marimba_chord.wav */; };
 		0E83769C22FB22F9009B9007 /* music_marimba_chord.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0E83769A22FB22F9009B9007 /* music_marimba_chord.wav */; };
@@ -194,14 +189,8 @@
 		0E496C0822E285AA00DEF38C /* CreateEventViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CreateEventViewController.m; sourceTree = "<group>"; };
 		0E496C0D22EE5AE200DEF38C /* DetailEventViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailEventViewController.h; sourceTree = "<group>"; };
 		0E496C0E22EE5AE200DEF38C /* DetailEventViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailEventViewController.m; sourceTree = "<group>"; };
-		0E83767322F24BB3009B9007 /* LocationTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocationTableViewController.h; sourceTree = "<group>"; };
-		0E83767422F24BB3009B9007 /* LocationTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocationTableViewController.m; sourceTree = "<group>"; };
-		0E83767622F896C2009B9007 /* LocationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocationViewController.h; sourceTree = "<group>"; };
-		0E83767722F896C3009B9007 /* LocationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocationViewController.m; sourceTree = "<group>"; };
 		0E83767B22F8E4D6009B9007 /* ProjectX.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; name = ProjectX.entitlements; path = ../../../.Trash/ProjectX.entitlements; sourceTree = "<group>"; };
 		0E83767C22F8E5F8009B9007 /* ProjectX.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ProjectX.entitlements; sourceTree = "<group>"; };
-		0E83769122F9ECFC009B9007 /* LocationViewObjC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocationViewObjC.h; sourceTree = "<group>"; };
-		0E83769222F9ECFC009B9007 /* LocationViewObjC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocationViewObjC.m; sourceTree = "<group>"; };
 		0E83769622FA9C65009B9007 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		0E83769822FB1F53009B9007 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		0E83769A22FB22F9009B9007 /* music_marimba_chord.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = music_marimba_chord.wav; sourceTree = "<group>"; };
@@ -453,12 +442,6 @@
 				EA70790522ED648B00D41CD1 /* PreferencesViewController.m */,
 				0E496C0D22EE5AE200DEF38C /* DetailEventViewController.h */,
 				0E496C0E22EE5AE200DEF38C /* DetailEventViewController.m */,
-				0E83767322F24BB3009B9007 /* LocationTableViewController.h */,
-				0E83767422F24BB3009B9007 /* LocationTableViewController.m */,
-				0E83767622F896C2009B9007 /* LocationViewController.h */,
-				0E83767722F896C3009B9007 /* LocationViewController.m */,
-				0E83769122F9ECFC009B9007 /* LocationViewObjC.h */,
-				0E83769222F9ECFC009B9007 /* LocationViewObjC.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -1153,7 +1136,6 @@
 				EA70790922ED656B00D41CD1 /* Bubble.m in Sources */,
 				E7AEA0AC22DE8C8A00A77CC2 /* GroupsViewController.m in Sources */,
 				E77FCBFE22E0DFF100A4E3AC /* EventAPI.m in Sources */,
-				0E83767522F24BB3009B9007 /* LocationTableViewController.m in Sources */,
 				EA7078FD22ED388200D41CD1 /* LanguagesTableViewController.m in Sources */,
 				EA54ED2E22DFBA2700D0D7A2 /* APIEventsManager.m in Sources */,
 				EA949E7A22EA5BF200263E1B /* MapAnnotation.m in Sources */,
@@ -1163,8 +1145,6 @@
 				EA54ECE622DE3F3800D0D7A2 /* AppDelegate.m in Sources */,
 				E7AEA0A922DE8C4400A77CC2 /* EventsFeedViewController.m in Sources */,
 				EA70790622ED648B00D41CD1 /* PreferencesViewController.m in Sources */,
-				0E83769322F9ECFC009B9007 /* LocationViewObjC.m in Sources */,
-				0E83767822F896C3009B9007 /* LocationViewController.m in Sources */,
 				E76311C022E2746400A1B674 /* topCollectionViewCell.m in Sources */,
 				E76311BB22E241BB00A1B674 /* Message.m in Sources */,
 				E714767022F38DCB0036F541 /* InterestFieldTableViewCell.m in Sources */,
@@ -1200,7 +1180,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0E83769422F9ECFC009B9007 /* LocationViewObjC.m in Sources */,
 				EA54ED0122DE3F3900D0D7A2 /* ProjectXTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1209,7 +1188,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0E83769522F9ECFC009B9007 /* LocationViewObjC.m in Sources */,
 				EA54ED0C22DE3F3900D0D7A2 /* ProjectXUITests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

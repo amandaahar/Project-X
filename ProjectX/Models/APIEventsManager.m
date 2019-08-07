@@ -157,6 +157,12 @@ static NSString * const publicTokenTicketMaster = @"OgabuZXqzqkv0GJtbvl5hKlbAFZL
         if (eventbriteDic && ticketmasterDic) {
             completion(eventbriteDic[@"events"],ticketmasterDic[@"_embedded"][@"events"], nil);
             NSLog(@"Block3");
+        }else if(eventbriteDic && ticketmasterDic == nil){
+            completion(eventbriteDic[@"events"],nil, nil);
+        }else if(eventbriteDic == nil && ticketmasterDic){
+              completion(nil,ticketmasterDic[@"_embedded"][@"events"], nil);
+        }else{
+            completion(nil,nil,[[NSError alloc] init]);
         }
     });
         

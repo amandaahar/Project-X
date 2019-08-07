@@ -20,7 +20,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (id)sharedManager;
 - (void)getCurrentUser:(void(^)(User *user, NSError *error))completion;
-- (void)getEvents:(void(^)(NSArray *event, NSError *error))completion;
 - (void)getMessagesFromEvent:(NSString *) eventID completion: (void(^)(NSArray *messages, NSError *error))completion;
 - (void)getEventsFromUser:(NSString *) userID completion: (void(^)(NSArray *events, NSError *error))completion;
 - (void)setNewLanguage : (NSString *) newLanguage;
@@ -34,7 +33,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)addFCMDeviceToUSer: (NSString *) token;
 - (void)removeFCMDeviceToUser:(NSString *) idUser;
 - (void)sendNotificationUsers : (NSString *) idEvent withText:(NSString *) text nameUser:(NSString *) nameUser;
-- (void)getEventsNotSwiped:(void(^)(NSArray *events, NSError *error))completion;
+- (void)getEventsNotSwiped: (CLLocation *) location completion:(void(^)(NSArray *events, NSError *error))completion;
 
 @end
 

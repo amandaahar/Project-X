@@ -8,6 +8,7 @@
 
 #import "MessageBubble.h"
 #import "../Helpers/TranslatorManager.h"
+#import "../Helpers/AppColors.h"
 #import "QuartzCore/QuartzCore.h"
 #import <UIKit/UIKit.h>
 @implementation MessageBubble
@@ -17,12 +18,12 @@
     self.contentView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     self.contentView.translatesAutoresizingMaskIntoConstraints = YES;
 
-    self.reactionView.layer.shadowRadius  = 4.5f;
+    self.reactionView.layer.shadowRadius  = 15;
     self.reactionView.layer.cornerRadius = 15;
     self.reactionView.clipsToBounds = YES;
-    self.reactionView.layer.shadowOffset = CGSizeMake(.0f,2.5f);
+    self.reactionView.layer.shadowOffset = CGSizeMake(0,0);
     self.reactionView.layer.shadowColor = [[UIColor grayColor] CGColor];
-    self.reactionView.layer.shadowOpacity = 3.6f;
+    self.reactionView.layer.shadowOpacity = 0.5;
     self.reactionView.layer.masksToBounds = NO;
     self.reactionView.layer.shadowPath = [UIBezierPath bezierPathWithRect:self.reactionView.bounds].CGPath;
 
@@ -110,7 +111,7 @@
    //  [self.reactionView setHidden:YES];
     
     self.bubbleView.isIncoming = NO;
-     self.bubbleView.outgoingColor = [UIColor colorWithRed:0.09 green:0.54 blue:1 alpha:1];
+    self.bubbleView.outgoingColor = [[AppColors sharedManager] getOrange];
     [self.bubbleView setNeedsDisplay];
     [self.bubbleLabel setTextAlignment:(NSTextAlignmentRight)];
    [self sizeToFit];

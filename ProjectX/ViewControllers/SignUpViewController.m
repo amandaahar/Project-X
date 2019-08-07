@@ -7,7 +7,7 @@
 //
 
 #import "SignUpViewController.h"
-
+#import "../Helpers/AppColors.h"
 @import MaterialTextField;
 @import Firebase;
 @import CoreLocation;
@@ -21,7 +21,7 @@
 @property (weak, nonatomic) IBOutlet MFTextField *secondPasswordField;
 @property (weak, nonatomic) IBOutlet MFTextField *lastName;
 @property (weak, nonatomic) IBOutlet MFTextField *username;
-
+@property (strong, nonatomic) CAGradientLayer *gradient;
 @end
 
 @implementation SignUpViewController
@@ -42,11 +42,20 @@
     self.secondPasswordField.delegate = self;
     self.secondPasswordField.textContentType = UITextContentTypeNewPassword;
     self.lastName.delegate = self;
-    
+    self.signUpButton.layer.borderWidth = 1;
+    self.signUpButton.layer.borderColor = [UIColor blackColor].CGColor;
     self.signUpButton.layer.cornerRadius = 15;
     [self.signUpButton setClipsToBounds:YES];
+    self.gradient = [[AppColors sharedManager] getGradientDefault:self.view];
+    [self.view.layer insertSublayer:self.gradient atIndex:0];
     
 }
+- (void) willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    self.gradient.frame = self.view.bounds;
+}
+
+
 
 #pragma mark - Design
 
