@@ -162,20 +162,23 @@
     
     [reusableView setProfileImageWithURL:self.currentUser.profileImageURL];
     [reusableView setNameText:[[self.currentUser.firstName stringByAppendingString:@" "] stringByAppendingString:self.currentUser.lastName]];
-    [reusableView getFollowLabel].backgroundColor = [[AppColors sharedManager] getLightBlue];
+    
+    
+    //[[reusableView getFollowLabel].layer insertSublayer:gradient atIndex:0];
+    [reusableView getFollowLabel].backgroundColor = [[AppColors sharedManager] getBlueBackground];
+    [reusableView getFollowLabel].textColor = [UIColor whiteColor];
+    [reusableView getMessageLabel].textColor = [[AppColors sharedManager] getBlueBackground];
+    [reusableView getMessageLabel].layer.borderColor = [[AppColors sharedManager] getBlueBackground].CGColor;
+    [reusableView getMessageLabel].layer.borderWidth = 1.5;
+    
     NSString *atSymbol = @"@";
-    if(self.currentUser.username != nil){
+    if (self.currentUser.username != nil){
         NSString *usernameText = [atSymbol stringByAppendingString:self.currentUser.username];
         [reusableView setUsernameText: usernameText];
-    }else{
-      
+    } else {
         [reusableView setUsernameText: self.currentUser.username];
     }
-   
-     
-     //[@"@" stringByAppendingString: self.currentUser.username]];
-     
-     //[self.username.text stringByAppendingString:self.currentUser.username]];
+    
     [reusableView setBioText:self.currentUser.bio];
     
     return reusableView;

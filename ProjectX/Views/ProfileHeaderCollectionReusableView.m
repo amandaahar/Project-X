@@ -45,5 +45,8 @@
 - (PillLabel *)getFollowLabel {
     return self.followLabel;
 }
+- (PillLabel *)getMessageLabel {
+    return self.messageLabel;
+}
 
 @end
