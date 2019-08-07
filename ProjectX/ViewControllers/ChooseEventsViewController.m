@@ -106,35 +106,6 @@ NSDateFormatter *formatter;
     
     [self presentViewController:alert animated:YES completion: nil];
     
-    /*
-    FIRDatabaseReference *geofireRef = [[FIRDatabase database] reference];
-    GeoFire *geoFire = [[GeoFire alloc] initWithFirebaseRef:geofireRef];
-    
-    [geoFire setLocation:[[CLLocation alloc] initWithLatitude:37.7853889 longitude:-122.4056973]
-                  forKey:@"firebase-hq"
-     withCompletionBlock:^(NSError *error) {
-         if (error != nil) {
-             NSLog(@"whoops: An error occurred: %@", error.localizedDescription);
-         } else {
-             NSLog(@"Saved location successfully!");
-         }
-     }];
-    
-    CLLocation *center = [[CLLocation alloc] initWithLatitude:37.7832889 longitude:-122.4056973];
-    // Query locations at [37.7832889, -122.4056973] with a radius of 600 meters
-    GFCircleQuery *circleQuery = [geoFire queryAtLocation:self.UserCurrentLocation withRadius:5.6];
-    
-    // Query location by region
-    MKCoordinateSpan span = MKCoordinateSpanMake(0.001, 0.001);
-    MKCoordinateRegion region = MKCoordinateRegionMake(center.coordinate, span);
-    GFRegionQuery *regionQuery = [geoFire queryWithRegion:region];
-    
-//    FIRDatabaseHandle queryHandle = [query observeEventType:GFEventTypeKeyEntered withBlock:^(NSString *key, CLLocation *location) {
-//        NSLog(@"Key '%@' entered the search area and is at location '%@'", key, location);
-//    }];
-    
-    */
-    
 }
 
 #pragma mark - Fetching Events
@@ -481,7 +452,6 @@ NSDateFormatter *formatter;
     self.audioPlayer.play;
     
     [self performSegueWithIdentifier:@"CreateEventSegue" sender:nil];
-//  [self resetCard]; Should I create a card for the created event or directly make a group
 }
 
 - (IBAction)resetAllCards:(UIBarButtonItem *)sender {
@@ -504,20 +474,11 @@ NSDateFormatter *formatter;
         CreateEventViewController *createEventController = (CreateEventViewController *)navigationController.topViewController;
         createEventController.delegate = self;
     }
-    
-    /*
-    else if ([segue.identifier isEqualToString: @"ChooseLocationSegue"]) {
-        UINavigationController *navigationController = [segue destinationViewController];
-        //LocationViewController *ChooseLocationController = (LocationViewController *)navigationController.topViewController;
-        //ChooseLocationController.delegate = self;
-    }
-     */
 }
 
 #pragma mark - Change Location
 
 - (IBAction)changeLocation:(id)sender {
-    //[self performSegueWithIdentifier:@"ChooseLocationSegue" sender:self];
     
     NSString *path = [[NSBundle mainBundle] pathForResource:@"pop_drip" ofType:@"wav"];
     NSURL *soundUrl = [NSURL fileURLWithPath:path];

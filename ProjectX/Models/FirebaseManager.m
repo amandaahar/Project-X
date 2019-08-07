@@ -83,33 +83,8 @@
     }];
 }
 
-- (void)getEvents:(void(^)(NSArray *events, NSError *error))completion
-{
-     [[[[database collectionWithPath:@"Event"] queryWhereField:@"eventDate" isGreaterThanOrEqualTo:[FIRTimestamp timestampWithDate:[[NSDate alloc] initWithTimeIntervalSinceNow:-60*60*24*6]]]
-                queryOrderedByField:@"location"]
-     addSnapshotListener:^(FIRQuerySnapshot *snapshot, NSError *error) {
-         if (error != nil) {
-             NSLog(@"Error getting documents: %@", error);
-             completion(nil,error);
-         } else {
-             NSMutableArray *events = [NSMutableArray new];
-             for (FIRDocumentSnapshot *document in snapshot.documents) {
-                 NSLog(@"%@ => %@", document.documentID, document.data);
-                 Event * myEvent = [[Event alloc] initWithDictionary:document.data eventID:document.documentID];
-                 myEvent.eventIDRef = document.reference;
-                 
-                 [events addObject:myEvent];
-             }
-            
-             completion(events, nil);
-         }
-     }];
-}
-
 - (void)getEventsNotSwiped: (CLLocation *) location completion:(void(^)(NSArray *events, NSError *error))completion {
     
-//    double latitude = 38.819;
-//    double longitude = -122.47;
     double latitude = location.coordinate.latitude;
     double longitude = location.coordinate.longitude;
     double distance = 10;
