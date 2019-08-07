@@ -14,6 +14,9 @@
 #import "../Helpers/Reachability.h"
 #import "DetailHomeViewController.h"
 #import "EventsAroundIntent.h"
+
+#import "../Helpers/AppColors.h"
+
 #import <AVFoundation/AVAudioPlayer.h>
 @import CoreLocation;
 @interface EventsFeedViewController () <UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate, UIScrollViewDelegate>
@@ -29,7 +32,7 @@
 @property (nonatomic, strong) User *currentUser;
 @property (strong, nonatomic) UINotificationFeedbackGenerator *feedbackGenerator;
 @property (strong, nonatomic) CLLocation *currentLocation;
-@property (strong,nonatomic) AVAudioPlayer *audioPlayer;
+@property (strong, nonatomic) AVAudioPlayer *audioPlayer;
 
 @end
 
@@ -38,14 +41,11 @@
 CLLocationManager *locationManager;
 NSDateFormatter *dateFormat;
 
-- (void)viewDidAppear:(BOOL)animated
-{
-  
-}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+   
     //[self fetchArrayCategories];
     // convert to date
     dateFormat = [[NSDateFormatter alloc] init];
@@ -360,14 +360,14 @@ NSDateFormatter *dateFormat;
     
     UILabel * titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, y_Title, 0, 0)];
     [titleLabel setBackgroundColor:UIColor.clearColor];
-    [titleLabel setTextColor:UIColor.blackColor];
+    [titleLabel setTextColor:[[AppColors sharedManager] getBlueLabels]];
     [titleLabel setFont:titleFont];
     [titleLabel setText:title];
     [titleLabel sizeToFit];
     
     UILabel * subTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, y_Subtitle, 0, 0)];
     [subTitleLabel setBackgroundColor:UIColor.clearColor];
-    [subTitleLabel setTextColor:UIColor.blackColor];
+    [subTitleLabel setTextColor:[[AppColors sharedManager] getDarkBlue]];
     [subTitleLabel setFont:subTitleFont];
     [subTitleLabel setText:subtitle];
     [subTitleLabel sizeToFit];
