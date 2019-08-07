@@ -12,9 +12,6 @@
 		0E496C0F22EE5AE200DEF38C /* DetailEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E496C0E22EE5AE200DEF38C /* DetailEventViewController.m */; };
 		0E83767522F24BB3009B9007 /* LocationTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E83767422F24BB3009B9007 /* LocationTableViewController.m */; };
 		0E83767822F896C3009B9007 /* LocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E83767722F896C3009B9007 /* LocationViewController.m */; };
-		0E83768222F9BA6C009B9007 /* pop_drip.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0E83768122F9BA6C009B9007 /* pop_drip.wav */; };
-		0E83768322F9BA6C009B9007 /* pop_drip.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0E83768122F9BA6C009B9007 /* pop_drip.wav */; };
-		0E83768422F9BA6C009B9007 /* pop_drip.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0E83768122F9BA6C009B9007 /* pop_drip.wav */; };
 		0E83769322F9ECFC009B9007 /* LocationViewObjC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E83769222F9ECFC009B9007 /* LocationViewObjC.m */; };
 		0E83769422F9ECFC009B9007 /* LocationViewObjC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E83769222F9ECFC009B9007 /* LocationViewObjC.m */; };
 		0E83769522F9ECFC009B9007 /* LocationViewObjC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E83769222F9ECFC009B9007 /* LocationViewObjC.m */; };
@@ -38,6 +35,7 @@
 		E714766C22F349A00036F541 /* InterestCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E714766A22F349A00036F541 /* InterestCollectionViewCell.xib */; };
 		E714767022F38DCB0036F541 /* InterestFieldTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E714766E22F38DCB0036F541 /* InterestFieldTableViewCell.m */; };
 		E714767122F38DCB0036F541 /* InterestFieldTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E714766F22F38DCB0036F541 /* InterestFieldTableViewCell.xib */; };
+		E75FAF6122FB387C0081C18F /* pop_drip.wav in Resources */ = {isa = PBXBuildFile; fileRef = E75FAF6022FB387B0081C18F /* pop_drip.wav */; };
 		E76311B822E23E8E00A1B674 /* MessagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E76311B722E23E8E00A1B674 /* MessagesViewController.m */; };
 		E76311BB22E241BB00A1B674 /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = E76311BA22E241BB00A1B674 /* Message.m */; };
 		E76311BF22E2746400A1B674 /* topCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E76311BD22E2746400A1B674 /* topCollectionViewCell.xib */; };
@@ -202,7 +200,6 @@
 		0E83767722F896C3009B9007 /* LocationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocationViewController.m; sourceTree = "<group>"; };
 		0E83767B22F8E4D6009B9007 /* ProjectX.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; name = ProjectX.entitlements; path = ../../../.Trash/ProjectX.entitlements; sourceTree = "<group>"; };
 		0E83767C22F8E5F8009B9007 /* ProjectX.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ProjectX.entitlements; sourceTree = "<group>"; };
-		0E83768122F9BA6C009B9007 /* pop_drip.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = pop_drip.wav; path = "../../../../Downloads/dev_tones free/tones-wav/pop_drip.wav"; sourceTree = "<group>"; };
 		0E83769122F9ECFC009B9007 /* LocationViewObjC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocationViewObjC.h; sourceTree = "<group>"; };
 		0E83769222F9ECFC009B9007 /* LocationViewObjC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocationViewObjC.m; sourceTree = "<group>"; };
 		0E83769622FA9C65009B9007 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -237,6 +234,7 @@
 		E714766D22F38DCB0036F541 /* InterestFieldTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InterestFieldTableViewCell.h; sourceTree = "<group>"; };
 		E714766E22F38DCB0036F541 /* InterestFieldTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InterestFieldTableViewCell.m; sourceTree = "<group>"; };
 		E714766F22F38DCB0036F541 /* InterestFieldTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InterestFieldTableViewCell.xib; sourceTree = "<group>"; };
+		E75FAF6022FB387B0081C18F /* pop_drip.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = pop_drip.wav; sourceTree = "<group>"; };
 		E76311B622E23E8E00A1B674 /* MessagesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MessagesViewController.h; sourceTree = "<group>"; };
 		E76311B722E23E8E00A1B674 /* MessagesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MessagesViewController.m; sourceTree = "<group>"; };
 		E76311B922E241BB00A1B674 /* Message.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
@@ -417,7 +415,7 @@
 		0E83767A22F8C0BB009B9007 /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
-				0E83768122F9BA6C009B9007 /* pop_drip.wav */,
+				E75FAF6022FB387B0081C18F /* pop_drip.wav */,
 				0E83769A22FB22F9009B9007 /* music_marimba_chord.wav */,
 			);
 			path = Sounds;
@@ -923,10 +921,10 @@
 				E703B94A22F2548700C63563 /* ShowInterestsTableViewCell.xib in Resources */,
 				EA3A502522E0F2FC004F2FFD /* HomeFeedTableViewCell.xib in Resources */,
 				EA54ECF122DE3F3900D0D7A2 /* Assets.xcassets in Resources */,
-				0E83768222F9BA6C009B9007 /* pop_drip.wav in Resources */,
 				EA54ECEC22DE3F3800D0D7A2 /* Main.storyboard in Resources */,
 				EAEFFD9522F80CA30079E3D7 /* GoogleService-Info.plist in Resources */,
 				E703B94522F248DD00C63563 /* EditProfileTableViewCell.xib in Resources */,
+				E75FAF6122FB387C0081C18F /* pop_drip.wav in Resources */,
 				0E83769B22FB22F9009B9007 /* music_marimba_chord.wav in Resources */,
 				E714767122F38DCB0036F541 /* InterestFieldTableViewCell.xib in Resources */,
 			);
@@ -936,7 +934,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0E83768322F9BA6C009B9007 /* pop_drip.wav in Resources */,
 				0E83769C22FB22F9009B9007 /* music_marimba_chord.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -945,7 +942,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0E83768422F9BA6C009B9007 /* pop_drip.wav in Resources */,
 				0E83769D22FB22F9009B9007 /* music_marimba_chord.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

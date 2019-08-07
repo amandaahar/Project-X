@@ -1456,8 +1456,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="356"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-<<<<<<< HEAD
-=======
+
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="blueGradient" translatesAutoresizingMaskIntoConstraints="NO" id="gwy-bI-TZd">
                                             <rect key="frame" x="0.0" y="3.5" width="375" height="287"/>
                                             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1465,7 +1464,6 @@
                                                 <constraint firstAttribute="height" constant="287" id="e3v-ng-dC5"/>
                                             </constraints>
                                         </imageView>
->>>>>>> 5388bde7fb7765081e0dff397b237eb6d6c0d765
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="pix-av-Cx4">
                                             <rect key="frame" x="137.5" y="58" width="100" height="100"/>
                                             <constraints>
