@@ -11,6 +11,7 @@
 #import "LanguagesTableViewController.h"
 #import "../Cells/MessageBubble.h"
 #import "../Helpers/TranslatorManager.h"
+#import "../Helpers/AppColors.h"
 #import "../Models/User.h"
 #import "DetailEventViewController.h"
 #import <AVFoundation/AVAudioPlayer.h>
@@ -42,7 +43,11 @@ NSLayoutConstraint *bottom;
             [[self navigationItem] setRightBarButtonItems:@[lan,det]];
         }
     }];
-    
+    self.messageText.layer.cornerRadius = 15;
+    self.messageText.clipsToBounds = YES;
+    self.sendButton.layer.cornerRadius = 15;
+    self.sendButton.layer.borderWidth = 1;
+    self.sendButton.layer.borderColor = [[AppColors sharedManager] getOrange].CGColor;
     NSString * language = [[NSLocale preferredLanguages] firstObject];
     NSLog(@"%@",language);
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(handleKeyboardNotifications:) name:UIKeyboardWillShowNotification object:nil];
