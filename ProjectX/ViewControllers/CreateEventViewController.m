@@ -13,6 +13,7 @@
 #import "MFTextField.h"
 #import "User.h"
 #import <AVFoundation/AVAudioPlayer.h>
+#import "../Helpers/AppColors.h"
 @import Firebase;
 
 @interface CreateEventViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
@@ -32,7 +33,8 @@
 @property (nonatomic, readwrite) FIRFirestore *db;
 @property (strong, nonatomic) NSString *eventID;
 @property (strong, nonatomic) User *currentUser;
-@property (strong,nonatomic) AVAudioPlayer *audioPlayer;
+@property (strong, nonatomic) AVAudioPlayer *audioPlayer;
+@property (strong, nonatomic) CAGradientLayer *backgroundGradient;
 
 @end
 
@@ -57,6 +59,12 @@ UIDatePicker *datePicker;
     [toolBar setItems:[NSArray arrayWithObjects:space,doneBtn, nil]];
     [self.createEventDate setInputAccessoryView:toolBar];
     
+    self.backgroundGradient = [CAGradientLayer layer];
+    self.backgroundGradient.frame = self.view.bounds;
+    self.backgroundGradient.colors = @[(id)[[AppColors sharedManager] getDarkPurple].CGColor, (id)[[AppColors sharedManager]  getDarkBlue].CGColor];
+    [self.backgroundGradient layoutIfNeeded];
+    [self.backgroundGradient setNeedsDisplay];
+    [self.view.layer insertSublayer:self.backgroundGradient atIndex:0];
 }
 
 - (void) ShowSelectedDate {

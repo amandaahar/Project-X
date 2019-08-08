@@ -18,12 +18,29 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="New logo 18px" translatesAutoresizingMaskIntoConstraints="NO" id="IhG-aw-6lT">
-                                <rect key="frame" x="8" y="241" width="359" height="185"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_nobackground" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IhG-aw-6lT">
+                                <rect key="frame" x="99.5" y="275" width="176" height="177"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="176" id="Z0b-OY-08W"/>
+                                    <constraint firstAttribute="height" constant="177" id="tLd-JS-bnq"/>
+                                </constraints>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PlanIt" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ab8-do-9qK">
+                                <rect key="frame" x="91" y="186" width="216" height="86"/>
+                                <fontDescription key="fontDescription" name="ChalkboardSE-Regular" family="Chalkboard SE" pointSize="70"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.44957131147384644" green="0.44631081819534302" blue="0.77859443426132202" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <constraints>
+                            <constraint firstItem="IhG-aw-6lT" firstAttribute="top" secondItem="ab8-do-9qK" secondAttribute="bottom" constant="3" id="2ZJ-uK-Z5X"/>
+                            <constraint firstItem="IhG-aw-6lT" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="5a4-8p-bMp"/>
+                            <constraint firstItem="ab8-do-9qK" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="166" id="Ccv-VV-Vhc"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="ab8-do-9qK" secondAttribute="trailing" constant="68" id="SXf-bH-djV"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="IhG-aw-6lT" secondAttribute="bottom" constant="215" id="in6-mV-dSN"/>
+                            <constraint firstItem="ab8-do-9qK" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="91" id="jHo-Vq-CQ7"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                 </viewController>
@@ -33,6 +50,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="New logo 18px" width="180" height="180"/>
+        <image name="logo_nobackground" width="180" height="180"/>
     </resources>
 </document>
