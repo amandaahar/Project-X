@@ -40,25 +40,6 @@
 }
 
 
-
-//- (instancetype)initWithDictionary:(NSDictionary *)dictionary eventID:(NSString *)eventID
-//{
-//    self = [super init];
-//    if (self)
-//    {
-////        self.name = dictionary[@"name"];
-////        self.descriptionEvent = dictionary[@"description"];
-////        self.attendees = dictionary[@"numAttendees"];
-////        // self.location = [[GeoFire alloc] init];
-////        self.pictures = dictionary[@"pictures"];
-////        self.location = dictionary[@"location"];
-////        self.date = dictionary[@"eventDate"];
-////        self.eventID = eventID;
-//        [self addDetails:dictionary eventId:eventID];
-//    }
-//    return self;
-//}
-//
 // Takes in an empty event and all the info needed to "make" the event
 // Adds all the info to the event, doesn't return anything
 - (void)addDetails:(NSDictionary *)details eventId:(NSString *)eventID {
@@ -73,14 +54,6 @@
     self.categories = details[@"categoryIndex"];
 }
 
-//+ (NSMutableArray *)eventsWithArray:(NSArray *)dictionaries{
-//    NSMutableArray *events = [NSMutableArray array];
-//    for (NSDictionary *dictionary in dictionaries) {
-//        Event *event = [[Event alloc] initWithDictionary:dictionary];
-//        [events addObject:event];
-//    }
-//    return event;
-//}
 
 
 - (instancetype)initWithFIRDocuemtReference:(FIRDocumentReference *)eventDoc {
