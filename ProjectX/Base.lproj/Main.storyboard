@@ -21,7 +21,7 @@
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7GQ-Lj-oFM">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_nobackground" translatesAutoresizingMaskIntoConstraints="NO" id="jRW-aQ-S9n">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Final_logo_180px" translatesAutoresizingMaskIntoConstraints="NO" id="jRW-aQ-S9n">
                                         <rect key="frame" x="237" y="53" width="97" height="109"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="109" id="0fk-Uk-cLR"/>
@@ -53,7 +53,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="8BG-Lq-SGX" customClass="MFTextField">
-                                        <rect key="frame" x="41" y="297" width="293" height="19"/>
+                                        <rect key="frame" x="41" y="297" width="293" height="32.5"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="293" id="G3F-08-mVe"/>
@@ -76,7 +76,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Quh-gG-szU">
-                                        <rect key="frame" x="105" y="369" width="165" height="38"/>
+                                        <rect key="frame" x="105" y="382.5" width="165" height="38"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="38" id="Acf-6T-GEC"/>
                                             <constraint firstAttribute="width" constant="165" id="QCr-Sf-8XE"/>
@@ -90,7 +90,7 @@
                                         </connections>
                                     </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ney-OB-1hx">
-                                        <rect key="frame" x="105" y="445" width="165" height="84"/>
+                                        <rect key="frame" x="105" y="458.5" width="165" height="84"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Log in with Touch ID" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xwm-rg-of8">
                                                 <rect key="frame" x="0.0" y="54" width="155" height="21"/>
@@ -122,7 +122,7 @@
                                         </constraints>
                                     </view>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="26" translatesAutoresizingMaskIntoConstraints="NO" id="BKJ-4g-HeG">
-                                        <rect key="frame" x="50" y="563" width="275" height="30"/>
+                                        <rect key="frame" x="50" y="576.5" width="275" height="30"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New to Project X?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dAS-Q8-LCM">
                                                 <rect key="frame" x="0.0" y="0.0" width="156" height="30"/>
@@ -507,7 +507,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="YRC-Ji-ias">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="YRC-Ji-ias">
                                         <rect key="frame" x="17" y="43" width="54" height="53"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="54" id="yGj-sl-A2F"/>
@@ -2063,6 +2063,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Final_logo_180px" width="60" height="60"/>
         <image name="Twitter_Logo_Blue-2" width="400" height="400"/>
         <image name="account" width="24" height="24"/>
         <image name="back" width="24" height="24"/>
@@ -2072,7 +2073,6 @@
         <image name="facebook-logo" width="512" height="512"/>
         <image name="home" width="24" height="24"/>
         <image name="igLogo" width="250" height="250"/>
-        <image name="logo_nobackground" width="180" height="180"/>
         <image name="touch-id-icon" width="512" height="512"/>
     </resources>
 </document>

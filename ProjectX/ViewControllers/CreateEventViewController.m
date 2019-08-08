@@ -41,8 +41,8 @@
 CLLocationCoordinate2D coordinate;
 UIDatePicker *datePicker;
 
-- (void)viewDidLoad {
-    
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     self.db = [FIRFirestore firestore];
     self.createEventLocation.delegate = self;
@@ -63,22 +63,24 @@ UIDatePicker *datePicker;
     [self.backgroundGradient layoutIfNeeded];
     [self.backgroundGradient setNeedsDisplay];
     [self.view.layer insertSublayer:self.backgroundGradient atIndex:0];
-   
 }
 
-- (void) ShowSelectedDate {
-    
+/*
+- (void) willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    self.backgroundGradient.frame = self.view.bounds;
+}
+ */
+
+- (void) ShowSelectedDate
+{
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"MMM d, h:mm a"];
 
     self.createEventDate.text = [NSString stringWithFormat:@"%@", [formatter stringFromDate:datePicker.date]];
     [self.createEventDate resignFirstResponder];
-    
 }
-- (void) willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
-{
-    self.backgroundGradient.frame = self.view.bounds;
-}
+
 #pragma mark - Event Image
 
 - (IBAction)OpenCameraButton:(id)sender {
