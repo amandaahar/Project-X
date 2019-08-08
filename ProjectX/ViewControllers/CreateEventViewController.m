@@ -35,7 +35,6 @@
 @property (strong, nonatomic) User *currentUser;
 @property (strong, nonatomic) AVAudioPlayer *audioPlayer;
 @property (strong, nonatomic) CAGradientLayer *backgroundGradient;
-
 @end
 
 @implementation CreateEventViewController
@@ -47,7 +46,6 @@ UIDatePicker *datePicker;
     [super viewDidLoad];
     self.db = [FIRFirestore firestore];
     self.createEventLocation.delegate = self;
-    
     datePicker = [[UIDatePicker alloc] init];
     datePicker.datePickerMode = UIDatePickerModeDateAndTime;
     [self.createEventDate setInputView:datePicker];
@@ -65,6 +63,7 @@ UIDatePicker *datePicker;
     [self.backgroundGradient layoutIfNeeded];
     [self.backgroundGradient setNeedsDisplay];
     [self.view.layer insertSublayer:self.backgroundGradient atIndex:0];
+   
 }
 
 - (void) ShowSelectedDate {
@@ -76,7 +75,10 @@ UIDatePicker *datePicker;
     [self.createEventDate resignFirstResponder];
     
 }
-
+- (void) willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    self.backgroundGradient.frame = self.view.bounds;
+}
 #pragma mark - Event Image
 
 - (IBAction)OpenCameraButton:(id)sender {
