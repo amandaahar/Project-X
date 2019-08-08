@@ -1988,6 +1988,7 @@
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="dXo-9h-DeI" firstAttribute="leading" secondItem="E57-g2-dsQ" secondAttribute="leading" id="48G-Xn-lpr"/>
                             <constraint firstItem="E57-g2-dsQ" firstAttribute="bottom" secondItem="dXo-9h-DeI" secondAttribute="bottom" id="GwL-Uy-AJE"/>
@@ -1995,6 +1996,9 @@
                             <constraint firstItem="E57-g2-dsQ" firstAttribute="trailing" secondItem="dXo-9h-DeI" secondAttribute="trailing" id="gPm-Tw-KS8"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="E57-g2-dsQ"/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="hyL-8F-ZmS" appends="YES" id="wdF-EA-fka"/>
+                        </connections>
                     </view>
                     <navigationItem key="navigationItem" title="Edit Profile" largeTitleDisplayMode="always" id="bf3-i8-2Jf">
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="oFp-yh-CIc">
@@ -2008,6 +2012,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vin-rD-2DA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="hyL-8F-ZmS">
+                    <connections>
+                        <action selector="tapGestureForKeyboard:" destination="AB5-tH-Yf7" id="aDX-Rt-Wg9"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="2488.8000000000002" y="3318.8905547226391"/>
         </scene>

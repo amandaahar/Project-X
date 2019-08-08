@@ -28,6 +28,9 @@
 
     // Configure the view for the selected state
 }
+- (IBAction)tapGestureForKeyboard:(id)sender {
+    [self endEditing:YES];
+}
 
 + (NSNumber *)recommendedHeight {
     return [NSNumber numberWithInt:280];
