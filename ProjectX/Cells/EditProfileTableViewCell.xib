@@ -68,6 +68,7 @@
                     <constraint firstItem="aGZ-rS-fFj" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="uiC-1q-cmJ"/>
                 </constraints>
             </tableViewCellContentView>
+            <gestureRecognizers/>
             <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>
             <connections>
                 <outlet property="bio" destination="waM-nv-nhT" id="BnG-J5-d2n"/>

@@ -91,6 +91,10 @@ NSString *cell2 = @"cell2";
 
 #pragma mark - Set up view
 
+- (IBAction)tapGestureForKeyboard:(id)sender {
+    [self.view endEditing:YES];
+}
+
 - (void)setUpCurrentProperties {
     [[FirebaseManager sharedManager] getCurrentUser:^(User * _Nonnull user, NSError * _Nonnull error) {
         if (error != nil) {
