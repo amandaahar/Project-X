@@ -116,6 +116,8 @@
     //Event *event = self.events[indexPath.row];
     Event *event = self.filteredData[indexPath.row];
     [cell setNameOfChatText:event.name];
+    [cell setEventDateText:event.date];
+    
     
     /*
     if (event.pictures[0] == nil) {

@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface GroupTableViewCell : UITableViewCell
 -(void)setNameOfChatText:(NSString *)nameOfChat;
 -(void) setImage: (NSString *) photoURL;
+- (void)setEventDateText:(NSDate *)date;
 
 @end
 
