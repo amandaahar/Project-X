@@ -35,8 +35,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.gradient = [[AppColors sharedManager] getGradientPurple:self.navigationController.navigationBar];
-    [self.navigationController.navigationBar.layer insertSublayer:self.gradient atIndex:1];
+//    self.gradient = [[AppColors sharedManager] getGradientPurple:self.navigationController.navigationBar];
+//    [self.navigationController.navigationBar.layer insertSublayer:self.gradient atIndex:1];
     self.db = [FIRFirestore firestore];
     self.chatsTableView.dataSource = self;
     self.chatsTableView.delegate = self;
@@ -66,7 +66,7 @@
                 }];
                 
             }
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [self.chatsTableView reloadData];
             });
             
