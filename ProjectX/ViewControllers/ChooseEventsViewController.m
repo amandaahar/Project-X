@@ -122,6 +122,10 @@ NSDateFormatter *formatter;
     
 }
 
+- (void) willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    self.gradient.frame = self.navigationController.navigationBar.bounds;
+}
 #pragma mark - Fetching Events
 
 - (void) fetchEvents {

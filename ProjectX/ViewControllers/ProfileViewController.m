@@ -64,6 +64,13 @@
     
 }
 
+
+- (void) willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    self.gradient.frame = self.navigationController.navigationBar.bounds;
+}
+
+
 - (void) setup {
     
     [[FirebaseManager sharedManager] getCurrentUser:^(User * _Nonnull user, NSError * _Nonnull error) {

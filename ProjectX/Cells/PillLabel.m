@@ -7,7 +7,7 @@
 //
 
 #import "PillLabel.h"
-
+#import "../Helpers/AppColors.h"
 @interface PillLabel()
 
 
@@ -19,6 +19,7 @@
     self.layer.cornerRadius = self.frame.size.height / 2;
     self.clipsToBounds = YES;
     self.textAlignment = NSTextAlignmentCenter;
+  
     //self.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"smallBlueGradient.png"]];
 }
 

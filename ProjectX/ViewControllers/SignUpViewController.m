@@ -56,7 +56,9 @@
 }
 
 
-
+- (UIStatusBarStyle)preferredStatusBarStyle{
+    return UIStatusBarStyleLightContent;
+}
 #pragma mark - Design
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField

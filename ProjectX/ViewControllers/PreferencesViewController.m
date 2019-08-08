@@ -10,6 +10,7 @@
 #import "../Models/Bubble.h"
 #import "../Models/APIEventsManager.h"
 #import "../Models/FirebaseManager.h"
+#import "../Helpers/AppColors.h"
 #import "../Cells/PreferencesCollectionViewCell.h"
 #import "MainTabBarController.h"
 #import "AppDelegate.h"
@@ -20,7 +21,7 @@
 @property (nonatomic, strong) NSMutableArray *preferencesDB;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityView;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
-
+@property (weak, nonatomic) CAGradientLayer *gradient;
 
 @end
 
@@ -32,7 +33,8 @@ BOOL lastTime = false;
 {
     [super viewDidLoad];
     [self.activityView setHidden:YES];
-    
+    [self.viewBubbles setAllowsTransparency:YES];
+    [self.viewBubbles setBackgroundColor:[UIColor clearColor]];
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
     NSLog(@"%@", FIRAuth.auth.currentUser.uid);
@@ -45,7 +47,14 @@ BOOL lastTime = false;
         [scene reload];
     }];
    
+    self.gradient = [[AppColors sharedManager] getGradientDefault:self.view];
+    [self.view.layer insertSublayer:self.gradient atIndex:0];
 
+}
+
+- (void) willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    self.gradient.frame = self.view.bounds;
 }
 - (IBAction)nextBubbleArray:(UIButton *)sender {
     if(!lastTime)
@@ -108,9 +117,9 @@ BOOL lastTime = false;
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
+   
     scene = [BLBubbleScene sceneWithSize:CGSizeMake(self.view.bounds.size.width / 2.0, self.view.bounds.size.height / 2.0)];
-    scene.backgroundColor = [UIColor whiteColor];
+    scene.backgroundColor = [UIColor clearColor];
     scene.bubbleDataSource = self;
     scene.bubbleDelegate = self;
 
@@ -118,6 +127,10 @@ BOOL lastTime = false;
     [self.viewBubbles presentScene:scene];
 }
 
+
+- (UIStatusBarStyle)preferredStatusBarStyle{
+    return UIStatusBarStyleLightContent;
+}
 #pragma mark - Bubble Delegate
 
 - (void)bubbleScene:(BLBubbleScene *)scene
@@ -179,13 +192,15 @@ BOOL lastTime = false;
 }
 
 - (UIColor *)bubbleScene:(BLBubbleScene *)scene bubbleFillColorForState:(BLBubbleNodeState)state{
-    return [UIColor redColor];
+    return [[AppColors sharedManager] getRed ];
 }
 
+- (UIColor *)bubbleScene:(BLBubbleScene *)scene bubbleTextColorForState:(BLBubbleNodeState)state{return [UIColor whiteColor ];}
 
 
 
-#pragma mark Bubble Data Source
+
+#pragma mark - Bubble Data Source
 
 - (NSInteger)numberOfBubblesInBubbleScene:(BLBubbleScene *)scene
 {
@@ -203,6 +218,9 @@ BOOL lastTime = false;
     PreferencesCollectionViewCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
     [cell.pillLabel setText:self.preferences[indexPath.row]];
    //[cell.pillLabel sizeToFit];
+    cell.pillLabel.layer.borderColor = [[AppColors sharedManager] getRed].CGColor;
+    cell.pillLabel.layer.borderWidth = 1;
+    
     return cell;
 }
 
