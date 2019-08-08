@@ -16,6 +16,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *bio;
 @property (weak, nonatomic) IBOutlet PillLabel *followLabel;
 @property (weak, nonatomic) IBOutlet PillLabel *messageLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *facebookLogo;
+@property (weak, nonatomic) IBOutlet UIImageView *instagramLogo;
+@property (weak, nonatomic) IBOutlet UIImageView *twitterLogo;
 
 
 @end
@@ -48,5 +51,6 @@
 - (PillLabel *)getMessageLabel {
     return self.messageLabel;
 }
+
 
 @end

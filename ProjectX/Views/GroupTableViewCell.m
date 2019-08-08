@@ -15,7 +15,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *groupImage;
 @property (weak, nonatomic) IBOutlet UILabel *nameOfChat;
 @property (weak, nonatomic) IBOutlet UILabel *previewOfLatestMessage;
-@property (weak, nonatomic) IBOutlet UILabel *lastMessageUser;
+@property (weak, nonatomic) IBOutlet UILabel *eventDate;
 @property (weak, nonatomic) IBOutlet UILabel *timeOfLastMessage;
 
 @end
@@ -38,6 +38,15 @@
 
 - (void)setNameOfChatText:(NSString *)nameOfChat {
     self.nameOfChat.text = nameOfChat;
+}
+
+- (void)setEventDateText:(NSDate *)date {
+    NSDateFormatter *format = [[NSDateFormatter alloc]init];
+    [format setDateFormat:@"yyyy-MM-dd"];
+    
+    NSString *eventDate = [format stringFromDate:date];
+    self.eventDate.text = eventDate;
+    //self.nameOfChat.text = nameOfChat;
 }
 
 - (void) setImage: (NSString *) photoURL {

@@ -99,7 +99,7 @@
         //[selectedCell addSubview:self.deleteButton];
         [selectedCell.deleteButton setHidden:NO];
         [selectedCell shake];
-        //selectedCell.interestsLabel.backgroundColor = [UIColor redColor];
+        //olselectedCell.interestsLabel.backgroundColor = [UIColor redColor];
         //[selectedCell.contentView sendSubviewToBack:selectedCell.interestsLabel];
         //[selectedCell.contentView bringSubviewToFront:self.deleteButton];
         //selectedCell

@@ -30,7 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
 -(UIColor *) getBlueLabels;
 -(CAGradientLayer *) getGradientPurple :(UIView *)view;
 -(CAGradientLayer *) getGradientDefault :(UIView *)view;
-
+-(UIColor *) getRed;
 @end
 
 NS_ASSUME_NONNULL_END

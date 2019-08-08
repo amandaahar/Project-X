@@ -87,6 +87,10 @@
 //}
 
 
+- (void) willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    self.gradient.frame = self.navigationController.navigationBar.bounds;
+}
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -116,6 +120,8 @@
     //Event *event = self.events[indexPath.row];
     Event *event = self.filteredData[indexPath.row];
     [cell setNameOfChatText:event.name];
+    [cell setEventDateText:event.date];
+    
     
     /*
     if (event.pictures[0] == nil) {
