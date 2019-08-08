@@ -101,6 +101,11 @@ NSDateFormatter *dateFormat;
 }
 
 
+- (void) willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    self.gradient.frame = self.navigationController.navigationBar.bounds;
+
+}
 
 - (void)showAlert:(NSNotification *) notification
 {

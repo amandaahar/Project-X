@@ -57,7 +57,7 @@ CAGradientLayer *gradient;
 
     [self.view.layer insertSublayer:gradient atIndex:0];
     
-    
+  
   
     //[[APIEventsManager sharedManager] getCategories];
     // Do any additional setup after loading the view.
@@ -66,6 +66,10 @@ CAGradientLayer *gradient;
 - (void) willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
     gradient.frame = self.view.bounds;
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle{
+    return UIStatusBarStyleLightContent;
 }
 
 

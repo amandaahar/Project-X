@@ -79,6 +79,9 @@
     return [UIColor colorWithRed: 1 green: 0.6 blue: 0.2274509804 alpha:1];
 }
 
+-(UIColor *) getRed{
+    return [UIColor colorWithRed: 0.9882352941 green: 0.2274509804 blue: 0.3725490196 alpha:1];
+}
 
 
 -(CAGradientLayer *) getGradientDefault :(UIView *)view{
