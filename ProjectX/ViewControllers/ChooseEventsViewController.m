@@ -54,8 +54,8 @@
 CLLocationManager *UserLocationManager;
 NSDateFormatter *formatter;
 
-- (void)viewDidLoad {
-    
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     self.gradient = [[AppColors sharedManager] getGradientPurple:self.navigationController.navigationBar];
     [self.navigationController.navigationBar.layer insertSublayer:self.gradient atIndex:1];
@@ -83,8 +83,6 @@ NSDateFormatter *formatter;
     [self.noEventsLabel setTextColor:[UIColor whiteColor]];
     [self.view addSubview:self.noEventsLabel];
     
-    //[self fetchEvents];
-    //[self fetchImage];
     formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"MMM d, h:mm a"];
     self.db = [FIRFirestore firestore];
@@ -117,21 +115,20 @@ NSDateFormatter *formatter;
                                                          }];
     
     [alert addAction:cancelAction];
-    
     [self presentViewController:alert animated:YES completion: nil];
-    
 }
 
 - (void) willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
     self.gradient.frame = self.navigationController.navigationBar.bounds;
 }
+
 #pragma mark - Fetching Events
 
-- (void) fetchEvents {
+- (void) fetchEvents
+{
     [[FirebaseManager sharedManager] getEventsNotSwiped:(CLLocation *) self.UserCurrentLocation completion:^(NSArray * _Nonnull event, NSError * _Nonnull error) {
-            if(error != nil)
-            {
+            if(error != nil) {
                 NSLog(@"Error showing documents: %@", error);
             } else {
                 Event * myEvent = event.firstObject;
@@ -278,8 +275,8 @@ NSDateFormatter *formatter;
 
 #pragma mark - Choosing Events
 
-- (IBAction)didPan:(UIPanGestureRecognizer *)sender {
-    
+- (IBAction)didPan:(UIPanGestureRecognizer *)sender
+{
     CGPoint translation = [sender translationInView:sender.view.superview];
     sender.view.center = CGPointMake(sender.view.center.x + translation.x, sender.view.center.y + translation.y);
     [sender setTranslation:CGPointMake(0.0, 0.0) inView:sender.view.superview];
@@ -295,7 +292,6 @@ NSDateFormatter *formatter;
             [myGen notificationOccurred:(UINotificationFeedbackTypeError)];
             myGen = NULL;
             [self nextEvent];
-            //[self resetCard];
         }
         
         else if ((self.card.center.x) > (self.card.frame.size.width - 75)){
@@ -379,18 +375,17 @@ NSDateFormatter *formatter;
     }
 }
 
-- (void) resetCard {
-    
+- (void) resetCard //to bring the card back to position if user chooses to move card but not off the screen
+{
     [UIView animateWithDuration:0.65 animations:^{
     [self.card setCenter:CGPointMake(self.view.center.x, self.view.center.y + 190)];
     }];
-    
 }
 
 #pragma mark MKMapViewDelegate Methods
 
-- (MKAnnotationView *)eventHomeView:(id<MKAnnotation>)annotation {
-    
+- (MKAnnotationView *)eventHomeView:(id<MKAnnotation>)annotation
+{
     MKAnnotationView *eventView = [self.mapView dequeueReusableAnnotationViewWithIdentifier:self.annotationID];
     eventView.canShowCallout = true;
     eventView.leftCalloutAccessoryView = [[UIImageView alloc] initWithFrame:CGRectMake(0.0, 0.0, 25.0, 50.0)];
@@ -419,7 +414,8 @@ NSDateFormatter *formatter;
     return eventView;
 }
 
-- (nullable MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation {
+- (nullable MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
+{
     if (annotation == self.mapView.userLocation) {
         return nil;
     }
@@ -431,8 +427,8 @@ NSDateFormatter *formatter;
 
 #pragma mark - Creating Event
 
-- (void) eventLocationIdentifier {
-    
+- (void) eventLocationIdentifier
+{
     Event *event = self.eventArray.firstObject;
     CLLocationDistance regionRadius = 11000;
 
@@ -447,28 +443,26 @@ NSDateFormatter *formatter;
     eventAnnotation.coordinate = location.center;
     
     [self.mapView addAnnotation:eventAnnotation];
-    
 }
 
-- (void) eventDateIdentifier {
-    
+- (void) eventDateIdentifier
+{
     Event *event = self.eventArray.firstObject;
 //    FIRTimestamp *eventTimestamp = event.date;
 //    [self setDateNSEvent:eventTimestamp.dateValue];
     self.eventDate.text = [NSString stringWithFormat:@"%@", [formatter stringFromDate:event.date]];
-    
 }
 
-- (void)didCreate:(Event *)newEvent {
-    
+- (void)didCreate:(Event *)newEvent //if event Created
+{
     [self.eventArray addObject:newEvent];
     [self fetchEvents];
     [self nextEvent];
     [self resetCard];
-    
 }
 
-- (IBAction)CreateEventAction:(id)sender {
+- (IBAction)CreateEventAction:(id)sender //to start creating
+{
     NSString *path = [[NSBundle mainBundle] pathForResource:@"pop_drip" ofType:@"wav"];
     NSURL *soundUrl = [NSURL fileURLWithPath:path];
     self.audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundUrl error:nil];
@@ -477,8 +471,8 @@ NSDateFormatter *formatter;
     [self performSegueWithIdentifier:@"CreateEventSegue" sender:nil];
 }
 
-- (IBAction)resetAllCards:(UIBarButtonItem *)sender {
-    
+- (IBAction)resetAllCards:(UIBarButtonItem *)sender //resets card from first element in array again
+{
     NSString *path = [[NSBundle mainBundle] pathForResource:@"pop_drip" ofType:@"wav"];
     NSURL *soundUrl = [NSURL fileURLWithPath:path];
     self.audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundUrl error:nil];
@@ -491,7 +485,8 @@ NSDateFormatter *formatter;
      
 #pragma mark - Navigation
      
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
     if ([segue.identifier isEqualToString: @"CreateEventSegue"]) {
         UINavigationController *navigationController = [segue destinationViewController];
         CreateEventViewController *createEventController = (CreateEventViewController *)navigationController.topViewController;
@@ -521,7 +516,7 @@ NSDateFormatter *formatter;
             }
         }];
         
-//        MKCircle *circle = [MKCircle circleWithCenterCoordinate:self.UserCurrentLocation.coordinate radius:1500];
+//        MKCircle *circle = [MKCircle circleWithCenterCoordinate:self.UserCurrentLocation.coordinate radius:2000];
 //        [self.mapView addOverlay:circle];
     }];
     UIAlertAction* cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
@@ -547,7 +542,7 @@ NSDateFormatter *formatter;
     circleView.fillColor = [[UIColor yellowColor] colorWithAlphaComponent:0.4];
     return circleView;
 }
- */
+*/
 
 - (void)getCoordinates : (NSString *) addressString completionHandler:(void(^)(CLLocation* coordinates, NSError *error))completion
 {

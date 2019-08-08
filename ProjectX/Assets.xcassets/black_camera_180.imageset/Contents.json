@@ -2,15 +2,16 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "ProfileFeed.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "untitled (10).png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
+      "filename" : "untitled (9).png",
       "scale" : "3x"
     }
   ],
