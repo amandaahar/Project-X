@@ -34,6 +34,8 @@
 @property (strong, nonatomic) CLLocation *currentLocation;
 @property (strong, nonatomic) AVAudioPlayer *audioPlayer;
 @property (strong, nonatomic) CAGradientLayer *gradient;
+@property (strong, nonatomic) UIActivityIndicatorView * spinner;
+@property (strong, nonatomic) UIView * spinnerView;
 @end
 
 @implementation EventsFeedViewController
@@ -49,6 +51,20 @@ NSDateFormatter *dateFormat;
 //    [self.navigationController.navigationBar.layer insertSublayer:self.gradient atIndex:1];
     //[self fetchArrayCategories];
     // convert to date
+    self.spinnerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 80, 80)];
+    self.spinnerView.center = CGPointMake(self.view.frame.size.width/2, self.view.frame.size.height/2 - 180);
+    self.spinnerView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.4];
+    self.spinnerView.clipsToBounds = YES;
+    self.spinnerView.layer.cornerRadius = 10;
+    [self.tableViewEventCategories addSubview:self.spinnerView];
+    
+    self.spinner = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
+    self.spinner.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
+    self.spinner.center = self.spinnerView.center;
+    [self.spinner setHidesWhenStopped:YES];
+    [self.tableViewEventCategories addSubview:self.spinner];
+    [self.spinner startAnimating];
+    
     dateFormat = [[NSDateFormatter alloc] init];
     // ignore +11 and use timezone name instead of seconds from gmt
     [dateFormat setDateFormat:@"YYYY-MM-dd'T'HH:mm:ss'+11:00'"];
@@ -303,11 +319,14 @@ NSDateFormatter *dateFormat;
         ];
         
         }
-        double delayInSeconds = 10.0;
+        double delayInSeconds = 8.0;
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
             [self.activityView setHidden:YES];
             [self.activityView stopAnimating];
+       
+            [self.spinnerView setHidden:YES];
+            [self.spinner stopAnimating];
         });
 }
 
