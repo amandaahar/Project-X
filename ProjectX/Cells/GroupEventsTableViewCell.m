@@ -21,7 +21,9 @@
     self.groupedEvents = [NSArray new];
     self.collectionViewGroupsEvents.delegate = self;
     self.collectionViewGroupsEvents.dataSource = self;
- 
+    self.backgroundColor = [UIColor whiteColor];
+   
+
 
 
     [self.collectionViewGroupsEvents reloadData];

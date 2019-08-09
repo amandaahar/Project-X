@@ -353,7 +353,7 @@ NSDateFormatter *dateFormat;
  */
 -(UIView *) setTitle: (NSString *) title subtitle:(NSString *) subtitle
 {
-    int navigationBarHeight = self.navigationController.navigationBar.frame.size.height;
+    int navigationBarHeight = 60;
     int navigationBarWidth = self.navigationController.navigationBar.frame.size.width;
     
     double y_Title = 0.0;
@@ -396,8 +396,20 @@ NSDateFormatter *dateFormat;
     [subTitleLabel setText:subtitle];
     [subTitleLabel sizeToFit];
     
-    UIView * titleView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, navigationBarWidth, navigationBarHeight)];
+    UIView * titleView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, navigationBarWidth
+                                                                  , navigationBarHeight)];
     titleView.backgroundColor = [UIColor whiteColor];
+    titleView.layer.cornerRadius = 10;
+    titleView.clipsToBounds = YES;
+    titleView.layer.shadowRadius  = 3;
+    
+    titleView.layer.shadowOffset = CGSizeMake(0,0);
+    titleView.layer.shadowColor = [UIColor lightGrayColor].CGColor;
+    titleView.layer.shadowOpacity = 0.5;
+    titleView.layer.masksToBounds = NO;
+    titleView.layer.shadowPath = [UIBezierPath bezierPathWithRect:titleView.bounds].CGPath;
+
+    
     [titleView addSubview:titleLabel];
     [titleView addSubview:subTitleLabel];
     return titleView;
