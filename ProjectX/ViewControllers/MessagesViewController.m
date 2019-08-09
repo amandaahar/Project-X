@@ -48,6 +48,7 @@ NSLayoutConstraint *bottom;
     self.sendButton.layer.cornerRadius = 15;
     self.sendButton.layer.borderWidth = 1;
     self.sendButton.layer.borderColor = [[AppColors sharedManager] getOrange].CGColor;
+    
     NSString * language = [[NSLocale preferredLanguages] firstObject];
     NSLog(@"%@",language);
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(handleKeyboardNotifications:) name:UIKeyboardWillShowNotification object:nil];
@@ -74,8 +75,7 @@ NSLayoutConstraint *bottom;
             [self.messagesTableView reloadData];
             if(self.messagesInChat.count > 0)
             {
-//            NSIndexPath * indexPath = [NSIndexPath indexPathForItem:self.messagesInChat.count - 1 inSection:0];
-//            [self.messagesTableView scrollToRowAtIndexPath:indexPath atScrollPosition:(UITableViewScrollPositionBottom) animated:YES];
+                
             }
             
         }
@@ -87,7 +87,7 @@ NSLayoutConstraint *bottom;
     bottom.constant = 0;
 }
 
--(void) chooseLanguage:(NSString *) text {
+- (void)chooseLanguage:(NSString *)text {
     UINotificationFeedbackGenerator *myGen = [[UINotificationFeedbackGenerator alloc] init];
     [myGen prepare];
     [myGen notificationOccurred:(UINotificationFeedbackTypeSuccess)];
@@ -105,7 +105,6 @@ NSLayoutConstraint *bottom;
 
 - (void)handleKeyboardNotifications:(NSNotification*)notification {
     CGRect keyboardFrame = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
-    
     for (NSLayoutConstraint * constraint in self.view.constraints)
     {
         if([constraint.identifier isEqualToString:@"bottom"])
@@ -118,7 +117,6 @@ NSLayoutConstraint *bottom;
 }
 
 - (IBAction)didTapSend:(id)sender {
-   //  User *currentUser = [[User alloc]init];
     if(![self.messageText.text isEqualToString: @""])
     {
         [[FirebaseManager sharedManager] getCurrentUser:^(User *user, NSError *error) {
@@ -168,7 +166,7 @@ NSLayoutConstraint *bottom;
     
 }
 
-- (void) detailsSegue: (NSString *) text {
+- (void)detailsSegue:(NSString *)text {
     
     UINotificationFeedbackGenerator *myGen = [[UINotificationFeedbackGenerator alloc] init];
     [myGen prepare];
@@ -181,18 +179,6 @@ NSLayoutConstraint *bottom;
     self.audioPlayer.play;
     
     [self performSegueWithIdentifier:@"eventDetails" sender:self];
-    
-}
-
-/*
--(void)getMessages {
-    FIRFirestore *db = [FIRFirestore firestore];
-    FIRCollectionReference *messages = [[[[db collectionWithPath:@"Event"] documentWithPath:self.chat.event] collectionWithPath:@"Chats"] documentWithPath:self.chat.
-}
- */
-                                        
-- (void)fetchMessages{
-
     
 }
 
@@ -267,7 +253,7 @@ NSLayoutConstraint *bottom;
             
         }];
         return @[delete];
-    }else{
+    } else {
         return @[];
     }
    

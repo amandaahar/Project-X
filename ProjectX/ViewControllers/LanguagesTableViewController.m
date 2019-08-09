@@ -17,7 +17,6 @@
 @end
 
 @implementation LanguagesTableViewController
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.searchBar.delegate = self;
@@ -58,7 +57,6 @@
     return self.filteredData.count;
 }
 
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     [cell.detailTextLabel setText:self.filteredData[indexPath.row][@"language"]];
@@ -76,7 +74,6 @@
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
-    
     if (searchText.length != 0) {
         
         NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(NSDictionary *evaluatedObject, NSDictionary *bindings) {
@@ -84,7 +81,6 @@
             return [language localizedCaseInsensitiveContainsString:searchText];
         }];
         self.filteredData = [self.languages filteredArrayUsingPredicate:predicate];
-        //NSLog(@"%@", self.filteredData);
     }
     else {
         self.filteredData = self.languages;

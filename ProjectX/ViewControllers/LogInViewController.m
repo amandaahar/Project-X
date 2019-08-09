@@ -58,12 +58,10 @@ CAGradientLayer *gradient;
     [self.view.layer insertSublayer:gradient atIndex:0];
     
   
-  
-    //[[APIEventsManager sharedManager] getCategories];
     // Do any additional setup after loading the view.
 }
 
-- (void) willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
     gradient.frame = self.view.bounds;
 }
@@ -127,7 +125,7 @@ enum AuthenticationState {
     }];
 }
 
--(void) logInWithUser: (NSString * )username andPassword: (NSString *) password{
+- (void)logInWithUser: (NSString * )username andPassword: (NSString *) password{
     [[FIRAuth auth] signInWithEmail:username
                            password:password
                          completion:^(FIRAuthDataResult * _Nullable authResult,
@@ -161,8 +159,9 @@ enum AuthenticationState {
                          }];
 }
 
--(IBAction)prepareForUnwind:(UIStoryboardSegue *)segue {
+- (IBAction)prepareForUnwind:(UIStoryboardSegue *)segue {
 }
+
 - (void)viewDidAppear:(BOOL)animated
 {
     if(FIRAuth.auth.currentUser != nil)

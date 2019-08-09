@@ -36,7 +36,7 @@
     return [NSNumber numberWithInt:280];
 }
 
-- (BOOL) textFieldShouldEndEditing:(UITextField *)textField {
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField {
     return YES;
 }
 

@@ -16,7 +16,7 @@
 
 @implementation InterestsCollectionViewCell
 
-- (void) setInterestLabelText:(NSString *)interestLabelText {
+- (void)setInterestLabelText:(NSString *)interestLabelText {
     self.interestLabel.text = interestLabelText;
 }
 

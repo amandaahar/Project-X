@@ -25,7 +25,7 @@
 
 @implementation ProfileHeaderCollectionReusableView
 
-- (void) setProfileImageWithURL:(NSString *)photoURL {
+- (void)setProfileImageWithURL:(NSString *)photoURL {
     NSURL *imageURL = [NSURL URLWithString:photoURL];
     [self.profileImage setImageWithURL:imageURL];
     
@@ -33,15 +33,15 @@
     self.profileImage.layer.masksToBounds = YES;
 }
 
-- (void) setNameText:(NSString *)name {
+- (void)setNameText:(NSString *)name {
     self.name.text = name;
 }
 
-- (void) setUsernameText:(NSString *)username {
+- (void)setUsernameText:(NSString *)username {
     self.username.text = username;
 }
 
-- (void) setBioText:(NSString *)bio {
+- (void)setBioText:(NSString *)bio {
     self.bio.text = bio;
 }
 

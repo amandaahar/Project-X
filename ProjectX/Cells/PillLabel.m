@@ -15,25 +15,24 @@
 
 @implementation PillLabel
 
--(void) setup {
+- (void)setup {
     self.layer.cornerRadius = self.frame.size.height / 2;
     self.clipsToBounds = YES;
     self.textAlignment = NSTextAlignmentCenter;
   
-    //self.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"smallBlueGradient.png"]];
 }
 
--(void) awakeFromNib {
+- (void)awakeFromNib {
     [super awakeFromNib];
     [self setup];
 }
 
--(void) layoutSubviews {
+- (void)layoutSubviews {
     [super layoutSubviews];
     [self setup];
 }
 
--(void) prepareForInterfaceBuilder {
+- (void)prepareForInterfaceBuilder {
     [super prepareForInterfaceBuilder];
     [self setup];
     

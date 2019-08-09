@@ -51,6 +51,8 @@ NSString *cell2 = @"cell2";
     
     self.editProfileTableView.dataSource = self;
     self.editProfileTableView.delegate = self;
+    
+    // notifications so xibs can communicate with this view controller
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(firstNameDidChange:) name:@"firstNameNotification" object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(lastNameDidChange:) name:@"lastNameNotification" object:nil];
@@ -59,11 +61,9 @@ NSString *cell2 = @"cell2";
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(interestRemoved:) name:@"interestRemovedNotification" object:nil];
     
-    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(interestCellSelected:) name:@"interestCellPressed" object:nil];
     
     // make the tableview lines go away
     self.editProfileTableView.separatorColor = [UIColor clearColor];
-    //[self.editProfileTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     
     [self.editProfileTableView registerNib:[UINib nibWithNibName:@"EditProfileTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:cell0];
     
@@ -109,17 +109,12 @@ NSString *cell2 = @"cell2";
             self.firstName = self.currentUser.firstName;
             self.lastName = self.currentUser.lastName;
             self.bio = self.currentUser.bio;
-            //for (NSDictionary *category in )
             self.usersInterests = self.currentUser.preferences;
             self.profileImageString = self.currentUser.profileImageURL;
             
             UIImageView *profilePhotoPlaceholder = [[UIImageView alloc]init];
             [profilePhotoPlaceholder setImageWithURL:imageURL];
             self.profilePhoto = profilePhotoPlaceholder.image;
-            
-            
-            //[self.profileCell.imageView setImageWithURL:imageURL];
-            //[self.interestsCollectionView reloadData];
             
             [self.editProfileTableView reloadData];
         }
@@ -153,14 +148,12 @@ NSString *cell2 = @"cell2";
         EditProfileTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cell0];
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
         
-        NSURL *imageURL = [NSURL URLWithString:self.profileImageString];
-        //cell.profileView = self.profilePhoto;
-        //[cell.profileView setImageWithURL:imageURL];
+        //NSURL *imageURL = [NSURL URLWithString:self.profileImageString];
         cell.profileView.image = self.profilePhoto;
-        //self.profilePhoto = cell.profileView.image;
         cell.firstName.text = self.firstName;
         cell.lastName.text = self.lastName;
         cell.bio.text = self.bio;
+        
         //add action to change profile button in cell
         [cell.changePhotoButton addTarget:self action:@selector(changeProfileImageButton:) forControlEvents:UIControlEventTouchUpInside];
         
@@ -170,7 +163,6 @@ NSString *cell2 = @"cell2";
         InterestFieldTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cell1];
         
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-        //self.chooseInterestsCell =
         cell.addInterestsField.inputView = self.interestsPicker;
         cell.addInterestsField.inputAccessoryView = interestsToolBar;
         
@@ -192,7 +184,7 @@ NSString *cell2 = @"cell2";
 }
 
 
-- (void)doneCategoryPicker:(UIButton *) button {
+- (void)doneCategoryPicker:(UIButton *)button {
     if (! [self.usersInterests containsObject:self.selectedRowDictRef]) {
         [self.usersInterests addObject:self.selectedRowDictRef];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"interestsAdded" object:nil userInfo:@{@"newInterest": self.selectedRowDictRef}];
@@ -207,7 +199,7 @@ NSString *cell2 = @"cell2";
 
 #pragma mark - Update info
 
-- (void) updateUserProperties {
+- (void)updateUserProperties {
     FIRDocumentReference *userRef = [[self.db collectionWithPath:@"Users"] documentWithPath:self.currentUser.userID];
     [userRef updateData:
      @{
@@ -225,7 +217,7 @@ NSString *cell2 = @"cell2";
        }];
 }
 
-- (NSString *) updateDocument {
+- (NSString *)updateDocument {
     FIRStorage *storage = [FIRStorage storage];
     NSUUID *randomID = [[NSUUID alloc] init];
     FIRStorageReference *storageRef = [storage referenceWithPath:[@"profileImages/" stringByAppendingString:[NSString stringWithFormat: @"%@", randomID.description, @".jpg"]]];
@@ -249,7 +241,6 @@ NSString *cell2 = @"cell2";
                 } else {
                     downloadURL = URL;
                     self.profileImageString = downloadURL.absoluteString;
-//                    NSURL *downloadURL = URL;
                     NSLog(@"Here is your downloaded URL: %@", downloadURL);
                     NSLog(@" here is image url%@", self.profileImageString);
                     
@@ -298,15 +289,11 @@ NSString *cell2 = @"cell2";
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
     
     UIImage *originalImage = info[UIImagePickerControllerOriginalImage];
-    //UIImage *editedImage = info[UIImagePickerControllerEditedImage];//Do I really need this
-    
-    //****
     self.profilePhoto = [self resizeImage:originalImage withSize:CGSizeMake(400, 400)];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"photoChangeNotification"
                                                         object:nil
                                                       userInfo:@{@"newPhoto": self.profilePhoto}];
-    //[self.editProfileTableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
-    //    [self imageStorage];
+    
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

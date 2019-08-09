@@ -13,7 +13,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface DetailHomeViewController : UIViewController
-@property (strong, nonatomic) EventAPI * event;
+@property (strong, nonatomic) EventAPI* event;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -11,8 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @protocol EventDidSelectedDelegate
--(void) didSelected : (EventAPI *) eventSelected;
-
+- (void)didSelected:(EventAPI *) eventSelected;
 
 @end
 

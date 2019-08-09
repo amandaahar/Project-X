@@ -35,8 +35,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    self.gradient = [[AppColors sharedManager] getGradientPurple:self.navigationController.navigationBar];
-//    [self.navigationController.navigationBar.layer insertSublayer:self.gradient atIndex:1];
     self.db = [FIRFirestore firestore];
     self.chatsTableView.dataSource = self;
     self.chatsTableView.delegate = self;
@@ -47,8 +45,7 @@
     self.filteredData = self.events;
 }
 
--(void) getChats {
-    
+- (void)getChats {
     [[FirebaseManager sharedManager] getCurrentUser:^(User * _Nonnull user, NSError * _Nonnull error) {
         if(error != nil) {
             NSLog(@"Error getting user");
@@ -56,6 +53,7 @@
             
             self.currentUser = user;
             [self.events removeAllObjects];
+            
             for(FIRDocumentReference *eventDoc in self.currentUser.events) {
                 [eventDoc getDocumentWithCompletion:^(FIRDocumentSnapshot * _Nullable snapshot, NSError * _Nullable error) {
                     if(error == nil){
@@ -77,17 +75,7 @@
 }
 
 
-//- (void) removeExpiredChats {
-//    for (Chat *chat in self.chats) {
-//        if(chat.isExpired) {
-//            [self.chats removeObject:chat];
-//        }
-//    }
-//
-//}
-
-
-- (void) willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
     self.gradient.frame = self.navigationController.navigationBar.bounds;
 }
@@ -102,6 +90,7 @@
     
     NSString *path = [[NSBundle mainBundle] pathForResource:@"pop_drip" ofType:@"wav"];
     NSURL *soundUrl = [NSURL fileURLWithPath:path];
+    
     self.audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundUrl error:nil];
     self.audioPlayer.play;
     
@@ -121,20 +110,7 @@
     Event *event = self.filteredData[indexPath.row];
     [cell setNameOfChatText:event.name];
     [cell setEventDateText:event.date];
-    
-    
-    /*
-    if (event.pictures[0] == nil) {
-        //self.eventImageURL = [UIImage imageNamed:@"https://profiles.utdallas.edu/img/default.png"];
-        NSData * imageData = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString: @"https://profiles.utdallas.edu/img/default.png"]];
-        //cell.image = [UIImage imageWithData: imageData];
-        [cell setImage:imageData];
-    }
-    */
-    
-    //else {
-        [cell setImage:event.pictures[0]];
-    //}
+    [cell setImage:event.pictures[0]];
     
     return cell;
 }
@@ -174,8 +150,6 @@
                 NSLog(@"Document successfully deleted");
            
                     [self.chatsTableView reloadData];
-       
-                
                 
             }
         }];
@@ -185,7 +159,6 @@
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
-    
     if (searchText.length != 0) {
         
         NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(Event *evaluatedObject, NSDictionary *bindings) {

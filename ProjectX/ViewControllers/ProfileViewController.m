@@ -19,11 +19,6 @@
 @import Firebase;
 @import SAMKeychain;
 @interface ProfileViewController () < UICollectionViewDelegate, UICollectionViewDataSource>
-@property (weak, nonatomic) IBOutlet UILabel *nameText;
-@property (weak, nonatomic) IBOutlet UIImageView *profilePictureImage;
-@property (weak, nonatomic) IBOutlet UILabel *username;
-@property (weak, nonatomic) IBOutlet UILabel *preferences;
-@property (weak, nonatomic) IBOutlet UILabel *bioText;
 @property (nonatomic, readwrite) FIRFirestore *db;
 @property (nonatomic, strong) User *currentUser;
 @property (weak, nonatomic) IBOutlet UICollectionView *interestsCollectionView;
@@ -40,9 +35,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-//    self.gradient = [[AppColors sharedManager] getGradientPurple:self.navigationController.navigationBar];
-//    [self.navigationController.navigationBar.layer insertSublayer:self.gradient atIndex:1];
-//    
     self.interestsCollectionView.delegate = self;
     self.interestsCollectionView.dataSource = self;
     
@@ -51,27 +43,17 @@
     layout.minimumInteritemSpacing = 2;
     layout.minimumLineSpacing = 5;
     
-//    UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout*)self.interestsCollectionView.collectionViewLayout;
-//    layout.itemSize = CGSizeMake(120, 25);
-//    layout.minimumInteritemSpacing = 2;
-//    layout.minimumLineSpacing = 10;
-    
-    //[self.interestsCollectionView br]
      [self setup];
-    
-    
-  
-    
 }
 
 
-- (void) willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
     self.gradient.frame = self.navigationController.navigationBar.bounds;
 }
 
 
-- (void) setup {
+- (void)setup {
     
     [[FirebaseManager sharedManager] getCurrentUser:^(User * _Nonnull user, NSError * _Nonnull error) {
         if(error != nil)
@@ -80,7 +62,6 @@
         } else
         {
             self.currentUser = user;
-            
             [self.interestsCollectionView reloadData];
         }
     }];
@@ -88,11 +69,6 @@
     
 }
 
-
--(void) setImage: (NSString *) photoURL {
-    NSURL *imageURL = [NSURL URLWithString:photoURL];
-    [self.profilePictureImage setImageWithURL:imageURL];
-}
 
 #pragma mark - Log Out
 
@@ -152,8 +128,6 @@
 - (nonnull __kindof UICollectionViewCell *)collectionView:(nonnull UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
     InterestsCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"InterestsCell" forIndexPath:indexPath];
     
-    //NSString *interest = [self.currentUser.preferences[indexPath.item][@"short_name"] componentsJoinedByString:@" "]
-    
     NSString *interest = [[self.currentUser.preferences[indexPath.item][@"short_name"] componentsSeparatedByString:@" "] objectAtIndex:0];
     
     [cell setInterestLabelText:interest];
@@ -193,8 +167,6 @@
     [reusableView setBioText:self.currentUser.bio];
     
     return reusableView;
-    
-    
 }
 
 

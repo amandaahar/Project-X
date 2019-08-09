@@ -14,13 +14,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ProfileHeaderCollectionReusableView : UICollectionReusableView
 
-- (void) setProfileImageWithURL:(NSString *)photoURL;
+- (void)setProfileImageWithURL:(NSString *)photoURL;
 
-- (void) setNameText:(NSString *)name;
+- (void)setNameText:(NSString *)name;
 
-- (void) setUsernameText:(NSString *)username;
+- (void)setUsernameText:(NSString *)username;
 
-- (void) setBioText:(NSString *)bio;
+- (void)setBioText:(NSString *)bio;
 
 - (PillLabel *)getFollowLabel;
 

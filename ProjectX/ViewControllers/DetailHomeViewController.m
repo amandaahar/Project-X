@@ -19,11 +19,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *descriptionEvent;
 @property (weak, nonatomic) IBOutlet UILabel *locationName;
 
-
 @end
 
 @implementation DetailHomeViewController
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.mapView.layer setCornerRadius:self.mapView.frame.size.height/2];
@@ -83,7 +81,6 @@
         [mapsButton setBackgroundImage:[UIImage imageNamed:@"mapsIcon"] forState:(UIControlStateNormal)];
         
         [view setRightCalloutAccessoryView: mapsButton];
-        
     }
     return view;
 }
@@ -99,7 +96,7 @@
     
 }
 
--(void) convertLatLongToAddress : (double) latitude : (double) longitude
+- (void)convertLatLongToAddress:(double)latitude :(double) longitude
 {
     CLGeocoder * geoCoder = [CLGeocoder new];
     CLLocation *location = [[CLLocation alloc] initWithLatitude:latitude longitude:longitude];
@@ -133,9 +130,6 @@
         }
     }];
 
-  
-    
-    
 }
 
 - (IBAction)shareEvent:(id)sender {
@@ -149,7 +143,6 @@
         myGen = NULL;
     }];
 }
-
 
 
 /*

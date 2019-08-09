@@ -50,7 +50,7 @@
     [self.view.layer insertSublayer:self.gradient atIndex:0];
     
 }
-- (void) willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
     self.gradient.frame = self.view.bounds;
 }
@@ -59,6 +59,7 @@
 - (UIStatusBarStyle)preferredStatusBarStyle{
     return UIStatusBarStyleLightContent;
 }
+
 #pragma mark - Design
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -103,12 +104,12 @@
 
 
 
-- (void) viewWillAppear:(BOOL)animated {
+- (void)viewWillAppear:(BOOL)animated {
     self.handle =
         [[FIRAuth auth] addAuthStateDidChangeListener:^(FIRAuth *_Nonnull auth, FIRUser *_Nullable user) {}];
 }
 
-- (void) viewWillDisappear:(BOOL)animated {
+- (void)viewWillDisappear:(BOOL)animated {
     [[FIRAuth auth] removeAuthStateDidChangeListener:self.handle];
 }
 

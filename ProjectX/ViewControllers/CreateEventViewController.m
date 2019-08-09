@@ -65,14 +65,7 @@ UIDatePicker *datePicker;
     [self.view.layer insertSublayer:self.backgroundGradient atIndex:0];
 }
 
-/*
-- (void) willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
-{
-    self.backgroundGradient.frame = self.view.bounds;
-}
- */
-
-- (void) ShowSelectedDate
+- (void)ShowSelectedDate
 {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"MMM d, h:mm a"];
@@ -110,10 +103,8 @@ UIDatePicker *datePicker;
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
     
     UIImage *originalImage = info[UIImagePickerControllerOriginalImage];
-//    UIImage *editedImage = info[UIImagePickerControllerEditedImage];//Do I really need this
     
     self.createPicture.image = [self resizeImage:originalImage withSize:CGSizeMake(400, 400)];
-//    [self imageStorage];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -132,8 +123,7 @@ UIDatePicker *datePicker;
     
 }
 
-- (NSString *) imageStorage {
-    
+- (NSString *)imageStorage {
     FIRStorage *storage = [FIRStorage storage];
     NSUUID *randomID = [[NSUUID alloc] init];
     FIRStorageReference *storageRef = [storage referenceWithPath:[@"images/" stringByAppendingString:[NSString stringWithFormat: @"%@", randomID.description, @".jpg"]]];
@@ -278,7 +268,7 @@ UIDatePicker *datePicker;
     
 }
 
-- (void) addEventImage {
+- (void)addEventImage {
     
     FIRDocumentReference *eventRef = [[self.db collectionWithPath:@"Event"] documentWithPath:self.eventID];
     [eventRef updateData:@{ @"pictures": [FIRFieldValue fieldValueForArrayUnion:@[self.EventImageString]]}
@@ -289,7 +279,6 @@ UIDatePicker *datePicker;
                     NSLog(@"Document updated with Image");
                 }
             }];
-    
 }
 
 #pragma mark - Done creating
@@ -356,7 +345,7 @@ UIDatePicker *datePicker;
     
 }
 
-- (void)addEventToCurrentUser: (NSString *)eventID {
+- (void)addEventToCurrentUser:(NSString *)eventID {
     FIRDocumentReference *eventRef = [[self.db collectionWithPath:@"Event"] documentWithPath:self.eventID];
     FIRDocumentReference *userRef = [[self.db collectionWithPath:@"Users"] documentWithPath:FIRAuth.auth.currentUser.uid];
     
@@ -400,19 +389,8 @@ UIDatePicker *datePicker;
             storeCategory = [NSNumber numberWithInt:4];
         }
         
-//    [userRef updateData:@{@"name": self.createEventName.text, @"description": self.createEventDescription.text, @"location": geoPoint, @"eventDate": [FIRTimestamp timestampWithDate: datePicker.date], @"numAttendees": formattedNumOfAttendees, @"categoryIndex": storeCategory, @"userFriendlyLocation": address, @"events": [FIRFieldValue fieldValueForArrayUnion:@[eventRef]] }];
-//
         [userRef updateData:@{@"events" : [FIRFieldValue fieldValueForArrayUnion:@[eventRef]]}];
-    /*
-    [[FirebaseManager sharedManager] getCurrentUser:^(User * _Nonnull user, NSError * _Nonnull error) {
-        if (error != nil) {
-            NSLog(@"Error getting current user for profile");
-        } else {
-            self.currentUser = user;
-            [self.currentUser joinEvent:eventID];
-        }
-    }];
-    */
+    
      }];
 }
 

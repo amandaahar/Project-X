@@ -45,9 +45,6 @@ NSDateFormatter *dateFormat;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    self.gradient = [[AppColors sharedManager] getGradientPurple:self.navigationController.navigationBar];
-//    [self.navigationController.navigationBar.layer insertSublayer:self.gradient atIndex:1];
-    //[self fetchArrayCategories];
     // convert to date
     dateFormat = [[NSDateFormatter alloc] init];
     // ignore +11 and use timezone name instead of seconds from gmt
@@ -59,6 +56,7 @@ NSDateFormatter *dateFormat;
     self.currentLocation = [[CLLocation alloc] initWithLatitude:36 longitude:-122];
     self.events = [NSMutableArray new];
     self.categories = [NSArray new];
+    
     NSDateFormatter *format = [[NSDateFormatter alloc] init];
     [format setDateFormat:@"MMM dd, yyyy HH:mm"];
     NSDate *now = [[NSDate alloc] init];
@@ -67,9 +65,11 @@ NSDateFormatter *dateFormat;
     NSString *dateString = [format stringFromDate:now];
     #pragma clang diagnostic pop
     
-    if([self isConnectionAvailable]){
+    if ([self isConnectionAvailable]) {
+        
     [self currentLocationIdentifier];
-    }else{
+        
+    } else {
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error" message:@"Check your internet connection" preferredStyle:(UIAlertControllerStyleAlert)];
         UIAlertAction *accept = [UIAlertAction actionWithTitle:@"Accept" style:(UIAlertActionStyleDefault) handler:nil];
         [alert addAction:accept];
@@ -80,15 +80,13 @@ NSDateFormatter *dateFormat;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showAlert:) name:@"newEvent" object:nil];
     
     
-    
     [self desiredInteraction];
 }
 
-- (void)showDetailView:(NSNotification *) notification
+- (void)showDetailView:(NSNotification *)notification
 {
     self.eventSelected = notification.object;
     [self performSegueWithIdentifier:@"details" sender:self];
-    NSLog(@"Notification");
     UIImpactFeedbackGenerator *myGen = [[UIImpactFeedbackGenerator alloc] initWithStyle:(UIImpactFeedbackStyleMedium)];
     [myGen impactOccurred];
     myGen = NULL;
@@ -101,16 +99,15 @@ NSDateFormatter *dateFormat;
 }
 
 
-- (void) willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
     self.gradient.frame = self.navigationController.navigationBar.bounds;
 
 }
 
-- (void)showAlert:(NSNotification *) notification
+- (void)showAlert:(NSNotification *)notification
 {
     NSString *name = notification.object;
-    
     
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"New event"
                                                                    message:[name stringByAppendingString: @" has been added to your calendar"]
@@ -138,8 +135,6 @@ NSDateFormatter *dateFormat;
     [[FirebaseManager sharedManager] getCurrentUser:^(User * _Nonnull user, NSError * _Nonnull error) {
         if(error == nil){
             self.currentUser = user;
-            //[self getEventsFromCategories];
-            // [self getEventsFromCategories];
             [self fetchArrayCategories];
         }
     }];
@@ -160,14 +155,12 @@ NSDateFormatter *dateFormat;
 }
 
 
-
 /// This method shows the cancel button
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
     self.searchBar.showsCancelButton = YES;
 }
 
 /// This method makes the search bar first responder
-
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
     self.searchBar.showsCancelButton = NO;
     self.searchBar.text = @"";
@@ -219,7 +212,7 @@ NSDateFormatter *dateFormat;
                     
                     [categoriesFiltered addObjectsFromArray:[categories filteredArrayUsingPredicate:predicate]];
                 }
-            }else{
+            } else{
                 categoriesFiltered = [categories copy];
             }
           
@@ -315,7 +308,7 @@ NSDateFormatter *dateFormat;
 }
 
 
--(BOOL)isConnectionAvailable
+- (BOOL)isConnectionAvailable
 {
     Reachability *reachability = [Reachability reachabilityForInternetConnection];
     
@@ -324,18 +317,7 @@ NSDateFormatter *dateFormat;
     return !(networkStatus == NotReachable);
 }
 #pragma mark - Design Methods
-/**
-    setTitle
-    This method is going to set a title and subtitle like in the App store.We are using it in the header section of the table view.
-
- -Parameters:
- -title: Title that we want to display
- -Subtile: Subtitle that we want to display
- 
- -Return:
-    A UIVIew that can be set in the eader of each section of the table view.
- */
--(UIView *) setTitle: (NSString *) title subtitle:(NSString *) subtitle
+- (UIView *)setTitle:(NSString *)title subtitle:(NSString *)subtitle
 {
     int navigationBarHeight = self.navigationController.navigationBar.frame.size.height;
     int navigationBarWidth = self.navigationController.navigationBar.frame.size.width;
@@ -389,7 +371,7 @@ NSDateFormatter *dateFormat;
 }
 
 
--(void) desiredInteraction{
+- (void)desiredInteraction {
     EventsAroundIntent *intent = [EventsAroundIntent new];
     [intent setSuggestedInvocationPhrase:@"Look for events around me with Plan It"];
     INInteraction *interaction = [[INInteraction alloc] initWithIntent:intent response:nil];
@@ -513,7 +495,7 @@ NSDateFormatter *dateFormat;
 
 
 
-- (void)getCoordinates : (NSString *) addressString completionHandler:(void(^)(CLLocation* coordinates, NSError *error))completion
+- (void)getCoordinates:(NSString *)addressString completionHandler:(void(^)(CLLocation* coordinates, NSError *error))completion
 {
     CLGeocoder *geoCoder = [[CLGeocoder alloc] init];
     [geoCoder geocodeAddressString:addressString completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
