@@ -83,8 +83,8 @@
     }];
 }
 
-- (void)getEventsNotSwiped: (CLLocation *) location completion:(void(^)(NSArray *events, NSError *error))completion {
-    
+- (void)getEventsNotSwiped: (CLLocation *) location completion:(void(^)(NSArray *events, NSError *error))completion
+{
     double latitude = location.coordinate.latitude;
     double longitude = location.coordinate.longitude;
     double distance = 10;
@@ -223,7 +223,6 @@
         }
         
     }];
-    
 }
 
 -(void) addUserToEvent : (FIRDocumentReference *) eventID

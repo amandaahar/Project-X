@@ -22,9 +22,9 @@
 @property (weak, nonatomic) IBOutlet MFTextField *createEventDescription;
 @property (weak, nonatomic) IBOutlet MFTextField *createEventLocation;
 @property (weak, nonatomic) IBOutlet MFTextField *createEventDate;
-@property (weak, nonatomic) IBOutlet MFTextField *createAttendees;//slider
+@property (weak, nonatomic) IBOutlet MFTextField *createAttendees;
 @property (weak, nonatomic) IBOutlet UIImageView *createPicture;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *createButton;//Make sure doesnt crash if not complete
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *createButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelButton;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
 @property (weak, nonatomic) IBOutlet UILabel *categoryLabel;
@@ -83,8 +83,8 @@ UIDatePicker *datePicker;
 
 #pragma mark - Event Image
 
-- (IBAction)OpenCameraButton:(id)sender {
-    
+- (IBAction)OpenCameraButton:(id)sender
+{
     NSString *path = [[NSBundle mainBundle] pathForResource:@"pop_drip" ofType:@"wav"];
     NSURL *soundUrl = [NSURL fileURLWithPath:path];
     self.audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundUrl error:nil];
@@ -104,20 +104,18 @@ UIDatePicker *datePicker;
     }
     
     [self presentViewController:imagePickerVC animated:YES completion:nil];
-    
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
     
     UIImage *originalImage = info[UIImagePickerControllerOriginalImage];
-//    UIImage *editedImage = info[UIImagePickerControllerEditedImage];//Do I really need this
-    
     self.createPicture.image = [self resizeImage:originalImage withSize:CGSizeMake(400, 400)];
 //    [self imageStorage];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (UIImage *)resizeImage:(UIImage *)image withSize:(CGSize)size {
+- (UIImage *)resizeImage:(UIImage *)image withSize:(CGSize)size
+{
     UIImageView *resizeImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, size.width, size.height)];
     
     resizeImageView.contentMode = UIViewContentModeScaleAspectFill;
@@ -129,11 +127,10 @@ UIDatePicker *datePicker;
     UIGraphicsEndImageContext();
     
     return newImage;
-    
 }
 
-- (NSString *) imageStorage {
-    
+- (NSString *) imageStorage
+{
     FIRStorage *storage = [FIRStorage storage];
     NSUUID *randomID = [[NSUUID alloc] init];
     FIRStorageReference *storageRef = [storage referenceWithPath:[@"images/" stringByAppendingString:[NSString stringWithFormat: @"%@", randomID.description, @".jpg"]]];
@@ -165,13 +162,12 @@ UIDatePicker *datePicker;
     }];
     
     return downloadURL.absoluteString;
-    
 }
 
 #pragma mark - Creating event
 
-- (IBAction)chooseCategory:(id)sender {
-
+- (IBAction)chooseCategory:(id)sender
+{
     UINotificationFeedbackGenerator *myGen = [[UINotificationFeedbackGenerator alloc] init];
     [myGen prepare];
     [myGen notificationOccurred:(UINotificationFeedbackTypeError)];
@@ -203,13 +199,12 @@ UIDatePicker *datePicker;
         self.categoryLabel.text = @"Select";
         storeCategory = [NSNumber numberWithInt:4];
     }
-    
 }
 
 
 
-- (IBAction)didTapCreate:(id)sender {
-    
+- (IBAction)didTapCreate:(id)sender
+{    
     NSString *path = [[NSBundle mainBundle] pathForResource:@"pop_drip" ofType:@"wav"];
     NSURL *soundUrl = [NSURL fileURLWithPath:path];
     self.audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundUrl error:nil];
@@ -289,26 +284,23 @@ UIDatePicker *datePicker;
                     NSLog(@"Document updated with Image");
                 }
             }];
-    
 }
 
 #pragma mark - Done creating
 
-- (IBAction)didTapCancel:(id)sender {
-    
+- (IBAction)didTapCancel:(id)sender
+{
     NSString *path = [[NSBundle mainBundle] pathForResource:@"pop_drip" ofType:@"wav"];
     NSURL *soundUrl = [NSURL fileURLWithPath:path];
     self.audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundUrl error:nil];
     self.audioPlayer.play;
     
     [self dismissViewControllerAnimated:YES completion:nil];
-    
 }
 
-- (IBAction)closeKeyboard:(id)sender {
-    
+- (IBAction)closeKeyboard:(id)sender
+{
     [self.view endEditing:YES];
-    
 }
 
 #pragma mark - Helpers
@@ -321,16 +313,14 @@ UIDatePicker *datePicker;
     return [NSError errorWithDomain:domain code:code userInfo:userInfo];
 }
 
-- (BOOL)validateFields {
-    
+- (BOOL)validateFields
+{
     NSError *error = [self errorWithLocalizedDescription:@"Required field"];
     BOOL areFieldsValid = YES;
     
     if (self.createEventName.text.length == 0) {
         [self.createEventName setError:error animated:YES];
         areFieldsValid = NO;
-        //[self.createEventName s]
-        //return;
     }
     if (self.createEventDescription.text.length == 0) {
         [self.createEventDescription setError:error animated:YES];
@@ -350,70 +340,15 @@ UIDatePicker *datePicker;
     if (self.createEventDate.text.length == 0) {
         [self.createEventDate setError:error animated:YES];
         areFieldsValid = NO;
-        //return;
     }
     return areFieldsValid;
-    
 }
 
-- (void)addEventToCurrentUser: (NSString *)eventID {
+- (void)addEventToCurrentUser: (NSString *)eventID
+{
     FIRDocumentReference *eventRef = [[self.db collectionWithPath:@"Event"] documentWithPath:self.eventID];
     FIRDocumentReference *userRef = [[self.db collectionWithPath:@"Users"] documentWithPath:FIRAuth.auth.currentUser.uid];
-    
-    NSString *address = [NSString stringWithFormat:@"%@", self.createEventLocation.text];
-    
-    [[[CLGeocoder alloc] init] geocodeAddressString:address completionHandler:^(NSArray *placemarks, NSError *error) {
-        if ([placemarks count] > 0) {
-            CLPlacemark *placemark = [placemarks objectAtIndex:0];
-            CLLocation *location = placemark.location;
-            coordinate = location.coordinate;
-        }
-        FIRGeoPoint *geoPoint = [[FIRGeoPoint alloc] initWithLatitude:coordinate.latitude longitude:coordinate.longitude];
-        
-        NSNumberFormatter *Attendeesformatter = [[NSNumberFormatter alloc] init];
-        NSNumber *formattedNumOfAttendees = [Attendeesformatter numberFromString:self.createAttendees.text];
-        
-        NSNumber *storeCategory = [[NSNumber alloc] init];
-        
-        if(self.segmentedControl.selectedSegmentIndex == 0){
-            self.categoryLabel.text = @"Food";
-            storeCategory = [NSNumber numberWithInt:0];
-        }
-        else if(self.segmentedControl.selectedSegmentIndex == 1){
-            self.categoryLabel.text = @"Culture";
-            storeCategory = [NSNumber numberWithInt:1];
-        }
-        else if(self.segmentedControl.selectedSegmentIndex == 2){
-            self.categoryLabel.text = @"Fitness";
-            storeCategory = [NSNumber numberWithInt:2];
-        }
-        else if(self.segmentedControl.selectedSegmentIndex == 3){
-            self.categoryLabel.text = @"Education";
-            storeCategory = [NSNumber numberWithInt:3];
-        }
-        else if(self.segmentedControl.selectedSegmentIndex == 4){
-            self.categoryLabel.text = @"Other";
-            storeCategory = [NSNumber numberWithInt:4];
-        }
-        else{
-            self.categoryLabel.text = @"Select";
-            storeCategory = [NSNumber numberWithInt:4];
-        }
-        
-//    [userRef updateData:@{@"name": self.createEventName.text, @"description": self.createEventDescription.text, @"location": geoPoint, @"eventDate": [FIRTimestamp timestampWithDate: datePicker.date], @"numAttendees": formattedNumOfAttendees, @"categoryIndex": storeCategory, @"userFriendlyLocation": address, @"events": [FIRFieldValue fieldValueForArrayUnion:@[eventRef]] }];
-//
-        [userRef updateData:@{@"events" : [FIRFieldValue fieldValueForArrayUnion:@[eventRef]]}];
-    /*
-    [[FirebaseManager sharedManager] getCurrentUser:^(User * _Nonnull user, NSError * _Nonnull error) {
-        if (error != nil) {
-            NSLog(@"Error getting current user for profile");
-        } else {
-            self.currentUser = user;
-            [self.currentUser joinEvent:eventID];
-        }
-    }];
-    */
-     }];
+    [userRef updateData:@{@"events" : [FIRFieldValue fieldValueForArrayUnion:@[eventRef]]}];
 }
 
 @end
