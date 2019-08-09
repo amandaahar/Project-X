@@ -9,6 +9,7 @@
 #import "GroupEventsTableViewCell.h"
 #import "CategoriesCollectionViewCell.h"
 #import "../Models/EventAPI.h"
+#import "../Helpers/AppColors.h"
 #import "topCollectionViewCell.h"
 #import "QuartzCore/QuartzCore.h"
 
@@ -20,8 +21,7 @@
     self.groupedEvents = [NSArray new];
     self.collectionViewGroupsEvents.delegate = self;
     self.collectionViewGroupsEvents.dataSource = self;
-   
-
+    self.backgroundColor = [UIColor whiteColor];
     [self.collectionViewGroupsEvents reloadData];
 }
 

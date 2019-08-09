@@ -34,6 +34,8 @@
 @property (strong, nonatomic) CLLocation *currentLocation;
 @property (strong, nonatomic) AVAudioPlayer *audioPlayer;
 @property (strong, nonatomic) CAGradientLayer *gradient;
+@property (strong, nonatomic) UIActivityIndicatorView * spinner;
+@property (strong, nonatomic) UIView * spinnerView;
 @end
 
 @implementation EventsFeedViewController
@@ -46,6 +48,20 @@ NSDateFormatter *dateFormat;
 - (void)viewDidLoad {
     [super viewDidLoad];
     // convert to date
+    self.spinnerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 80, 80)];
+    self.spinnerView.center = CGPointMake(self.view.frame.size.width/2, self.view.frame.size.height/2 - 180);
+    self.spinnerView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.4];
+    self.spinnerView.clipsToBounds = YES;
+    self.spinnerView.layer.cornerRadius = 10;
+    [self.tableViewEventCategories addSubview:self.spinnerView];
+    
+    self.spinner = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
+    self.spinner.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
+    self.spinner.center = self.spinnerView.center;
+    [self.spinner setHidesWhenStopped:YES];
+    [self.tableViewEventCategories addSubview:self.spinner];
+    [self.spinner startAnimating];
+    
     dateFormat = [[NSDateFormatter alloc] init];
     // ignore +11 and use timezone name instead of seconds from gmt
     [dateFormat setDateFormat:@"YYYY-MM-dd'T'HH:mm:ss'+11:00'"];
@@ -116,10 +132,7 @@ NSDateFormatter *dateFormat;
     UIAlertAction *action = [UIAlertAction actionWithTitle:@"Accept" style:(UIAlertActionStyleCancel) handler:nil];
     
     [alert addAction:action];
-    UINotificationFeedbackGenerator *myGen = [[UINotificationFeedbackGenerator alloc] init];
-    [myGen prepare];
-    [myGen notificationOccurred:(UINotificationFeedbackTypeSuccess)];
-    myGen = NULL;
+    
     [self presentViewController:alert animated:YES completion:nil];
 }
 
@@ -299,11 +312,14 @@ NSDateFormatter *dateFormat;
         ];
         
         }
-        double delayInSeconds = 10.0;
+        double delayInSeconds = 8.0;
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
             [self.activityView setHidden:YES];
             [self.activityView stopAnimating];
+       
+            [self.spinnerView setHidden:YES];
+            [self.spinner stopAnimating];
         });
 }
 
@@ -319,7 +335,7 @@ NSDateFormatter *dateFormat;
 #pragma mark - Design Methods
 - (UIView *)setTitle:(NSString *)title subtitle:(NSString *)subtitle
 {
-    int navigationBarHeight = self.navigationController.navigationBar.frame.size.height;
+    int navigationBarHeight = 60;
     int navigationBarWidth = self.navigationController.navigationBar.frame.size.width;
     
     double y_Title = 0.0;
@@ -362,8 +378,20 @@ NSDateFormatter *dateFormat;
     [subTitleLabel setText:subtitle];
     [subTitleLabel sizeToFit];
     
-    UIView * titleView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, navigationBarWidth, navigationBarHeight)];
+    UIView * titleView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, navigationBarWidth
+                                                                  , navigationBarHeight)];
     titleView.backgroundColor = [UIColor whiteColor];
+    titleView.layer.cornerRadius = 10;
+    titleView.clipsToBounds = YES;
+    titleView.layer.shadowRadius  = 3;
+    
+    titleView.layer.shadowOffset = CGSizeMake(0,0);
+    titleView.layer.shadowColor = [UIColor lightGrayColor].CGColor;
+    titleView.layer.shadowOpacity = 0.5;
+    titleView.layer.masksToBounds = NO;
+    titleView.layer.shadowPath = [UIBezierPath bezierPathWithRect:titleView.bounds].CGPath;
+
+    
     [titleView addSubview:titleLabel];
     [titleView addSubview:subTitleLabel];
     return titleView;

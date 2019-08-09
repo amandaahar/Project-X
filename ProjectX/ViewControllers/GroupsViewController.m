@@ -33,7 +33,8 @@
 
 @implementation GroupsViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     self.db = [FIRFirestore firestore];
     self.chatsTableView.dataSource = self;
@@ -45,7 +46,8 @@
     self.filteredData = self.events;
 }
 
-- (void)getChats {
+- (void)getChats
+{
     [[FirebaseManager sharedManager] getCurrentUser:^(User * _Nonnull user, NSError * _Nonnull error) {
         if(error != nil) {
             NSLog(@"Error getting user");
@@ -71,18 +73,13 @@
         }
         
      }];
-
 }
 
-
-- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
-{
-    self.gradient.frame = self.navigationController.navigationBar.bounds;
-}
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
     UINotificationFeedbackGenerator *myGen = [[UINotificationFeedbackGenerator alloc] init];
     [myGen prepare];
     [myGen notificationOccurred:(UINotificationFeedbackTypeSuccess)];
@@ -99,8 +96,8 @@
     [[messagesViewController navigationItem] setTitle:self.eventToPass.name];
 }
 
-- (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
-
+- (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
+{
     static NSString *GroupchatID = @"cell";
     GroupTableViewCell *cell = [self.chatsTableView dequeueReusableCellWithIdentifier:GroupchatID];
     if (cell == nil) {
@@ -122,12 +119,47 @@
     [self performSegueWithIdentifier:@"chat" sender:self];
 }
 
-- (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+- (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
     return self.filteredData.count;
 }
 
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+#pragma mark - Searching
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    if (searchText.length != 0) {
+        
+        NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(Event *evaluatedObject, NSDictionary *bindings) {
+            NSString* chatName = evaluatedObject.name;
+           return [chatName containsString:searchText];
+        }];
+        self.filteredData = [self.events filteredArrayUsingPredicate:predicate];
+        //NSLog(@"%@", self.filteredData);
+    }
+    else {
+        self.filteredData = self.events;
+    }
     
+    [self.chatsTableView reloadData];
+}
+
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
+{
+    self.searchBar.showsCancelButton = YES;
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
+{
+    self.searchBar.showsCancelButton = NO;
+    self.searchBar.text = @"";
+    [self.searchBar resignFirstResponder];
+}
+
+#pragma mark - Deleting groups
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         
         NSMutableArray *copyEvents = self.events.mutableCopy;
@@ -141,56 +173,23 @@
             FIRDocumentReference *eventRef = [[self.db collectionWithPath:@"Event"] documentWithPath: event.eventID];
             [references addObject:eventRef];
         }
-      
+        
         FIRDocumentReference *deleteRef = [[self.db collectionWithPath:@"Users"] documentWithPath:FIRAuth.auth.currentUser.uid];
         [deleteRef updateData:@{ @"events":references} completion:^(NSError * _Nullable error) {
             if (error != nil) {
                 NSLog(@"Error deleting document: %@", error);
             } else {
                 NSLog(@"Document successfully deleted");
-           
-                    [self.chatsTableView reloadData];
-                
+                [self.chatsTableView reloadData];
             }
         }];
-        
     }
-    
-}
-
-- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
-    if (searchText.length != 0) {
-        
-        NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(Event *evaluatedObject, NSDictionary *bindings) {
-            NSString* chatName = evaluatedObject.name;
-           return [chatName containsString:searchText];
-        }];
-        self.filteredData = [self.events filteredArrayUsingPredicate:predicate];
-        
-        NSLog(@"%@", self.filteredData);
-        
-    }
-    else {
-        self.filteredData = self.events;
-    }
-    
-    [self.chatsTableView reloadData];
-}
-
-- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
-    self.searchBar.showsCancelButton = YES;
-}
-
-- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
-    self.searchBar.showsCancelButton = NO;
-    self.searchBar.text = @"";
-    [self.searchBar resignFirstResponder];
 }
 
 #pragma mark - UITableView Delegate
 
-- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
     return UITableViewCellEditingStyleDelete;
 }
 

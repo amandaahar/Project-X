@@ -57,10 +57,11 @@ NSDateFormatter *formatter;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-//    self.gradient = [[AppColors sharedManager] getGradientPurple:self.navigationController.navigationBar];
-//    [self.navigationController.navigationBar.layer insertSublayer:self.gradient atIndex:1];
     [self fetchEvents];
-    //[self fetchImage];
+    
+    //    self.gradient = [[AppColors sharedManager] getGradientPurple:self.navigationController.navigationBar];
+    //    [self.navigationController.navigationBar.layer insertSublayer:self.gradient atIndex:1];
+    
     formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"MMM d, h:mm a"];
     self.db = [FIRFirestore firestore];
@@ -118,10 +119,12 @@ NSDateFormatter *formatter;
     [self presentViewController:alert animated:YES completion: nil];
 }
 
+/*
 - (void) willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
     self.gradient.frame = self.navigationController.navigationBar.bounds;
 }
+*/
 
 #pragma mark - Fetching Events
 
@@ -131,7 +134,7 @@ NSDateFormatter *formatter;
             if(error != nil) {
                 NSLog(@"Error showing documents: %@", error);
             } else {
-                Event * myEvent = event.firstObject;
+                Event *myEvent = event.firstObject;
                 if (myEvent == nil) {
                     self.emptyCard.alpha = 1;
                     self.noEventsLabel.alpha = 1;
@@ -186,25 +189,6 @@ NSDateFormatter *formatter;
     }];
 }
 
-/*
-- (void) fetchImage {
-    
-    FIRStorage *storage = [FIRStorage storage];
-    FIRStorageReference *storageRef = [storage reference];
-    FIRStorageReference *eventImageRef = [storageRef child:@"images/02DC7684-D657-4B5B-82FC-8D1DA735E300"];
-    
-     [eventImageRef dataWithMaxSize:1 * 1024 * 1024 completion:^(NSData *data, NSError *error){
-        if (error != nil) {
-            NSLog(@"Uh-oh, first error occurred: %@", error);
-        } else {
-            UIImage *eventImage = [UIImage imageWithData:data];
-            self.eventPhoto.image = eventImage;
-        }
-    }];
-    
-}
-*/
-
 - (BOOL)isConnectionAvailable
 {
     Reachability *reachability = [Reachability reachabilityForInternetConnection];
@@ -224,7 +208,7 @@ NSDateFormatter *formatter;
     [[FirebaseManager sharedManager] getCurrentUser:^(User * _Nonnull user, NSError * _Nonnull error) {
         if(error == nil){
             self.currentUser = user;
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [self fetchEvents];
             });
             
@@ -246,20 +230,23 @@ NSDateFormatter *formatter;
      }];
 }
 
+#pragma mark - Choosing Events
 
-- (void) movingPreview {
-    
+- (void) movingPreview
+{
+    //This commented animation moves the card as a preview of how to swipe right
     /*
-    [UIView animateKeyframesWithDuration:1.0 delay:1.5 options:nil animations:^{self.card.frame = CGRectMake(self.card.frame.origin.x + 200, self.card.frame.origin.y - 75, self.card.frame.size.width, self.card.frame.size.height);
-        
-    } completion:^(BOOL finished) {
-                                    [UIView animateWithDuration:1.0 delay:0.0 options:nil animations:^{self.card.frame = CGRectMake(self.card.frame.origin.x - 200, self.card.frame.origin.y + 75, self.card.frame.size.width, self.card.frame.size.height);
-                                    } completion:^(BOOL finished) {
-                                      //self.animationInProgress = YES;
-                                    }];
-                                }];
-    */
+     [UIView animateKeyframesWithDuration:1.0 delay:1.5 options:nil animations:^{self.card.frame = CGRectMake(self.card.frame.origin.x + 200, self.card.frame.origin.y - 75, self.card.frame.size.width, self.card.frame.size.height);
+     
+     } completion:^(BOOL finished) {
+     [UIView animateWithDuration:1.0 delay:0.0 options:nil animations:^{self.card.frame = CGRectMake(self.card.frame.origin.x - 200, self.card.frame.origin.y + 75, self.card.frame.size.width, self.card.frame.size.height);
+     } completion:^(BOOL finished) {
+     //self.animationInProgress = YES;
+     }];
+     }];
+     */
     
+    //This animation moves the card as a fast shake to show that it is movable
     CABasicAnimation *animation =
     [CABasicAnimation animationWithKeyPath:@"position"];
     [animation setDuration:0.15];
@@ -270,10 +257,7 @@ NSDateFormatter *formatter;
     [animation setToValue:[NSValue valueWithCGPoint:
                            CGPointMake([self.card center].x + 20.0f, [self.card center].y)]];
     [[self.card layer] addAnimation:animation forKey:@"position"];
-    
 }
-
-#pragma mark - Choosing Events
 
 - (IBAction)didPan:(UIPanGestureRecognizer *)sender
 {
@@ -320,9 +304,9 @@ NSDateFormatter *formatter;
     }
 }
 
-- (void) nextEvent {
-    
-    NSMutableArray * tempArray = [self.eventArray mutableCopy];
+- (void) nextEvent
+{
+    NSMutableArray *tempArray = [self.eventArray mutableCopy];
     [tempArray removeObjectAtIndex:0];
     self.eventArray = tempArray;
     
@@ -375,11 +359,23 @@ NSDateFormatter *formatter;
     }
 }
 
-- (void) resetCard //to bring the card back to position if user chooses to move card but not off the screen
+//to bring the card back to position if user chooses to move card but not off the screen
+- (void) resetCard
 {
     [UIView animateWithDuration:0.65 animations:^{
     [self.card setCenter:CGPointMake(self.view.center.x, self.view.center.y + 190)];
     }];
+}
+
+- (IBAction)resetAllCards:(UIBarButtonItem *)sender //resets card from first element in array again
+{
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"pop_drip" ofType:@"wav"];
+    NSURL *soundUrl = [NSURL fileURLWithPath:path];
+    self.audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundUrl error:nil];
+    self.audioPlayer.play;
+    
+    [self fetchEvents];
+    [self resetCard];
 }
 
 #pragma mark MKMapViewDelegate Methods
@@ -448,8 +444,6 @@ NSDateFormatter *formatter;
 - (void) eventDateIdentifier
 {
     Event *event = self.eventArray.firstObject;
-//    FIRTimestamp *eventTimestamp = event.date;
-//    [self setDateNSEvent:eventTimestamp.dateValue];
     self.eventDate.text = [NSString stringWithFormat:@"%@", [formatter stringFromDate:event.date]];
 }
 
@@ -470,18 +464,6 @@ NSDateFormatter *formatter;
     
     [self performSegueWithIdentifier:@"CreateEventSegue" sender:nil];
 }
-
-- (IBAction)resetAllCards:(UIBarButtonItem *)sender //resets card from first element in array again
-{
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"pop_drip" ofType:@"wav"];
-    NSURL *soundUrl = [NSURL fileURLWithPath:path];
-    self.audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundUrl error:nil];
-    self.audioPlayer.play;
-    
-    [self fetchEvents];
-    [self resetCard];
-}
-
      
 #pragma mark - Navigation
      
@@ -496,8 +478,8 @@ NSDateFormatter *formatter;
 
 #pragma mark - Change Location
 
-- (IBAction)changeLocation:(id)sender {
-    
+- (IBAction)changeLocation:(id)sender
+{
     NSString *path = [[NSBundle mainBundle] pathForResource:@"pop_drip" ofType:@"wav"];
     NSURL *soundUrl = [NSURL fileURLWithPath:path];
     self.audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundUrl error:nil];
@@ -531,7 +513,6 @@ NSDateFormatter *formatter;
         textField.keyboardType = UIKeyboardTypeDefault;
     }];
     [self presentViewController:alert animated:YES completion:nil];
-
 }
 
 /*
@@ -544,7 +525,7 @@ NSDateFormatter *formatter;
 }
 */
 
-- (void)getCoordinates : (NSString *) addressString completionHandler:(void(^)(CLLocation* coordinates, NSError *error))completion
+- (void)getCoordinates : (NSString *)addressString completionHandler:(void(^)(CLLocation *coordinates, NSError *error))completion
 {
     CLGeocoder *geoCoder = [[CLGeocoder alloc] init];
     [geoCoder geocodeAddressString:addressString completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
@@ -560,7 +541,6 @@ NSDateFormatter *formatter;
         CLLocation *location = placemark.location;
         completion(location, nil);
     }];
-    
 }
 
 @end

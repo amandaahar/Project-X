@@ -54,7 +54,7 @@
     NSURL *imageURL = [NSURL URLWithString:photoURL];
     NSURLRequest *request = [NSURLRequest requestWithURL:imageURL];
     
-    [self.groupImage setImageWithURLRequest:request placeholderImage:nil
+    [self.groupImage setImageWithURLRequest:request placeholderImage:[UIImage imageNamed:@"placeholder"]
                                     success:^(NSURLRequest *imageRequest, NSHTTPURLResponse *imageResponse, UIImage *image) {
                                         
                                         [UIView transitionWithView:self.groupImage duration:0.5 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
