@@ -46,6 +46,7 @@
 @property (strong, nonatomic) UILabel *noEventsLabel;
 @property (strong,nonatomic) AVAudioPlayer *audioPlayer;
 @property (strong, nonatomic) CAGradientLayer *gradient;
+//@property (strong, nonatomic) MapAnnotation *eventAnnotation;
 
 @end
 
@@ -58,17 +59,8 @@ NSDateFormatter *formatter;
 {
     [super viewDidLoad];
     [self fetchEvents];
-    
-    //    self.gradient = [[AppColors sharedManager] getGradientPurple:self.navigationController.navigationBar];
-    //    [self.navigationController.navigationBar.layer insertSublayer:self.gradient atIndex:1];
-    
-    formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"MMM d, h:mm a"];
-    self.db = [FIRFirestore firestore];
-    self.mapView.delegate = self;
-    self.annotationID = @"Pin";
-    [self.mapView registerClass:[MKAnnotationView class] forAnnotationViewWithReuseIdentifier:self.annotationID];
-    self.eventArray = [NSMutableArray new];
+//    self.gradient = [[AppColors sharedManager] getGradientPurple:self.navigationController.navigationBar];
+//    [self.navigationController.navigationBar.layer insertSublayer:self.gradient atIndex:1];
     
     self.emptyCard = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 100)];
     self.emptyCard.center = self.view.center;
@@ -89,6 +81,7 @@ NSDateFormatter *formatter;
     self.db = [FIRFirestore firestore];
     self.mapView.delegate = self;
     self.annotationID = @"Pin";
+    //self.eventAnnotation = [[MapAnnotation alloc] init];
     [self.mapView registerClass:[MKAnnotationView class] forAnnotationViewWithReuseIdentifier:self.annotationID];
     self.eventArray = [NSMutableArray new];
     
@@ -374,6 +367,7 @@ NSDateFormatter *formatter;
     self.audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundUrl error:nil];
     self.audioPlayer.play;
     
+    [self.mapView removeAnnotations:self.mapView.annotations];
     [self fetchEvents];
     [self resetCard];
 }
