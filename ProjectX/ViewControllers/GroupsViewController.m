@@ -15,7 +15,6 @@
 #import "MessagesViewController.h"
 #import "DetailEventViewController.h"
 #import "../Helpers/AppColors.h"
-
 #import <AVFoundation/AVAudioPlayer.h>
 
 @interface GroupsViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate>
@@ -29,6 +28,7 @@
 @property (strong, nonatomic) NSArray *filteredData;
 @property (strong,nonatomic) AVAudioPlayer *audioPlayer;
 @property (strong, nonatomic) CAGradientLayer *gradient;
+
 @end
 
 @implementation GroupsViewController
@@ -192,5 +192,24 @@
 {
     return UITableViewCellEditingStyleDelete;
 }
+
+/*
+- (void)confettiBurst {
+    CAEmitterLayer *emitter = [CAEmitterLayer layer];
+    emitter.emitterShape = kCAEmitterLayerLine;
+    emitter.emitterCells = CAEmitterCell
+    emitter.emitterPosition = CGPointMake(self.view.frame.width/2 x, 0);
+    emitter.emitterSize = CGSizeMake(self.view.frame.width , 2);
+    [[self.view layer] addSublayer:emitter];
+    //CGPoint(self.view.frame.width/2, 0);
+ 
+     CAGradientLayer *gradient = [CAGradientLayer layer];
+     gradient.frame = view.bounds;
+     gradient.colors = @[(id)[[AppColors sharedManager] getDarkPurple].CGColor, (id)[[AppColors sharedManager]  getDarkBlue].CGColor];
+     [gradient layoutIfNeeded];
+     [gradient setNeedsDisplay];
+     return gradient;
+}
+*/
 
 @end

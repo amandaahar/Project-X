@@ -20,6 +20,7 @@ target 'ProjectX' do
   pod 'BLBubbleFilters'
   pod 'SAMKeychain'
   pod 'AESCrypt'
+  pod 'MCFireworksButton'
   target 'ProjectXTests' do
     inherit! :search_paths
     # Pods for testing
