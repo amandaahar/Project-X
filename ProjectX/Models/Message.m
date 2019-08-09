@@ -7,7 +7,7 @@
 //
 
 #import "Message.h"
-
+#import "AESCrypt.h"
 @implementation Message
 
 
@@ -22,7 +22,9 @@
     self = [super init];
     if(self) {
         FIRTimestamp *timeSent = dictionary[@"timeSent"];
-        [self setText:dictionary[@"text"]];
+        NSString *password = @"p4ssw0rd";
+        NSString *message = [AESCrypt decrypt:dictionary[@"text"] password:password];
+        [self setText:message];
         [self setTimeSent:timeSent.dateValue];
         [self setNameOfSender:dictionary[@"nameOfSender"]];
         [self setUserID:dictionary[@"userID"]];

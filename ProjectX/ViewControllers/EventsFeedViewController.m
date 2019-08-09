@@ -306,7 +306,7 @@ NSDateFormatter *dateFormat;
                     [self.tableViewEventCategories reloadData];
                 });
             }else{
-                NSLog(@"%@", error.localizedRecoveryOptions);
+               // NSLog(@"%@", error.localizedRecoveryOptions);
             }
             }
         ];
