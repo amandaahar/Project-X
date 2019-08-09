@@ -32,21 +32,21 @@
 
 @implementation DetailEventViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
-    
     [self fetchEvents];
     //[self fetchImage];
     
     self.mapView.delegate = self;
     self.annotationID = @"Pin";
     [self.mapView registerClass:[MKAnnotationView class] forAnnotationViewWithReuseIdentifier:self.annotationID];
-    
 }
 
 #pragma mark - Fetching Event details
 
-- (void) fetchEvents {
+- (void) fetchEvents
+{
     [[FirebaseManager sharedManager] getCurrentEvent:self.detailEventID completion:^(Event * _Nonnull myEvent, NSError * _Nonnull error) {
         if (error != nil) {
             NSLog(@"Error getting event details.");
@@ -71,26 +71,20 @@
             eventAnnotation.title = self.eventName.text;
             eventAnnotation.locationName = self.userFriendlyLocation.text;
             //eventAnnotation.placeName = self.eventLocation.text;
-            //eventAnnotation.placeName = @"testing location";
             //eventAnnotation.placeName = [NSString stringWithFormat:@"%@", event.location];
             eventAnnotation.coordinate = location.center;
             [self.mapView addAnnotation:eventAnnotation];
             
+//            FIRTimestamp *eventTimestamp = myEvent.date;
+//            [self setDateNSEvent:eventTimestamp.dateValue];
             NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
             [formatter setDateFormat:@"MMM d, h:mm a"];
             self.eventDate.text = [NSString stringWithFormat:@"%@", [formatter stringFromDate:myEvent.date]];
-            /*
-            FIRTimestamp *eventTimestamp = myEvent.date;
-            [self setDateNSEvent:eventTimestamp.dateValue];
-            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-            [formatter setDateFormat:@"MMM d, h:mm a"];
-            self.eventDate.text = [NSString stringWithFormat:@"%@", [formatter stringFromDate:self.dateNSEvent]];
-             */
         }
     }];
-    
 }
 
+/*
 - (void) fetchImage {
     
     FIRStorage *storage = [FIRStorage storage];
@@ -105,13 +99,13 @@
             self.eventImage.image = eventImage;
         }
     }];
-    
 }
+ */
 
 #pragma mark - Map
 
-- (MKAnnotationView *)eventHomeView:(id<MKAnnotation>)annotation {
-    
+- (MKAnnotationView *)eventHomeView:(id<MKAnnotation>)annotation
+{
     MKAnnotationView *eventView = [self.mapView dequeueReusableAnnotationViewWithIdentifier:self.annotationID];
     eventView.canShowCallout = true;
     eventView.leftCalloutAccessoryView = [[UIImageView alloc] initWithFrame:CGRectMake(0.0, 0.0, 25.0, 50.0)];
@@ -148,11 +142,13 @@
     return eventView;
 }
 
-- (nullable MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation {
+- (nullable MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
+{
     return [self eventHomeView:annotation];
 }
 
-- (IBAction)directionsToPlace:(UIButton *)sender {
+- (IBAction)directionsToPlace:(UIButton *)sender
+{
     [[FirebaseManager sharedManager] getCurrentEvent:self.detailEventID completion:^(Event * _Nonnull myEvent, NSError * _Nonnull error) {
         if (error != nil) {
             NSLog(@"Error getting event details.");

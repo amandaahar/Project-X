@@ -2,11 +2,12 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "logo2.png",
+      "filename" : "baseline_video_call_white_18dp.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "baseline_video_call_white_18dp-1.png",
       "scale" : "2x"
     },
     {
