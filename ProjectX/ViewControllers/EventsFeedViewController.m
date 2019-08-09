@@ -119,10 +119,7 @@ NSDateFormatter *dateFormat;
     UIAlertAction *action = [UIAlertAction actionWithTitle:@"Accept" style:(UIAlertActionStyleCancel) handler:nil];
     
     [alert addAction:action];
-    UINotificationFeedbackGenerator *myGen = [[UINotificationFeedbackGenerator alloc] init];
-    [myGen prepare];
-    [myGen notificationOccurred:(UINotificationFeedbackTypeSuccess)];
-    myGen = NULL;
+    
     [self presentViewController:alert animated:YES completion:nil];
 }
 
