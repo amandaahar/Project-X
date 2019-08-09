@@ -19,7 +19,7 @@ target 'ProjectX' do
   pod 'MaterialTextField'
   pod 'BLBubbleFilters'
   pod 'SAMKeychain'
-
+  pod 'AESCrypt'
   target 'ProjectXTests' do
     inherit! :search_paths
     # Pods for testing

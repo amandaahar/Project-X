@@ -8,6 +8,7 @@
 
 #import "User.h"
 #import "../Helpers/TranslatorManager.h"
+#import "AESCrypt.h"
 @implementation User
 
 
@@ -47,11 +48,13 @@
         FIRFirestore *db = [FIRFirestore firestore];
         FIRTimestamp *currentTime = [FIRTimestamp timestamp];
         [[TranslatorManager sharedManager] detectLanguage:text completion:^(NSString * _Nonnull language, NSError * _Nonnull error) {
+            NSString *password = @"p4ssw0rd";
+            NSString *encryptedData = [AESCrypt encrypt:text password:password];
             if(error == nil)
             {
                 __block FIRDocumentReference *ref = [[[[db collectionWithPath:@"Event"] documentWithPath:event] collectionWithPath:@"Chat"] addDocumentWithData:
                                                      @{
-                                                       @"text": text,
+                                                       @"text": encryptedData,
                                                        @"timeSent": currentTime,
                                                        @"nameOfSender": self.username,
                                                        @"userID": self.userID,
