@@ -1,6 +1,0 @@
-framework module MCFireworksButton {
-  umbrella header "MCFireworksButton-umbrella.h"
-
-  export *
-  module * { export * }
-}

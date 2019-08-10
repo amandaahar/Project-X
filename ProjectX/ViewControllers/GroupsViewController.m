@@ -16,6 +16,8 @@
 #import "DetailEventViewController.h"
 #import "../Helpers/AppColors.h"
 #import <AVFoundation/AVAudioPlayer.h>
+#import "ProjectX-Swift.h"
+#import <SAConfettiView-Swift.h>
 
 @interface GroupsViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate>
 @property (nonatomic, strong) NSMutableArray *events;
@@ -44,6 +46,10 @@
     [self.chatsTableView reloadData];
     self.events = [[NSMutableArray alloc] init];
     self.filteredData = self.events;
+    SAConfettiView * confettiView = [[SAConfettiView alloc] initWithFrame:self.view.bounds];
+    [confettiView startConfetti];git 
+    [self.view addSubview:confettiView];
+   
 }
 
 - (void)getChats
@@ -68,6 +74,7 @@
             }
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [self.chatsTableView reloadData];
+                
             });
             
         }
