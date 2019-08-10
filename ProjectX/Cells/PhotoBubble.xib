@@ -30,10 +30,10 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="t55-MM-sAP" customClass="BubbleView">
-                        <rect key="frame" x="23" y="22" width="202" height="153"/>
+                        <rect key="frame" x="23" y="22" width="202" height="187"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nzN-Ob-bP6">
-                                <rect key="frame" x="171" y="142" width="46" height="31"/>
+                                <rect key="frame" x="151" y="176" width="46" height="31"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="emojiPlaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="Wxz-2h-6Pq">
                                         <rect key="frame" x="0.0" y="2" width="25" height="24"/>
@@ -70,12 +70,12 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="nzN-Ob-bP6" secondAttribute="trailing" constant="-15" id="1M1-Yo-Luy"/>
+                            <constraint firstAttribute="trailing" secondItem="nzN-Ob-bP6" secondAttribute="trailing" constant="5" id="1M1-Yo-Luy"/>
                             <constraint firstAttribute="bottom" secondItem="nzN-Ob-bP6" secondAttribute="bottom" constant="-20" id="fh4-Bf-rbU"/>
                         </constraints>
                     </view>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="TUb-xe-eto">
-                        <rect key="frame" x="38" y="30" width="172" height="135"/>
+                        <rect key="frame" x="38" y="30" width="172" height="169"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="172" id="nQV-xn-yno"/>
                         </constraints>

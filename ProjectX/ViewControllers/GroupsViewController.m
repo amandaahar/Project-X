@@ -40,12 +40,15 @@
     self.chatsTableView.dataSource = self;
     self.chatsTableView.delegate = self;
     self.searchBar.delegate = self;
+
+}
+- (void)viewDidAppear:(BOOL)animated{
+    self.events = [[NSMutableArray alloc] init];
     [self getChats];
     [self.chatsTableView reloadData];
-    self.events = [[NSMutableArray alloc] init];
+    
     self.filteredData = self.events;
 }
-
 - (void)getChats
 {
     [[FirebaseManager sharedManager] getCurrentUser:^(User * _Nonnull user, NSError * _Nonnull error) {

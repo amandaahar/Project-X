@@ -132,6 +132,11 @@
     [self.imagemessage layoutIfNeeded];
     [self.imagemessage sizeToFit];
     [self.bubbleView setNeedsDisplay];
+    
+    self.bubbleView.isIncoming = NO;
+    self.bubbleView.outgoingColor = [[AppColors sharedManager] getOrange];
+    [self.bubbleView setNeedsDisplay];
+    [self.imagemessage setNeedsDisplay];
 }
 
 - (void)prepareForReuse{
