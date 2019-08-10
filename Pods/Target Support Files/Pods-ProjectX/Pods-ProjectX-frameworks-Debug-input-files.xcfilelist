@@ -8,9 +8,12 @@ ${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework
 ${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework
 ${BUILT_PRODUCTS_DIR}/LoadingShimmer/LoadingShimmer.framework
 ${BUILT_PRODUCTS_DIR}/MaterialTextField/MaterialTextField.framework
+${BUILT_PRODUCTS_DIR}/Pastel/Pastel.framework
 ${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework
 ${BUILT_PRODUCTS_DIR}/SAMKeychain/SAMKeychain.framework
+${BUILT_PRODUCTS_DIR}/WaterDrops/WaterDrops.framework
 ${BUILT_PRODUCTS_DIR}/gRPC-C++/grpcpp.framework
 ${BUILT_PRODUCTS_DIR}/gRPC-Core/grpc.framework
 ${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework
+${BUILT_PRODUCTS_DIR}/lottie-ios/Lottie.framework
 ${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework

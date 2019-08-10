@@ -13,6 +13,8 @@
 #import "MainTabBarController.h"
 #import "../Models/FirebaseManager.h"
 #import <QuartzCore/QuartzCore.h>
+#import <ProjectX-Swift.h>
+#import <Pastel-Swift.h>
 @import SAMKeychain;
 @import Firebase;
 @import MaterialTextField;
@@ -33,6 +35,10 @@ struct KeychainConfiguration {
 CAGradientLayer *gradient;
 - (void)viewDidLoad {
     [super viewDidLoad];
+    PastelView *pastelView = [[PastelView alloc] initWithFrame:self.view.bounds];
+    
+    [pastelView startAnimation];
+    [self.view insertSubview:pastelView atIndex:0];
     self.usernameField.delegate = self;
     self.passwordField.delegate = self;
     self.loginButton.layer.cornerRadius = 15;
@@ -55,7 +61,7 @@ CAGradientLayer *gradient;
     [gradient layoutIfNeeded];
     [gradient setNeedsDisplay];
 
-    [self.view.layer insertSublayer:gradient atIndex:0];
+    //[self.view.layer insertSublayer:gradient atIndex:0];
     
   
     // Do any additional setup after loading the view.

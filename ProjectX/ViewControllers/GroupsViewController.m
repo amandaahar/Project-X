@@ -36,6 +36,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     self.db = [FIRFirestore firestore];
     self.chatsTableView.dataSource = self;
     self.chatsTableView.delegate = self;

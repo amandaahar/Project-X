@@ -15,7 +15,7 @@
 #import "ProfileHeaderCollectionReusableView.h"
 #import "AppColors.h"
 #import <AVFoundation/AVAudioPlayer.h>
-
+#import <WaterDrops-Swift.h>
 @import Firebase;
 @import SAMKeychain;
 @interface ProfileViewController () < UICollectionViewDelegate, UICollectionViewDataSource>
@@ -37,7 +37,9 @@
     
     self.interestsCollectionView.delegate = self;
     self.interestsCollectionView.dataSource = self;
-    
+    WaterDropsView *waterDropView = [[WaterDropsView alloc] initWithFrame:CGRectMake(100, 0, 400, 150)];
+    [waterDropView addAnimation];
+    [self.interestsCollectionView insertSubview:waterDropView atIndex:2];
     
     UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout*)self.interestsCollectionView.collectionViewLayout;
     layout.minimumInteritemSpacing = 2;

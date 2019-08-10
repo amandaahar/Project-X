@@ -14,10 +14,9 @@
 #import "../Helpers/Reachability.h"
 #import "DetailHomeViewController.h"
 #import "EventsAroundIntent.h"
-
+#import <WaterDrops-Swift.h>
 #import "ProjectX-Swift.h"
 #import "../Helpers/AppColors.h"
-
 #import <AVFoundation/AVAudioPlayer.h>
 @import CoreLocation;
 @interface EventsFeedViewController () <UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate, UIScrollViewDelegate>
@@ -322,6 +321,7 @@ NSDateFormatter *dateFormat;
        [LoadHelper stopCovering:self.tableViewEventCategories];
             [self.spinnerView setHidden:YES];
             [self.spinner stopAnimating];
+            
         });
 }
 
@@ -393,7 +393,7 @@ NSDateFormatter *dateFormat;
     titleView.layer.masksToBounds = NO;
     titleView.layer.shadowPath = [UIBezierPath bezierPathWithRect:titleView.bounds].CGPath;
 
-    
+   
     [titleView addSubview:titleLabel];
     [titleView addSubview:subTitleLabel];
     return titleView;
@@ -433,7 +433,7 @@ NSDateFormatter *dateFormat;
     }
     cell.groupedEvents = self.eventsFiltered[indexPath.section];
     [cell.collectionViewGroupsEvents reloadData];
-    
+
     return cell;
 }
 

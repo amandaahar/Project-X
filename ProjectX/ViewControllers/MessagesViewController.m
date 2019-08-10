@@ -15,6 +15,7 @@
 #import "../Models/User.h"
 #import "../Cells/PhotoBubble.h"
 #import "DetailEventViewController.h"
+#import <WaterDrops-Swift.h>
 #import <AVFoundation/AVAudioPlayer.h>
 @interface MessagesViewController () <UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *messageText;
@@ -37,6 +38,7 @@ NSLayoutConstraint *bottom;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
     [[FirebaseManager sharedManager] getCurrentUser:^(User * _Nonnull user, NSError * _Nonnull error) {
         if(error == nil)
         {
