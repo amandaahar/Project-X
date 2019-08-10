@@ -31,6 +31,7 @@
 		E714767022F38DCB0036F541 /* InterestFieldTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E714766E22F38DCB0036F541 /* InterestFieldTableViewCell.m */; };
 		E714767122F38DCB0036F541 /* InterestFieldTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E714766F22F38DCB0036F541 /* InterestFieldTableViewCell.xib */; };
 		E75FAF6122FB387C0081C18F /* pop_drip.wav in Resources */ = {isa = PBXBuildFile; fileRef = E75FAF6022FB387B0081C18F /* pop_drip.wav */; };
+		E75FAF6322FE31F70081C18F /* LoadingShimmer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75FAF6222FE31F70081C18F /* LoadingShimmer.swift */; };
 		E76311B822E23E8E00A1B674 /* MessagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E76311B722E23E8E00A1B674 /* MessagesViewController.m */; };
 		E76311BB22E241BB00A1B674 /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = E76311BA22E241BB00A1B674 /* Message.m */; };
 		E76311BF22E2746400A1B674 /* topCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E76311BD22E2746400A1B674 /* topCollectionViewCell.xib */; };
@@ -227,6 +228,8 @@
 		E714766E22F38DCB0036F541 /* InterestFieldTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InterestFieldTableViewCell.m; sourceTree = "<group>"; };
 		E714766F22F38DCB0036F541 /* InterestFieldTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InterestFieldTableViewCell.xib; sourceTree = "<group>"; };
 		E75FAF6022FB387B0081C18F /* pop_drip.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = pop_drip.wav; sourceTree = "<group>"; };
+		E75FAF6222FE31F70081C18F /* LoadingShimmer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingShimmer.swift; sourceTree = "<group>"; };
+		E75FAF6422FE33630081C18F /* ProjectX-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ProjectX-Bridging-Header.h"; sourceTree = "<group>"; };
 		E76311B622E23E8E00A1B674 /* MessagesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MessagesViewController.h; sourceTree = "<group>"; };
 		E76311B722E23E8E00A1B674 /* MessagesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MessagesViewController.m; sourceTree = "<group>"; };
 		E76311B922E241BB00A1B674 /* Message.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
@@ -423,6 +426,7 @@
 			children = (
 				EAEFFD9422F80CA30079E3D7 /* GoogleService-Info.plist */,
 				0ECF088722DE791300F5A8AA /* SignUpViewController.h */,
+				E75FAF6222FE31F70081C18F /* LoadingShimmer.swift */,
 				0ECF088822DE791300F5A8AA /* SignUpViewController.m */,
 				0ECF088B22DE792900F5A8AA /* LogInViewController.h */,
 				0ECF088C22DE792900F5A8AA /* LogInViewController.m */,
@@ -655,6 +659,7 @@
 		EA54ED2222DE867D00D0D7A2 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				E75FAF6422FE33630081C18F /* ProjectX-Bridging-Header.h */,
 				E77FCBFD22E0DFF100A4E3AC /* EventAPI.h */,
 				E77FCBFC22E0DFF100A4E3AC /* EventAPI.m */,
 				EA54ED1F22DE819900D0D7A2 /* User.h */,
@@ -1160,6 +1165,7 @@
 				E77FCBFE22E0DFF100A4E3AC /* EventAPI.m in Sources */,
 				EA7078FD22ED388200D41CD1 /* LanguagesTableViewController.m in Sources */,
 				EA54ED2E22DFBA2700D0D7A2 /* APIEventsManager.m in Sources */,
+				E75FAF6322FE31F70081C18F /* LoadingShimmer.swift in Sources */,
 				EA949E7A22EA5BF200263E1B /* MapAnnotation.m in Sources */,
 				EA70790C22EF8F5C00D41CD1 /* PreferencesCollectionViewCell.m in Sources */,
 				EA73F81D22E11B4700385689 /* GroupEventsTableViewCell.m in Sources */,
@@ -1558,6 +1564,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 58C2A4F841B979D31E891283 /* Pods-ProjectXTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -1582,6 +1589,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7A78AAE3F23A2D3A1981E014 /* Pods-ProjectXTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -1605,6 +1613,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6CECD9E907EEFEFF904D5343 /* Pods-ProjectXUITests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = XYQR9G9T5T;
@@ -1628,6 +1637,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F2287022550AC21351D6997B /* Pods-ProjectXUITests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = XYQR9G9T5T;

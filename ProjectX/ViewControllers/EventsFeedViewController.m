@@ -15,6 +15,7 @@
 #import "DetailHomeViewController.h"
 #import "EventsAroundIntent.h"
 
+#import "ProjectX-Swift.h"
 #import "../Helpers/AppColors.h"
 
 #import <AVFoundation/AVAudioPlayer.h>
@@ -47,6 +48,7 @@ NSDateFormatter *dateFormat;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [LoadHelper startCovering:self.view];
     // convert to date
     self.spinnerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 80, 80)];
     self.spinnerView.center = CGPointMake(self.view.frame.size.width/2, self.view.frame.size.height/2 - 180);
@@ -317,7 +319,7 @@ NSDateFormatter *dateFormat;
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
             [self.activityView setHidden:YES];
             [self.activityView stopAnimating];
-       
+       [LoadHelper stopCovering:self.view];
             [self.spinnerView setHidden:YES];
             [self.spinner stopAnimating];
         });

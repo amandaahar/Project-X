@@ -53,4 +53,32 @@
 }
 
 
+- (IBAction)facebookButton:(id)sender {
+    if (![[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"fb://"]]) {
+        
+        // opening the app didn't work - let's open Safari
+        if (![[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://www.facebook.com"]]) {
+        }
+    }
+
+}
+
+- (IBAction)instagramButton:(id)sender {
+    if (![[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"instagram://"]]) {
+        
+        // opening the app didn't work - let's open Safari
+        if (![[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://www.instagram.com"]]) {
+        }
+    }
+}
+
+- (IBAction)twitterButton:(id)sender {
+    if (![[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"twitter://"]]) {
+        
+        // opening the app didn't work - let's open Safari
+        if (![[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://www.twitter.com"]]) {
+        }
+    }
+}
+
 @end

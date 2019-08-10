@@ -156,6 +156,7 @@ PODS:
   - gRPC-Core/Interface (1.21.0)
   - GTMSessionFetcher/Core (1.2.2)
   - leveldb-library (1.20)
+  - LoadingShimmer (1.0.2)
   - MaterialTextField (1.0.1)
   - nanopb (0.3.901):
     - nanopb/decode (= 0.3.901)
@@ -178,6 +179,7 @@ DEPENDENCIES:
   - FirebaseMessaging
   - FirebaseMLNaturalLanguage
   - FirebaseStorage
+  - LoadingShimmer
   - MaterialTextField
   - SAMKeychain
 
@@ -208,6 +210,7 @@ SPEC REPOS:
     - gRPC-Core
     - GTMSessionFetcher
     - leveldb-library
+    - LoadingShimmer
     - MaterialTextField
     - nanopb
     - Protobuf
@@ -239,11 +242,12 @@ SPEC CHECKSUMS:
   gRPC-Core: c9aef9a261a1247e881b18059b84d597293c9947
   GTMSessionFetcher: 61bb0f61a4cb560030f1222021178008a5727a23
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
+  LoadingShimmer: 930cfb5e2f3cd65b964fd1095e22a8c470e58633
   MaterialTextField: f1a0786588e4d3610cb9bb62d2adbe9777cebbf9
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   Protobuf: 1097ca58584c8d9be81bfbf2c5ff5975648dd87a
   SAMKeychain: 483e1c9f32984d50ca961e26818a534283b4cd5c
 
-PODFILE CHECKSUM: 0db596ca525696a4f667767d3454674548cd388e
+PODFILE CHECKSUM: 54d11fb6b9c33d30b3db95b9cb8d0575ee199f2c
 
-COCOAPODS: 1.7.5
+COCOAPODS: 1.7.2
