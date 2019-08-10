@@ -40,14 +40,14 @@
     self.chatsTableView.dataSource = self;
     self.chatsTableView.delegate = self;
     self.searchBar.delegate = self;
-
-}
-- (void)viewDidAppear:(BOOL)animated{
     self.events = [[NSMutableArray alloc] init];
     [self getChats];
     [self.chatsTableView reloadData];
     
     self.filteredData = self.events;
+}
+- (void)viewDidAppear:(BOOL)animated{
+
 }
 - (void)getChats
 {
