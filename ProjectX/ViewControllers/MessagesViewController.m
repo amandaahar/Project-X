@@ -13,9 +13,10 @@
 #import "../Helpers/TranslatorManager.h"
 #import "../Helpers/AppColors.h"
 #import "../Models/User.h"
+#import "../Cells/PhotoBubble.h"
 #import "DetailEventViewController.h"
 #import <AVFoundation/AVAudioPlayer.h>
-@interface MessagesViewController () <UITableViewDelegate, UITableViewDataSource>
+@interface MessagesViewController () <UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *messageText;
 @property (weak, nonatomic) IBOutlet UIButton *sendButton;
 @property (weak, nonatomic) IBOutlet UITableView *messagesTableView;
@@ -25,11 +26,13 @@
 @property (strong, nonatomic) User *user;
 @property (nonatomic, readwrite) FIRFirestore *db;
 @property (strong,nonatomic) AVAudioPlayer *audioPlayer;
-
+@property (strong, nonatomic) UIImage *createPicture;
+@property (strong, nonatomic) NSString *urlImage;
 @end
 
 @implementation MessagesViewController
 NSString * identifier = @"bubble";
+NSString * identifier2 = @"photo";
 NSLayoutConstraint *bottom;
 
 - (void)viewDidLoad {
@@ -66,7 +69,8 @@ NSLayoutConstraint *bottom;
     self.messagesTableView.allowsSelection = NO;
     self.idCurrentUser = FIRAuth.auth.currentUser.uid;
     [self.messagesTableView registerNib:[UINib nibWithNibName:@"MessageBubble" bundle:nil] forCellReuseIdentifier:identifier];
-    
+    [self.messagesTableView registerNib:[UINib nibWithNibName:@"PhotoBubble" bundle:nil] forCellReuseIdentifier:identifier2];
+
     [[FirebaseManager sharedManager] getMessagesFromEvent:self.eventID completion:^(NSArray * _Nonnull messages, NSError * _Nonnull error) {
         if (error) {
             NSLog(@"error getting messages");
@@ -186,6 +190,33 @@ NSLayoutConstraint *bottom;
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
     MessageBubble *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     Message *message = self.messagesInChat[indexPath.row];
+    
+    if([message.text containsString:@"http"]){
+        PhotoBubble *cell2 = [tableView dequeueReusableCellWithIdentifier:identifier2];
+        [cell2 setUserLanguage:self.user.language];
+        [cell2 setIdEvent:self.eventID];
+        if([self.idCurrentUser isEqualToString:message.userID])
+        {
+            [cell2 showOutgoingMessage:message];
+            
+        }else
+        {
+            [cell2 showIncomingMessage:message];
+        }
+        
+        
+        
+        
+        
+        cell2.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        [cell2 autoresizesSubviews];
+        [cell2 layoutSubviews];
+        
+        [cell2 layoutIfNeeded];
+        
+        return cell2;
+    }
     [cell setUserLanguage:self.user.language];
     [cell setIdEvent:self.eventID];
     if([self.idCurrentUser isEqualToString:message.userID])
@@ -196,6 +227,9 @@ NSLayoutConstraint *bottom;
     {
         [cell showIncomingMessage:message];
     }
+    
+    
+    
     
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -259,7 +293,110 @@ NSLayoutConstraint *bottom;
    
     
 }
+- (IBAction)sendImage:(UIButton *)sender {
+    UIImagePickerController *imagePickerVC = [UIImagePickerController new];
+    imagePickerVC.delegate = self;
+    imagePickerVC.allowsEditing = YES;
+    
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        imagePickerVC.sourceType = UIImagePickerControllerSourceTypeCamera;
+    }
+    
+    else {
+        NSLog(@"Camera unavailable so we will use photo library instead");
+        imagePickerVC.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    }
+    
+    [self presentViewController:imagePickerVC animated:YES completion:nil];
+}
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker{
+    
+}
 
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<UIImagePickerControllerInfoKey,id> *)info{
+    
+    UIImage *originalImage = info[UIImagePickerControllerOriginalImage];
+    UIImage *image = [self resizeImage:originalImage withSize:CGSizeMake(400, 400)];
+    NSString *urlImage =[self imageStorage:image];
+   
+
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (UIImage *)resizeImage:(UIImage *)image withSize:(CGSize)size
+{
+    UIImageView *resizeImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, size.width, size.height)];
+    
+    resizeImageView.contentMode = UIViewContentModeScaleAspectFill;
+    resizeImageView.image = image;
+    
+    UIGraphicsBeginImageContext(size);
+    [resizeImageView.layer renderInContext:UIGraphicsGetCurrentContext()];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return newImage;
+}
+- (NSString *)imageStorage : (UIImage *) image
+{
+    FIRStorage *storage = [FIRStorage storage];
+    NSUUID *randomID = [[NSUUID alloc] init];
+    FIRStorageReference *storageRef = [storage referenceWithPath:[self.eventID stringByAppendingString: [@"/images/" stringByAppendingString:[NSString stringWithFormat: @"%@", randomID.description, @".jpg"]]]];
+    NSData *data = UIImageJPEGRepresentation(image, 0.75);
+    FIRStorageMetadata *uploadMetaData = [[FIRStorageMetadata alloc] init];
+    uploadMetaData.contentType = @"image/jpeg";
+    __block NSURL *downloadURL = [[NSURL alloc] init];
+    
+    FIRStorageUploadTask *uploadTask = [storageRef putData:data metadata:uploadMetaData completion:^(FIRStorageMetadata *metadata, NSError *error) {
+        if (error != nil) {
+            NSLog(@"Error occurred: %@", error);
+        } else {
+            int size = metadata.size;
+            [storageRef downloadURLWithCompletion:^(NSURL * _Nullable URL, NSError * _Nullable error) {
+                if (error != nil) {
+                    NSLog(@"Error occurred: %@", error);
+                } else {
+                    downloadURL = URL;
+                    NSLog(@"Downloaded URL: %@", downloadURL);
+                    self.urlImage = downloadURL.absoluteString;
+                    NSLog(@"Image URL: %@", self.urlImage);
+                    if(downloadURL.absoluteString != nil && ![downloadURL.absoluteString isEqualToString: @""])
+                    {
+                        [[FirebaseManager sharedManager] getCurrentUser:^(User *user, NSError *error) {
+                            if (error != nil) {
+                                NSLog(@"Error getting user");
+                                UINotificationFeedbackGenerator *myGen = [[UINotificationFeedbackGenerator alloc] init];
+                                [myGen prepare];
+                                [myGen notificationOccurred:(UINotificationFeedbackTypeError)];
+                                myGen = NULL;
+                            } else {
+                                [user composeMessage:downloadURL.absoluteString chat:self.eventID];
+                                UINotificationFeedbackGenerator *myGen = [[UINotificationFeedbackGenerator alloc] init];
+                                [myGen prepare];
+                                [myGen notificationOccurred:(UINotificationFeedbackTypeSuccess)];
+                                myGen = NULL;
+                                
+                                NSString *path = [[NSBundle mainBundle] pathForResource:@"music_marimba_chord" ofType:@"wav"];
+                                NSURL *soundUrl = [NSURL fileURLWithPath:path];
+                                self.audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundUrl error:nil];
+                                self.audioPlayer.play;
+                                
+                                //self.messageText.text = @"";
+                            }
+                            
+                        }];
+                    }
+                }
+            }];
+        }
+    }];
+    
+    [uploadTask observeStatus:FIRStorageTaskStatusSuccess handler:^(FIRStorageTaskSnapshot *snapshot) {
+        NSLog(@"Picture sending success!");
+    }];
+    
+    return downloadURL.absoluteString;
+}
 @end
 
 

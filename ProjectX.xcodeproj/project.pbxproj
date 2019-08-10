@@ -72,6 +72,8 @@
 		EA07F9EB22F9404D0095A6A6 /* HomeFeedTableViewCell.xib in Sources */ = {isa = PBXBuildFile; fileRef = EA3A502322E0F2FC004F2FFD /* HomeFeedTableViewCell.xib */; };
 		EA07F9EE22F9F2230095A6A6 /* AppColors.m in Sources */ = {isa = PBXBuildFile; fileRef = EA07F9ED22F9F2230095A6A6 /* AppColors.m */; };
 		EA07F9F522FB861C0095A6A6 /* HomeNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA07F9F422FB861C0095A6A6 /* HomeNavigationController.m */; };
+		EA07F9F922FE1FEE0095A6A6 /* PhotoBubble.m in Sources */ = {isa = PBXBuildFile; fileRef = EA07F9F722FE1FEE0095A6A6 /* PhotoBubble.m */; };
+		EA07F9FA22FE1FEE0095A6A6 /* PhotoBubble.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA07F9F822FE1FEE0095A6A6 /* PhotoBubble.xib */; };
 		EA3A502422E0F2FC004F2FFD /* HomeFeedTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3A502222E0F2FC004F2FFD /* HomeFeedTableViewCell.m */; };
 		EA3A502522E0F2FC004F2FFD /* HomeFeedTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA3A502322E0F2FC004F2FFD /* HomeFeedTableViewCell.xib */; };
 		EA54ECE622DE3F3800D0D7A2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EA54ECE522DE3F3800D0D7A2 /* AppDelegate.m */; };
@@ -279,6 +281,9 @@
 		EA07F9ED22F9F2230095A6A6 /* AppColors.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppColors.m; sourceTree = "<group>"; };
 		EA07F9F322FB861C0095A6A6 /* HomeNavigationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeNavigationController.h; sourceTree = "<group>"; };
 		EA07F9F422FB861C0095A6A6 /* HomeNavigationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeNavigationController.m; sourceTree = "<group>"; };
+		EA07F9F622FE1FEE0095A6A6 /* PhotoBubble.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PhotoBubble.h; sourceTree = "<group>"; };
+		EA07F9F722FE1FEE0095A6A6 /* PhotoBubble.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PhotoBubble.m; sourceTree = "<group>"; };
+		EA07F9F822FE1FEE0095A6A6 /* PhotoBubble.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PhotoBubble.xib; sourceTree = "<group>"; };
 		EA3A502122E0F2FC004F2FFD /* HomeFeedTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HomeFeedTableViewCell.h; path = ProjectX/Cells/HomeFeedTableViewCell.h; sourceTree = SOURCE_ROOT; };
 		EA3A502222E0F2FC004F2FFD /* HomeFeedTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = HomeFeedTableViewCell.m; path = ProjectX/Cells/HomeFeedTableViewCell.m; sourceTree = SOURCE_ROOT; };
 		EA3A502322E0F2FC004F2FFD /* HomeFeedTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = HomeFeedTableViewCell.xib; path = ProjectX/Cells/HomeFeedTableViewCell.xib; sourceTree = SOURCE_ROOT; };
@@ -568,6 +573,9 @@
 				E714766D22F38DCB0036F541 /* InterestFieldTableViewCell.h */,
 				E714766E22F38DCB0036F541 /* InterestFieldTableViewCell.m */,
 				E714766F22F38DCB0036F541 /* InterestFieldTableViewCell.xib */,
+				EA07F9F622FE1FEE0095A6A6 /* PhotoBubble.h */,
+				EA07F9F722FE1FEE0095A6A6 /* PhotoBubble.m */,
+				EA07F9F822FE1FEE0095A6A6 /* PhotoBubble.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -916,6 +924,7 @@
 				E76311BF22E2746400A1B674 /* topCollectionViewCell.xib in Resources */,
 				E703B94A22F2548700C63563 /* ShowInterestsTableViewCell.xib in Resources */,
 				EA3A502522E0F2FC004F2FFD /* HomeFeedTableViewCell.xib in Resources */,
+				EA07F9FA22FE1FEE0095A6A6 /* PhotoBubble.xib in Resources */,
 				EA54ECF122DE3F3900D0D7A2 /* Assets.xcassets in Resources */,
 				EA54ECEC22DE3F3800D0D7A2 /* Main.storyboard in Resources */,
 				EAEFFD9522F80CA30079E3D7 /* GoogleService-Info.plist in Resources */,
@@ -1186,6 +1195,7 @@
 				E7AEA0BA22DFCC3A00A77CC2 /* Chat.m in Sources */,
 				EA73F81322E10AE200385689 /* CategoriesCollectionViewCell.m in Sources */,
 				E76311B822E23E8E00A1B674 /* MessagesViewController.m in Sources */,
+				EA07F9F922FE1FEE0095A6A6 /* PhotoBubble.m in Sources */,
 				E703B94422F248DD00C63563 /* EditProfileTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

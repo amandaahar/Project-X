@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="photo" rowHeight="210" id="tgb-PD-76T" customClass="PhotoBubble">
+            <rect key="frame" x="0.0" y="0.0" width="440" height="210"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="tgb-PD-76T" id="wqq-1d-qqt">
+                <rect key="frame" x="0.0" y="0.0" width="440" height="209.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c9V-Iw-96j" userLabel="Vivian">
+                        <rect key="frame" x="10" y="4" width="133" height="18"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="18" id="UYY-Ve-dhN"/>
+                            <constraint firstAttribute="width" constant="133" id="Yuj-5q-95J"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="t55-MM-sAP" customClass="BubbleView">
+                        <rect key="frame" x="23" y="22" width="202" height="153"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nzN-Ob-bP6">
+                                <rect key="frame" x="171" y="142" width="46" height="31"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="emojiPlaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="Wxz-2h-6Pq">
+                                        <rect key="frame" x="0.0" y="2" width="25" height="24"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="25" id="slO-yz-sOM"/>
+                                            <constraint firstAttribute="height" constant="24" id="tcV-Rb-i6B"/>
+                                        </constraints>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6VA-4Y-aCM">
+                                        <rect key="frame" x="0.0" y="2" width="44" height="28"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="44" id="Df3-tZ-Fj0"/>
+                                            <constraint firstAttribute="height" constant="28" id="GSu-dk-tm4"/>
+                                        </constraints>
+                                        <state key="normal" title="+">
+                                            <color key="titleColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="reacts:" destination="tgb-PD-76T" eventType="touchUpInside" id="Keo-6g-3uL"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="6VA-4Y-aCM" secondAttribute="trailing" constant="2" id="CKs-8D-xKu"/>
+                                    <constraint firstItem="6VA-4Y-aCM" firstAttribute="centerY" secondItem="nzN-Ob-bP6" secondAttribute="centerY" constant="0.5" id="Qvq-fY-hpP"/>
+                                    <constraint firstItem="Wxz-2h-6Pq" firstAttribute="top" secondItem="6VA-4Y-aCM" secondAttribute="top" id="XYy-Ga-NxI"/>
+                                    <constraint firstItem="6VA-4Y-aCM" firstAttribute="leading" secondItem="Wxz-2h-6Pq" secondAttribute="leading" id="Xiv-MI-mnh"/>
+                                    <constraint firstItem="6VA-4Y-aCM" firstAttribute="leading" secondItem="nzN-Ob-bP6" secondAttribute="leading" id="a98-TU-den"/>
+                                    <constraint firstAttribute="height" constant="31" id="h6p-d2-ymw"/>
+                                    <constraint firstItem="6VA-4Y-aCM" firstAttribute="top" secondItem="nzN-Ob-bP6" secondAttribute="top" constant="2" id="orM-oY-aNx"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="nzN-Ob-bP6" secondAttribute="trailing" constant="-15" id="1M1-Yo-Luy"/>
+                            <constraint firstAttribute="bottom" secondItem="nzN-Ob-bP6" secondAttribute="bottom" constant="-20" id="fh4-Bf-rbU"/>
+                        </constraints>
+                    </view>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="TUb-xe-eto">
+                        <rect key="frame" x="38" y="30" width="172" height="135"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="172" id="nQV-xn-yno"/>
+                        </constraints>
+                    </imageView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="t55-MM-sAP" firstAttribute="top" secondItem="c9V-Iw-96j" secondAttribute="bottom" id="0qY-gs-s8n"/>
+                    <constraint firstItem="TUb-xe-eto" firstAttribute="top" secondItem="t55-MM-sAP" secondAttribute="top" constant="8" id="Bpi-yJ-cXu"/>
+                    <constraint firstItem="c9V-Iw-96j" firstAttribute="leading" secondItem="wqq-1d-qqt" secondAttribute="leading" constant="10" id="GIu-3F-UrL"/>
+                    <constraint firstItem="c9V-Iw-96j" firstAttribute="top" secondItem="wqq-1d-qqt" secondAttribute="top" constant="4" id="KeK-W3-mma"/>
+                    <constraint firstItem="TUb-xe-eto" firstAttribute="bottom" secondItem="t55-MM-sAP" secondAttribute="bottom" constant="-10" id="a8O-Ns-yFv"/>
+                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="TUb-xe-eto" secondAttribute="trailing" constant="15" id="bIl-pZ-lzc"/>
+                    <constraint firstItem="TUb-xe-eto" firstAttribute="trailing" secondItem="t55-MM-sAP" secondAttribute="trailing" constant="-15" id="bxd-kA-XOt"/>
+                    <constraint firstItem="TUb-xe-eto" firstAttribute="bottom" secondItem="wqq-1d-qqt" secondAttribute="bottomMargin" id="dTJ-NN-mLT"/>
+                    <constraint firstItem="TUb-xe-eto" firstAttribute="leading" secondItem="t55-MM-sAP" secondAttribute="leading" constant="15" id="xH8-pa-rWN"/>
+                    <constraint firstItem="TUb-xe-eto" firstAttribute="leading" secondItem="wqq-1d-qqt" secondAttribute="leading" constant="38" id="xJN-Q4-Prb"/>
+                </constraints>
+            </tableViewCellContentView>
+            <accessibility key="accessibilityConfiguration">
+                <accessibilityTraits key="traits" notEnabled="YES"/>
+            </accessibility>
+            <viewLayoutGuide key="safeArea" id="JcJ-zu-4Hn"/>
+            <connections>
+                <outlet property="bubbleView" destination="t55-MM-sAP" id="fEO-EF-DVl"/>
+                <outlet property="imagemessage" destination="TUb-xe-eto" id="dvj-W4-r5h"/>
+                <outlet property="leftConstraint" destination="xJN-Q4-Prb" id="VFv-7B-cQv"/>
+                <outlet property="nameLabel" destination="c9V-Iw-96j" id="X4b-S1-PjE"/>
+                <outlet property="reactionButton" destination="6VA-4Y-aCM" id="tTN-Ob-4ja"/>
+                <outlet property="reactionImage" destination="Wxz-2h-6Pq" id="PbC-Kq-KNc"/>
+                <outlet property="reactionView" destination="nzN-Ob-bP6" id="FD3-cN-Rga"/>
+                <outlet property="rightConstraint" destination="bIl-pZ-lzc" id="oxl-St-hES"/>
+            </connections>
+            <point key="canvasLocation" x="217.39130434782609" y="152.67857142857142"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="emojiPlaceholder" width="512" height="512"/>
+    </resources>
+</document>
