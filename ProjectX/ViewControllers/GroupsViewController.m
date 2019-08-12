@@ -9,14 +9,16 @@
 #import "GroupsViewController.h"
 #import "../Models/FirebaseManager.h"
 #import "GroupTableViewCell.h"
+#import "ChooseEventsViewController.h"
 #import "Chat.h"
 #import "Event.h"
 #import "User.h"
 #import "MessagesViewController.h"
 #import "DetailEventViewController.h"
 #import "../Helpers/AppColors.h"
-
 #import <AVFoundation/AVAudioPlayer.h>
+#import "ProjectX-Swift.h"
+#import <SAConfettiView-Swift.h>
 
 @interface GroupsViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate>
 @property (nonatomic, strong) NSMutableArray *events;
@@ -29,6 +31,8 @@
 @property (strong, nonatomic) NSArray *filteredData;
 @property (strong,nonatomic) AVAudioPlayer *audioPlayer;
 @property (strong, nonatomic) CAGradientLayer *gradient;
+@property (strong, nonatomic) SAConfettiView *confettiView;
+
 @end
 
 @implementation GroupsViewController
@@ -46,6 +50,8 @@
     [self.chatsTableView reloadData];
     
     self.filteredData = self.events;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(swipedEvent:) name:@"confetti" object:nil];
 }
 - (void)viewDidAppear:(BOOL)animated{
 
@@ -68,10 +74,11 @@
                     
                     }
                 }];
-                
             }
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [self.chatsTableView reloadData];
+                [self.confettiView stopConfetti];
+                [self.confettiView removeFromSuperview];
             });
             
         }
@@ -195,6 +202,13 @@
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return UITableViewCellEditingStyleDelete;
+}
+
+- (void)swipedEvent:(BOOL)swiped
+{
+        self.confettiView = [[SAConfettiView alloc] initWithFrame:self.view.bounds];
+        [self.confettiView startConfetti];
+        [self.view addSubview:self.confettiView];
 }
 
 @end

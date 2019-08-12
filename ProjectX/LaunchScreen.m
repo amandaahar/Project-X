@@ -7,7 +7,7 @@
 //
 
 #import "LaunchScreen.h"
-
+#import <Pastel-Swift.h>
 @interface LaunchScreen ()
 
 @end
@@ -16,6 +16,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    PastelView *pastelView = [[PastelView alloc] initWithFrame:self.view.bounds];
+    
+    [pastelView startAnimation];
+    [self.view insertSubview:pastelView atIndex:0];
     // Do any additional setup after loading the view.
 }
 

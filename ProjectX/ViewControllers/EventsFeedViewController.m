@@ -87,8 +87,8 @@ NSDateFormatter *dateFormat;
     [self currentLocationIdentifier];
         
     } else {
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error" message:@"Check your internet connection" preferredStyle:(UIAlertControllerStyleAlert)];
-        UIAlertAction *accept = [UIAlertAction actionWithTitle:@"Accept" style:(UIAlertActionStyleDefault) handler:nil];
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"No internet connection!" message:@"Please check your internet connection." preferredStyle:(UIAlertControllerStyleAlert)];
+        UIAlertAction *accept = [UIAlertAction actionWithTitle:@"Try Again" style:(UIAlertActionStyleDefault) handler:nil];
         [alert addAction:accept];
         [self presentViewController:alert animated:YES completion:nil];
     }

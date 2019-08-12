@@ -10,6 +10,7 @@ ${BUILT_PRODUCTS_DIR}/LoadingShimmer/LoadingShimmer.framework
 ${BUILT_PRODUCTS_DIR}/MaterialTextField/MaterialTextField.framework
 ${BUILT_PRODUCTS_DIR}/Pastel/Pastel.framework
 ${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework
+${BUILT_PRODUCTS_DIR}/SAConfettiView/SAConfettiView.framework
 ${BUILT_PRODUCTS_DIR}/SAMKeychain/SAMKeychain.framework
 ${BUILT_PRODUCTS_DIR}/WaterDrops/WaterDrops.framework
 ${BUILT_PRODUCTS_DIR}/gRPC-C++/grpcpp.framework

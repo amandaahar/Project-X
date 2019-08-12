@@ -25,7 +25,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Final_logo_180px" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IhG-aw-6lT">
-                                <rect key="frame" x="130" y="284" width="114" height="108"/>
+                                <rect key="frame" x="130.5" y="284" width="114" height="108"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="114" id="Z0b-OY-08W"/>
                                     <constraint firstAttribute="height" constant="108" id="tLd-JS-bnq"/>

@@ -21,6 +21,7 @@ target 'ProjectX' do
   pod 'SAMKeychain'
   pod 'AESCrypt'
   pod 'LoadingShimmer'
+  pod 'SAConfettiView'
   pod 'lottie-ios'
   pod 'WaterDrops'
   pod 'Pastel'

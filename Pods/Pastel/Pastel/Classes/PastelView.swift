@@ -98,7 +98,7 @@ import UIKit
         self.colors.append(color)
     }
     
-    func animateGradient() {
+    @objc func animateGradient() {
         currentGradient += 1
         let animation = CABasicAnimation(keyPath: Animation.keyPath)
         animation.duration = animationDuration

@@ -58,17 +58,8 @@ NSDateFormatter *formatter;
 {
     [super viewDidLoad];
     [self fetchEvents];
-    
-    //    self.gradient = [[AppColors sharedManager] getGradientPurple:self.navigationController.navigationBar];
-    //    [self.navigationController.navigationBar.layer insertSublayer:self.gradient atIndex:1];
-    
-    formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"MMM d, h:mm a"];
-    self.db = [FIRFirestore firestore];
-    self.mapView.delegate = self;
-    self.annotationID = @"Pin";
-    [self.mapView registerClass:[MKAnnotationView class] forAnnotationViewWithReuseIdentifier:self.annotationID];
-    self.eventArray = [NSMutableArray new];
+//    self.gradient = [[AppColors sharedManager] getGradientPurple:self.navigationController.navigationBar];
+//    [self.navigationController.navigationBar.layer insertSublayer:self.gradient atIndex:1];
     
     self.emptyCard = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 100)];
     self.emptyCard.center = self.view.center;
@@ -89,6 +80,7 @@ NSDateFormatter *formatter;
     self.db = [FIRFirestore firestore];
     self.mapView.delegate = self;
     self.annotationID = @"Pin";
+    //self.eventAnnotation = [[MapAnnotation alloc] init];
     [self.mapView registerClass:[MKAnnotationView class] forAnnotationViewWithReuseIdentifier:self.annotationID];
     self.eventArray = [NSMutableArray new];
     
@@ -117,6 +109,7 @@ NSDateFormatter *formatter;
     
     [alert addAction:cancelAction];
     [self presentViewController:alert animated:YES completion: nil];
+    
 }
 
 /*
@@ -163,7 +156,6 @@ NSDateFormatter *formatter;
                     self.eventLocation.text = myEvent.userFriendlyLocation;
                     
                     if(myEvent.categories.intValue == 0){
-                        //How to fix that everything is food if none available
                         self.categoryIndex.text = @"Food";
                     }
                     else if(myEvent.categories.intValue == 1){
@@ -295,6 +287,8 @@ NSDateFormatter *formatter;
             [myGen prepare];
             [myGen notificationOccurred:(UINotificationFeedbackTypeSuccess)];
             myGen = NULL;
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"confetti" object:nil];
             self.tabBarController.selectedIndex = 2;
         }
         
@@ -374,6 +368,7 @@ NSDateFormatter *formatter;
     self.audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundUrl error:nil];
     self.audioPlayer.play;
     
+    [self.mapView removeAnnotations:self.mapView.annotations];
     [self fetchEvents];
     [self resetCard];
 }
@@ -447,7 +442,7 @@ NSDateFormatter *formatter;
     self.eventDate.text = [NSString stringWithFormat:@"%@", [formatter stringFromDate:event.date]];
 }
 
-- (void)didCreate:(Event *)newEvent //if event Created
+- (void)didCreate:(Event *)newEvent //After event created
 {
     [self.eventArray addObject:newEvent];
     [self fetchEvents];
