@@ -38,14 +38,14 @@ import UIKit
     open var maxDuration: TimeInterval = 12
     
     public override init(frame: CGRect) {
-        self.dropNum = 10
+        self.dropNum = 30
         self.color = UIColor.blue.withAlphaComponent(0.7)
         self.minDropSize = 4
-        self.maxDropSize = 10
+        self.maxDropSize = 20
         self.minLength = 0
         self.maxLength = 100
         self.minDuration = 4
-        self.maxDuration = 12
+        self.maxDuration = 20
         super.init(frame: frame)
     }
     

@@ -37,7 +37,7 @@
     
     self.interestsCollectionView.delegate = self;
     self.interestsCollectionView.dataSource = self;
-    WaterDropsView *waterDropView = [[WaterDropsView alloc] initWithFrame:CGRectMake(100, 0, 400, 150)];
+    WaterDropsView *waterDropView = [[WaterDropsView alloc] initWithFrame:CGRectMake(0, 0, 400, 150)];
     [waterDropView addAnimation];
     [self.interestsCollectionView insertSubview:waterDropView atIndex:2];
     
