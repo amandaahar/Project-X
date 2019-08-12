@@ -14,10 +14,9 @@
 #import "../Helpers/Reachability.h"
 #import "DetailHomeViewController.h"
 #import "EventsAroundIntent.h"
-
+#import <WaterDrops-Swift.h>
 #import "ProjectX-Swift.h"
 #import "../Helpers/AppColors.h"
-
 #import <AVFoundation/AVAudioPlayer.h>
 @import CoreLocation;
 @interface EventsFeedViewController () <UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate, UIScrollViewDelegate>
@@ -48,22 +47,22 @@ NSDateFormatter *dateFormat;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [LoadHelper startCovering:self.view];
+    
     // convert to date
-    self.spinnerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 80, 80)];
-    self.spinnerView.center = CGPointMake(self.view.frame.size.width/2, self.view.frame.size.height/2 - 180);
+    self.spinnerView = [[UIView alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2, self.view.frame.size.height/2 - 180, 80, 80)];
+    self.spinnerView.center = CGPointMake(self.view.frame.size.width/2, self.view.frame.size.height/2);
     self.spinnerView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.4];
     self.spinnerView.clipsToBounds = YES;
     self.spinnerView.layer.cornerRadius = 10;
-    [self.tableViewEventCategories addSubview:self.spinnerView];
+    [self.view addSubview:self.spinnerView];
     
     self.spinner = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
     self.spinner.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
     self.spinner.center = self.spinnerView.center;
     [self.spinner setHidesWhenStopped:YES];
-    [self.tableViewEventCategories addSubview:self.spinner];
+    [self.view addSubview:self.spinner];
     [self.spinner startAnimating];
-    
+    [LoadHelper startCovering:self.tableViewEventCategories];
     dateFormat = [[NSDateFormatter alloc] init];
     // ignore +11 and use timezone name instead of seconds from gmt
     [dateFormat setDateFormat:@"YYYY-MM-dd'T'HH:mm:ss'+11:00'"];
@@ -319,9 +318,10 @@ NSDateFormatter *dateFormat;
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
             [self.activityView setHidden:YES];
             [self.activityView stopAnimating];
-       [LoadHelper stopCovering:self.view];
+       [LoadHelper stopCovering:self.tableViewEventCategories];
             [self.spinnerView setHidden:YES];
             [self.spinner stopAnimating];
+            
         });
 }
 
@@ -393,7 +393,7 @@ NSDateFormatter *dateFormat;
     titleView.layer.masksToBounds = NO;
     titleView.layer.shadowPath = [UIBezierPath bezierPathWithRect:titleView.bounds].CGPath;
 
-    
+   
     [titleView addSubview:titleLabel];
     [titleView addSubview:subTitleLabel];
     return titleView;
@@ -433,7 +433,7 @@ NSDateFormatter *dateFormat;
     }
     cell.groupedEvents = self.eventsFiltered[indexPath.section];
     [cell.collectionViewGroupsEvents reloadData];
-    
+
     return cell;
 }
 

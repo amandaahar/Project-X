@@ -9,9 +9,9 @@
 import UIKit
 import QuartzCore
 
-@objc public class SAConfettiView: UIView {
+public class SAConfettiView: UIView {
 
-     public enum ConfettiType {
+    public enum ConfettiType {
         case Confetti
         case Triangle
         case Star
@@ -46,7 +46,7 @@ import QuartzCore
         active = false
     }
 
-   @objc public func startConfetti() {
+    @objc public func startConfetti() {
         emitter = CAEmitterLayer()
 
         emitter.emitterPosition = CGPoint(x: frame.size.width / 2.0, y: 0)
@@ -68,7 +68,7 @@ import QuartzCore
         active = false
     }
 
-     func imageForType(type: ConfettiType) -> UIImage? {
+    func imageForType(type: ConfettiType) -> UIImage? {
 
         var fileName: String!
 

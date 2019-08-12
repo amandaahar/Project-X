@@ -40,18 +40,22 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     self.db = [FIRFirestore firestore];
     self.chatsTableView.dataSource = self;
     self.chatsTableView.delegate = self;
     self.searchBar.delegate = self;
+    self.events = [[NSMutableArray alloc] init];
     [self getChats];
     [self.chatsTableView reloadData];
-    self.events = [[NSMutableArray alloc] init];
+    
     self.filteredData = self.events;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(swipedEvent:) name:@"confetti" object:nil];
 }
+- (void)viewDidAppear:(BOOL)animated{
 
+}
 - (void)getChats
 {
     [[FirebaseManager sharedManager] getCurrentUser:^(User * _Nonnull user, NSError * _Nonnull error) {

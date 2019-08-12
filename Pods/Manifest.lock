@@ -169,15 +169,18 @@ PODS:
   - GTMSessionFetcher/Core (1.2.2)
   - leveldb-library (1.20)
   - LoadingShimmer (1.0.2)
+  - lottie-ios (3.1.2)
   - MaterialTextField (1.0.1)
   - nanopb (0.3.901):
     - nanopb/decode (= 0.3.901)
     - nanopb/encode (= 0.3.901)
   - nanopb/decode (0.3.901)
   - nanopb/encode (0.3.901)
+  - Pastel (0.6.0)
   - Protobuf (3.9.0)
   - SAConfettiView (0.1.8)
   - SAMKeychain (1.5.3)
+  - WaterDrops (0.1.3)
 
 DEPENDENCIES:
   - AESCrypt
@@ -193,9 +196,12 @@ DEPENDENCIES:
   - FirebaseMLNaturalLanguage
   - FirebaseStorage
   - LoadingShimmer
+  - lottie-ios
   - MaterialTextField
+  - Pastel
   - SAConfettiView
   - SAMKeychain
+  - WaterDrops
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -229,11 +235,14 @@ SPEC REPOS:
     - GTMSessionFetcher
     - leveldb-library
     - LoadingShimmer
+    - lottie-ios
     - MaterialTextField
     - nanopb
+    - Pastel
     - Protobuf
     - SAConfettiView
     - SAMKeychain
+    - WaterDrops
 
 SPEC CHECKSUMS:
   AESCrypt: 1d89bf8b0789cf274ab2205ea461adbe9321d5f8
@@ -266,12 +275,15 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: 61bb0f61a4cb560030f1222021178008a5727a23
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   LoadingShimmer: 930cfb5e2f3cd65b964fd1095e22a8c470e58633
+  lottie-ios: 49cd85b1f24f61a7708ad7ec76a523ab2d0e3100
   MaterialTextField: f1a0786588e4d3610cb9bb62d2adbe9777cebbf9
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
+  Pastel: 814f081efbe2859c37e65ee44f396e6e5be88619
   Protobuf: 1097ca58584c8d9be81bfbf2c5ff5975648dd87a
   SAConfettiView: c87031a2280659261b730fce3669fb10e73636ee
   SAMKeychain: 483e1c9f32984d50ca961e26818a534283b4cd5c
+  WaterDrops: 8f28cad75a2770e24bc2f7688274273a9d92a289
 
-PODFILE CHECKSUM: b05a067e7a01ccb44f13ff933794be94c8aaf5c9
+PODFILE CHECKSUM: 023661accfcc6e6f184614162827ac8fe6612a6a
 
 COCOAPODS: 1.7.4

@@ -130,7 +130,7 @@
                                                     <constraint firstAttribute="width" constant="156" id="vkF-AC-AW8"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LYa-VI-QoX">
@@ -1432,7 +1432,7 @@
                                 <rect key="frame" x="0.0" y="615" width="375" height="52"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="   Send Message" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="RFh-0O-0c5">
-                                        <rect key="frame" x="17" y="11" width="272" height="30"/>
+                                        <rect key="frame" x="54" y="11" width="235" height="30"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
@@ -1450,14 +1450,28 @@
                                             <action selector="didTapSend:" destination="kQF-6t-QBu" eventType="touchUpInside" id="LqO-lU-scS"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SjW-Ur-Pzy">
+                                        <rect key="frame" x="13" y="11" width="36" height="36"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="36" id="rVh-Hk-02S"/>
+                                        </constraints>
+                                        <color key="tintColor" red="0.96078431369999995" green="0.65289962562020132" blue="0.34504308939468303" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <state key="normal" image="baseline_photo_camera_black_36pt"/>
+                                        <connections>
+                                            <action selector="sendImage:" destination="kQF-6t-QBu" eventType="touchUpInside" id="ZuT-JE-Hac"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="RFh-0O-0c5" firstAttribute="centerY" secondItem="H0u-Al-5de" secondAttribute="centerY" id="207-x8-LA1"/>
                                     <constraint firstAttribute="height" constant="52" id="7gx-KI-Fci"/>
                                     <constraint firstItem="y9E-af-9As" firstAttribute="trailing" secondItem="H0u-Al-5de" secondAttribute="trailingMargin" id="A1T-ff-b65"/>
+                                    <constraint firstItem="SjW-Ur-Pzy" firstAttribute="top" secondItem="H0u-Al-5de" secondAttribute="top" constant="11" id="BpA-TO-O4g"/>
+                                    <constraint firstAttribute="bottom" secondItem="SjW-Ur-Pzy" secondAttribute="bottom" constant="5" id="Gps-ab-Ktb"/>
                                     <constraint firstItem="RFh-0O-0c5" firstAttribute="bottom" secondItem="y9E-af-9As" secondAttribute="bottom" id="KJ8-U5-KJB"/>
-                                    <constraint firstItem="RFh-0O-0c5" firstAttribute="leading" secondItem="H0u-Al-5de" secondAttribute="leading" constant="17" id="XeJ-Wi-Ivt"/>
+                                    <constraint firstItem="SjW-Ur-Pzy" firstAttribute="leading" secondItem="H0u-Al-5de" secondAttribute="leading" constant="13" id="WTa-i0-39E"/>
+                                    <constraint firstItem="RFh-0O-0c5" firstAttribute="leading" relation="lessThanOrEqual" secondItem="SjW-Ur-Pzy" secondAttribute="trailing" constant="5" id="XeJ-Wi-Ivt"/>
                                     <constraint firstItem="y9E-af-9As" firstAttribute="leading" secondItem="RFh-0O-0c5" secondAttribute="trailing" constant="15" id="e6e-Ao-XCv"/>
                                     <constraint firstItem="RFh-0O-0c5" firstAttribute="top" secondItem="y9E-af-9As" secondAttribute="top" id="fnb-Wa-EgP"/>
                                     <constraint firstItem="RFh-0O-0c5" firstAttribute="top" secondItem="H0u-Al-5de" secondAttribute="top" constant="11" id="o4Q-sM-gOE"/>
@@ -1510,7 +1524,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="2433" y="2479"/>
+            <point key="canvasLocation" x="2432.8000000000002" y="2478.7106446776615"/>
         </scene>
         <!--Detail Event View Controller-->
         <scene sceneID="u3m-HI-W4U">
@@ -2097,6 +2111,7 @@
         <image name="baseline_edit_white_18dp" width="18" height="18"/>
         <image name="baseline_group_add_white_18dp" width="18" height="18"/>
         <image name="baseline_help_outline_white_18dp" width="18" height="18"/>
+        <image name="baseline_photo_camera_black_36pt" width="36" height="36"/>
         <image name="baseline_security_white_18dp" width="18" height="18"/>
         <image name="baseline_video_call_white_18dp" width="18" height="18"/>
         <image name="black_camera_180" width="60" height="60"/>

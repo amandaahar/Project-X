@@ -50,6 +50,9 @@
         [[TranslatorManager sharedManager] detectLanguage:text completion:^(NSString * _Nonnull language, NSError * _Nonnull error) {
             NSString *password = @"p4ssw0rd";
             NSString *encryptedData = [AESCrypt encrypt:text password:password];
+            if([text containsString:@"https"]){
+                encryptedData = text;
+            }
             if(error == nil)
             {
                 __block FIRDocumentReference *ref = [[[[db collectionWithPath:@"Event"] documentWithPath:event] collectionWithPath:@"Chat"] addDocumentWithData:

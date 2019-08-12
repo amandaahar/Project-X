@@ -22,6 +22,9 @@ target 'ProjectX' do
   pod 'AESCrypt'
   pod 'LoadingShimmer'
   pod 'SAConfettiView'
+  pod 'lottie-ios'
+  pod 'WaterDrops'
+  pod 'Pastel'
   target 'ProjectXTests' do
     inherit! :search_paths
     # Pods for testing

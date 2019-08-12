@@ -76,7 +76,7 @@ private let safeAreaTopHeight = (kScreenHeight == 812.0 || kScreenHeight == 896.
             }
         }
         
-        let coverableCellsIds = ["Cell1", "Cell1", "Cell1", "Cell1", "Cell1"]
+        let coverableCellsIds = ["cellGrouped", "cellGrouped", "cellGrouped", "cellGrouped", "cellGrouped"]
         if type(of: view!) === UITableView.self {
             for i in 0..<coverableCellsIds.count {
                 getTableViewPath(view, index: i, coverableCellsIds: coverableCellsIds)

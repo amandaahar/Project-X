@@ -23,7 +23,11 @@
     if(self) {
         FIRTimestamp *timeSent = dictionary[@"timeSent"];
         NSString *password = @"p4ssw0rd";
-        NSString *message = [AESCrypt decrypt:dictionary[@"text"] password:password];
+        NSString *text = dictionary[@"text"];
+        NSString *message = [AESCrypt decrypt:text password:password];
+        if([text containsString:@"https"]){
+            message = text;
+        }
         [self setText:message];
         [self setTimeSent:timeSent.dateValue];
         [self setNameOfSender:dictionary[@"nameOfSender"]];
