@@ -9,6 +9,7 @@
 #import "GroupsViewController.h"
 #import "../Models/FirebaseManager.h"
 #import "GroupTableViewCell.h"
+#import "ChooseEventsViewController.h"
 #import "Chat.h"
 #import "Event.h"
 #import "User.h"
@@ -30,6 +31,7 @@
 @property (strong, nonatomic) NSArray *filteredData;
 @property (strong,nonatomic) AVAudioPlayer *audioPlayer;
 @property (strong, nonatomic) CAGradientLayer *gradient;
+@property (strong, nonatomic) SAConfettiView *confettiView;
 
 @end
 
@@ -46,10 +48,8 @@
     [self.chatsTableView reloadData];
     self.events = [[NSMutableArray alloc] init];
     self.filteredData = self.events;
-    SAConfettiView * confettiView = [[SAConfettiView alloc] initWithFrame:self.view.bounds];
-    [confettiView startConfetti];git 
-    [self.view addSubview:confettiView];
-   
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(swipedEvent:) name:@"confetti" object:nil];
 }
 
 - (void)getChats
@@ -70,11 +70,11 @@
                     
                     }
                 }];
-                
             }
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [self.chatsTableView reloadData];
-                
+                [self.confettiView stopConfetti];
+                [self.confettiView removeFromSuperview];
             });
             
         }
@@ -200,23 +200,11 @@
     return UITableViewCellEditingStyleDelete;
 }
 
-/*
-- (void)confettiBurst {
-    CAEmitterLayer *emitter = [CAEmitterLayer layer];
-    emitter.emitterShape = kCAEmitterLayerLine;
-    emitter.emitterCells = CAEmitterCell
-    emitter.emitterPosition = CGPointMake(self.view.frame.width/2 x, 0);
-    emitter.emitterSize = CGSizeMake(self.view.frame.width , 2);
-    [[self.view layer] addSublayer:emitter];
-    //CGPoint(self.view.frame.width/2, 0);
- 
-     CAGradientLayer *gradient = [CAGradientLayer layer];
-     gradient.frame = view.bounds;
-     gradient.colors = @[(id)[[AppColors sharedManager] getDarkPurple].CGColor, (id)[[AppColors sharedManager]  getDarkBlue].CGColor];
-     [gradient layoutIfNeeded];
-     [gradient setNeedsDisplay];
-     return gradient;
+- (void)swipedEvent:(BOOL)swiped
+{
+        self.confettiView = [[SAConfettiView alloc] initWithFrame:self.view.bounds];
+        [self.confettiView startConfetti];
+        [self.view addSubview:self.confettiView];
 }
-*/
 
 @end

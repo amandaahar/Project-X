@@ -46,7 +46,6 @@
 @property (strong, nonatomic) UILabel *noEventsLabel;
 @property (strong,nonatomic) AVAudioPlayer *audioPlayer;
 @property (strong, nonatomic) CAGradientLayer *gradient;
-//@property (strong, nonatomic) MapAnnotation *eventAnnotation;
 
 @end
 
@@ -110,6 +109,7 @@ NSDateFormatter *formatter;
     
     [alert addAction:cancelAction];
     [self presentViewController:alert animated:YES completion: nil];
+    
 }
 
 /*
@@ -156,7 +156,6 @@ NSDateFormatter *formatter;
                     self.eventLocation.text = myEvent.userFriendlyLocation;
                     
                     if(myEvent.categories.intValue == 0){
-                        //How to fix that everything is food if none available
                         self.categoryIndex.text = @"Food";
                     }
                     else if(myEvent.categories.intValue == 1){
@@ -288,6 +287,8 @@ NSDateFormatter *formatter;
             [myGen prepare];
             [myGen notificationOccurred:(UINotificationFeedbackTypeSuccess)];
             myGen = NULL;
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"confetti" object:nil];
             self.tabBarController.selectedIndex = 2;
         }
         
@@ -441,7 +442,7 @@ NSDateFormatter *formatter;
     self.eventDate.text = [NSString stringWithFormat:@"%@", [formatter stringFromDate:event.date]];
 }
 
-- (void)didCreate:(Event *)newEvent //if event Created
+- (void)didCreate:(Event *)newEvent //After event created
 {
     [self.eventArray addObject:newEvent];
     [self fetchEvents];
