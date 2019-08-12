@@ -24,6 +24,7 @@
 @property (weak, nonatomic) IBOutlet UICollectionView *interestsCollectionView;
 @property (strong, nonatomic) AVAudioPlayer *audioPlayer;
 @property (strong, nonatomic) CAGradientLayer *gradient;
+@property (strong, nonatomic)  WaterDropsView *waterDropView;
 @end
 
 @implementation ProfileViewController
@@ -37,15 +38,18 @@
     
     self.interestsCollectionView.delegate = self;
     self.interestsCollectionView.dataSource = self;
-    WaterDropsView *waterDropView = [[WaterDropsView alloc] initWithFrame:CGRectMake(0, 0, 400, 150)];
-    [waterDropView addAnimation];
-    [self.interestsCollectionView insertSubview:waterDropView atIndex:2];
+    self.waterDropView = [[WaterDropsView alloc] initWithFrame:CGRectMake(0, 0, 400, 150)];
+
+    [self.interestsCollectionView insertSubview:self.waterDropView atIndex:2];
     
     UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout*)self.interestsCollectionView.collectionViewLayout;
     layout.minimumInteritemSpacing = 2;
     layout.minimumLineSpacing = 5;
     
      [self setup];
+}
+- (void)viewDidAppear:(BOOL)animate{
+    [self.waterDropView addAnimation];
 }
 
 
