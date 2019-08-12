@@ -24,7 +24,7 @@
                             <constraint firstAttribute="width" secondItem="1hG-Ed-Ic7" secondAttribute="height" multiplier="1:1" id="I87-3G-mJ0"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ODm-yF-c6o">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ODm-yF-c6o">
                         <rect key="frame" x="91" y="10" width="144" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="Qdo-gm-ue2"/>

@@ -30,6 +30,8 @@
     [self.createGroupButton setClipsToBounds:YES];
     [self.descriptionEvent setText:self.event.summary];
     [self.navigationItem setTitle:self.event.name];
+    
+    
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString: self.event.logo]];
 
     
