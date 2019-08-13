@@ -66,6 +66,11 @@ NSDateFormatter *formatter;
     self.emptyCard.backgroundColor = [UIColor blackColor];
     self.emptyCard.layer.cornerRadius = 15;
     self.emptyCard.layer.masksToBounds = true;
+    self.emptyCard.layer.shadowColor = [UIColor grayColor].CGColor;
+    self.emptyCard.layer.shadowOffset = CGSizeMake(5, 5);
+    self.emptyCard.layer.shadowOpacity = 1;
+    self.emptyCard.layer.shadowRadius = 1.0;
+    self.emptyCard.layer.masksToBounds = NO;
     [self.view addSubview:self.emptyCard];
     
     self.noEventsLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 270, 200)];
@@ -176,6 +181,11 @@ NSDateFormatter *formatter;
                     
                     self.card.layer.cornerRadius = 15;
                     self.card.layer.masksToBounds = true;
+                    self.card.layer.shadowColor = [UIColor grayColor].CGColor;
+                    self.card.layer.shadowOffset = CGSizeMake(5, 5);
+                    self.card.layer.shadowOpacity = 1;
+                    self.card.layer.shadowRadius = 1.0;
+                    self.card.layer.masksToBounds = NO;
                 }
             }
     }];

@@ -52,7 +52,6 @@
     [self.waterDropView addAnimation];
 }
 
-
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
     self.gradient.frame = self.navigationController.navigationBar.bounds;
