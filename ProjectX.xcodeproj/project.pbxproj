@@ -111,6 +111,7 @@
 		EAD405ED2302125600B70CC1 /* ComplicationController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAD405EC2302125600B70CC1 /* ComplicationController.m */; };
 		EAD405EF2302125700B70CC1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EAD405EE2302125700B70CC1 /* Assets.xcassets */; };
 		EAD405F42302125700B70CC1 /* ProjectXWatch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = EAD405D12302125500B70CC1 /* ProjectXWatch.app */; };
+		EAD405FF2302317A00B70CC1 /* EventsFeed.m in Sources */ = {isa = PBXBuildFile; fileRef = EAD405FE2302317A00B70CC1 /* EventsFeed.m */; };
 		EAEFFD7222F2250D0079E3D7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAEFFD7122F2250D0079E3D7 /* QuartzCore.framework */; };
 		EAEFFD7622F4C6EC0079E3D7 /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAEFFD7522F4C6EB0079E3D7 /* LocalAuthentication.framework */; };
 		EAEFFD8022F806CB0079E3D7 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAEFFD7F22F806CB0079E3D7 /* NotificationCenter.framework */; };
@@ -398,6 +399,8 @@
 		EAD405EE2302125700B70CC1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EAD405F02302125700B70CC1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EAD405F12302125700B70CC1 /* PushNotificationPayload.apns */ = {isa = PBXFileReference; lastKnownFileType = text; path = PushNotificationPayload.apns; sourceTree = "<group>"; };
+		EAD405FD2302317A00B70CC1 /* EventsFeed.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EventsFeed.h; sourceTree = "<group>"; };
+		EAD405FE2302317A00B70CC1 /* EventsFeed.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EventsFeed.m; sourceTree = "<group>"; };
 		EAEFFD7122F2250D0079E3D7 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		EAEFFD7522F4C6EB0079E3D7 /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
 		EAEFFD7E22F806CB0079E3D7 /* Widget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = Widget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -793,6 +796,8 @@
 				EAD405EE2302125700B70CC1 /* Assets.xcassets */,
 				EAD405F02302125700B70CC1 /* Info.plist */,
 				EAD405F12302125700B70CC1 /* PushNotificationPayload.apns */,
+				EAD405FD2302317A00B70CC1 /* EventsFeed.h */,
+				EAD405FE2302317A00B70CC1 /* EventsFeed.m */,
 			);
 			path = "ProjectXWatch Extension";
 			sourceTree = "<group>";
@@ -1390,6 +1395,7 @@
 				EAD405E72302125600B70CC1 /* ExtensionDelegate.m in Sources */,
 				EAD405ED2302125600B70CC1 /* ComplicationController.m in Sources */,
 				EAD405E42302125600B70CC1 /* InterfaceController.m in Sources */,
+				EAD405FF2302317A00B70CC1 /* EventsFeed.m in Sources */,
 				EAD405EA2302125600B70CC1 /* NotificationController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

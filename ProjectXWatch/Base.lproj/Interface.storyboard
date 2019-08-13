@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="14490.70" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="AgC-eL-Hgc">
+<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="14490.70" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="AgC-eL-Hgc" pageOrientation="vertical">
     <device id="watch38" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -14,22 +14,229 @@
             <objects>
                 <controller id="AgC-eL-Hgc" customClass="InterfaceController">
                     <items>
-                        <imageView height="97" alignment="left" image="logo_nobackground" contentMode="scaleAspectFit" id="lgj-ki-mjs"/>
-                        <button width="1" alignment="left" title="Plan It" id="wW2-cl-XNb">
-                            <connections>
-                                <segue destination="mbb-1B-5M2" kind="push" id="HGa-vg-n0T"/>
-                            </connections>
-                        </button>
+                        <group width="136" height="146" alignment="center" verticalAlignment="center" layout="vertical" id="12b-kD-A8N">
+                            <items>
+                                <imageView width="136" height="91" alignment="left" image="Final_logo" contentMode="scaleAspectFit" id="lgj-ki-mjs">
+                                    <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </imageView>
+                                <button width="1" height="42" alignment="left" title="Plan It" id="wW2-cl-XNb">
+                                    <connections>
+                                        <segue destination="mbb-1B-5M2" kind="push" id="s5F-kU-VUH"/>
+                                    </connections>
+                                </button>
+                            </items>
+                        </group>
                     </items>
+                    <menu key="menu" id="KgZ-Km-w30">
+                        <items>
+                            <menuItem title="Events" icon="info" id="ymJ-pa-hNk"/>
+                            <menuItem title="EventsAround" id="hjY-0I-84i"/>
+                        </items>
+                    </menu>
                     <color key="backgroundColor" red="0.49484241518922267" green="0.4241385391656658" blue="0.74980751811594204" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="-13" y="285"/>
+            <point key="canvasLocation" x="-13" y="291"/>
         </scene>
         <!--Interface Controller-->
         <scene sceneID="6Gb-Vf-2VE">
             <objects>
-                <controller id="mbb-1B-5M2">
+                <controller contentMode="scaleAspectFit" id="mbb-1B-5M2">
+                    <items>
+                        <group width="1" height="124" alignment="left" radius="10" spacing="6" id="Xf8-6m-Pha">
+                            <items>
+                                <separator height="112" alignment="left" id="72F-aX-24p">
+                                    <color key="color" red="0.45098039220000002" green="0.69411764710000001" blue="0.92156862750000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </separator>
+                                <group width="110" height="117" alignment="left" layout="vertical" id="yob-Ds-HuT">
+                                    <items>
+                                        <group width="108" alignment="left" id="1Hm-Yz-3sN">
+                                            <items>
+                                                <label width="107" alignment="left" text="Fox Hunt" id="DN8-od-iS6">
+                                                    <color key="textColor" red="0.50603199929999998" green="0.84366030390000002" blue="0.84826290729999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                </label>
+                                            </items>
+                                        </group>
+                                        <group width="1" height="50" alignment="left" id="5SV-IT-a8e">
+                                            <items>
+                                                <dateLabel height="54" alignment="left" numberOfLines="2" minimumScaleFactor="0.59999999999999998" format="M/d/yy, h:mm a" id="V2j-FS-mie">
+                                                    <date key="previewedDate" timeIntervalSinceReferenceDate="587420400">
+                                                        <!--2019-08-13 20:20:00 +0000-->
+                                                    </date>
+                                                </dateLabel>
+                                            </items>
+                                        </group>
+                                        <group width="1" height="32" alignment="left" spacing="5" id="M6L-0Z-W6L">
+                                            <items>
+                                                <label width="42" height="28" alignment="left" text="On time" minimumScaleFactor="0.40000000000000002" id="EoM-6a-crW">
+                                                    <color key="textColor" red="0.53081643069999995" green="0.97228260870000005" blue="0.25327513410000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                </label>
+                                                <label height="28" alignment="left" text="Menlo Park" minimumScaleFactor="0.59999999999999998" id="8ny-Jc-e4R">
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </label>
+                                            </items>
+                                        </group>
+                                    </items>
+                                </group>
+                            </items>
+                        </group>
+                        <group width="1" height="116" alignment="left" id="jkY-yX-4hO">
+                            <items>
+                                <group width="1" height="124" alignment="left" radius="10" spacing="6" id="91b-QW-CrW">
+                                    <items>
+                                        <separator height="112" alignment="left" id="3jl-qm-9kg">
+                                            <color key="color" red="0.45098039220000002" green="0.69411764710000001" blue="0.92156862750000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </separator>
+                                        <group width="110" height="117" alignment="left" layout="vertical" id="U8i-fe-wAy">
+                                            <items>
+                                                <group width="108" alignment="left" id="ezC-km-ufX">
+                                                    <items>
+                                                        <label width="107" alignment="left" text="Movie Night" id="dXC-4N-QPv">
+                                                            <color key="textColor" red="0.50603199929999998" green="0.84366030390000002" blue="0.84826290729999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                        </label>
+                                                    </items>
+                                                </group>
+                                                <group width="1" height="51" alignment="left" id="hQd-Pg-szX">
+                                                    <items>
+                                                        <dateLabel height="60" alignment="left" numberOfLines="2" format="M/d/yy, h:mm a" id="dnw-D0-brn">
+                                                            <date key="previewedDate" timeIntervalSinceReferenceDate="587098800">
+                                                                <!--2019-08-10 03:00:00 +0000-->
+                                                            </date>
+                                                        </dateLabel>
+                                                    </items>
+                                                </group>
+                                                <group width="1" height="32" alignment="left" spacing="5" id="Sa7-Dl-EST">
+                                                    <items>
+                                                        <label width="42" height="27" alignment="left" text="Past" minimumScaleFactor="0.80000000000000004" id="tiy-NN-4cS">
+                                                            <color key="textColor" red="0.98823529409999999" green="0.2274509804" blue="0.37254901959999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </label>
+                                                        <label width="84" height="28" alignment="left" text="Hyatt" numberOfLines="2" minimumScaleFactor="0.40000000000000002" id="aAz-bF-fpf">
+                                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </label>
+                                                    </items>
+                                                </group>
+                                            </items>
+                                        </group>
+                                    </items>
+                                </group>
+                            </items>
+                        </group>
+                        <group width="1" height="127" alignment="left" id="OxU-Y0-AVb">
+                            <items>
+                                <group width="1" height="124" alignment="left" radius="10" spacing="6" id="PON-EM-LHE">
+                                    <items>
+                                        <separator height="112" alignment="left" id="YSr-Wb-t6o">
+                                            <color key="color" red="0.45098039220000002" green="0.69411764710000001" blue="0.92156862750000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </separator>
+                                        <group width="110" height="117" alignment="left" layout="vertical" id="RuR-rj-kgU">
+                                            <items>
+                                                <group width="108" alignment="left" id="OuH-8R-ynF">
+                                                    <items>
+                                                        <label width="107" alignment="left" text="Soulcycle" id="fN6-nx-8m1">
+                                                            <color key="textColor" red="0.50603199929999998" green="0.84366030390000002" blue="0.84826290729999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                        </label>
+                                                    </items>
+                                                </group>
+                                                <group width="1" height="50" alignment="left" id="Qez-2R-jRj">
+                                                    <items>
+                                                        <dateLabel height="54" alignment="left" numberOfLines="2" minimumScaleFactor="0.59999999999999998" format="M/d/yy, h:mm a" id="ubh-sP-7ps">
+                                                            <date key="previewedDate" timeIntervalSinceReferenceDate="587239200">
+                                                                <!--2019-08-11 18:00:00 +0000-->
+                                                            </date>
+                                                        </dateLabel>
+                                                    </items>
+                                                </group>
+                                                <group width="1" height="32" alignment="left" spacing="5" id="UTX-KU-hKS">
+                                                    <items>
+                                                        <label width="42" height="28" alignment="left" text="Soon" minimumScaleFactor="0.40000000000000002" id="rfl-dc-IOV">
+                                                            <color key="textColor" red="0.50603199929999998" green="0.84366030390000002" blue="0.84826290729999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                        </label>
+                                                        <label height="28" alignment="left" text="Menlo Park" minimumScaleFactor="0.59999999999999998" id="quv-id-IpA">
+                                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </label>
+                                                    </items>
+                                                </group>
+                                            </items>
+                                        </group>
+                                    </items>
+                                </group>
+                            </items>
+                        </group>
+                        <group width="1" height="124" alignment="left" radius="10" spacing="6" id="neN-4f-mn8">
+                            <items>
+                                <separator height="112" alignment="left" id="a0U-vU-J8m">
+                                    <color key="color" red="0.45098039220000002" green="0.69411764710000001" blue="0.92156862750000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </separator>
+                                <group width="110" height="117" alignment="left" layout="vertical" id="64m-kf-oI8">
+                                    <items>
+                                        <group width="108" alignment="left" id="V18-07-IsI">
+                                            <items>
+                                                <label width="107" alignment="left" text="Hide and Seek" id="sp3-tD-5wm">
+                                                    <color key="textColor" red="0.50603199929999998" green="0.84366030390000002" blue="0.84826290729999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                </label>
+                                            </items>
+                                        </group>
+                                        <group width="1" height="50" alignment="left" id="NHF-0S-YKy">
+                                            <items>
+                                                <dateLabel height="54" alignment="left" numberOfLines="2" minimumScaleFactor="0.59999999999999998" format="M/d/yy, h:mm a" id="mIB-MN-6jd">
+                                                    <date key="previewedDate" timeIntervalSinceReferenceDate="587151000">
+                                                        <!--2019-08-10 17:30:00 +0000-->
+                                                    </date>
+                                                </dateLabel>
+                                            </items>
+                                        </group>
+                                        <group width="1" height="32" alignment="left" spacing="5" id="bSh-yA-UNa">
+                                            <items>
+                                                <label width="42" height="28" alignment="left" text="Past" minimumScaleFactor="0.40000000000000002" id="nGR-mg-zmy">
+                                                    <color key="textColor" red="0.91744791670000003" green="0.1927963177" blue="0.2741651175" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                </label>
+                                                <label height="28" alignment="left" text="Menlo Park" minimumScaleFactor="0.59999999999999998" id="mOT-kl-MGN">
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </label>
+                                            </items>
+                                        </group>
+                                    </items>
+                                </group>
+                            </items>
+                        </group>
+                        <group width="1" height="124" alignment="left" radius="10" spacing="6" id="tLl-lt-5rd">
+                            <items>
+                                <separator height="112" alignment="left" id="6zP-Cm-cEf">
+                                    <color key="color" red="0.45098039220000002" green="0.69411764710000001" blue="0.92156862750000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </separator>
+                                <group width="110" height="117" alignment="left" layout="vertical" id="L3O-ce-stk">
+                                    <items>
+                                        <group width="108" alignment="left" id="W5E-DD-7Kn">
+                                            <items>
+                                                <label width="107" alignment="left" text="Stargazing" id="ctS-je-8mW">
+                                                    <color key="textColor" red="0.50603199929999998" green="0.84366030390000002" blue="0.84826290729999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                </label>
+                                            </items>
+                                        </group>
+                                        <group width="1" height="50" alignment="left" id="k3R-SR-pVf">
+                                            <items>
+                                                <dateLabel height="54" alignment="left" numberOfLines="2" minimumScaleFactor="0.59999999999999998" format="M/d/yy, h:mm a" id="eh6-hZ-kd9">
+                                                    <date key="previewedDate" timeIntervalSinceReferenceDate="587793600">
+                                                        <!--2019-08-18 04:00:00 +0000-->
+                                                    </date>
+                                                </dateLabel>
+                                            </items>
+                                        </group>
+                                        <group width="1" height="32" alignment="left" spacing="5" id="1Ms-g6-MbC">
+                                            <items>
+                                                <label width="42" height="28" alignment="left" text="Soon" minimumScaleFactor="0.40000000000000002" id="REj-LM-9p6">
+                                                    <color key="textColor" red="0.50603199929999998" green="0.84366030390000002" blue="0.84826290729999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                </label>
+                                                <label height="28" alignment="left" text="Golden Gate" minimumScaleFactor="0.59999999999999998" id="Cmm-JZ-Qt3">
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </label>
+                                            </items>
+                                        </group>
+                                    </items>
+                                </group>
+                            </items>
+                        </group>
+                    </items>
                     <menu key="menu" id="KFY-v2-mVu">
                         <items>
                             <menuItem title="Menu Item" icon="accept" id="hR7-L5-Adx"/>
@@ -37,7 +244,7 @@
                     </menu>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="252" y="287"/>
+            <point key="canvasLocation" x="292" y="173"/>
         </scene>
         <!--Static Notification Interface Controller-->
         <scene sceneID="AEw-b0-oYE">
@@ -54,21 +261,21 @@
                     </connections>
                 </notificationController>
             </objects>
-            <point key="canvasLocation" x="220" y="643"/>
+            <point key="canvasLocation" x="309" y="837"/>
         </scene>
         <!--Notification Controller-->
         <scene sceneID="ZPc-GJ-vnh">
             <objects>
                 <controller id="4sK-HA-Art" customClass="NotificationController"/>
             </objects>
-            <point key="canvasLocation" x="633" y="748"/>
+            <point key="canvasLocation" x="700" y="872"/>
         </scene>
         <!--Notification Controller-->
         <scene sceneID="Niz-AI-uX2">
             <objects>
                 <controller id="eXb-UN-Cd0" customClass="NotificationController"/>
             </objects>
-            <point key="canvasLocation" x="633" y="428"/>
+            <point key="canvasLocation" x="700" y="596"/>
         </scene>
     </scenes>
 </document>
