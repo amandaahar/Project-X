@@ -22,6 +22,9 @@
 @property (weak, nonatomic) IBOutlet MFTextField *lastName;
 @property (weak, nonatomic) IBOutlet MFTextField *username;
 @property (strong, nonatomic) CAGradientLayer *gradient;
+@property (weak, nonatomic) IBOutlet UISwitch *acceptTerms;
+
+
 @end
 
 @implementation SignUpViewController
@@ -116,79 +119,86 @@
 - (IBAction)signUpUser:(id)sender {
     // initialize a user object
 
-    if([self verifyPasswords: self.passwordField.text passwordTwo:self.secondPasswordField.text])
-    {
-    // call sign up function on the object
-    [[FIRAuth auth] createUserWithEmail:self.emailField.text
-                               password:self.passwordField.text
-                             completion:^(FIRAuthDataResult * _Nullable authResult, NSError * _Nullable error)
+    if(self.acceptTerms.isOn){
+        if([self verifyPasswords: self.passwordField.text passwordTwo:self.secondPasswordField.text])
         {
-            if (error != nil) {
-                NSLog(@"Error: %@", error.localizedDescription);
-                [self displayAlert:@"Error" subtitle:error.localizedDescription];
-            }else
+        // call sign up function on the object
+        [[FIRAuth auth] createUserWithEmail:self.emailField.text
+                                   password:self.passwordField.text
+                                 completion:^(FIRAuthDataResult * _Nullable authResult, NSError * _Nullable error)
             {
-                NSString * language = [[NSLocale preferredLanguages] firstObject];
-                if([language containsString:@"-"])
+                if (error != nil) {
+                    NSLog(@"Error: %@", error.localizedDescription);
+                    [self displayAlert:@"Error" subtitle:error.localizedDescription];
+                }else
                 {
-                    NSRange range = [language rangeOfString:@"-"];
-                    NSString *newString = [language substringToIndex:range.location];
-                    language = newString;
-                }
-                NSLog(@"User registered successfully");
-            
-                [[FIRInstanceID instanceID] instanceIDWithHandler:^(FIRInstanceIDResult * _Nullable result,
-                                                                    NSError * _Nullable error) {
-                    if (error != nil) {
-                        [[[self.db collectionWithPath:@"Users"] documentWithPath:FIRAuth.auth.currentUser.uid] setData:@{ @"firstName": self.usernameField.text,
-                                                                                                   @"email": self.emailField.text,
-                                                                                                @"lastName" : self.lastName.text,
-                                                                                                @"username" : self.username.text,
-                                                                                                     @"lan": language,
-                                                                                                    @"bio" : @"",
-                                                                                                    @"fcm" : @"",
-                                                                                              @"profileImage" : @"https://profiles.utdallas.edu/img/default.png"
-                                                                                                 } completion:^(NSError * _Nullable error) {
-                                                                                                                             if (error != nil)
-                                                                                                                             {
-                                                                                                                                 NSLog(@"Error writing document: %@", error);
-                                                                                                                             } else
-                                                                                                                             {
-                                                                                                                                 NSLog(@"Document successfully written!");
-                                                                                                                                 [self performSegueWithIdentifier:@"preferences" sender:self];
-                                                                                                                             }
-                                                                                                 }];
-                    } else {
-                        NSLog(@"Remote instance ID token: %@", result.token);
-                        [[[self.db collectionWithPath:@"Users"] documentWithPath:FIRAuth.auth.currentUser.uid] setData:@{ @"firstName": self.usernameField.text,
-                                                                                                                          @"email": self.emailField.text,
-                                                                                                                          @"lastName" : self.lastName.text,
-                                                                                                                          @"username" : self.username.text,
-                                                                                                                          @"lan": language,
-                                                                                                                          @"bio" : @"",
-                                                                                                                          @"fcm" : result.token,
-                                                                                                                          @"profileImage" : @"https://profiles.utdallas.edu/img/default.png"
-                                                                                                                          } completion:^(NSError * _Nullable error) {
-                                                                                                                              if (error != nil)
-                                                                                                                              {
-                                                                                                                                  NSLog(@"Error writing document: %@", error);
-                                                                                                                              } else
-                                                                                                                              {
-                                                                                                                                  NSLog(@"Document successfully written!");
-                                                                                                                                  [self performSegueWithIdentifier:@"preferences" sender:self];
-                                                                                                                              }
-                                                                                                                          }];
-                       
+                    NSString * language = [[NSLocale preferredLanguages] firstObject];
+                    if([language containsString:@"-"])
+                    {
+                        NSRange range = [language rangeOfString:@"-"];
+                        NSString *newString = [language substringToIndex:range.location];
+                        language = newString;
                     }
-                   
-                }];
+                    NSLog(@"User registered successfully");
                 
+                    [[FIRInstanceID instanceID] instanceIDWithHandler:^(FIRInstanceIDResult * _Nullable result,
+                                                                        NSError * _Nullable error) {
+                        if (error != nil) {
+                            [[[self.db collectionWithPath:@"Users"] documentWithPath:FIRAuth.auth.currentUser.uid] setData:@{ @"firstName": self.usernameField.text,
+                                                                                                       @"email": self.emailField.text,
+                                                                                                    @"lastName" : self.lastName.text,
+                                                                                                    @"username" : self.username.text,
+                                                                                                         @"lan": language,
+                                                                                                        @"bio" : @"",
+                                                                                                        @"fcm" : @"",
+                                                                                                  @"profileImage" : @"https://profiles.utdallas.edu/img/default.png"
+                                                                                                     } completion:^(NSError * _Nullable error) {
+                                                                                                                                 if (error != nil)
+                                                                                                                                 {
+                                                                                                                                     NSLog(@"Error writing document: %@", error);
+                                                                                                                                 } else
+                                                                                                                                 {
+                                                                                                                                     NSLog(@"Document successfully written!");
+                                                                                                                                     [self performSegueWithIdentifier:@"preferences" sender:self];
+                                                                                                                                 }
+                                                                                                     }];
+                        } else {
+                            NSLog(@"Remote instance ID token: %@", result.token);
+                            [[[self.db collectionWithPath:@"Users"] documentWithPath:FIRAuth.auth.currentUser.uid] setData:@{ @"firstName": self.usernameField.text,
+                                                                                                                              @"email": self.emailField.text,
+                                                                                                                              @"lastName" : self.lastName.text,
+                                                                                                                              @"username" : self.username.text,
+                                                                                                                              @"lan": language,
+                                                                                                                              @"bio" : @"",
+                                                                                                                              @"fcm" : result.token,
+                                                                                                                              @"profileImage" : @"https://profiles.utdallas.edu/img/default.png"
+                                                                                                                              } completion:^(NSError * _Nullable error) {
+                                                                                                                                  if (error != nil)
+                                                                                                                                  {
+                                                                                                                                      NSLog(@"Error writing document: %@", error);
+                                                                                                                                  } else
+                                                                                                                                  {
+                                                                                                                                      NSLog(@"Document successfully written!");
+                                                                                                                                      [self performSegueWithIdentifier:@"preferences" sender:self];
+                                                                                                                                  }
+                                                                                                                              }];
+                           
+                        }
+                       
+                    }];
+                    
+            }
+        }];
+        } else
+        {
+            [self displayAlert:@"Error" subtitle:@"Please try with a password with more than 6 characters"];
         }
-    }];
-    } else
-    {
-        [self displayAlert:@"Error" subtitle:@"Please try with a password with more than 6 characters"];
+    }else{
+         [self displayAlert:@"Error" subtitle:@"Please accept terms and conditions"];
     }
+    
+    
+        
 }
 
 - (BOOL)verifyPasswords:(NSString *)passwordOne passwordTwo:(NSString *)passwordTwo
@@ -207,6 +217,10 @@
     [self presentViewController:alert animated:YES completion:nil];
     
 }
+
+- (IBAction)showTermsAndConditions:(UIButton *)sender {
+}
+
 
 - (IBAction)shutKeyboard:(UITapGestureRecognizer *)sender {
     [self.view endEditing:YES];

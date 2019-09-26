@@ -93,19 +93,6 @@ PODS:
     - GoogleUtilities/Reachability (~> 6.2)
     - GoogleUtilities/UserDefaults (~> 6.2)
     - Protobuf (~> 3.1)
-  - FirebaseMLCommon (0.17.0):
-    - FirebaseCore (~> 6.0)
-    - FirebaseInstanceID (~> 4.2)
-    - GoogleUtilities/UserDefaults (~> 6.0)
-    - GTMSessionFetcher/Core (~> 1.1)
-  - FirebaseMLNaturalLanguage (0.16.3):
-    - FirebaseCore (~> 6.0)
-    - FirebaseMLCommon (~> 0.17)
-    - GoogleToolboxForMac/Logger (~> 2.1)
-    - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
-    - "GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)"
-    - GTMSessionFetcher/Core (~> 1.1)
-    - Protobuf (~> 3.5)
   - FirebaseStorage (3.4.0):
     - FirebaseAuthInterop (~> 1.0)
     - FirebaseCore (~> 6.0)
@@ -120,18 +107,6 @@ PODS:
   - GoogleDataTransportCCTSupport (1.0.1):
     - GoogleDataTransport (~> 1.1)
     - nanopb
-  - GoogleToolboxForMac/DebugUtils (2.2.1):
-    - GoogleToolboxForMac/Defines (= 2.2.1)
-  - GoogleToolboxForMac/Defines (2.2.1)
-  - GoogleToolboxForMac/Logger (2.2.1):
-    - GoogleToolboxForMac/Defines (= 2.2.1)
-  - "GoogleToolboxForMac/NSData+zlib (2.2.1)":
-    - GoogleToolboxForMac/Defines (= 2.2.1)
-  - "GoogleToolboxForMac/NSDictionary+URLArguments (2.2.1)":
-    - GoogleToolboxForMac/DebugUtils (= 2.2.1)
-    - GoogleToolboxForMac/Defines (= 2.2.1)
-    - "GoogleToolboxForMac/NSString+URLArguments (= 2.2.1)"
-  - "GoogleToolboxForMac/NSString+URLArguments (2.2.1)"
   - GoogleUtilities/AppDelegateSwizzler (6.2.4):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
@@ -193,7 +168,6 @@ DEPENDENCIES:
   - FirebaseFirestore
   - FirebaseFunctions
   - FirebaseMessaging
-  - FirebaseMLNaturalLanguage
   - FirebaseStorage
   - LoadingShimmer
   - lottie-ios
@@ -222,13 +196,10 @@ SPEC REPOS:
     - FirebaseFunctions
     - FirebaseInstanceID
     - FirebaseMessaging
-    - FirebaseMLCommon
-    - FirebaseMLNaturalLanguage
     - FirebaseStorage
     - GoogleAppMeasurement
     - GoogleDataTransport
     - GoogleDataTransportCCTSupport
-    - GoogleToolboxForMac
     - GoogleUtilities
     - "gRPC-C++"
     - gRPC-Core
@@ -262,13 +233,10 @@ SPEC CHECKSUMS:
   FirebaseFunctions: 5af7c35d1c5e41608fecbb667eb6c4e672e318d0
   FirebaseInstanceID: 8b42755db950682e7de0d167bc6fb26a57b244af
   FirebaseMessaging: ddd74d13644ef24cc4e2d95cabd1cf408e99b7b0
-  FirebaseMLCommon: b236f9bc8a020d4c36744d6e402b2fb9d6fe3f6d
-  FirebaseMLNaturalLanguage: a8b1308281ba28950a9a82e084ac998800abd506
   FirebaseStorage: 618dd8fd886b30adf6e5d1915b1f5c18cb5c3944
   GoogleAppMeasurement: 47285fa897e5a125df56b9ef8750a1d81e4598a8
   GoogleDataTransport: b0115dbdf1943c998628dca30800ddd263aaa166
   GoogleDataTransportCCTSupport: 3451e7d8ba19093e533362a6d78d6d9014c6a037
-  GoogleToolboxForMac: b3553629623a3b1bff17f555e736cd5a6d95ad55
   GoogleUtilities: 64b5e3982b1b01bda26712affd5c523ef32563cf
   "gRPC-C++": 9dfe7b44821e7b3e44aacad2af29d2c21f7cde83
   gRPC-Core: c9aef9a261a1247e881b18059b84d597293c9947
@@ -284,6 +252,6 @@ SPEC CHECKSUMS:
   SAMKeychain: 483e1c9f32984d50ca961e26818a534283b4cd5c
   WaterDrops: 8f28cad75a2770e24bc2f7688274273a9d92a289
 
-PODFILE CHECKSUM: 023661accfcc6e6f184614162827ac8fe6612a6a
+PODFILE CHECKSUM: 51401b658dc637c4174d2af2fd46fb7e7bc85ab2
 
-COCOAPODS: 1.7.4
+COCOAPODS: 1.7.5

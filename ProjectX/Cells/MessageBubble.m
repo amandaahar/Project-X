@@ -87,7 +87,7 @@
                 [self.bubbleLabel sizeToFit];
                 [self.bubbleView setNeedsDisplay];
                 
-                [self sizeToFit];
+               // [self sizeToFit];
             }
             
         }];

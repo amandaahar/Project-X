@@ -30,8 +30,13 @@
         self.pictures = dictionary[@"pictures"];
         self.location = dictionary[@"location"];
         self.usersInEvent = dictionary[@"swipeUsers"];
-        FIRTimestamp *date = dictionary[@"eventDate"];
-        self.date = date.dateValue;
+        @try {
+            FIRTimestamp *date = dictionary[@"eventDate"];
+            self.date = date.dateValue;
+        } @catch (NSException *exception) {
+             self.date = [[NSDate alloc] init];
+        }
+       
         self.eventID = eventID;
         self.categories = dictionary[@"categoryIndex"];
         self.userFriendlyLocation = dictionary[@"userFriendlyLocation"];

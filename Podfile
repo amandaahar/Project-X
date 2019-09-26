@@ -11,7 +11,7 @@ target 'ProjectX' do
   pod 'FirebaseCore'
   pod 'FirebaseDatabase'
   pod 'FirebaseFirestore'
-  pod 'FirebaseMLNaturalLanguage'
+
   pod 'FirebaseFunctions'
   pod 'FirebaseMessaging'
   pod 'FirebaseStorage'

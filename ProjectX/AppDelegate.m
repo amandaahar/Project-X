@@ -8,7 +8,6 @@
 
 #import "AppDelegate.h"
 @import Firebase;
-@import FirebaseMLCommon;
 @import UserNotifications;
 @interface AppDelegate ()<UNUserNotificationCenterDelegate>
 

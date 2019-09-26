@@ -29,10 +29,13 @@ struct KeychainConfiguration {
 @property (weak, nonatomic) IBOutlet UIButton *signUpButton;
 @property (weak, nonatomic) IBOutlet MFTextField *passwordField;
 @property (strong, nonatomic) LAContext *context;
+@property (weak, nonatomic) IBOutlet UILabel *myOptions;
+@property (weak, nonatomic) IBOutlet UIButton *buttonFaceOrTouch;
 @end
 
 @implementation LogInViewController
 CAGradientLayer *gradient;
+CLLocationManager *locationManager2;
 - (void)viewDidLoad {
     [super viewDidLoad];
     PastelView *pastelView = [[PastelView alloc] initWithFrame:self.view.bounds];
@@ -52,7 +55,23 @@ CAGradientLayer *gradient;
     self.context = [[LAContext alloc] init];
     NSError *error = [[NSError alloc] init];
     [self.context setLocalizedCancelTitle:@"Enter mail and password"];
-    [self.context canEvaluatePolicy:kLAPolicyDeviceOwnerAuthentication error:&error];
+    [self.context canEvaluatePolicy:kLAPolicyDeviceOwnerAuthenticationWithBiometrics error:&error];
+    
+    switch (self.context.biometryType) {
+        case LABiometryTypeFaceID:
+            [self.myOptions setText:@"Log in with FaceID"];
+         
+            break;
+        case LABiometryTypeTouchID:
+            [self.myOptions setText:@"Log in with TouchID"];
+            [self.buttonFaceOrTouch setImage:[UIImage imageNamed:@"touch-id-icon"] forState:(UIControlStateNormal)];
+            break;
+            
+        default:
+             [self.myOptions setText:@""];
+            [self.buttonFaceOrTouch setHidden:YES];
+            break;
+    }
     
     gradient = [CAGradientLayer layer];
     
@@ -60,6 +79,8 @@ CAGradientLayer *gradient;
     gradient.colors = @[(id)[[AppColors sharedManager] getDarkPurple].CGColor, (id)[[AppColors sharedManager]  getDarkBlue].CGColor];
     [gradient layoutIfNeeded];
     [gradient setNeedsDisplay];
+    locationManager2 = [CLLocationManager new];
+    [locationManager2 requestWhenInUseAuthorization];
 
     //[self.view.layer insertSublayer:gradient atIndex:0];
     
@@ -104,6 +125,10 @@ enum AuthenticationState {
                                       NSError * _Nullable error) {
         if (error != nil) {
             NSLog(@"User log in failed: %@", error.localizedDescription);
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"There is a problem" message:error.localizedDescription preferredStyle: UIAlertControllerStyleAlert];
+            UIAlertAction *accept = [UIAlertAction actionWithTitle:@"Accept" style:(UIAlertActionStyleCancel) handler:nil];
+            [alert addAction:accept];
+            [self presentViewController:alert animated:YES completion:nil];
         } else {
             NSLog(@"User logged in successfully");
             [[FIRInstanceID instanceID] instanceIDWithHandler:^(FIRInstanceIDResult * _Nullable result,
@@ -138,6 +163,11 @@ enum AuthenticationState {
                                       NSError * _Nullable error) {
                              if (error != nil) {
                                  NSLog(@"User log in failed: %@", error.localizedDescription);
+                                 UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"There is a problem" message:error.localizedDescription preferredStyle: UIAlertControllerStyleAlert];
+                                 UIAlertAction *accept = [UIAlertAction actionWithTitle:@"Accept" style:(UIAlertActionStyleCancel) handler:nil];
+                                 [alert addAction:accept];
+                                 [self presentViewController:alert animated:YES completion:nil];
+                                 NSLog(@"HOLA");
                              } else {
                                  NSLog(@"User logged in successfully");
                                  [[FIRInstanceID instanceID] instanceIDWithHandler:^(FIRInstanceIDResult * _Nullable result,

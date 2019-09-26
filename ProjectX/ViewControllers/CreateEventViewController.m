@@ -28,6 +28,8 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelButton;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
 @property (weak, nonatomic) IBOutlet UILabel *categoryLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *cameraImage;
+
 @property (strong, nonatomic) NSString *EventImageString;
 @property (weak, nonatomic) NSString *userFriendlyLocation;
 @property (nonatomic, readwrite) FIRFirestore *db;
@@ -56,6 +58,8 @@ UIDatePicker *datePicker;
     UIBarButtonItem *space=[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     [toolBar setItems:[NSArray arrayWithObjects:space,doneBtn, nil]];
     [self.createEventDate setInputAccessoryView:toolBar];
+    [self.cameraImage.layer setCornerRadius:10];
+    [self.cameraImage setClipsToBounds:YES];
     
     self.backgroundGradient = [CAGradientLayer layer];
     self.backgroundGradient.frame = self.view.bounds;
